@@ -47,10 +47,27 @@ class SystemsTableViewController: UITableViewController, NSFetchedResultsControl
 		return cell
 	}
 	
+	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+		if let controller = self.fetchedResultsController {
+			if let system = controller.objectAtIndexPath(indexPath) as? System {
+				performSegueWithIdentifier("toDetailView", sender: system)
+			} else {
+				print("Error getting System")
+			}
+		} else {
+			print("Error getting controller")
+		}
+	}
+	
 	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-		if (segue.identifier == "toDetailView") {
-			if let destination = segue.destinationViewController as? DetailViewController {
-				destination.navigationItem.title = (sender! as! SystemTableViewCell).systemNameLabel.text
+		if let system = sender as? System {
+			if (segue.identifier == "toDetailView") {
+				if let destination = segue.destinationViewController as? DetailViewController {
+					destination.navigationItem.title = system.systemName
+					destination.detailsText = system.systemDescription
+				}
+			} else if (segue.identifier == "toSubcategoryView") {
+				print("To Subcategory View")
 			}
 		}
 	}

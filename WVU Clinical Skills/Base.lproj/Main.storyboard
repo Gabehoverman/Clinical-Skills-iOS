@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Ags-F4-B5Q">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Ags-F4-B5Q">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -38,7 +38,6 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="systemNameLabel" destination="ijk-2L-s0D" id="cvf-Gb-xVq"/>
-                                    <segue destination="wWe-Nr-bdG" kind="show" identifier="toDetailView" id="9wq-yT-Wqz"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -48,6 +47,10 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Systems" id="vXZ-xS-Xnc"/>
+                    <connections>
+                        <segue destination="wWe-Nr-bdG" kind="show" identifier="toDetailView" id="pLn-V9-smY"/>
+                        <segue destination="FIX-bn-2gn" kind="show" identifier="toSubcategoryView" id="vHo-hW-dhS"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Myo-E9-iSL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -64,12 +67,78 @@
                     <view key="view" contentMode="scaleToFill" id="8Tz-fj-YpC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L9l-tm-tcw">
+                                <rect key="frame" x="28" y="72" width="560" height="520"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <dataDetectorType key="dataDetectorTypes" link="YES"/>
+                            </textView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="L9l-tm-tcw" firstAttribute="trailing" secondItem="8Tz-fj-YpC" secondAttribute="trailingMargin" constant="8" id="Bdv-Lr-2Mz"/>
+                            <constraint firstItem="L9l-tm-tcw" firstAttribute="leading" secondItem="8Tz-fj-YpC" secondAttribute="leadingMargin" constant="8" id="T1w-co-wqU"/>
+                            <constraint firstItem="DGC-vy-jNX" firstAttribute="top" secondItem="L9l-tm-tcw" secondAttribute="bottom" constant="8" id="kuu-1Q-CdS"/>
+                            <constraint firstItem="L9l-tm-tcw" firstAttribute="top" secondItem="Bzf-6v-Yr6" secondAttribute="bottom" constant="8" id="myp-0w-HiK"/>
+                        </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="Detail View" id="vEZ-Sj-sJ4"/>
+                    <connections>
+                        <outlet property="detailsTextView" destination="L9l-tm-tcw" id="DbL-XV-Sfk"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bLh-eG-ZNj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2369" y="531"/>
+            <point key="canvasLocation" x="2361" y="183"/>
+        </scene>
+        <!--Subsystems-->
+        <scene sceneID="Iub-hb-ncz">
+            <objects>
+                <tableViewController id="FIX-bn-2gn" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="yNm-cQ-kfX">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="SystemCell" id="ZEO-Mz-5Gk" userLabel="SubsystemCell" customClass="SystemTableViewCell" customModule="WVU_Clinical_Skills" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZEO-Mz-5Gk" id="2Yr-2t-uFA">
+                                    <rect key="frame" x="0.0" y="0.0" width="567" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subsystem Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lTe-UT-DGy">
+                                            <rect key="frame" x="16" y="8" width="551" height="27"/>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="lTe-UT-DGy" firstAttribute="trailing" secondItem="2Yr-2t-uFA" secondAttribute="trailingMargin" constant="8" id="EVk-PN-3wc"/>
+                                        <constraint firstItem="lTe-UT-DGy" firstAttribute="top" secondItem="2Yr-2t-uFA" secondAttribute="topMargin" id="FGh-Mq-Og0"/>
+                                        <constraint firstItem="lTe-UT-DGy" firstAttribute="leading" secondItem="2Yr-2t-uFA" secondAttribute="leadingMargin" constant="8" id="OYE-RW-HYo"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="lTe-UT-DGy" secondAttribute="bottom" id="aUx-P3-BtT"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="systemNameLabel" destination="lTe-UT-DGy" id="0tr-BG-LcN"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="FIX-bn-2gn" id="VRc-dc-v9X"/>
+                            <outlet property="delegate" destination="FIX-bn-2gn" id="rsM-Vu-6Xy"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Subsystems" id="y0P-in-rjG"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7Sc-jm-hfD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2361" y="912"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="hF8-Sb-rDO">
