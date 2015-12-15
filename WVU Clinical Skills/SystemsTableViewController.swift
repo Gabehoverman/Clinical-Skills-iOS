@@ -61,4 +61,12 @@ class SystemsTableViewController: UITableViewController, NSFetchedResultsControl
 		return cell
 	}
 	
+	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+		if (segue.identifier == "toDetailView") {
+			if let destination = segue.destinationViewController as? DetailViewController {
+				destination.navigationItem.title = (sender! as! SystemTableViewCell).systemNameLabel.text
+			}
+		}
+	}
+	
 }
