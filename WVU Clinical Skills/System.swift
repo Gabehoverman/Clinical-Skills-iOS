@@ -16,4 +16,8 @@ class System: NSManagedObject {
 	@NSManaged var systemName: String
 	@NSManaged var systemDescription : String
 	
+	func toString() -> String {
+		return "\(self.systemName): \(self.systemDescription)"
+	}
+	
 }

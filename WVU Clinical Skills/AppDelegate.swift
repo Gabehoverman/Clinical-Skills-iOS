@@ -12,16 +12,24 @@ import CoreData
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+	let SHOULD_REFRESH_DATABASE_ON_LAUNCH = true
+	let SHOULD_SEED = true
+	
     var window: UIWindow?
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+		print("Seeding")
+		let dataHelper = DataHelper(context: self.managedObjectContext)
+		dataHelper.seedSystems()
+		dataHelper.printAllSystems()
         return true
     }
 	
 	func applicationWillTerminate(application: UIApplication) {
 		// Save all data when app terminates
+		print("Goodbye!")
 		self.saveContext()
 	}
 	
@@ -44,6 +52,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// Create the coordinator and store
 		let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
 		let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("WVUClinicalSkills")
+		
+		
+		if (self.SHOULD_REFRESH_DATABASE_ON_LAUNCH) {
+			do {
+				try NSFileManager.defaultManager().removeItemAtURL(url)
+			} catch _ {
+				print("Error removing the database at \(url)")
+			}
+		}
+		
+		
 		var failureReason = "There was an error creating or loading the application's saved data."
 		do {
 			try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil)
