@@ -1,0 +1,17 @@
+//
+//  SystemTableViewCell.swift
+//  WVU Clinical Skills
+//
+//  Created by Nick on 12/14/15.
+//  Copyright © 2015 Nick. All rights reserved.
+//
+
+import Foundation
+import UIKit
+
+class SystemTableViewCell: UITableViewCell {
+
+	
+	@IBOutlet weak var systemNameLabel: UILabel!
+	
+}

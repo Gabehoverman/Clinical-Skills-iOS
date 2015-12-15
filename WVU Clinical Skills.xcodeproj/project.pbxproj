@@ -1,0 +1,553 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0116CADF1C1FB1920006706C /* SystemsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0116CADE1C1FB1920006706C /* SystemsTableViewController.swift */; };
+		0116CAE11C1FB4C60006706C /* SystemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0116CAE01C1FB4C60006706C /* SystemTableViewCell.swift */; };
+		01C9947B1C1F887900491F94 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C9947A1C1F887900491F94 /* AppDelegate.swift */; };
+		01C994801C1F887900491F94 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01C9947E1C1F887900491F94 /* Main.storyboard */; };
+		01C994821C1F887900491F94 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01C994811C1F887900491F94 /* Assets.xcassets */; };
+		01C994851C1F887900491F94 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01C994831C1F887900491F94 /* LaunchScreen.storyboard */; };
+		01C994901C1F887900491F94 /* WVU_Clinical_SkillsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C9948F1C1F887900491F94 /* WVU_Clinical_SkillsTests.swift */; };
+		01C9949B1C1F887900491F94 /* WVU_Clinical_SkillsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C9949A1C1F887900491F94 /* WVU_Clinical_SkillsUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		01C9948C1C1F887900491F94 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 01C9946F1C1F887900491F94 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 01C994761C1F887900491F94;
+			remoteInfo = "WVU Clinical Skills";
+		};
+		01C994971C1F887900491F94 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 01C9946F1C1F887900491F94 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 01C994761C1F887900491F94;
+			remoteInfo = "WVU Clinical Skills";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0116CADE1C1FB1920006706C /* SystemsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemsTableViewController.swift; sourceTree = "<group>"; };
+		0116CAE01C1FB4C60006706C /* SystemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemTableViewCell.swift; sourceTree = "<group>"; };
+		01C994771C1F887900491F94 /* WVU Clinical Skills.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WVU Clinical Skills.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		01C9947A1C1F887900491F94 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		01C9947F1C1F887900491F94 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		01C994811C1F887900491F94 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		01C994841C1F887900491F94 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		01C994861C1F887900491F94 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		01C9948B1C1F887900491F94 /* WVU Clinical SkillsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "WVU Clinical SkillsTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		01C9948F1C1F887900491F94 /* WVU_Clinical_SkillsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WVU_Clinical_SkillsTests.swift; sourceTree = "<group>"; };
+		01C994911C1F887900491F94 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		01C994961C1F887900491F94 /* WVU Clinical SkillsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "WVU Clinical SkillsUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		01C9949A1C1F887900491F94 /* WVU_Clinical_SkillsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WVU_Clinical_SkillsUITests.swift; sourceTree = "<group>"; };
+		01C9949C1C1F887900491F94 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		01C994741C1F887900491F94 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		01C994881C1F887900491F94 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		01C994931C1F887900491F94 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0116CAE21C1FB6B30006706C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		0116CAE31C1FB6B70006706C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0116CAE01C1FB4C60006706C /* SystemTableViewCell.swift */,
+				01C9947E1C1F887900491F94 /* Main.storyboard */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		0116CAE41C1FB6BA0006706C /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				0116CADE1C1FB1920006706C /* SystemsTableViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		0116CAE51C1FB6C00006706C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				01C9947A1C1F887900491F94 /* AppDelegate.swift */,
+				01C994811C1F887900491F94 /* Assets.xcassets */,
+				01C994831C1F887900491F94 /* LaunchScreen.storyboard */,
+				01C994861C1F887900491F94 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		01C9946E1C1F887900491F94 = {
+			isa = PBXGroup;
+			children = (
+				01C994791C1F887900491F94 /* WVU Clinical Skills */,
+				01C9948E1C1F887900491F94 /* WVU Clinical SkillsTests */,
+				01C994991C1F887900491F94 /* WVU Clinical SkillsUITests */,
+				01C994781C1F887900491F94 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		01C994781C1F887900491F94 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				01C994771C1F887900491F94 /* WVU Clinical Skills.app */,
+				01C9948B1C1F887900491F94 /* WVU Clinical SkillsTests.xctest */,
+				01C994961C1F887900491F94 /* WVU Clinical SkillsUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		01C994791C1F887900491F94 /* WVU Clinical Skills */ = {
+			isa = PBXGroup;
+			children = (
+				0116CAE21C1FB6B30006706C /* Model */,
+				0116CAE31C1FB6B70006706C /* View */,
+				0116CAE41C1FB6BA0006706C /* Controller */,
+				0116CAE51C1FB6C00006706C /* Supporting Files */,
+			);
+			path = "WVU Clinical Skills";
+			sourceTree = "<group>";
+		};
+		01C9948E1C1F887900491F94 /* WVU Clinical SkillsTests */ = {
+			isa = PBXGroup;
+			children = (
+				01C9948F1C1F887900491F94 /* WVU_Clinical_SkillsTests.swift */,
+				01C994911C1F887900491F94 /* Info.plist */,
+			);
+			path = "WVU Clinical SkillsTests";
+			sourceTree = "<group>";
+		};
+		01C994991C1F887900491F94 /* WVU Clinical SkillsUITests */ = {
+			isa = PBXGroup;
+			children = (
+				01C9949A1C1F887900491F94 /* WVU_Clinical_SkillsUITests.swift */,
+				01C9949C1C1F887900491F94 /* Info.plist */,
+			);
+			path = "WVU Clinical SkillsUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		01C994761C1F887900491F94 /* WVU Clinical Skills */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 01C9949F1C1F887900491F94 /* Build configuration list for PBXNativeTarget "WVU Clinical Skills" */;
+			buildPhases = (
+				01C994731C1F887900491F94 /* Sources */,
+				01C994741C1F887900491F94 /* Frameworks */,
+				01C994751C1F887900491F94 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "WVU Clinical Skills";
+			productName = "WVU Clinical Skills";
+			productReference = 01C994771C1F887900491F94 /* WVU Clinical Skills.app */;
+			productType = "com.apple.product-type.application";
+		};
+		01C9948A1C1F887900491F94 /* WVU Clinical SkillsTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 01C994A21C1F887900491F94 /* Build configuration list for PBXNativeTarget "WVU Clinical SkillsTests" */;
+			buildPhases = (
+				01C994871C1F887900491F94 /* Sources */,
+				01C994881C1F887900491F94 /* Frameworks */,
+				01C994891C1F887900491F94 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				01C9948D1C1F887900491F94 /* PBXTargetDependency */,
+			);
+			name = "WVU Clinical SkillsTests";
+			productName = "WVU Clinical SkillsTests";
+			productReference = 01C9948B1C1F887900491F94 /* WVU Clinical SkillsTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		01C994951C1F887900491F94 /* WVU Clinical SkillsUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 01C994A51C1F887900491F94 /* Build configuration list for PBXNativeTarget "WVU Clinical SkillsUITests" */;
+			buildPhases = (
+				01C994921C1F887900491F94 /* Sources */,
+				01C994931C1F887900491F94 /* Frameworks */,
+				01C994941C1F887900491F94 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				01C994981C1F887900491F94 /* PBXTargetDependency */,
+			);
+			name = "WVU Clinical SkillsUITests";
+			productName = "WVU Clinical SkillsUITests";
+			productReference = 01C994961C1F887900491F94 /* WVU Clinical SkillsUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		01C9946F1C1F887900491F94 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0710;
+				LastUpgradeCheck = 0710;
+				ORGANIZATIONNAME = Nick;
+				TargetAttributes = {
+					01C994761C1F887900491F94 = {
+						CreatedOnToolsVersion = 7.1;
+						DevelopmentTeam = 86M7CMCE7J;
+					};
+					01C9948A1C1F887900491F94 = {
+						CreatedOnToolsVersion = 7.1;
+						DevelopmentTeam = 86M7CMCE7J;
+						TestTargetID = 01C994761C1F887900491F94;
+					};
+					01C994951C1F887900491F94 = {
+						CreatedOnToolsVersion = 7.1;
+						DevelopmentTeam = 86M7CMCE7J;
+						TestTargetID = 01C994761C1F887900491F94;
+					};
+				};
+			};
+			buildConfigurationList = 01C994721C1F887900491F94 /* Build configuration list for PBXProject "WVU Clinical Skills" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 01C9946E1C1F887900491F94;
+			productRefGroup = 01C994781C1F887900491F94 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				01C994761C1F887900491F94 /* WVU Clinical Skills */,
+				01C9948A1C1F887900491F94 /* WVU Clinical SkillsTests */,
+				01C994951C1F887900491F94 /* WVU Clinical SkillsUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		01C994751C1F887900491F94 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				01C994851C1F887900491F94 /* LaunchScreen.storyboard in Resources */,
+				01C994821C1F887900491F94 /* Assets.xcassets in Resources */,
+				01C994801C1F887900491F94 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		01C994891C1F887900491F94 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		01C994941C1F887900491F94 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		01C994731C1F887900491F94 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0116CAE11C1FB4C60006706C /* SystemTableViewCell.swift in Sources */,
+				0116CADF1C1FB1920006706C /* SystemsTableViewController.swift in Sources */,
+				01C9947B1C1F887900491F94 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		01C994871C1F887900491F94 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				01C994901C1F887900491F94 /* WVU_Clinical_SkillsTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		01C994921C1F887900491F94 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				01C9949B1C1F887900491F94 /* WVU_Clinical_SkillsUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		01C9948D1C1F887900491F94 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 01C994761C1F887900491F94 /* WVU Clinical Skills */;
+			targetProxy = 01C9948C1C1F887900491F94 /* PBXContainerItemProxy */;
+		};
+		01C994981C1F887900491F94 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 01C994761C1F887900491F94 /* WVU Clinical Skills */;
+			targetProxy = 01C994971C1F887900491F94 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		01C9947E1C1F887900491F94 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				01C9947F1C1F887900491F94 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		01C994831C1F887900491F94 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				01C994841C1F887900491F94 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		01C9949D1C1F887900491F94 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		01C9949E1C1F887900491F94 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		01C994A01C1F887900491F94 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "WVU Clinical Skills/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.marshall.alexander.WVU-Clinical-Skills";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		01C994A11C1F887900491F94 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "WVU Clinical Skills/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.marshall.alexander.WVU-Clinical-Skills";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		01C994A31C1F887900491F94 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = "WVU Clinical SkillsTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.marshall.alexander.WVU-Clinical-SkillsTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WVU Clinical Skills.app/WVU Clinical Skills";
+			};
+			name = Debug;
+		};
+		01C994A41C1F887900491F94 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = "WVU Clinical SkillsTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.marshall.alexander.WVU-Clinical-SkillsTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WVU Clinical Skills.app/WVU Clinical Skills";
+			};
+			name = Release;
+		};
+		01C994A61C1F887900491F94 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "WVU Clinical SkillsUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.marshall.alexander.WVU-Clinical-SkillsUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = "WVU Clinical Skills";
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		01C994A71C1F887900491F94 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "WVU Clinical SkillsUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.marshall.alexander.WVU-Clinical-SkillsUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = "WVU Clinical Skills";
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		01C994721C1F887900491F94 /* Build configuration list for PBXProject "WVU Clinical Skills" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01C9949D1C1F887900491F94 /* Debug */,
+				01C9949E1C1F887900491F94 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		01C9949F1C1F887900491F94 /* Build configuration list for PBXNativeTarget "WVU Clinical Skills" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01C994A01C1F887900491F94 /* Debug */,
+				01C994A11C1F887900491F94 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		01C994A21C1F887900491F94 /* Build configuration list for PBXNativeTarget "WVU Clinical SkillsTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01C994A31C1F887900491F94 /* Debug */,
+				01C994A41C1F887900491F94 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		01C994A51C1F887900491F94 /* Build configuration list for PBXNativeTarget "WVU Clinical SkillsUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01C994A61C1F887900491F94 /* Debug */,
+				01C994A71C1F887900491F94 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 01C9946F1C1F887900491F94 /* Project object */;
+}
