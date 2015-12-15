@@ -22,7 +22,10 @@ class DataHelper: NSObject {
 		let systems = [
 			(name: "Musculoskeletal", description: "This system includes anything relating to the muscles or skeleton"),
 			(name: "Cardiovascular", description: "This system includes anything relating to the heart, veins, and arteries"),
-			(name: "Ear, Nose, and Throat", description: "This system includes anything relating to the ears, nose, or throat")
+			(name: "Ear, Nose, and Throat", description: "This system includes anything relating to the ears, nose, or throat"),
+			(name: "Respiratory", description: "This system includes anything relating to the lungs and respiration"),
+			(name: "Neurological", description: "This system includes anything relating to the brain"),
+			(name: "Abdomen", description: "This system includes anything relating to the abdominal region")
 		]
 		
 		for system in systems {

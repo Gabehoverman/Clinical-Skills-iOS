@@ -8,27 +8,28 @@
 
 import Foundation
 import UIKit
+import CoreData
 
 class SystemsTableViewController: UITableViewController {
-
-	let data = [
-		"Musculoskeletal",
-		"Cardiovascular",
-		"Ear, Nose, Throat"
-	]
 	
+	var allSystems: [System] = []
 	
-	override func viewDidLoad() {
-		
+	override func viewWillAppear(animated: Bool) {
+		let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+		let managedOjbectContext = appDelegate.managedObjectContext
+		let systemsFetchRequest = NSFetchRequest(entityName: "System")
+		let primarySortDescriptor = NSSortDescriptor(key: "systemName", ascending: true)
+		systemsFetchRequest.sortDescriptors = [primarySortDescriptor]
+		allSystems = (try! managedOjbectContext.executeFetchRequest(systemsFetchRequest)) as! [System]
 	}
 	
 	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return self.data.count
+		return self.allSystems.count
 	}
 	
 	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCellWithIdentifier("SystemCell") as! SystemTableViewCell
-		cell.systemNameLabel.text = self.data[indexPath.row]
+		cell.systemNameLabel.text = self.allSystems[indexPath.row].systemName
 		return cell
 	}
 	
