@@ -14,16 +14,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	let SHOULD_REFRESH_DATABASE_ON_LAUNCH = true
 	let SHOULD_SEED = true
+	let SHOULD_PRINT_DATABASE_CONTENTS = true
 	
     var window: UIWindow?
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-		print("Seeding")
 		let dataHelper = DataHelper(context: self.managedObjectContext)
-		dataHelper.seedSystems()
-		dataHelper.printAllSystems()
+		if (self.SHOULD_SEED) {
+			print("Seeding")
+			dataHelper.seedSystems()
+		}
+		
+		if (self.SHOULD_PRINT_DATABASE_CONTENTS) {
+			dataHelper.printAllSystems()
+		}
+		
         return true
     }
 	
@@ -87,6 +94,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.) This property is optional since there are legitimate error conditions that could cause the creation of the context to fail.
 		let coordinator = self.persistentStoreCoordinator
 		var managedObjectContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
+		managedObjectContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
 		managedObjectContext.persistentStoreCoordinator = coordinator
 		return managedObjectContext
 	}()
