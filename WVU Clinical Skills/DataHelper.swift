@@ -26,18 +26,19 @@ class DataHelper: NSObject {
 	func seedSystems() {
 		
 		let systems = [
-			(name: "Musculoskeletal", description: "This system includes anything relating to the muscles or skeleton"),
-			(name: "Cardiovascular", description: "This system includes anything relating to the heart, veins, and arteries"),
-			(name: "Ear, Nose, and Throat", description: "This system includes anything relating to the ears, nose, or throat"),
-			(name: "Respiratory", description: "This system includes anything relating to the lungs and respiration"),
-			(name: "Neurological", description: "This system includes anything relating to the brain"),
-			(name: "Abdomen", description: "This system includes anything relating to the abdominal region")
+			(name: "Musculoskeletal", description: "This system includes anything relating to the muscles or skeleton", visible: false),
+			(name: "Cardiovascular", description: "This system includes anything relating to the heart, veins, and arteries", visible: true),
+			(name: "Ear, Nose, and Throat", description: "This system includes anything relating to the ears, nose, or throat", visible: false),
+			(name: "Respiratory", description: "This system includes anything relating to the lungs and respiration", visible: true),
+			(name: "Neurological", description: "This system includes anything relating to the brain", visible: false),
+			(name: "Abdomen", description: "This system includes anything relating to the abdominal region", visible: true)
 		]
 		
 		for system in systems {
 			let newSystem = NSEntityDescription.insertNewObjectForEntityForName("System", inManagedObjectContext: self.context) as! System
 			newSystem.systemName = system.name
 			newSystem.systemDescription = system.description
+			newSystem.visible = system.visible
 		}
 		
 		do {

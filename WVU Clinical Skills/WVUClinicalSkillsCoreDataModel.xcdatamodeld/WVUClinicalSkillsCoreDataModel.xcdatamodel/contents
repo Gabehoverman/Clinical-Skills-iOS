@@ -3,8 +3,9 @@
     <entity name="System" representedClassName="System" syncable="YES">
         <attribute name="systemDescription" attributeType="String" syncable="YES"/>
         <attribute name="systemName" attributeType="String" syncable="YES"/>
+        <attribute name="visible" optional="YES" attributeType="Boolean" syncable="YES"/>
     </entity>
     <elements>
-        <element name="System" positionX="-63" positionY="-18" width="128" height="75"/>
+        <element name="System" positionX="-63" positionY="-18" width="128" height="90"/>
     </elements>
 </model>

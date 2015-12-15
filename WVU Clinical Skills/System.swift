@@ -17,6 +17,7 @@ class System: NSManagedObject {
 	
 	@NSManaged var systemName: String
 	@NSManaged var systemDescription : String
+	@NSManaged var visible: Bool
 	
 	/**
 		Returns a human-friendly string representation of the System
