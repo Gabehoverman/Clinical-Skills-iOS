@@ -43,6 +43,7 @@ class DataHelper: NSObject {
 		do {
 			try self.context.save()
 		} catch _ {
+			// Silently Ignore Error
 		}
 		
 	}
