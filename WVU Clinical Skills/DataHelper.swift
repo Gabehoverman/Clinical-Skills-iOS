@@ -9,6 +9,9 @@
 import UIKit
 import CoreData
 
+/**
+	Utility for Seeding and Displaying the Database
+*/
 class DataHelper: NSObject {
 
 	let context: NSManagedObjectContext
@@ -17,6 +20,9 @@ class DataHelper: NSObject {
 		self.context = context
 	}
 	
+	/**
+		Inserts System seed data into the database
+	*/
 	func seedSystems() {
 		
 		let systems = [
@@ -41,6 +47,9 @@ class DataHelper: NSObject {
 		
 	}
 	
+	/**
+		Prints all System data currently in the database
+	*/
 	func printAllSystems() {
 		
 		let systemFetchRequest = NSFetchRequest(entityName: "System")

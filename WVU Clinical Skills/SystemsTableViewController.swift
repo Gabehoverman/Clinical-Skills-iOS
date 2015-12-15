@@ -10,6 +10,9 @@ import Foundation
 import UIKit
 import CoreData
 
+/**
+	Table View displaying all System data inside the database
+*/
 class SystemsTableViewController: UITableViewController {
 	
 	var allSystems: [System] = []

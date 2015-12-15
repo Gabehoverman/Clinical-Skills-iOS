@@ -9,8 +9,10 @@
 import Foundation
 import UIKit
 
+/**
+	Prototype Cell for a System
+*/
 class SystemTableViewCell: UITableViewCell {
-
 	
 	@IBOutlet weak var systemNameLabel: UILabel!
 	
