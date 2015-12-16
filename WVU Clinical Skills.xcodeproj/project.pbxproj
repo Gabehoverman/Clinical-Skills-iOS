@@ -21,6 +21,8 @@
 		01C994851C1F887900491F94 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01C994831C1F887900491F94 /* LaunchScreen.storyboard */; };
 		01C994901C1F887900491F94 /* WVU_Clinical_SkillsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C9948F1C1F887900491F94 /* WVU_Clinical_SkillsTests.swift */; };
 		01C9949B1C1F887900491F94 /* WVU_Clinical_SkillsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C9949A1C1F887900491F94 /* WVU_Clinical_SkillsUITests.swift */; };
+		01F503351C21F5D700757799 /* SubsystemsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F503341C21F5D700757799 /* SubsystemsTableViewController.swift */; };
+		01F503371C21F62B00757799 /* SubsystemsFetchedResultsControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F503361C21F62B00757799 /* SubsystemsFetchedResultsControllers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +63,8 @@
 		01C994961C1F887900491F94 /* WVU Clinical SkillsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "WVU Clinical SkillsUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		01C9949A1C1F887900491F94 /* WVU_Clinical_SkillsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WVU_Clinical_SkillsUITests.swift; sourceTree = "<group>"; };
 		01C9949C1C1F887900491F94 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		01F503341C21F5D700757799 /* SubsystemsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubsystemsTableViewController.swift; sourceTree = "<group>"; };
+		01F503361C21F62B00757799 /* SubsystemsFetchedResultsControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubsystemsFetchedResultsControllers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +98,7 @@
 				01B2592E1C1FC8CD0075964F /* WVUClinicalSkillsCoreDataModel.xcdatamodeld */,
 				01B259311C1FC98F0075964F /* System.swift */,
 				019597131C20A2740004E579 /* SystemFetchedResultsControllers.swift */,
+				01F503361C21F62B00757799 /* SubsystemsFetchedResultsControllers.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -111,6 +116,7 @@
 			isa = PBXGroup;
 			children = (
 				0116CADE1C1FB1920006706C /* SystemsTableViewController.swift */,
+				01F503341C21F5D700757799 /* SubsystemsTableViewController.swift */,
 				013D8AF41C2014300026B574 /* DetailViewController.swift */,
 				019597151C20AB700004E579 /* SystemDetailViewController.swift */,
 			);
@@ -317,6 +323,8 @@
 				0116CADF1C1FB1920006706C /* SystemsTableViewController.swift in Sources */,
 				01B259341C1FCB320075964F /* DataHelper.swift in Sources */,
 				01B259301C1FC8CD0075964F /* WVUClinicalSkillsCoreDataModel.xcdatamodeld in Sources */,
+				01F503351C21F5D700757799 /* SubsystemsTableViewController.swift in Sources */,
+				01F503371C21F62B00757799 /* SubsystemsFetchedResultsControllers.swift in Sources */,
 				019597141C20A2740004E579 /* SystemFetchedResultsControllers.swift in Sources */,
 				01C9947B1C1F887900491F94 /* AppDelegate.swift in Sources */,
 				013D8AF51C2014300026B574 /* DetailViewController.swift in Sources */,

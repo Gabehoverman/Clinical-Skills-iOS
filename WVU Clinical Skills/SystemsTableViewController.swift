@@ -71,8 +71,9 @@ class SystemsTableViewController: UITableViewController, NSFetchedResultsControl
 					destination.detailsText = system.systemDescription
 				}
 			} else if (segue.identifier == "toSubsystemView") {
-				if let destination = segue.destinationViewController as? SystemsTableViewController {
+				if let destination = segue.destinationViewController as? SubsystemsTableViewController {
 					destination.navigationItem.title = system.systemName
+					destination.parentSystem = system
 				}
 			}
 		}

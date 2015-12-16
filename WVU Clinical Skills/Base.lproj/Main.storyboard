@@ -92,18 +92,18 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bLh-eG-ZNj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2361" y="183"/>
+            <point key="canvasLocation" x="2345" y="167"/>
         </scene>
         <!--Subsystems-->
         <scene sceneID="Iub-hb-ncz">
             <objects>
-                <tableViewController id="FIX-bn-2gn" sceneMemberID="viewController">
+                <tableViewController id="FIX-bn-2gn" customClass="SubsystemsTableViewController" customModule="WVU_Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="yNm-cQ-kfX">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="SystemCell" id="ZEO-Mz-5Gk" userLabel="SubsystemCell" customClass="SystemTableViewCell" customModule="WVU_Clinical_Skills" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="SubsystemCell" id="ZEO-Mz-5Gk" userLabel="SubsystemCell" customClass="SystemTableViewCell" customModule="WVU_Clinical_Skills" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZEO-Mz-5Gk" id="2Yr-2t-uFA">
@@ -135,6 +135,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Subsystems" id="y0P-in-rjG"/>
+                    <connections>
+                        <segue destination="wWe-Nr-bdG" kind="show" identifier="toDetailView" id="Ety-DP-U1e"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Sc-jm-hfD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -159,4 +162,7 @@
             <point key="canvasLocation" x="793" y="531"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="Ety-DP-U1e"/>
+    </inferredMetricsTieBreakers>
 </document>
