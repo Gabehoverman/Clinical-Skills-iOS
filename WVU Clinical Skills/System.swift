@@ -18,6 +18,15 @@ class System: NSManagedObject {
 	@NSManaged var systemName: String
 	@NSManaged var systemDescription : String
 	@NSManaged var visible: Bool
+	@NSManaged var parentSystem: System?
+	@NSManaged var subsystems: NSMutableSet?
+	
+	func addSubsystem(subsystem: System) {
+		if (self.subsystems == nil) {
+			self.subsystems = NSMutableSet()
+		}
+		self.subsystems!.addObject(subsystem)
+	}
 	
 	/**
 		Returns a human-friendly string representation of the System

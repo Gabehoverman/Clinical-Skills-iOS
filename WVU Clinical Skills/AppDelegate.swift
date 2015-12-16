@@ -14,7 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	let SHOULD_REFRESH_DATABASE_ON_LAUNCH = true
 	let SHOULD_SEED = true
-	let SHOULD_PRINT_DATABASE_CONTENTS = false
+	let SHOULD_PRINT_DATABASE_CONTENTS = true
 	
     var window: UIWindow?
 
@@ -25,10 +25,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		if (self.SHOULD_SEED) {
 			print("Seeding")
 			dataHelper.seedSystems()
+			dataHelper.seedSubsystems()
 		}
 		
 		if (self.SHOULD_PRINT_DATABASE_CONTENTS) {
-			dataHelper.printAllSystems()
+			dataHelper.printContents()
 		}
 		
         return true

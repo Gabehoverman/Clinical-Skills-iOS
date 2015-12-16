@@ -28,7 +28,7 @@ class DataHelper: NSObject {
 		let systems = [
 			(name: "Musculoskeletal", description: "This system includes anything relating to the muscles or skeleton", visible: false),
 			(name: "Cardiovascular", description: "This system includes anything relating to the heart, veins, and arteries", visible: true),
-			(name: "Ear, Nose, and Throat", description: "This system includes anything relating to the ears, nose, or throat", visible: false),
+			(name: "Ear, Nose, and Throat", description: "This system includes anything relating to the ears, nose, or throat", visible: true),
 			(name: "Respiratory", description: "This system includes anything relating to the lungs and respiration", visible: true),
 			(name: "Neurological", description: "This system includes anything relating to the brain", visible: false),
 			(name: "Abdomen", description: "This system includes anything relating to the abdominal region", visible: true)
@@ -41,26 +41,90 @@ class DataHelper: NSObject {
 			newSystem.visible = system.visible
 		}
 		
-		do {
-			try self.context.save()
-		} catch _ {
-			// Silently Ignore Error
+		self.saveContext()
+	}
+	
+	/**
+		Inserts Subsystems seed data into the database
+	*/
+	func seedSubsystems() {
+		let data = [
+			"Ear, Nose, and Throat" : [
+				(name: "Ear", description: "This system includes anything relating to the ears", visible: true),
+				(name: "Nose", description: "This system includes anything relating to the nose", visible: true),
+				(name: "Throat", description: "This system includes anything relating to the throat", visible: true)
+			],
+			
+			"Musculoskeletal" : [
+				(name: "Spine", description: "The verterbral column", visible: true),
+				(name: "Upper Extremity", description: "The region stretching from the deltoid to the hand", visible: true),
+				(name: "Lower Extremity", description: "The region between the hip and the ankle", visible: true)
+			]
+		]
+		
+		for (parentName, subsystems) in data {
+			let request = NSFetchRequest(entityName: "System")
+			request.predicate = NSPredicate(format: "systemName = %@", parentName)
+			let parent = try! self.context.executeFetchRequest(request).first as! System
+			for subsystem in subsystems {
+				let newSubsystem = NSEntityDescription.insertNewObjectForEntityForName("System", inManagedObjectContext: self.context) as! System
+				newSubsystem.systemName = subsystem.name
+				newSubsystem.systemDescription = subsystem.description
+				newSubsystem.visible = subsystem.visible
+				newSubsystem.parentSystem = parent
+				parent.addSubsystem(newSubsystem)
+			}
 		}
 		
+		self.saveContext()
+	}
+	
+	/**
+		Saves the Managed Context with error handling
+	*/
+	func saveContext() {
+		do {
+			try self.context.save()
+		} catch {
+			print("Error saving the context")
+		}
+	}
+	
+	/**
+		Prints the entire contents of the database with sections separated by a newline
+	*/
+	func printContents() {
+		self.printAllSystems()
+		print("")
+		self.printAllSubsystems()
 	}
 	
 	/**
 		Prints all System data currently in the database
 	*/
 	func printAllSystems() {
-		
 		let systemFetchRequest = NSFetchRequest(entityName: "System")
-		let allSystems = (try! context.executeFetchRequest(systemFetchRequest)) as! [System]
+		systemFetchRequest.predicate = NSPredicate(format: "parentSystem = nil")
+		systemFetchRequest.sortDescriptors = [NSSortDescriptor(key: "systemName", ascending: true)]
+		let allSystems = (try! self.context.executeFetchRequest(systemFetchRequest)) as! [System]
 		print("SYSTEMS")
 		for system in allSystems {
 			print("\t\(system.toString())")
 		}
-		
+	}
+	
+	/**
+		Prints all Subsystem data currently in the database
+	*/
+	func printAllSubsystems() {
+		let subsystemFetchRequest = NSFetchRequest(entityName: "System")
+		subsystemFetchRequest.predicate = NSPredicate(format: "parentSystem != nil")
+		subsystemFetchRequest.sortDescriptors = [NSSortDescriptor(key: "systemName", ascending: true)]
+		let allSubsystems = (try! self.context.executeFetchRequest(subsystemFetchRequest)) as! [System]
+		print("SUBSYSTEMS")
+		for subsystem in allSubsystems {
+			print("\t\(subsystem.parentSystem!.systemName) -> \(subsystem.toString())")
+		}
 	}
 	
 }

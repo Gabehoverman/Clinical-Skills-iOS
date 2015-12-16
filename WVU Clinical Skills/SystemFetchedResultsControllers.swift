@@ -15,6 +15,7 @@ class SystemFetchedResultsControllers {
 	
 	class func allSystemsResultController(delegateController: NSFetchedResultsControllerDelegate) -> NSFetchedResultsController {
 		let request = NSFetchRequest(entityName: "System")
+		request.predicate = NSPredicate(format: "parentSystem = nil")
 		request.sortDescriptors = [NSSortDescriptor(key: "systemName", ascending: true)]
 		let controller = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
 		controller.delegate = delegateController
@@ -23,7 +24,10 @@ class SystemFetchedResultsControllers {
 	
 	class func allVisibleSystemsResultController(delegateController: NSFetchedResultsControllerDelegate) -> NSFetchedResultsController {
 		let request = NSFetchRequest(entityName: "System")
-		request.predicate = NSPredicate(format: "visible == %@", true)
+		var predicates = [NSPredicate]()
+		predicates.append(NSPredicate(format: "parentSystem = nil"))
+		predicates.append(NSPredicate(format: "visible = %@", true))
+		request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
 		request.sortDescriptors = [NSSortDescriptor(key: "systemName", ascending: true)]
 		let controller = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
 		controller.delegate = delegateController
