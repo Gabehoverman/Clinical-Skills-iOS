@@ -50,7 +50,11 @@ class SystemsTableViewController: UITableViewController, NSFetchedResultsControl
 	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 		if let controller = self.fetchedResultsController {
 			if let system = controller.objectAtIndexPath(indexPath) as? System {
-				performSegueWithIdentifier("toDetailView", sender: system)
+				if (system.subsystems == nil || system.subsystems?.count == 0) {
+					performSegueWithIdentifier("toDetailView", sender: system)
+				} else {
+					performSegueWithIdentifier("toSubsystemView", sender: system)
+				}
 			} else {
 				print("Error getting System")
 			}
@@ -66,8 +70,10 @@ class SystemsTableViewController: UITableViewController, NSFetchedResultsControl
 					destination.navigationItem.title = system.systemName
 					destination.detailsText = system.systemDescription
 				}
-			} else if (segue.identifier == "toSubcategoryView") {
-				print("To Subcategory View")
+			} else if (segue.identifier == "toSubsystemView") {
+				if let destination = segue.destinationViewController as? SystemsTableViewController {
+					destination.navigationItem.title = system.systemName
+				}
 			}
 		}
 	}

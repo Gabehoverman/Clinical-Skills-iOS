@@ -49,7 +49,7 @@
                     <navigationItem key="navigationItem" title="Systems" id="vXZ-xS-Xnc"/>
                     <connections>
                         <segue destination="wWe-Nr-bdG" kind="show" identifier="toDetailView" id="pLn-V9-smY"/>
-                        <segue destination="FIX-bn-2gn" kind="show" identifier="toSubcategoryView" id="vHo-hW-dhS"/>
+                        <segue destination="FIX-bn-2gn" kind="show" identifier="toSubsystemView" id="vHo-hW-dhS"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Myo-E9-iSL" userLabel="First Responder" sceneMemberID="firstResponder"/>

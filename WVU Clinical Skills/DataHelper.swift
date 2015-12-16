@@ -39,6 +39,8 @@ class DataHelper: NSObject {
 			newSystem.systemName = system.name
 			newSystem.systemDescription = system.description
 			newSystem.visible = system.visible
+			newSystem.parentSystem = nil
+			newSystem.subsystems = nil
 		}
 		
 		self.saveContext()
