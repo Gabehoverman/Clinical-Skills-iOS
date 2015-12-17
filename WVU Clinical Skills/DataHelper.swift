@@ -13,7 +13,7 @@ import CoreData
 	Utility for Seeding and Displaying the Database
 */
 class DataHelper: NSObject {
-
+	
 	let context: NSManagedObjectContext
 	
 	init(context: NSManagedObjectContext) {
@@ -31,16 +31,21 @@ class DataHelper: NSObject {
 			(name: "Ear, Nose, and Throat", description: "This system includes anything relating to the ears, nose, or throat", visible: true),
 			(name: "Respiratory", description: "This system includes anything relating to the lungs and respiration", visible: true),
 			(name: "Neurological", description: "This system includes anything relating to the brain", visible: false),
-			(name: "Abdomen", description: "This system includes anything relating to the abdominal region", visible: true)
+			(name: "Abdomen", description: "This system includes anything relating to the abdominal region\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThis is a string with a really long gap in between!", visible: true)
 		]
 		
 		for system in systems {
-			let newSystem = NSEntityDescription.insertNewObjectForEntityForName("System", inManagedObjectContext: self.context) as! System
-			newSystem.systemName = system.name
-			newSystem.systemDescription = system.description
-			newSystem.visible = system.visible
-			newSystem.parentSystem = nil
-			newSystem.subsystems = nil
+			let duplicateCheckRequest = NSFetchRequest(entityName: "System")
+			duplicateCheckRequest.predicate = NSPredicate(format: "systemName = %@", system.name)
+			let results = try! self.context.executeFetchRequest(duplicateCheckRequest)
+			if (results.count == 0) {
+				let newSystem = NSEntityDescription.insertNewObjectForEntityForName("System", inManagedObjectContext: self.context) as! System
+				newSystem.systemName = system.name
+				newSystem.systemDescription = system.description
+				newSystem.visible = system.visible
+				newSystem.parentSystem = nil
+				newSystem.subsystems = nil
+			}
 		}
 		
 		self.saveContext()
@@ -50,18 +55,31 @@ class DataHelper: NSObject {
 		Inserts Subsystems seed data into the database
 	*/
 	func seedSubsystems() {
+		
 		let data = [
-			"Ear, Nose, and Throat" : [
+			("Ear, Nose, and Throat", [
 				(name: "Ear", description: "This system includes anything relating to the ears", visible: true),
 				(name: "Nose", description: "This system includes anything relating to the nose", visible: true),
 				(name: "Throat", description: "This system includes anything relating to the throat", visible: true)
-			],
+			]),
 			
-			"Musculoskeletal" : [
+			("Throat", [
+				(name: "Left Tonsil", description: "Mass of lymphoid tissue in the back of the throat on the left side", visible: true),
+				(name: "Right Tonsil", description: "Mass of lymphoid tissue in the back of the throat on the right side", visible: true)
+			]),
+			
+			("Left Tonsil", [
+				(name: "Adenoids", description: "Incompletely encapsulated by the left tonsil", visible: false),
+				(name: "Tubal", description: "Located on the roof of the pharynx", visible: true),
+				(name: "Palatine", description: "Incomletely encapsulated by the left tonsil", visible: false),
+				(name: "Lingual", description: "Incompletely encapsulated by the left tonsil", visible: false),
+			]),
+			
+			("Musculoskeletal", [
 				(name: "Spine", description: "The verterbral column", visible: true),
 				(name: "Upper Extremity", description: "The region stretching from the deltoid to the hand", visible: true),
 				(name: "Lower Extremity", description: "The region between the hip and the ankle", visible: true)
-			]
+			])
 		]
 		
 		for (parentName, subsystems) in data {
@@ -69,16 +87,20 @@ class DataHelper: NSObject {
 			request.predicate = NSPredicate(format: "systemName = %@", parentName)
 			let parent = try! self.context.executeFetchRequest(request).first as! System
 			for subsystem in subsystems {
-				let newSubsystem = NSEntityDescription.insertNewObjectForEntityForName("System", inManagedObjectContext: self.context) as! System
-				newSubsystem.systemName = subsystem.name
-				newSubsystem.systemDescription = subsystem.description
-				newSubsystem.visible = subsystem.visible
-				newSubsystem.parentSystem = parent
-				parent.addSubsystem(newSubsystem)
+				let duplicateCheckRequest = NSFetchRequest(entityName: "System")
+				duplicateCheckRequest.predicate = NSPredicate(format: "systemName = %@", subsystem.name)
+				let results = try! self.context.executeFetchRequest(duplicateCheckRequest)
+				if (results.count == 0) {
+					let newSubsystem = NSEntityDescription.insertNewObjectForEntityForName("System", inManagedObjectContext: self.context) as! System
+					newSubsystem.systemName = subsystem.name
+					newSubsystem.systemDescription = subsystem.description
+					newSubsystem.visible = subsystem.visible
+					newSubsystem.parentSystem = parent
+					parent.addSubsystem(newSubsystem)
+				}
 			}
+			self.saveContext()
 		}
-		
-		self.saveContext()
 	}
 	
 	/**

@@ -9,7 +9,7 @@
         <!--Systems Table View Controller-->
         <scene sceneID="y25-gg-7EJ">
             <objects>
-                <tableViewController title="Systems Table View Controller" id="1Lz-Nd-jFp" customClass="SystemsTableViewController" customModule="WVU_Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="SystemsTableViewController" title="Systems Table View Controller" id="1Lz-Nd-jFp" customClass="SystemsTableViewController" customModule="WVU_Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="bX3-Bn-OUd">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -48,8 +48,8 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Systems" id="vXZ-xS-Xnc"/>
                     <connections>
-                        <segue destination="wWe-Nr-bdG" kind="show" identifier="toDetailView" id="pLn-V9-smY"/>
-                        <segue destination="FIX-bn-2gn" kind="show" identifier="toSubsystemView" id="vHo-hW-dhS"/>
+                        <segue destination="wWe-Nr-bdG" kind="show" identifier="toDetailView" id="LAg-f8-Qwt"/>
+                        <segue destination="FIX-bn-2gn" kind="show" identifier="toSubsystemView" id="snw-ct-kJv"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Myo-E9-iSL" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -59,7 +59,7 @@
         <!--System Detail View Controller-->
         <scene sceneID="RgV-9l-bZE">
             <objects>
-                <viewController title="System Detail View Controller" id="wWe-Nr-bdG" customClass="DetailViewController" customModule="WVU_Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="System Detai lView Controller" automaticallyAdjustsScrollViewInsets="NO" id="wWe-Nr-bdG" userLabel="System Detail View Controller" customClass="SystemDetailViewController" customModule="WVU_Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Bzf-6v-Yr6"/>
                         <viewControllerLayoutGuide type="bottom" id="DGC-vy-jNX"/>
@@ -68,36 +68,46 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L9l-tm-tcw">
-                                <rect key="frame" x="28" y="72" width="560" height="520"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wlm-Qf-Gmv">
+                                <rect key="frame" x="20" y="72" width="560" height="21"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L9l-tm-tcw" userLabel="Description Text View">
+                                <rect key="frame" x="20" y="101" width="560" height="479"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <dataDetectorType key="dataDetectorTypes" link="YES"/>
                             </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="L9l-tm-tcw" firstAttribute="trailing" secondItem="8Tz-fj-YpC" secondAttribute="trailingMargin" constant="8" id="Bdv-Lr-2Mz"/>
-                            <constraint firstItem="L9l-tm-tcw" firstAttribute="leading" secondItem="8Tz-fj-YpC" secondAttribute="leadingMargin" constant="8" id="T1w-co-wqU"/>
-                            <constraint firstItem="DGC-vy-jNX" firstAttribute="top" secondItem="L9l-tm-tcw" secondAttribute="bottom" constant="8" id="kuu-1Q-CdS"/>
-                            <constraint firstItem="L9l-tm-tcw" firstAttribute="top" secondItem="Bzf-6v-Yr6" secondAttribute="bottom" constant="8" id="myp-0w-HiK"/>
+                            <constraint firstItem="wlm-Qf-Gmv" firstAttribute="trailing" secondItem="8Tz-fj-YpC" secondAttribute="trailingMargin" id="6Ce-bs-teM"/>
+                            <constraint firstItem="L9l-tm-tcw" firstAttribute="leading" secondItem="8Tz-fj-YpC" secondAttribute="leadingMargin" id="M5p-j4-RbA"/>
+                            <constraint firstItem="DGC-vy-jNX" firstAttribute="top" secondItem="L9l-tm-tcw" secondAttribute="bottom" constant="20" id="PTY-vl-4Dz"/>
+                            <constraint firstItem="L9l-tm-tcw" firstAttribute="trailing" secondItem="8Tz-fj-YpC" secondAttribute="trailingMargin" id="aM0-aq-aSQ"/>
+                            <constraint firstItem="wlm-Qf-Gmv" firstAttribute="leading" secondItem="8Tz-fj-YpC" secondAttribute="leadingMargin" id="ffQ-ln-c4i"/>
+                            <constraint firstItem="L9l-tm-tcw" firstAttribute="top" secondItem="wlm-Qf-Gmv" secondAttribute="bottom" constant="8" id="rnl-Te-MGS"/>
+                            <constraint firstItem="wlm-Qf-Gmv" firstAttribute="top" secondItem="Bzf-6v-Yr6" secondAttribute="bottom" constant="8" id="uhA-am-BJN"/>
+                            <constraint firstItem="L9l-tm-tcw" firstAttribute="top" secondItem="wlm-Qf-Gmv" secondAttribute="bottom" constant="8" id="v0t-WV-U2d"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Detail View" id="vEZ-Sj-sJ4"/>
                     <connections>
-                        <outlet property="detailsTextView" destination="L9l-tm-tcw" id="DbL-XV-Sfk"/>
+                        <outlet property="descriptionTextView" destination="L9l-tm-tcw" id="J6y-Fl-c0j"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bLh-eG-ZNj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2345" y="167"/>
         </scene>
-        <!--Subsystems-->
+        <!--Subsystem Table View Controller-->
         <scene sceneID="Iub-hb-ncz">
             <objects>
-                <tableViewController id="FIX-bn-2gn" customClass="SubsystemsTableViewController" customModule="WVU_Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="SubsystemTableViewController" title="Subsystem Table View Controller" id="FIX-bn-2gn" customClass="SubsystemsTableViewController" customModule="WVU_Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="yNm-cQ-kfX">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -136,7 +146,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Subsystems" id="y0P-in-rjG"/>
                     <connections>
-                        <segue destination="wWe-Nr-bdG" kind="show" identifier="toDetailView" id="Ety-DP-U1e"/>
+                        <segue destination="wWe-Nr-bdG" kind="show" identifier="toDetailView" id="FFV-qn-tuG"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Sc-jm-hfD" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -163,6 +173,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Ety-DP-U1e"/>
+        <segue reference="LAg-f8-Qwt"/>
     </inferredMetricsTieBreakers>
 </document>

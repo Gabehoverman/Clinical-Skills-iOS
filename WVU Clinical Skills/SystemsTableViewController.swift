@@ -66,9 +66,9 @@ class SystemsTableViewController: UITableViewController, NSFetchedResultsControl
 	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
 		if let system = sender as? System {
 			if (segue.identifier == "toDetailView") {
-				if let destination = segue.destinationViewController as? DetailViewController {
+				if let destination = segue.destinationViewController as? SystemDetailViewController {
 					destination.navigationItem.title = system.systemName
-					destination.detailsText = system.systemDescription
+					destination.system = system
 				}
 			} else if (segue.identifier == "toSubsystemView") {
 				if let destination = segue.destinationViewController as? SubsystemsTableViewController {

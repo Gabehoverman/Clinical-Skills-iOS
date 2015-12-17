@@ -17,13 +17,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	let SHOULD_PRINT_DATABASE_CONTENTS = false
 	
     var window: UIWindow?
-
-
+	
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
 		let dataHelper = DataHelper(context: self.managedObjectContext)
 		if (self.SHOULD_SEED) {
-			print("Seeding")
 			dataHelper.seedSystems()
 			dataHelper.seedSubsystems()
 		}
@@ -37,7 +35,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	
 	func applicationWillTerminate(application: UIApplication) {
 		// Save all data when app terminates
-		print("Goodbye!")
 		self.saveContext()
 	}
 	

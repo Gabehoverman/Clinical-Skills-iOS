@@ -26,7 +26,7 @@ class SubsystemsFetchedResultsControllers {
 		let request = NSFetchRequest(entityName: "System")
 		var predicates = [NSPredicate]()
 		predicates.append(NSPredicate(format: "visible = %@", true))
-		predicates.append(NSPredicate(format: "systemName = %@", parentSystem.systemName))
+		predicates.append(NSPredicate(format: "parentSystem = %@", parentSystem))
 		request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
 		request.sortDescriptors = [NSSortDescriptor(key: "systemName", ascending: true)]
 		let controller = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)

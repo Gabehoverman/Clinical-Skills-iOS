@@ -18,7 +18,7 @@ class SubsystemsTableViewController: UITableViewController, NSFetchedResultsCont
         super.viewDidLoad()
 		if (self.parentSystem != nil) {
 			self.navigationItem.title = self.parentSystem!.systemName
-			self.fetchedResultsController = SubsystemsFetchedResultsControllers.allSubsystemsFetchedResultsController(self.parentSystem!, delegateController: self)
+			self.fetchedResultsController = SubsystemsFetchedResultsControllers.allVisibleSubsystemsFetchedResultsController(self.parentSystem!, delegateController: self)
 			do {
 				try self.fetchedResultsController!.performFetch()
 			} catch {
@@ -54,7 +54,11 @@ class SubsystemsTableViewController: UITableViewController, NSFetchedResultsCont
 				if (subsystem.subsystems == nil || subsystem.subsystems?.count == 0) {
 					performSegueWithIdentifier("toDetailView", sender: subsystem)
 				} else {
-					performSegueWithIdentifier("toSubsystemView", sender: subsystem)
+					if let subsystemViewController = self.storyboard?.instantiateViewControllerWithIdentifier("SubsystemTableViewController") as? SubsystemsTableViewController {
+						subsystemViewController.parentSystem = subsystem
+						self.navigationItem.title = subsystem.systemName
+						self.navigationController?.pushViewController(subsystemViewController, animated: true)
+					}
 				}
 			} else {
 				print("Error getting Subsystem")
@@ -67,14 +71,9 @@ class SubsystemsTableViewController: UITableViewController, NSFetchedResultsCont
 	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
 		if let subsystem = sender as? System {
 			if segue.identifier == "toDetailView" {
-				if let destinationVC = segue.destinationViewController as? DetailViewController {
+				if let destinationVC = segue.destinationViewController as? SystemDetailViewController {
 					destinationVC.navigationItem.title = subsystem.systemName
-					destinationVC.detailsText = subsystem.systemDescription
-				}
-			} else if segue.identifier == "toSubsystemView" {
-				if let destinationVC = segue.destinationViewController as? SubsystemsTableViewController {
-					destinationVC.navigationItem.title = subsystem.systemName
-					destinationVC.parentSystem = subsystem
+					destinationVC.system = subsystem
 				}
 			}
 		}
