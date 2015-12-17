@@ -1,0 +1,23 @@
+[
+	{
+		"name" : "Ear",
+		"description" : "This system includes anything relating to the ears",
+		"visible" : true,
+		"parentSystemName" : "Ear, Nose, and Throat",
+		"subsystemNames" : []
+	},
+	{
+		"name" : "Nose",
+		"description" : "This system includes anything relating to the nose",
+		"visible" : true,
+		"parentSystemName" : "Ear, Nose, and Throat",
+		"subsystemNames" : []
+	},
+	{
+		"name" : "Throat",
+		"description" : "This system includes anything relating to the throat",
+		"visible" : true,
+		"parentSystemName" : "Ear, Nose, and Throat",
+		"subsystemNames" : []
+	}
+]

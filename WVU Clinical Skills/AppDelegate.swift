@@ -22,8 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
 		let dataHelper = DataHelper(context: self.managedObjectContext)
 		if self.SHOULD_SEED {
-			dataHelper.seedSystems()
-			dataHelper.seedSubsystems()
+			dataHelper.seed()
 		}
 		
 		if self.SHOULD_PRINT_DATABASE_CONTENTS {

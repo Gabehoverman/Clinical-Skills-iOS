@@ -1,0 +1,37 @@
+[
+	{
+		"name" : "Musculoskeletal",
+		"description" : "This system includes anything relating to the muscles or the skeleton",
+		"visible" : true,
+		"parentSystemName" : "",
+		"subsystemNames" : []
+	},
+	{
+		"name" : "Cardiovascular",
+		"description" : "This system includes anything relating to the hearts, veins, or arteries",
+		"visible" : true,
+		"parentSystemName" : "",
+		"subsystemNames" : []
+	},
+	{
+		"name" : "Ear, Nose, and Throat",
+		"description" : "This system includes anything relating to the ears, nose, or throat",
+		"visible" : true,
+		"parentSystemName" : "",
+		"subsystemNames" : []
+	},
+	{
+		"name" : "Respiratory",
+		"description" : "This system includes anything relating to the lungs and respiration",
+		"visible" : false,
+		"parentSystemName" : "",
+		"subsystemNames" : []
+	},
+	{
+		"name" : "Abdomen",
+		"description" : "This system includes anything relating to the abdominal region",
+		"visible" : false,
+		"parentSystemName" : "",
+		"subsystemNames" : []
+	}
+]

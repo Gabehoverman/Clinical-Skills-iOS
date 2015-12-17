@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import SwiftyJSON
 
 /**
 	Utility for Seeding and Displaying the Database
@@ -20,35 +21,35 @@ class DataHelper: NSObject {
 		self.context = context
 	}
 	
+	func seed() {
+		self.seedSystems()
+		//self.seedSubsystems()
+	}
+	
 	/**
 		Inserts System seed data into the database
 	*/
 	func seedSystems() {
 		
-		let systems = [
-			(name: "Musculoskeletal", description: "This system includes anything relating to the muscles or skeleton", visible: false),
-			(name: "Cardiovascular", description: "This system includes anything relating to the heart, veins, and arteries", visible: true),
-			(name: "Ear, Nose, and Throat", description: "This system includes anything relating to the ears, nose, or throat", visible: true),
-			(name: "Respiratory", description: "This system includes anything relating to the lungs and respiration", visible: true),
-			(name: "Neurological", description: "This system includes anything relating to the brain", visible: false),
-			(name: "Abdomen", description: "This system includes anything relating to the abdominal region\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThis is a string with a really long gap in between!", visible: true)
-		]
-		
-		for system in systems {
-			let duplicateCheckRequest = NSFetchRequest(entityName: "System")
-			duplicateCheckRequest.predicate = NSPredicate(format: "systemName = %@", system.name)
-			let results = try! self.context.executeFetchRequest(duplicateCheckRequest)
-			if results.count == 0 {
-				let newSystem = NSEntityDescription.insertNewObjectForEntityForName("System", inManagedObjectContext: self.context) as! System
-				newSystem.systemName = system.name
-				newSystem.systemDescription = system.description
-				newSystem.visible = system.visible
-				newSystem.parentSystem = nil
-				newSystem.subsystems = nil
+		if let jsonFilePath = NSBundle.mainBundle().pathForResource("systems", ofType: "json") {
+			if let jsonData = NSData(contentsOfFile: jsonFilePath) {
+				let json = JSON(data: jsonData)
+				for (_, system) in json {
+					let duplicateCheckRequest = NSFetchRequest(entityName: "System")
+					duplicateCheckRequest.predicate = NSPredicate(format: "systemName = %@", system["name"].string!)
+					let results = try! self.context.executeFetchRequest(duplicateCheckRequest)
+					if results.count == 0 {
+						let newSystem = NSEntityDescription.insertNewObjectForEntityForName("System", inManagedObjectContext: self.context) as! System
+						newSystem.systemName = system["name"].string!
+						newSystem.systemDescription = system["description"].string!
+						newSystem.visible = system["visible"].bool!
+						newSystem.parentSystem = nil
+						newSystem.subsystems = nil
+					}
+				}
+				self.saveContext()
 			}
 		}
-		
-		self.saveContext()
 	}
 	
 	/**
