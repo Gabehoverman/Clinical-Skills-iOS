@@ -38,7 +38,7 @@ class DataHelper: NSObject {
 			let duplicateCheckRequest = NSFetchRequest(entityName: "System")
 			duplicateCheckRequest.predicate = NSPredicate(format: "systemName = %@", system.name)
 			let results = try! self.context.executeFetchRequest(duplicateCheckRequest)
-			if (results.count == 0) {
+			if results.count == 0 {
 				let newSystem = NSEntityDescription.insertNewObjectForEntityForName("System", inManagedObjectContext: self.context) as! System
 				newSystem.systemName = system.name
 				newSystem.systemDescription = system.description
@@ -90,7 +90,7 @@ class DataHelper: NSObject {
 				let duplicateCheckRequest = NSFetchRequest(entityName: "System")
 				duplicateCheckRequest.predicate = NSPredicate(format: "systemName = %@", subsystem.name)
 				let results = try! self.context.executeFetchRequest(duplicateCheckRequest)
-				if (results.count == 0) {
+				if results.count == 0 {
 					let newSubsystem = NSEntityDescription.insertNewObjectForEntityForName("System", inManagedObjectContext: self.context) as! System
 					newSubsystem.systemName = subsystem.name
 					newSubsystem.systemDescription = subsystem.description

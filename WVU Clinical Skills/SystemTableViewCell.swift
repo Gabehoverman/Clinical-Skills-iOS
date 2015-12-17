@@ -14,6 +14,8 @@ import UIKit
 */
 class SystemTableViewCell: UITableViewCell {
 	
+	static let identifier = "SystemCell"
+	
 	@IBOutlet weak var systemNameLabel: UILabel!
 	
 }

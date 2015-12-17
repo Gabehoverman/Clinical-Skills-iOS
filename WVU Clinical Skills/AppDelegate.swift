@@ -21,12 +21,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
 		let dataHelper = DataHelper(context: self.managedObjectContext)
-		if (self.SHOULD_SEED) {
+		if self.SHOULD_SEED {
 			dataHelper.seedSystems()
 			dataHelper.seedSubsystems()
 		}
 		
-		if (self.SHOULD_PRINT_DATABASE_CONTENTS) {
+		if self.SHOULD_PRINT_DATABASE_CONTENTS {
 			dataHelper.printContents()
 		}
 		
@@ -59,7 +59,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("WVUClinicalSkills")
 		
 		
-		if (self.SHOULD_REFRESH_DATABASE_ON_LAUNCH) {
+		if self.SHOULD_REFRESH_DATABASE_ON_LAUNCH {
 			do {
 				try NSFileManager.defaultManager().removeItemAtURL(url)
 			} catch _ {

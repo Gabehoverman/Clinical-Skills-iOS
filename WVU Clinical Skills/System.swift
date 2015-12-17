@@ -22,7 +22,7 @@ class System: NSManagedObject {
 	@NSManaged var subsystems: NSMutableSet?
 	
 	func addSubsystem(subsystem: System) {
-		if (self.subsystems == nil) {
+		if self.subsystems == nil {
 			self.subsystems = NSMutableSet()
 		}
 		self.subsystems!.addObject(subsystem)
