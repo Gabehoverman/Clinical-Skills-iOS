@@ -8,17 +8,30 @@
 
 import UIKit
 
-class SystemDetailViewController: UIViewController {
+class SystemDetailViewController: UITableViewController {
 
 	var system: System?
 	
-	@IBOutlet weak var descriptionTextView: UITextView!
+	override func viewDidLoad() {
+		self.tableView.tableFooterView = UIView(frame: CGRectZero)
+	}
 	
-    override func viewDidLoad() {
-        super.viewDidLoad()
-		if self.system != nil {
-			self.descriptionTextView.text = self.system!.systemDescription
-		}
-    }
+	override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+		return 1
+	}
+	
+	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		return 1
+	}
+	
+	override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+		return 132
+	}
+	
+	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+		let cell = tableView.dequeueReusableCellWithIdentifier("DescriptionCell") as! SystemDetailDescriptionTableViewCell
+		//cell.descriptionTextView.text = self.system!.systemDescription
+		return cell
+	}
 
 }

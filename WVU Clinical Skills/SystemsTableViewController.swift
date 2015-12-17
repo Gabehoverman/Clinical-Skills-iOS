@@ -41,7 +41,7 @@ class SystemsTableViewController: UITableViewController, NSFetchedResultsControl
 	}
 	
 	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCellWithIdentifier(SystemTableViewCell.identifier) as! SystemTableViewCell
+		let cell = tableView.dequeueReusableCellWithIdentifier("SystemCell") as! SystemTableViewCell
 		let system = self.fetchedResultsController!.objectAtIndexPath(indexPath) as! System
 		cell.systemNameLabel.text = system.systemName
 		return cell
