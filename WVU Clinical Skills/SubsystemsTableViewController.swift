@@ -26,7 +26,12 @@ class SubsystemsTableViewController: UITableViewController, NSFetchedResultsCont
 				print("Error fetching subsystems")
 			}
 		}
-    }
+	}
+	
+	@IBAction func detailsBarButtonPressed(sender: AnyObject) {
+		self.performSegueWithIdentifier(StoryboardSegueIdentifiers.toDetailView, sender: self.parentSystem)
+	}
+	
 	
 	override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
 		if let sections = self.fetchedResultsController?.sections {

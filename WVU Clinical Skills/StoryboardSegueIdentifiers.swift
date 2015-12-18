@@ -11,4 +11,5 @@ import Foundation
 class StoryboardSegueIdentifiers {
 	static let toDetailView = "toDetailView"
 	static let toSubsystemView = "toSubsystemView"
+	static let toVideoView = "toVideoView"
 }

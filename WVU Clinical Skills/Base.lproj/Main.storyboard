@@ -221,7 +221,15 @@
                             <outlet property="delegate" destination="FIX-bn-2gn" id="rsM-Vu-6Xy"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Subsystems" id="y0P-in-rjG"/>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Subsystems" id="y0P-in-rjG">
+                        <barButtonItem key="rightBarButtonItem" title="Details" id="xQA-7i-RKB">
+                            <connections>
+                                <action selector="detailsBarButtonPressed:" destination="FIX-bn-2gn" id="lqv-eb-HTO"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <segue destination="3Qm-9F-gYl" kind="show" identifier="toDetailView" id="xfx-Cf-bcm"/>
                     </connections>
