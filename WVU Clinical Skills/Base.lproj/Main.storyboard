@@ -37,7 +37,7 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="systemNameLabel" destination="ijk-2L-s0D" id="cvf-Gb-xVq"/>
+                                    <outlet property="systemNameLabel" destination="ijk-2L-s0D" id="Z3m-OM-hLX"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -60,7 +60,7 @@
         <scene sceneID="vDm-oK-s1j">
             <objects>
                 <tableViewController id="3Qm-9F-gYl" userLabel="System Detail View Controller" customClass="SystemDetailViewController" customModule="WVU_Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Jud-Yd-pTF">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Jud-Yd-pTF" userLabel="Details Table View">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -99,7 +99,32 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="descriptionTextView" destination="pHr-Si-dze" id="0gL-ze-1g6"/>
+                                    <outlet property="descriptionTextView" destination="pHr-Si-dze" id="2S6-Sa-biw"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LinkCell" id="flQ-mv-LRa" userLabel="LinkCell" customClass="SystemDetailLinkTableViewCell" customModule="WVU_Clinical_Skills" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="224" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="flQ-mv-LRa" id="cZJ-gM-87c">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="YouTube Link" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7uQ-oL-f1c">
+                                            <rect key="frame" x="8" y="8" width="584" height="27"/>
+                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="7uQ-oL-f1c" firstAttribute="top" secondItem="cZJ-gM-87c" secondAttribute="topMargin" id="6sM-7i-QOL"/>
+                                        <constraint firstItem="7uQ-oL-f1c" firstAttribute="leading" secondItem="cZJ-gM-87c" secondAttribute="leadingMargin" id="GHd-Dv-lqa"/>
+                                        <constraint firstItem="7uQ-oL-f1c" firstAttribute="bottom" secondItem="cZJ-gM-87c" secondAttribute="bottomMargin" id="dvN-LF-yj9"/>
+                                        <constraint firstItem="7uQ-oL-f1c" firstAttribute="trailing" secondItem="cZJ-gM-87c" secondAttribute="trailingMargin" id="quW-LJ-ZcL"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="linkLabel" destination="7uQ-oL-f1c" id="qHm-1v-NIN"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

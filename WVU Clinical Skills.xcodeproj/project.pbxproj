@@ -12,6 +12,8 @@
 		0118E6EF1C229E9700989F34 /* StoryboardSegueIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0118E6EE1C229E9700989F34 /* StoryboardSegueIdentifiers.swift */; };
 		0118E6F11C22ABDE00989F34 /* SystemDetailDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0118E6F01C22ABDE00989F34 /* SystemDetailDescriptionTableViewCell.swift */; };
 		011FF5F31C239B9B0097BD6A /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011FF5F21C239B9B0097BD6A /* Link.swift */; };
+		011FF5F51C239FCF0097BD6A /* SystemDetailLinkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011FF5F41C239FCF0097BD6A /* SystemDetailLinkTableViewCell.swift */; };
+		011FF5F71C23A4E70097BD6A /* LinksFetchedResultsControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011FF5F61C23A4E70097BD6A /* LinksFetchedResultsControllers.swift */; };
 		01394CB91C236B1400D555B4 /* systems.json in Resources */ = {isa = PBXBuildFile; fileRef = 01394CB81C236B1400D555B4 /* systems.json */; };
 		01394CBB1C23702600D555B4 /* subsystems.json in Resources */ = {isa = PBXBuildFile; fileRef = 01394CBA1C23702600D555B4 /* subsystems.json */; };
 		01394CBF1C23745F00D555B4 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01394CBE1C23745F00D555B4 /* SwiftyJSON.framework */; };
@@ -53,6 +55,8 @@
 		0118E6EE1C229E9700989F34 /* StoryboardSegueIdentifiers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryboardSegueIdentifiers.swift; sourceTree = "<group>"; };
 		0118E6F01C22ABDE00989F34 /* SystemDetailDescriptionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemDetailDescriptionTableViewCell.swift; sourceTree = "<group>"; };
 		011FF5F21C239B9B0097BD6A /* Link.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Link.swift; sourceTree = "<group>"; };
+		011FF5F41C239FCF0097BD6A /* SystemDetailLinkTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemDetailLinkTableViewCell.swift; sourceTree = "<group>"; };
+		011FF5F61C23A4E70097BD6A /* LinksFetchedResultsControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinksFetchedResultsControllers.swift; sourceTree = "<group>"; };
 		01394CB81C236B1400D555B4 /* systems.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = systems.json; sourceTree = "<group>"; };
 		01394CBA1C23702600D555B4 /* subsystems.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = subsystems.json; sourceTree = "<group>"; };
 		01394CBE1C23745F00D555B4 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
@@ -111,6 +115,7 @@
 				011FF5F21C239B9B0097BD6A /* Link.swift */,
 				019597131C20A2740004E579 /* SystemFetchedResultsControllers.swift */,
 				01F503361C21F62B00757799 /* SubsystemsFetchedResultsControllers.swift */,
+				011FF5F61C23A4E70097BD6A /* LinksFetchedResultsControllers.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -120,6 +125,7 @@
 			children = (
 				0116CAE01C1FB4C60006706C /* SystemTableViewCell.swift */,
 				0118E6F01C22ABDE00989F34 /* SystemDetailDescriptionTableViewCell.swift */,
+				011FF5F41C239FCF0097BD6A /* SystemDetailLinkTableViewCell.swift */,
 				01C9947E1C1F887900491F94 /* Main.storyboard */,
 			);
 			name = View;
@@ -377,9 +383,11 @@
 				0116CADF1C1FB1920006706C /* SystemsTableViewController.swift in Sources */,
 				0118E6F11C22ABDE00989F34 /* SystemDetailDescriptionTableViewCell.swift in Sources */,
 				011FF5F31C239B9B0097BD6A /* Link.swift in Sources */,
+				011FF5F71C23A4E70097BD6A /* LinksFetchedResultsControllers.swift in Sources */,
 				01B259341C1FCB320075964F /* DataHelper.swift in Sources */,
 				01B259301C1FC8CD0075964F /* WVUClinicalSkillsCoreDataModel.xcdatamodeld in Sources */,
 				01F503351C21F5D700757799 /* SubsystemsTableViewController.swift in Sources */,
+				011FF5F51C239FCF0097BD6A /* SystemDetailLinkTableViewCell.swift in Sources */,
 				01F503371C21F62B00757799 /* SubsystemsFetchedResultsControllers.swift in Sources */,
 				019597141C20A2740004E579 /* SystemFetchedResultsControllers.swift in Sources */,
 				01C9947B1C1F887900491F94 /* AppDelegate.swift in Sources */,

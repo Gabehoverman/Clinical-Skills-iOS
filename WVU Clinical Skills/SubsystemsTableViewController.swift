@@ -12,6 +12,7 @@ import CoreData
 class SubsystemsTableViewController: UITableViewController, NSFetchedResultsControllerDelegate {
 
 	var parentSystem: System?
+	
 	var fetchedResultsController: NSFetchedResultsController?
 	
     override func viewDidLoad() {
