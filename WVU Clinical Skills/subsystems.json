@@ -4,20 +4,29 @@
 		"description" : "This system includes anything relating to the ears",
 		"visible" : true,
 		"parentSystemName" : "Ear, Nose, and Throat",
-		"subsystemNames" : []
 	},
 	{
 		"name" : "Nose",
 		"description" : "This system includes anything relating to the nose",
 		"visible" : true,
 		"parentSystemName" : "Ear, Nose, and Throat",
-		"subsystemNames" : []
 	},
 	{
 		"name" : "Throat",
 		"description" : "This system includes anything relating to the throat",
 		"visible" : true,
 		"parentSystemName" : "Ear, Nose, and Throat",
-		"subsystemNames" : []
+	},
+	{
+		"name" : "Left Tonsil",
+		"description" : "Mass of lymphoid tissue in the back of the throat on the left side",
+		"visible" : true,
+		"parentSystemName" : "Throat",
+	},
+	{
+		"name" : "Right Tonsil",
+		"description" : "Mass of lymphoid tissue in the back of the throat on the right side",
+		"visible" : false,
+		"parentSystemName" : "Throat",
 	}
 ]
