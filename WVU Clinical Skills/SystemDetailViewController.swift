@@ -17,7 +17,6 @@ class SystemDetailViewController: UITableViewController, NSFetchedResultsControl
 	var links: [Link]?
 	
 	override func viewDidLoad() {
-		self.tableView.tableFooterView = UIView(frame: CGRectZero)
 		if self.system != nil {
 			self.fetchedResultsController = LinksFetchedResultsControllers.allLinksFetchedResultsController(self.system!, delegateController: self)
 			do {
@@ -29,21 +28,31 @@ class SystemDetailViewController: UITableViewController, NSFetchedResultsControl
 				print("Error fetching Links")
 			}
 		}
+		self.tableView.tableFooterView = UIView(frame: CGRectZero)
 	}
 	
 	override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-		return 1
+		return 2
+	}
+	
+	override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+		switch (section) {
+			case 0: return "Description"
+			case 1: return "Video Links"
+			default: return "Section \(section)"
+		}
 	}
 	
 	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		if self.links != nil {
-			return self.links!.count + 1
+		if (section == 0) {
+			return 1
+		} else {
+			return self.links!.count
 		}
-		return 1
 	}
 	
 	override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-		if indexPath.row == 0 {
+		if indexPath.section == 0 {
 			return 132
 		} else {
 			return 44
@@ -51,13 +60,13 @@ class SystemDetailViewController: UITableViewController, NSFetchedResultsControl
 	}
 	
 	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		if indexPath.row == 0 {
+		if indexPath.section == 0 {
 			let cell = tableView.dequeueReusableCellWithIdentifier("DescriptionCell") as! SystemDetailDescriptionTableViewCell
 			cell.descriptionTextView.text = self.system?.systemDescription
 			return cell
 		} else {
 			let cell = tableView.dequeueReusableCellWithIdentifier("LinkCell") as! SystemDetailLinkTableViewCell
-			cell.linkLabel.text = self.links![indexPath.row - 1].title
+			cell.linkLabel.text = self.links![indexPath.row].title
 			return cell
 		}
 	}

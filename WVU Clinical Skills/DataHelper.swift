@@ -30,7 +30,6 @@ class DataHelper: NSObject {
 		Inserts System seed data into the database
 	*/
 	func seedSystems() {
-		
 		if let jsonFilePath = NSBundle.mainBundle().pathForResource("systems", ofType: "json") {
 			if let jsonData = NSData(contentsOfFile: jsonFilePath) {
 				let json = JSON(data: jsonData)
@@ -63,7 +62,6 @@ class DataHelper: NSObject {
 		Inserts Subsystems seed data into the database
 	*/
 	func seedSubsystems() {
-		
 		if let jsonFilePath = NSBundle.mainBundle().pathForResource("subsystems", ofType: "json") {
 			if let jsonData = NSData(contentsOfFile: jsonFilePath) {
 				let json = JSON(data: jsonData)
