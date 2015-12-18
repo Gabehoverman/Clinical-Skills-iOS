@@ -4,29 +4,63 @@
 		"description" : "This system includes anything relating to the muscles or the skeleton",
 		"visible" : true,
 		"parentSystemName" : "",
+		"links" : [
+			{
+				"title": "The Musculoskeletal System",
+				"link": "https://www.youtube.com/watch?v=g6sLwgUHwTk"
+			}
+		]
 	},
 	{
 		"name" : "Cardiovascular",
 		"description" : "This system includes anything relating to the hearts, veins, or arteries",
 		"visible" : true,
 		"parentSystemName" : "",
+		"links" : [
+			{
+				"title": "Cardiovascular System Anatomy",
+				"link": "https://www.youtube.com/watch?v=Sc3IN99sRrI"
+			}
+		]
 	},
 	{
 		"name" : "Ear, Nose, and Throat",
 		"description" : "This system includes anything relating to the ears, nose, or throat",
 		"visible" : true,
 		"parentSystemName" : "",
+		"links" : [
+			{
+				"title": "Ears Nose & Throat",
+				"link": "https://www.youtube.com/watch?v=djdua3n5Y80"
+			},
+			{
+				"title": "ENT - Physical Exam of the Ear Nose Throat",
+				"link": "https://www.youtube.com/watch?v=HMOugR37_do"
+			}
+		]
 	},
 	{
 		"name" : "Respiratory",
 		"description" : "This system includes anything relating to the lungs and respiration",
 		"visible" : false,
 		"parentSystemName" : "",
+		"links" : [
+			{
+				"title": "The Respiratory System",
+				"link": "https://www.youtube.com/watch?v=hc1YtXc_84A"
+			}
+		]
 	},
 	{
 		"name" : "Abdomen",
 		"description" : "This system includes anything relating to the abdominal region",
 		"visible" : false,
 		"parentSystemName" : "",
+		"links" : [
+			{
+				"title": "Abdomen Exam",
+				"link": "https://www.youtube.com/watch?v=AirqmUB-T1Y"
+			}
+		]
 	}
 ]

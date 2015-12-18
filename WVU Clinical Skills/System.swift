@@ -20,12 +20,20 @@ class System: NSManagedObject {
 	@NSManaged var visible: Bool
 	@NSManaged var parentSystem: System?
 	@NSManaged var subsystems: NSMutableSet?
+	@NSManaged var links: NSMutableSet?
 	
 	func addSubsystem(subsystem: System) {
 		if self.subsystems == nil {
 			self.subsystems = NSMutableSet()
 		}
 		self.subsystems!.addObject(subsystem)
+	}
+	
+	func addLink(link: Link) {
+		if self.links == nil {
+			self.links = NSMutableSet()
+		}
+		self.links!.addObject(link)
 	}
 	
 	/**

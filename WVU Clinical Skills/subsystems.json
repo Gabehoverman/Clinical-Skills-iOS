@@ -4,29 +4,59 @@
 		"description" : "This system includes anything relating to the ears",
 		"visible" : true,
 		"parentSystemName" : "Ear, Nose, and Throat",
+		"links" : [
+			{
+				"title": "Examination of the Ear",
+				"link": "https://www.youtube.com/watch?v=ZU0Aix2qYGE"
+			}
+		]
 	},
 	{
 		"name" : "Nose",
 		"description" : "This system includes anything relating to the nose",
 		"visible" : true,
 		"parentSystemName" : "Ear, Nose, and Throat",
+		"links" : [
+			{
+				"title": "Nose Examination Role Play",
+				"link": "https://www.youtube.com/watch?v=j7FQuiMQUBU"
+			}
+		]
 	},
 	{
 		"name" : "Throat",
 		"description" : "This system includes anything relating to the throat",
 		"visible" : true,
 		"parentSystemName" : "Ear, Nose, and Throat",
+		"links" : [
+			{
+				"title": "ENT - Physical Exam of the Ear Nose Throat",
+				"link": "https://www.youtube.com/watch?v=HMOugR37_do"
+			}
+		]
 	},
 	{
 		"name" : "Left Tonsil",
 		"description" : "Mass of lymphoid tissue in the back of the throat on the left side",
 		"visible" : true,
 		"parentSystemName" : "Throat",
+		"links" : [
+			{
+				"title": "Examination Of Tonsils",
+				"link": "https://www.youtube.com/watch?v=dM4jPUIMDT0"
+			}
+		]
 	},
 	{
 		"name" : "Right Tonsil",
 		"description" : "Mass of lymphoid tissue in the back of the throat on the right side",
 		"visible" : false,
 		"parentSystemName" : "Throat",
+		"links" : [
+			{
+				"title": "Examination Of Tonsils",
+				"link": "https://www.youtube.com/watch?v=dM4jPUIMDT0"
+			}
+		]
 	}
 ]

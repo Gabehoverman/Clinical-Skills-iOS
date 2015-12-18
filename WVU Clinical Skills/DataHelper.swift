@@ -45,6 +45,13 @@ class DataHelper: NSObject {
 						newSystem.visible = system["visible"].bool!
 						newSystem.parentSystem = nil
 						newSystem.subsystems = nil
+						for linkDict in system["links"].array! {
+							let newLink = NSEntityDescription.insertNewObjectForEntityForName("Link", inManagedObjectContext: self.context) as! Link
+							newLink.title = linkDict.dictionary!["title"]!.string!
+							newLink.link = linkDict.dictionary!["link"]!.string!
+							newLink.system = newSystem
+							newSystem.addLink(newLink)
+						}
 					}
 				}
 				self.saveContext()
@@ -99,6 +106,8 @@ class DataHelper: NSObject {
 		self.printAllSystems()
 		print("")
 		self.printAllSubsystems()
+		print("")
+		self.printAllLinks()
 	}
 	
 	/**
@@ -126,6 +135,16 @@ class DataHelper: NSObject {
 		print("SUBSYSTEMS")
 		for subsystem in allSubsystems {
 			print("\t\(subsystem.parentSystem!.systemName) -> \(subsystem.toString())")
+		}
+	}
+	
+	func printAllLinks() {
+		let linkFetchRequest = NSFetchRequest(entityName: "Link")
+		linkFetchRequest.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+		let allLinks = try! self.context.executeFetchRequest(linkFetchRequest) as! [Link]
+		print("LINKS")
+		for link in allLinks {
+			print("\t\(link.toString())")
 		}
 	}
 	
