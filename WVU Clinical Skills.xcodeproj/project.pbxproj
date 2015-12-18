@@ -136,7 +136,6 @@
 			isa = PBXGroup;
 			children = (
 				01C9947A1C1F887900491F94 /* AppDelegate.swift */,
-				01B259331C1FCB320075964F /* DataHelper.swift */,
 				0118E6EE1C229E9700989F34 /* StoryboardSegueIdentifiers.swift */,
 				01C994811C1F887900491F94 /* Assets.xcassets */,
 				01C994831C1F887900491F94 /* LaunchScreen.storyboard */,
@@ -148,6 +147,7 @@
 		01394CB31C2368B200D555B4 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				01B259331C1FCB320075964F /* DataHelper.swift */,
 				01394CB81C236B1400D555B4 /* systems.json */,
 				01394CBA1C23702600D555B4 /* subsystems.json */,
 			);
