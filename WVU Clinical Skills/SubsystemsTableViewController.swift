@@ -57,7 +57,6 @@ class SubsystemsTableViewController: UITableViewController, NSFetchedResultsCont
 				} else {
 					if let subsystemViewController = self.storyboard?.instantiateViewControllerWithIdentifier("SubsystemTableViewController") as? SubsystemsTableViewController {
 						subsystemViewController.parentSystem = subsystem
-						self.navigationItem.title = subsystem.systemName
 						self.navigationController?.pushViewController(subsystemViewController, animated: true)
 					}
 				}
