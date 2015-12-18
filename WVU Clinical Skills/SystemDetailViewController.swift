@@ -70,5 +70,24 @@ class SystemDetailViewController: UITableViewController, NSFetchedResultsControl
 			return cell
 		}
 	}
-
+	
+	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+		if indexPath.section != 0 {
+			if let link = self.links?[indexPath.row] {
+				self.performSegueWithIdentifier("toVideoView", sender: link)
+			}
+		}
+	}
+	
+	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+		if let link = sender as? Link {
+			if segue.identifier == "toVideoView" {
+				if let destinationNavVC = segue.destinationViewController as? UINavigationController {
+					if let destinationVC = destinationNavVC.viewControllers.first as? VideoViewController {
+						destinationVC.videoLink = link.link
+					}
+				}
+			}
+		}
+	}
 }

@@ -16,10 +16,9 @@ class LinksFetchedResultsControllers {
 	class func allLinksFetchedResultsController(system: System, delegateController: NSFetchedResultsControllerDelegate) -> NSFetchedResultsController {
 		let request = NSFetchRequest(entityName: "Link")
 		request.predicate = NSPredicate(format: "%K = %@", "system.systemName", system.systemName)
-		request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+		request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true, selector: Selector("localizedStandardCompare:"))]
 		let controller = NSFetchedResultsController(fetchRequest: request, managedObjectContext: self.context, sectionNameKeyPath: nil, cacheName: nil)
 		controller.delegate = delegateController
 		return controller
 	}
-	
 }

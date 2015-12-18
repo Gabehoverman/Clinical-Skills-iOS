@@ -125,10 +125,55 @@
                             <outlet property="delegate" destination="3Qm-9F-gYl" id="jVE-5r-BNH"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Details" id="Cwo-i2-sKV"/>
+                    <connections>
+                        <segue destination="uR9-vv-G7X" kind="presentation" identifier="toVideoView" id="7FT-B3-GGK"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aBa-BU-GGI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2361" y="95"/>
+        </scene>
+        <!--Video View Controller-->
+        <scene sceneID="jPX-HK-Pdt">
+            <objects>
+                <viewController title="Video View Controller" automaticallyAdjustsScrollViewInsets="NO" id="Nlb-h8-hcU" customClass="VideoViewController" customModule="WVU_Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="42B-HM-VC3"/>
+                        <viewControllerLayoutGuide type="bottom" id="Pzu-J2-suk"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="mRE-wP-4vW">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z0m-xf-w75">
+                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Z0m-xf-w75" firstAttribute="leading" secondItem="mRE-wP-4vW" secondAttribute="leadingMargin" constant="-20" id="Dwy-yf-l84"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Z0m-xf-w75" secondAttribute="trailing" constant="-20" id="ZU9-8a-TbX"/>
+                            <constraint firstItem="Pzu-J2-suk" firstAttribute="top" secondItem="Z0m-xf-w75" secondAttribute="bottom" id="cqG-Jy-yQA"/>
+                            <constraint firstItem="Z0m-xf-w75" firstAttribute="top" secondItem="42B-HM-VC3" secondAttribute="bottom" id="kqN-G8-tLW"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Video" id="J0E-TO-MmY">
+                        <barButtonItem key="leftBarButtonItem" title="Close" id="rA8-5R-99l">
+                            <connections>
+                                <action selector="closeButtonPressed:" destination="Nlb-h8-hcU" id="wxi-CB-ned"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="videoWebView" destination="Z0m-xf-w75" id="JDa-bG-yKG"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4H5-q2-C1p" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4016" y="95"/>
         </scene>
         <!--Subsystem Table View Controller-->
         <scene sceneID="Iub-hb-ncz">
@@ -179,10 +224,10 @@
             </objects>
             <point key="canvasLocation" x="2361" y="912"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Main Navigation Controller-->
         <scene sceneID="hF8-Sb-rDO">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Ags-F4-B5Q" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Ags-F4-B5Q" userLabel="Main Navigation Controller" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="ZDK-s4-zAr">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -197,8 +242,26 @@
             </objects>
             <point key="canvasLocation" x="793" y="531"/>
         </scene>
+        <!--Video Navigation Controller-->
+        <scene sceneID="SEx-C9-dYQ">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="uR9-vv-G7X" userLabel="Video Navigation Controller" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="MCP-Na-nZX">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Nlb-h8-hcU" kind="relationship" relationship="rootViewController" id="Ili-r6-OaP"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KLx-ax-Hjw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3204" y="95"/>
+        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="6e2-XX-8M3"/>
+        <segue reference="xfx-Cf-bcm"/>
     </inferredMetricsTieBreakers>
 </document>
