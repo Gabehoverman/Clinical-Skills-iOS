@@ -48,6 +48,7 @@ class DataHelper: NSObject {
 							let newLink = NSEntityDescription.insertNewObjectForEntityForName("Link", inManagedObjectContext: self.context) as! Link
 							newLink.title = linkDict.dictionary!["title"]!.string!
 							newLink.link = linkDict.dictionary!["link"]!.string!
+							newLink.visible = linkDict.dictionary!["visible"]!.bool!
 							newLink.system = newSystem
 							newSystem.addLink(newLink)
 						}

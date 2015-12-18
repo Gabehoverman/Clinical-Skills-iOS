@@ -18,7 +18,7 @@ class SystemDetailViewController: UITableViewController, NSFetchedResultsControl
 	
 	override func viewDidLoad() {
 		if self.system != nil {
-			self.fetchedResultsController = LinksFetchedResultsControllers.allLinksFetchedResultsController(self.system!, delegateController: self)
+			self.fetchedResultsController = LinksFetchedResultsControllers.allVisibleLinksFetchedResultsController(self.system!, delegateController: self)
 			do {
 				try self.fetchedResultsController!.performFetch()
 				if let allLinks = self.fetchedResultsController!.fetchedObjects as? [Link] {

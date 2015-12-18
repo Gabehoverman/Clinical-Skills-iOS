@@ -7,7 +7,8 @@
 		"links" : [
 			{
 				"title": "Examination of the Ear",
-				"link": "https://www.youtube.com/watch?v=ZU0Aix2qYGE"
+				"link": "https://www.youtube.com/watch?v=ZU0Aix2qYGE",
+				"visible" : true
 			}
 		]
 	},
@@ -19,7 +20,8 @@
 		"links" : [
 			{
 				"title": "Nose Examination Role Play",
-				"link": "https://www.youtube.com/watch?v=j7FQuiMQUBU"
+				"link": "https://www.youtube.com/watch?v=j7FQuiMQUBU",
+				"visible" : true
 			}
 		]
 	},
@@ -31,7 +33,8 @@
 		"links" : [
 			{
 				"title": "ENT - Physical Exam of the Ear Nose Throat",
-				"link": "https://www.youtube.com/watch?v=HMOugR37_do"
+				"link": "https://www.youtube.com/watch?v=HMOugR37_do",
+				"visible" : true
 			}
 		]
 	},
@@ -43,7 +46,8 @@
 		"links" : [
 			{
 				"title": "Examination Of Tonsils",
-				"link": "https://www.youtube.com/watch?v=dM4jPUIMDT0"
+				"link": "https://www.youtube.com/watch?v=dM4jPUIMDT0",
+				"visible" : true
 			}
 		]
 	},
@@ -55,7 +59,8 @@
 		"links" : [
 			{
 				"title": "Examination Of Tonsils",
-				"link": "https://www.youtube.com/watch?v=dM4jPUIMDT0"
+				"link": "https://www.youtube.com/watch?v=dM4jPUIMDT0",
+				"visible" : true
 			}
 		]
 	}

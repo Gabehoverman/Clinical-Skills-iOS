@@ -21,4 +21,16 @@ class LinksFetchedResultsControllers {
 		controller.delegate = delegateController
 		return controller
 	}
+	
+	class func allVisibleLinksFetchedResultsController(system: System, delegateController: NSFetchedResultsControllerDelegate) -> NSFetchedResultsController {
+		let request = NSFetchRequest(entityName: "Link")
+		var predicates = [NSPredicate]()
+		predicates.append(NSPredicate(format: "%K = %@", "visible", true))
+		predicates.append(NSPredicate(format: "%K = %@", "system.systemName", system.systemName))
+		request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
+		request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true, selector: Selector("localizedStandardCompare:"))]
+		let controller = NSFetchedResultsController(fetchRequest: request, managedObjectContext: self.context, sectionNameKeyPath: nil, cacheName: nil)
+		controller.delegate = delegateController
+		return controller
+	}
 }

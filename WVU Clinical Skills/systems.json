@@ -7,7 +7,8 @@
 		"links" : [
 			{
 				"title": "The Musculoskeletal System",
-				"link": "https://www.youtube.com/watch?v=g6sLwgUHwTk"
+				"link": "https://www.youtube.com/watch?v=g6sLwgUHwTk",
+				"visible" : true
 			}
 		]
 	},
@@ -19,63 +20,78 @@
 		"links" : [
 			{
 				"title": "Cardiovascular System Anatomy",
-				"link": "https://www.youtube.com/watch?v=Sc3IN99sRrI"
+				"link": "https://www.youtube.com/watch?v=Sc3IN99sRrI",
+				"visible" : true
 			},
 			{
 				"title": "Cardiovascular System Anatomy 2",
-				"link": "https://www.google.com"
+				"link": "https://www.google.com",
+				"visible" : true
 			},
 			{
 				"title": "Cardiovascular System Anatomy 3",
-				"link": "https://www.youtube.com/watch?v=Sc3IN99sRrI"
+				"link": "https://www.youtube.com/watch?v=Sc3IN99sRrI",
+				"visible" : false
 			},
 			{
 				"title": "Cardiovascular System Anatomy 4",
-				"link": "https://www.youtube.com/watch?v=Sc3IN99sRrI"
+				"link": "https://www.youtube.com/watch?v=Sc3IN99sRrI",
+				"visible" : false
 			},
 			{
 				"title": "Cardiovascular System Anatomy 5",
-				"link": "https://www.youtube.com/watch?v=Sc3IN99sRrI"
+				"link": "https://www.youtube.com/watch?v=Sc3IN99sRrI",
+				"visible" : false
 			},
 			{
 				"title": "Cardiovascular System Anatomy 6",
-				"link": "https://www.youtube.com/watch?v=Sc3IN99sRrI"
+				"link": "https://www.youtube.com/watch?v=Sc3IN99sRrI",
+				"visible" : false
 			},
 			{
 				"title": "Cardiovascular System Anatomy 7",
-				"link": "https://www.youtube.com/watch?v=Sc3IN99sRrI"
+				"link": "https://www.youtube.com/watch?v=Sc3IN99sRrI",
+				"visible" : false
 			},
 			{
 				"title": "Cardiovascular System Anatomy 8",
-				"link": "https://www.youtube.com/watch?v=Sc3IN99sRrI"
+				"link": "https://www.youtube.com/watch?v=Sc3IN99sRrI",
+				"visible" : false
 			},
 			{
 				"title": "Cardiovascular System Anatomy 9",
-				"link": "https://www.youtube.com/watch?v=Sc3IN99sRrI"
+				"link": "https://www.youtube.com/watch?v=Sc3IN99sRrI",
+				"visible" : false
 			},
 			{
 				"title": "Cardiovascular System Anatomy 10",
-				"link": "https://www.youtube.com/watch?v=Sc3IN99sRrI"
+				"link": "https://www.youtube.com/watch?v=Sc3IN99sRrI",
+				"visible" : false
 			},
 			{
 				"title": "Cardiovascular System Anatomy 11",
-				"link": "https://www.youtube.com/watch?v=Sc3IN99sRrI"
+				"link": "https://www.youtube.com/watch?v=Sc3IN99sRrI",
+				"visible" : false
 			},
 			{
 				"title": "Cardiovascular System Anatomy 12",
-				"link": "https://www.youtube.com/watch?v=Sc3IN99sRrI"
+				"link": "https://www.youtube.com/watch?v=Sc3IN99sRrI",
+				"visible" : false
 			},
 			{
 				"title": "Cardiovascular System Anatomy 13",
-				"link": "https://www.youtube.com/watch?v=Sc3IN99sRrI"
+				"link": "https://www.youtube.com/watch?v=Sc3IN99sRrI",
+				"visible" : false
 			},
 			{
 				"title": "Cardiovascular System Anatomy 14",
-				"link": "https://www.youtube.com/watch?v=Sc3IN99sRrI"
+				"link": "https://www.youtube.com/watch?v=Sc3IN99sRrI",
+				"visible" : false
 			},
 			{
 				"title": "Cardiovascular System Anatomy 15",
-				"link": "https://www.youtube.com/watch?v=Sc3IN99sRrI"
+				"link": "https://www.youtube.com/watch?v=Sc3IN99sRrI",
+				"visible" : false
 			}
 		]
 	},
@@ -87,11 +103,13 @@
 		"links" : [
 			{
 				"title": "Ears Nose & Throat",
-				"link": "https://www.youtube.com/watch?v=djdua3n5Y80"
+				"link": "https://www.youtube.com/watch?v=djdua3n5Y80",
+				"visible" : true
 			},
 			{
 				"title": "ENT - Physical Exam of the Ear Nose Throat",
-				"link": "https://www.youtube.com/watch?v=HMOugR37_do"
+				"link": "https://www.youtube.com/watch?v=HMOugR37_do",
+				"visible" : true
 			}
 		]
 	},
@@ -103,7 +121,8 @@
 		"links" : [
 			{
 				"title": "The Respiratory System",
-				"link": "https://www.youtube.com/watch?v=hc1YtXc_84A"
+				"link": "https://www.youtube.com/watch?v=hc1YtXc_84A",
+				"visible" : true
 			}
 		]
 	},
@@ -115,7 +134,8 @@
 		"links" : [
 			{
 				"title": "Abdomen Exam",
-				"link": "https://www.youtube.com/watch?v=AirqmUB-T1Y"
+				"link": "https://www.youtube.com/watch?v=AirqmUB-T1Y",
+				"visible" : true
 			}
 		]
 	}

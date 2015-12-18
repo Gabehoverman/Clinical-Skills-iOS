@@ -151,13 +151,18 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
                             </webView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Tae-NY-QCY">
+                                <rect key="frame" x="290" y="290" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Z0m-xf-w75" firstAttribute="leading" secondItem="mRE-wP-4vW" secondAttribute="leadingMargin" constant="-20" id="Dwy-yf-l84"/>
+                            <constraint firstItem="Tae-NY-QCY" firstAttribute="centerY" secondItem="mRE-wP-4vW" secondAttribute="centerY" id="KfO-9C-y0L"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Z0m-xf-w75" secondAttribute="trailing" constant="-20" id="ZU9-8a-TbX"/>
                             <constraint firstItem="Pzu-J2-suk" firstAttribute="top" secondItem="Z0m-xf-w75" secondAttribute="bottom" id="cqG-Jy-yQA"/>
                             <constraint firstItem="Z0m-xf-w75" firstAttribute="top" secondItem="42B-HM-VC3" secondAttribute="bottom" id="kqN-G8-tLW"/>
+                            <constraint firstItem="Tae-NY-QCY" firstAttribute="centerX" secondItem="mRE-wP-4vW" secondAttribute="centerX" id="taB-3D-e9M"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Video" id="J0E-TO-MmY">
@@ -168,6 +173,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="activityIndicator" destination="Tae-NY-QCY" id="5uB-tM-5UP"/>
                         <outlet property="videoWebView" destination="Z0m-xf-w75" id="JDa-bG-yKG"/>
                     </connections>
                 </viewController>

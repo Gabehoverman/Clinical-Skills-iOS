@@ -14,6 +14,7 @@ class Link: NSManagedObject {
 
 	@NSManaged var title: String
 	@NSManaged var link: String
+	@NSManaged var visible: Bool
 	@NSManaged var system: System
 	
 	func toString() -> String {
