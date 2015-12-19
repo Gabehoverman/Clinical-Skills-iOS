@@ -10,6 +10,8 @@ import UIKit
 
 class SystemDetailDescriptionTableViewCell: UITableViewCell {
 	
+	static let defaultHeight: CGFloat = 88
+	
 	@IBOutlet weak var descriptionTextView: UITextView!
 	
 }

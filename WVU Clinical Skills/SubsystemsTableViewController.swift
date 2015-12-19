@@ -48,7 +48,7 @@ class SubsystemsTableViewController: UITableViewController, NSFetchedResultsCont
 	}
 	
 	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCellWithIdentifier("SubsystemCell") as! SystemTableViewCell
+		let cell = tableView.dequeueReusableCellWithIdentifier(StoryboardPrototypeCellIdentifiers.subsystemCell) as! SystemTableViewCell
 		let subsystem = self.fetchedResultsController!.objectAtIndexPath(indexPath) as! System
 		cell.systemNameLabel.text = subsystem.systemName
 		return cell
