@@ -56,9 +56,7 @@ class SystemDetailViewController: UITableViewController, NSFetchedResultsControl
 	override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
 		if indexPath.section == 0 {
 			if self.didExpandDescriptionCell {
-				if let cell = tableView.dequeueReusableCellWithIdentifier(StoryboardPrototypeCellIdentifiers.descriptionCell) as? SystemDetailDescriptionTableViewCell {
-					return cell.descriptionTextView.sizeThatFits(CGSize(width: cell.descriptionTextView.bounds.size.width, height: CGFloat.max)).height
-				}
+				return SystemDetailDescriptionTableViewCell.expandedHeight
 			}
 			return SystemDetailDescriptionTableViewCell.defaultHeight
 		}

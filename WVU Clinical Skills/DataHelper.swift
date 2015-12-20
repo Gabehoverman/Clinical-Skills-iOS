@@ -13,7 +13,9 @@ import SwiftyJSON
 /**
 	Utility for Seeding and Displaying the Database
 */
-class DataHelper: NSObject {
+class DataHelper: NSObject, NSURLConnectionDataDelegate {
+	
+	var jsonData: NSMutableData?
 	
 	let context: NSManagedObjectContext
 	
@@ -22,8 +24,9 @@ class DataHelper: NSObject {
 	}
 	
 	func seed() {
-		self.seedSystems()
-		self.seedSubsystems()
+		self.getRemoteSystems()
+		//self.seedSystems()
+		//self.seedSubsystems()
 	}
 	
 	/**
@@ -57,6 +60,52 @@ class DataHelper: NSObject {
 				self.saveContext()
 			}
 		}
+	}
+	
+	func getRemoteSystems() {
+		let urlPath = "http://localhost:3000/systems/all.json"
+		if let url = NSURL(string: urlPath) {
+			let request = NSURLRequest(URL: url)
+			let connection = NSURLConnection(request: request, delegate: self)
+		}
+	}
+	
+	func connection(connection: NSURLConnection, didReceiveData data: NSData) {
+		if self.jsonData == nil {
+			self.jsonData = NSMutableData()
+		}
+		self.jsonData!.appendData(data)
+	}
+	
+	func connectionDidFinishLoading(connection: NSURLConnection) {
+		if let data = self.jsonData {
+			let json = JSON(data: data)
+			for (_, system) in json {
+				let duplicateCheckRequest = NSFetchRequest(entityName: "System")
+				duplicateCheckRequest.predicate = NSPredicate(format: "%K = %@", "systemName", system["name"].string!)
+				let results = try! self.context.executeFetchRequest(duplicateCheckRequest)
+				if results.count == 0 {
+					let newSystem = NSEntityDescription.insertNewObjectForEntityForName("System", inManagedObjectContext: self.context) as! System
+					newSystem.systemName = system["name"].string!
+					newSystem.systemDescription = system["description"].string!
+					newSystem.visible = system["visible"].bool!
+					newSystem.parentSystem = nil
+					newSystem.subsystems = nil
+					for link in system["links"].array! {
+						let linkDictionary = link.dictionary!
+						let newLink = NSEntityDescription.insertNewObjectForEntityForName("Link", inManagedObjectContext: self.context) as! Link
+						newLink.title = linkDictionary["title"]!.string!
+						newLink.link = linkDictionary["link"]!.string!
+						newLink.visible = linkDictionary["visible"]!.bool!
+						newLink.system = newSystem
+						newSystem.addLink(newLink)
+					}
+				}
+				self.saveContext()
+			}
+		}
+		let nc = NSNotificationCenter.defaultCenter()
+		nc.postNotificationName("ReceivedSystemData", object: nil)
 	}
 	
 	/**

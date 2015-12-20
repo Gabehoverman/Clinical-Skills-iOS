@@ -18,12 +18,24 @@ class SystemsTableViewController: UITableViewController, NSFetchedResultsControl
 	var fetchedResultsController: NSFetchedResultsController?
 	
 	override func viewDidLoad() {
-		self.fetchedResultsController = SystemFetchedResultsControllers.allVisibleSystemsResultController(self)
+		self.fetchResults()
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("foundNewData"), name: "ReceivedSystemData", object: nil)
+	}
+	
+	func fetchResults() {
+		if self.fetchedResultsController == nil {
+			self.fetchedResultsController = SystemFetchedResultsControllers.allVisibleSystemsResultController(self)
+		}
 		do {
 			try self.fetchedResultsController!.performFetch()
 		} catch {
 			print("Error occurred during System fetch")
 		}
+	}
+	
+	func foundNewData() {
+		self.fetchResults()
+		self.tableView.reloadData()
 	}
 	
 	override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
