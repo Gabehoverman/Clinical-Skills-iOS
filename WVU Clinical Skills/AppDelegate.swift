@@ -12,7 +12,7 @@ import CoreData
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-	let SHOULD_REFRESH_DATABASE_ON_LAUNCH = true
+	let SHOULD_REFRESH_DATABASE_ON_LAUNCH = false
 	let SHOULD_SEED = true
 	let SHOULD_PRINT_DATABASE_CONTENTS = true
 	

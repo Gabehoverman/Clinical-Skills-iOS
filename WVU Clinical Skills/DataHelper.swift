@@ -15,6 +15,8 @@ import SwiftyJSON
 */
 class DataHelper: NSObject, NSURLConnectionDataDelegate {
 	
+	let baseURLPath = "http://7951e2e2.ngrok.io/"
+	
 	var jsonData: NSMutableData?
 	
 	let context: NSManagedObjectContext
@@ -25,14 +27,12 @@ class DataHelper: NSObject, NSURLConnectionDataDelegate {
 	
 	func seed() {
 		self.getRemoteSystems()
-		//self.seedSystems()
-		//self.seedSubsystems()
 	}
 	
 	/**
 		Inserts System seed data into the database
 	*/
-	func seedSystems() {
+	func getLocalSystems() {
 		if let jsonFilePath = NSBundle.mainBundle().pathForResource("systems", ofType: "json") {
 			if let jsonData = NSData(contentsOfFile: jsonFilePath) {
 				let json = JSON(data: jsonData)
@@ -63,10 +63,12 @@ class DataHelper: NSObject, NSURLConnectionDataDelegate {
 	}
 	
 	func getRemoteSystems() {
-		let urlPath = "http://localhost:3000/systems/all.json"
+		let urlPath = self.baseURLPath + "systems/all.json"
 		if let url = NSURL(string: urlPath) {
 			let request = NSURLRequest(URL: url)
-			let connection = NSURLConnection(request: request, delegate: self)
+			if let connection = NSURLConnection(request: request, delegate: self, startImmediately: false) {
+				connection.start()
+			}
 		}
 	}
 	
@@ -80,32 +82,50 @@ class DataHelper: NSObject, NSURLConnectionDataDelegate {
 	func connectionDidFinishLoading(connection: NSURLConnection) {
 		if let data = self.jsonData {
 			let json = JSON(data: data)
-			for (_, system) in json {
-				let duplicateCheckRequest = NSFetchRequest(entityName: "System")
-				duplicateCheckRequest.predicate = NSPredicate(format: "%K = %@", "systemName", system["name"].string!)
-				let results = try! self.context.executeFetchRequest(duplicateCheckRequest)
-				if results.count == 0 {
-					let newSystem = NSEntityDescription.insertNewObjectForEntityForName("System", inManagedObjectContext: self.context) as! System
-					newSystem.systemName = system["name"].string!
-					newSystem.systemDescription = system["description"].string!
-					newSystem.visible = system["visible"].bool!
-					newSystem.parentSystem = nil
-					newSystem.subsystems = nil
-					for link in system["links"].array! {
-						let linkDictionary = link.dictionary!
-						let newLink = NSEntityDescription.insertNewObjectForEntityForName("Link", inManagedObjectContext: self.context) as! Link
-						newLink.title = linkDictionary["title"]!.string!
-						newLink.link = linkDictionary["link"]!.string!
-						newLink.visible = linkDictionary["visible"]!.bool!
-						newLink.system = newSystem
-						newSystem.addLink(newLink)
-					}
-				}
-				self.saveContext()
-			}
+			self.parseSystem(json)
 		}
 		let nc = NSNotificationCenter.defaultCenter()
 		nc.postNotificationName("ReceivedSystemData", object: nil)
+	}
+	
+	func parseSystem(json: JSON) {
+		for (_, system) in json {
+//			let duplicateCheckRequest = NSFetchRequest(entityName: "System")
+//			duplicateCheckRequest.predicate = NSPredicate(format: "%K = %@", "systemName", system["name"].string!)
+//			let results = try! self.context.executeFetchRequest(duplicateCheckRequest)
+//			if results.count == 0 {
+			if !self.checkForDuplicate("System", key: "systemName", value: system["name"].string!) {
+				let newSystem = NSEntityDescription.insertNewObjectForEntityForName("System", inManagedObjectContext: self.context) as! System
+				newSystem.systemName = system["name"].string!
+				newSystem.systemDescription = system["description"].string!
+				newSystem.visible = system["visible"].bool!
+				newSystem.parentSystem = nil
+				newSystem.subsystems = nil
+				for link in system["links"].array! {
+					let linkDictionary = link.dictionary!
+					let newLink = NSEntityDescription.insertNewObjectForEntityForName("Link", inManagedObjectContext: self.context) as! Link
+					newLink.title = linkDictionary["title"]!.string!
+					newLink.link = linkDictionary["link"]!.string!
+					newLink.visible = linkDictionary["visible"]!.bool!
+					newLink.system = newSystem
+					newSystem.addLink(newLink)
+				}
+			}
+			self.saveContext()
+		}
+	}
+	
+	func checkForDuplicate(entityName: String, key: String, value: CVarArgType) -> Bool {
+		let duplicateCheckRequest = NSFetchRequest(entityName: entityName)
+		duplicateCheckRequest.predicate = NSPredicate(format: "%K = %@", key, value)
+		do {
+			let results = try self.context.executeFetchRequest(duplicateCheckRequest)
+			return results.count != 0
+		} catch {
+			print("Error in Duplicate Fetch Request")
+		}
+		print("Duplicate Found")
+		return true
 	}
 	
 	/**
