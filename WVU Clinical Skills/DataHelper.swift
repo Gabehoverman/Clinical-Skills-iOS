@@ -15,54 +15,33 @@ import SwiftyJSON
 */
 class DataHelper: NSObject, NSURLConnectionDataDelegate {
 	
-	let baseURLPath = "http://7951e2e2.ngrok.io/"
+	// MARK: - Properties
+	
+	let baseURLPath = "http://aea3de69.ngrok.io/"
 	
 	var jsonData: NSMutableData?
 	
 	let context: NSManagedObjectContext
 	
+	
+	// MARK: - Initializers
+	
 	init(context: NSManagedObjectContext) {
 		self.context = context
 	}
 	
+	// MARK: - Seed Methods
+	
 	func seed() {
-		self.getRemoteSystems()
+		//self.localSeed()
+		self.remoteSeed()
 	}
 	
-	/**
-		Inserts System seed data into the database
-	*/
-	func getLocalSystems() {
-		if let jsonFilePath = NSBundle.mainBundle().pathForResource("systems", ofType: "json") {
-			if let jsonData = NSData(contentsOfFile: jsonFilePath) {
-				let json = JSON(data: jsonData)
-				for (_, system) in json {
-					let duplicateCheckRequest = NSFetchRequest(entityName: "System")
-					duplicateCheckRequest.predicate = NSPredicate(format: "systemName = %@", system["name"].string!)
-					let results = try! self.context.executeFetchRequest(duplicateCheckRequest)
-					if results.count == 0 {
-						let newSystem = NSEntityDescription.insertNewObjectForEntityForName("System", inManagedObjectContext: self.context) as! System
-						newSystem.systemName = system["name"].string!
-						newSystem.systemDescription = system["description"].string!
-						newSystem.visible = system["visible"].bool!
-						newSystem.parentSystem = nil
-						newSystem.subsystems = nil
-						for linkDict in system["links"].array! {
-							let newLink = NSEntityDescription.insertNewObjectForEntityForName("Link", inManagedObjectContext: self.context) as! Link
-							newLink.title = linkDict.dictionary!["title"]!.string!
-							newLink.link = linkDict.dictionary!["link"]!.string!
-							newLink.visible = linkDict.dictionary!["visible"]!.bool!
-							newLink.system = newSystem
-							newSystem.addLink(newLink)
-						}
-					}
-				}
-				self.saveContext()
-			}
-		}
+	func localSeed() {
+		//TODO: Implement Local Seed
 	}
 	
-	func getRemoteSystems() {
+	func remoteSeed() {
 		let urlPath = self.baseURLPath + "systems/all.json"
 		if let url = NSURL(string: urlPath) {
 			let request = NSURLRequest(URL: url)
@@ -71,6 +50,8 @@ class DataHelper: NSObject, NSURLConnectionDataDelegate {
 			}
 		}
 	}
+	
+	// MARK: - Remote Connection
 	
 	func connection(connection: NSURLConnection, didReceiveData data: NSData) {
 		if self.jsonData == nil {
@@ -88,84 +69,60 @@ class DataHelper: NSObject, NSURLConnectionDataDelegate {
 		nc.postNotificationName("ReceivedSystemData", object: nil)
 	}
 	
+	// MARK: - JSON Parsing
+	
 	func parseSystem(json: JSON) {
 		for (_, system) in json {
-//			let duplicateCheckRequest = NSFetchRequest(entityName: "System")
-//			duplicateCheckRequest.predicate = NSPredicate(format: "%K = %@", "systemName", system["name"].string!)
-//			let results = try! self.context.executeFetchRequest(duplicateCheckRequest)
-//			if results.count == 0 {
 			if !self.checkForDuplicate("System", key: "systemName", value: system["name"].string!) {
 				let newSystem = NSEntityDescription.insertNewObjectForEntityForName("System", inManagedObjectContext: self.context) as! System
 				newSystem.systemName = system["name"].string!
 				newSystem.systemDescription = system["description"].string!
 				newSystem.visible = system["visible"].bool!
-				newSystem.parentSystem = nil
-				newSystem.subsystems = nil
-				for link in system["links"].array! {
-					let linkDictionary = link.dictionary!
-					let newLink = NSEntityDescription.insertNewObjectForEntityForName("Link", inManagedObjectContext: self.context) as! Link
-					newLink.title = linkDictionary["title"]!.string!
-					newLink.link = linkDictionary["link"]!.string!
-					newLink.visible = linkDictionary["visible"]!.bool!
-					newLink.system = newSystem
-					newSystem.addLink(newLink)
+				
+				if system["subsystems"].array?.count != 0 {
+					self.parseSybsystems(system["name"].string!, subsystemsJSON: system["subsystems"].array!)
 				}
-			}
-			self.saveContext()
-		}
-	}
-	
-	func checkForDuplicate(entityName: String, key: String, value: CVarArgType) -> Bool {
-		let duplicateCheckRequest = NSFetchRequest(entityName: entityName)
-		duplicateCheckRequest.predicate = NSPredicate(format: "%K = %@", key, value)
-		do {
-			let results = try self.context.executeFetchRequest(duplicateCheckRequest)
-			return results.count != 0
-		} catch {
-			print("Error in Duplicate Fetch Request")
-		}
-		print("Duplicate Found")
-		return true
-	}
-	
-	/**
-		Inserts Subsystems seed data into the database
-	*/
-	func seedSubsystems() {
-		if let jsonFilePath = NSBundle.mainBundle().pathForResource("subsystems", ofType: "json") {
-			if let jsonData = NSData(contentsOfFile: jsonFilePath) {
-				let json = JSON(data: jsonData)
-				for (_, subsystem) in json {
-					let duplicateCheckRequest = NSFetchRequest(entityName: "System")
-					duplicateCheckRequest.predicate = NSPredicate(format: "systemName = %@", subsystem["name"].string!)
-					let results = try! self.context.executeFetchRequest(duplicateCheckRequest)
-					if results.count == 0 {
-						let newSubsystem = NSEntityDescription.insertNewObjectForEntityForName("System", inManagedObjectContext: self.context) as! System
-						newSubsystem.systemName = subsystem["name"].string!
-						newSubsystem.systemDescription = subsystem["description"].string!
-						newSubsystem.visible = subsystem["visible"].bool!
-						let parentSystemFetchRequest = NSFetchRequest(entityName: "System")
-						parentSystemFetchRequest.predicate = NSPredicate(format: "systemName = %@", subsystem["parentSystemName"].string!)
-						let parentSystem = try! self.context.executeFetchRequest(parentSystemFetchRequest).first as! System
-						newSubsystem.parentSystem = parentSystem
-						newSubsystem.subsystems = nil
-					}
-				}
-				self.saveContext()
+				
+				self.parseLinks(newSystem, linksJSON: system["links"].array!)
 			}
 		}
+		self.saveContext()
 	}
 	
-	/**
-		Saves the Managed Context with error handling
-	*/
-	func saveContext() {
-		do {
-			try self.context.save()
-		} catch {
-			print("Error saving the context")
+	func parseSybsystems(parentName: String, subsystemsJSON: [JSON]) {
+		for subsystemJSON in subsystemsJSON {
+			if let subsystemDict = subsystemJSON.dictionary {
+				if !self.checkForDuplicate("System", key: "systemName", value: subsystemDict["name"]!.string!) {
+					let newSubsystem = NSEntityDescription.insertNewObjectForEntityForName("System", inManagedObjectContext: self.context) as! System
+					newSubsystem.systemName = subsystemDict["name"]!.string!
+					newSubsystem.systemDescription = subsystemDict["description"]!.string!
+					newSubsystem.visible = subsystemDict["visible"]!.bool!
+					self.parseLinks(newSubsystem, linksJSON: subsystemDict["links"]!.array!)
+					let parentSystemFetchRequest = NSFetchRequest(entityName: "System")
+					parentSystemFetchRequest.predicate = NSPredicate(format: "%K = %@", "systemName", parentName)
+					let parentSystem = try! self.context.executeFetchRequest(parentSystemFetchRequest).first as! System
+					newSubsystem.parentSystem = parentSystem
+					newSubsystem.subsystems = nil
+				}
+			}
 		}
+		self.saveContext()
 	}
+	
+	func parseLinks(system: System, linksJSON: [JSON]) {
+		for linkJSON in linksJSON {
+			let linkDict = linkJSON.dictionary!
+			let newLink = NSEntityDescription.insertNewObjectForEntityForName("Link", inManagedObjectContext: self.context) as! Link
+			newLink.title = linkDict["title"]!.string!
+			newLink.link = linkDict["link"]!.string!
+			newLink.visible = linkDict["visible"]!.bool!
+			newLink.system = system
+			system.addLink(newLink)
+		}
+		self.saveContext()
+	}
+	
+	// MARK: - Database Printing
 	
 	/**
 		Prints the entire contents of the database with sections separated by a newline
@@ -213,6 +170,32 @@ class DataHelper: NSObject, NSURLConnectionDataDelegate {
 		print("LINKS")
 		for link in allLinks {
 			print("\t\(link.toString())")
+		}
+	}
+	
+	// MARK: - Utility Methods
+	
+	func checkForDuplicate(entityName: String, key: String, value: CVarArgType) -> Bool {
+		let duplicateCheckRequest = NSFetchRequest(entityName: entityName)
+		duplicateCheckRequest.predicate = NSPredicate(format: "%K = %@", key, value)
+		do {
+			let results = try self.context.executeFetchRequest(duplicateCheckRequest)
+			return results.count != 0
+		} catch {
+			print("Error in Duplicate Fetch Request")
+		}
+		print("Duplicate Found")
+		return true
+	}
+	
+	/**
+	Saves the Managed Context with error handling
+	*/
+	func saveContext() {
+		do {
+			try self.context.save()
+		} catch {
+			print("Error saving the context")
 		}
 	}
 	
