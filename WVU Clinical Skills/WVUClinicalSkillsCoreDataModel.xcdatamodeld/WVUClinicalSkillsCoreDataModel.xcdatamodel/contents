@@ -4,13 +4,13 @@
         <attribute name="link" attributeType="String" syncable="YES"/>
         <attribute name="title" attributeType="String" syncable="YES"/>
         <attribute name="visible" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <relationship name="system" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="System" inverseName="links" inverseEntity="System" syncable="YES"/>
+        <relationship name="systems" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="System" inverseName="links" inverseEntity="System" syncable="YES"/>
     </entity>
     <entity name="System" representedClassName="System" syncable="YES">
         <attribute name="systemDescription" attributeType="String" syncable="YES"/>
         <attribute name="systemName" attributeType="String" syncable="YES"/>
         <attribute name="visible" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <relationship name="links" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Link" inverseName="system" inverseEntity="Link" syncable="YES"/>
+        <relationship name="links" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Link" inverseName="systems" inverseEntity="Link" syncable="YES"/>
         <relationship name="parentSystem" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="System" inverseName="subsystems" inverseEntity="System" syncable="YES"/>
         <relationship name="subsystems" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="System" inverseName="parentSystem" inverseEntity="System" syncable="YES"/>
     </entity>

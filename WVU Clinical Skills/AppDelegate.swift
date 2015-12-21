@@ -13,22 +13,12 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	let SHOULD_REFRESH_DATABASE_ON_LAUNCH = true
-	let SHOULD_SEED = true
-	let SHOULD_PRINT_DATABASE_CONTENTS = false
 	
     var window: UIWindow?
 	
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-		let dataHelper = DataHelper(context: self.managedObjectContext)
-		if self.SHOULD_SEED {
-			dataHelper.seed()
-		}
-		
-		if self.SHOULD_PRINT_DATABASE_CONTENTS {
-			dataHelper.printContents()
-		}
-		
+		let _ = DataHelper(context: self.managedObjectContext)
         return true
     }
 	

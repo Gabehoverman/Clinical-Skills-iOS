@@ -17,17 +17,28 @@ class DataHelper: NSObject, NSURLConnectionDataDelegate {
 	
 	// MARK: - Properties
 	
-	let baseURLPath = "http://aea3de69.ngrok.io/"
+	let SHOULD_SEED = true
+	let SHOULD_PRINT_DATASTORE_CONTENTS = false
 	
-	var jsonData: NSMutableData?
+	let baseURLPath = "http://6a28aead.ngrok.io/"
 	
 	let context: NSManagedObjectContext
 	
+	var jsonData: NSMutableData?
 	
 	// MARK: - Initializers
 	
 	init(context: NSManagedObjectContext) {
 		self.context = context
+		super.init()
+		
+		if self.SHOULD_SEED {
+			self.seed()
+		}
+		
+		if self.SHOULD_PRINT_DATASTORE_CONTENTS {
+			NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("printContents"), name: "SHOULD_PRINT_DATASTORE_CONTENTS", object: nil)
+		}
 	}
 	
 	// MARK: - Seed Methods
@@ -64,9 +75,16 @@ class DataHelper: NSObject, NSURLConnectionDataDelegate {
 		if let data = self.jsonData {
 			let json = JSON(data: data)
 			self.parseSystem(json)
+		} else {
+			print("No Data Received")
 		}
 		let nc = NSNotificationCenter.defaultCenter()
+		nc.postNotificationName("SHOULD_PRINT_DATASTORE_CONTENTS", object: nil)
 		nc.postNotificationName("ReceivedSystemData", object: nil)
+	}
+	
+	func connection(connection: NSURLConnection, didFailWithError error: NSError) {
+		print("Error: \(error.localizedDescription)")
 	}
 	
 	// MARK: - JSON Parsing
@@ -79,8 +97,12 @@ class DataHelper: NSObject, NSURLConnectionDataDelegate {
 				newSystem.systemDescription = system["description"].string!
 				newSystem.visible = system["visible"].bool!
 				
+				if let parentName = system["parent_system"].dictionary?["name"]?.string {
+					self.parseParentSystem(newSystem, parentName: parentName)
+				}
+				
 				if system["subsystems"].array?.count != 0 {
-					self.parseSybsystems(system["name"].string!, subsystemsJSON: system["subsystems"].array!)
+					self.parseSubsystems(system["name"].string!, subsystemsJSON: system["subsystems"].array!)
 				}
 				
 				self.parseLinks(newSystem, linksJSON: system["links"].array!)
@@ -89,7 +111,15 @@ class DataHelper: NSObject, NSURLConnectionDataDelegate {
 		self.saveContext()
 	}
 	
-	func parseSybsystems(parentName: String, subsystemsJSON: [JSON]) {
+	func parseParentSystem(system: System, parentName: String) {
+		let parentFetchRequest = NSFetchRequest(entityName: "System")
+		parentFetchRequest.predicate = NSPredicate(format: "%K = %@", "systemName", parentName)
+		if let parentSystem = try! self.context.executeFetchRequest(parentFetchRequest).first as? System {
+			system.parentSystem = parentSystem
+		}
+	}
+	
+	func parseSubsystems(parentName: String, subsystemsJSON: [JSON]) {
 		for subsystemJSON in subsystemsJSON {
 			if let subsystemDict = subsystemJSON.dictionary {
 				if !self.checkForDuplicate("System", key: "systemName", value: subsystemDict["name"]!.string!) {
@@ -102,7 +132,6 @@ class DataHelper: NSObject, NSURLConnectionDataDelegate {
 					parentSystemFetchRequest.predicate = NSPredicate(format: "%K = %@", "systemName", parentName)
 					let parentSystem = try! self.context.executeFetchRequest(parentSystemFetchRequest).first as! System
 					newSubsystem.parentSystem = parentSystem
-					newSubsystem.subsystems = nil
 				}
 			}
 		}
@@ -110,14 +139,24 @@ class DataHelper: NSObject, NSURLConnectionDataDelegate {
 	}
 	
 	func parseLinks(system: System, linksJSON: [JSON]) {
+		//TODO: Prevent Duplicate Links
 		for linkJSON in linksJSON {
 			let linkDict = linkJSON.dictionary!
-			let newLink = NSEntityDescription.insertNewObjectForEntityForName("Link", inManagedObjectContext: self.context) as! Link
-			newLink.title = linkDict["title"]!.string!
-			newLink.link = linkDict["link"]!.string!
-			newLink.visible = linkDict["visible"]!.bool!
-			newLink.system = system
-			system.addLink(newLink)
+//			if !self.checkForDuplicate("Link", key: "title", value: linkDict["title"]!.string!) {
+				let newLink = NSEntityDescription.insertNewObjectForEntityForName("Link", inManagedObjectContext: self.context) as! Link
+				newLink.title = linkDict["title"]!.string!
+				newLink.link = linkDict["link"]!.string!
+				newLink.visible = linkDict["visible"]!.bool!
+				newLink.addSystem(system)
+				system.addLink(newLink)
+//			} else {
+//				let linkFetchRequest = NSFetchRequest(entityName: "Link")
+//				linkFetchRequest.predicate = NSPredicate(format: "%K = %@", "title", linkDict["title"]!.string!)
+//				if let link = try! self.context.executeFetchRequest(linkFetchRequest).first as? Link {
+//					link.addSystem(system)
+//					system.addLink(link)
+//				}
+//			}
 		}
 		self.saveContext()
 	}
@@ -145,7 +184,7 @@ class DataHelper: NSObject, NSURLConnectionDataDelegate {
 		let allSystems = (try! self.context.executeFetchRequest(systemFetchRequest)) as! [System]
 		print("SYSTEMS")
 		for system in allSystems {
-			print("\t\(system.toString())")
+			print("\t\(system.systemName)")
 		}
 	}
 	
@@ -159,7 +198,8 @@ class DataHelper: NSObject, NSURLConnectionDataDelegate {
 		let allSubsystems = (try! self.context.executeFetchRequest(subsystemFetchRequest)) as! [System]
 		print("SUBSYSTEMS")
 		for subsystem in allSubsystems {
-			print("\t\(subsystem.parentSystem!.systemName) -> \(subsystem.toString())")
+			print("\t\(subsystem.parentSystem!.systemName):")
+			print("\t\t- \(subsystem.systemName)")
 		}
 	}
 	
@@ -169,7 +209,7 @@ class DataHelper: NSObject, NSURLConnectionDataDelegate {
 		let allLinks = try! self.context.executeFetchRequest(linkFetchRequest) as! [Link]
 		print("LINKS")
 		for link in allLinks {
-			print("\t\(link.toString())")
+			print("\t\(link.title)")
 		}
 	}
 	
@@ -177,7 +217,7 @@ class DataHelper: NSObject, NSURLConnectionDataDelegate {
 	
 	func checkForDuplicate(entityName: String, key: String, value: CVarArgType) -> Bool {
 		let duplicateCheckRequest = NSFetchRequest(entityName: entityName)
-		duplicateCheckRequest.predicate = NSPredicate(format: "%K = %@", key, value)
+		duplicateCheckRequest.predicate = NSPredicate(format: "%K == %@", key, value)
 		do {
 			let results = try self.context.executeFetchRequest(duplicateCheckRequest)
 			return results.count != 0

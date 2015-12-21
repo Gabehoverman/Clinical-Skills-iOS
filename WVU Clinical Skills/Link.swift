@@ -15,7 +15,14 @@ class Link: NSManagedObject {
 	@NSManaged var title: String
 	@NSManaged var link: String
 	@NSManaged var visible: Bool
-	@NSManaged var system: System
+	@NSManaged var systems: NSMutableSet?
+	
+	func addSystem(system: System) {
+		if self.systems == nil {
+			self.systems = NSMutableSet()
+		}
+		self.systems?.addObject(system)
+	}
 	
 	func toString() -> String {
 		return "\(self.title) -> \(self.link)"
