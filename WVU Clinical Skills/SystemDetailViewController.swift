@@ -56,7 +56,10 @@ class SystemDetailViewController: UITableViewController, NSFetchedResultsControl
 	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		if indexPath.section == 0 {
 			let cell = tableView.dequeueReusableCellWithIdentifier(StoryboardPrototypeCellIdentifiers.descriptionCell, forIndexPath: indexPath) as! DescriptionTableViewCell
-			cell.descriptionLabel.text = self.system!.systemDescription
+			let propagateTap = UITapGestureRecognizer(target: self, action: Selector("propagateTap:"))
+			propagateTap.delegate = self
+			cell.descriptionTextView.addGestureRecognizer(propagateTap)
+			cell.descriptionTextView.text = self.system!.systemDescription
 			return cell
 		} else {
 			let cell = tableView.dequeueReusableCellWithIdentifier(StoryboardPrototypeCellIdentifiers.linkCell, forIndexPath: indexPath) as! LinkTableViewCell
@@ -101,6 +104,19 @@ class SystemDetailViewController: UITableViewController, NSFetchedResultsControl
 			return DescriptionTableViewCell.defaultHeight
 		}
 		return LinkTableViewCell.defaultHeight
+	}
+	
+	func propagateTap(sender: UIGestureRecognizer) {
+		if let textView = sender.view as? UITextView {
+			if var cellToSelect = textView.superview {
+				while !cellToSelect.isKindOfClass(UITableViewCell) {
+					cellToSelect = cellToSelect.superview!
+				}
+				if let cell = cellToSelect as? UITableViewCell {
+					self.tableView(self.tableView, didSelectRowAtIndexPath: self.tableView.indexPathForCell(cell)!)
+				}
+			}
+		}
 	}
 	
 }
