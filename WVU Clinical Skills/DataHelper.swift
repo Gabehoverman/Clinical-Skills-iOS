@@ -10,6 +10,14 @@ import UIKit
 import CoreData
 import SwiftyJSON
 
+// MARK: - Data Helper Protocol
+
+protocol DataHelperDelegate {
+	func didReceiveData()
+}
+
+// MARK: - Data Helper Class
+
 /**
 	Utility for Seeding and Displaying the Database
 */
@@ -22,29 +30,22 @@ class DataHelper: NSObject, NSURLConnectionDataDelegate {
 	
 	let baseURLPath = "https://wvusom-data-server.herokuapp.com/"
 	
+	let delegate: DataHelperDelegate?
 	let context: NSManagedObjectContext
 	
 	var jsonData: NSMutableData?
 	
 	// MARK: - Initializers
 	
-	init(context: NSManagedObjectContext) {
+	init(context: NSManagedObjectContext, delegate:DataHelperDelegate?) {
+		self.delegate = delegate
 		self.context = context
-		super.init()
-		
-		if self.SHOULD_SEED {
-			self.seed()
-		}
-		
-		if self.SHOULD_PRINT_DATASTORE_CONTENTS {
-			NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("printContents"), name: "SHOULD_PRINT_DATASTORE_CONTENTS", object: nil)
-		}
 	}
 	
 	// MARK: - Seed Methods
 	
 	func seed() {
-		//self.localSeed()
+		self.localSeed()
 		self.remoteSeed()
 	}
 	
@@ -70,9 +71,9 @@ class DataHelper: NSObject, NSURLConnectionDataDelegate {
 				
 				if data != nil {
 					self.parseSystem(JSON(data: data!))
-					let nc = NSNotificationCenter.defaultCenter()
-					nc.postNotificationName("SHOULD_PRINT_DATASTORE_CONTENTS", object: nil)
-					nc.postNotificationName("ReceivedSystemData", object: nil)
+					if self.delegate != nil {
+						self.delegate!.didReceiveData()
+					}
 				}
 			}).resume()
 		}

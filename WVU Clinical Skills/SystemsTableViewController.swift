@@ -13,14 +13,33 @@ import CoreData
 /**
 	Table View displaying all System data inside the database
 */
-class SystemsTableViewController: UITableViewController, NSFetchedResultsControllerDelegate {
+class SystemsTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, DataHelperDelegate {
 	
+	// MARK: - Properties
+	
+	var shouldAskForData = true
 	var fetchedResultsController: NSFetchedResultsController?
+	
+	// MARK: - View Controller Methods
+	
+	override func viewWillAppear(animated: Bool) {
+		if self.shouldAskForData {
+			if let context = (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext {
+				let dataHelper = DataHelper(context: context, delegate: self)
+				dataHelper.seed()
+			}
+		}
+	}
+	
+	override func viewWillDisappear(animated: Bool) {
+		self.shouldAskForData = false
+	}
 	
 	override func viewDidLoad() {
 		self.fetchResults()
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("foundNewData"), name: "ReceivedSystemData", object: nil)
 	}
+	
+	// MARK: - Data Methods
 	
 	func fetchResults() {
 		if self.fetchedResultsController == nil {
@@ -37,6 +56,12 @@ class SystemsTableViewController: UITableViewController, NSFetchedResultsControl
 		self.fetchResults()
 		self.tableView.performSelectorOnMainThread(Selector("reloadData"), withObject: nil, waitUntilDone: false)
 	}
+	
+	func didReceiveData() {
+		self.foundNewData()
+	}
+	
+	// MARK: - Table View Methods
 	
 	override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
 		if let sections = self.fetchedResultsController!.sections {
@@ -74,6 +99,8 @@ class SystemsTableViewController: UITableViewController, NSFetchedResultsControl
 			print("Error getting controller")
 		}
 	}
+	
+	// MARK: - Navigation Methods
 	
 	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
 		if let system = sender as? System {
