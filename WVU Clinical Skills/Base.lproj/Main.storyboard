@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Ags-F4-B5Q">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -49,7 +48,7 @@
                     <navigationItem key="navigationItem" title="Systems" id="vXZ-xS-Xnc"/>
                     <connections>
                         <segue destination="FIX-bn-2gn" kind="show" identifier="toSubsystemView" id="snw-ct-kJv"/>
-                        <segue destination="3Qm-9F-gYl" kind="show" identifier="toDetailView" id="6e2-XX-8M3"/>
+                        <segue destination="vAG-KD-oGw" kind="show" identifier="toDetailsView" id="LJH-69-7Tz"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Myo-E9-iSL" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -57,129 +56,75 @@
             <point key="canvasLocation" x="1601" y="531"/>
         </scene>
         <!--System Detail View Controller-->
-        <scene sceneID="vDm-oK-s1j">
+        <scene sceneID="rYr-Sx-ea8">
             <objects>
-                <tableViewController id="3Qm-9F-gYl" userLabel="System Detail View Controller" customClass="SystemDetailViewController" customModule="WVU_Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Jud-Yd-pTF" userLabel="Details Table View">
+                <tableViewController id="vAG-KD-oGw" customClass="SystemDetailViewController" customModule="WVU_Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="hby-B7-Vyf" userLabel="Details Table View">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DescriptionCell" rowHeight="132" id="OUa-s9-Cp0" customClass="SystemDetailDescriptionTableViewCell" customModule="WVU_Clinical_Skills" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DescriptionCell" rowHeight="132" id="YnK-fe-hEv" userLabel="Description Cell" customClass="DescriptionTableViewCell" customModule="WVU_Clinical_Skills" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="92" width="600" height="132"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="OUa-s9-Cp0" id="kRi-1B-Za7">
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YnK-fe-hEv" id="bNC-Tn-KaM">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="131"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="749" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pHr-Si-dze">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kee-eh-Tn8">
                                             <rect key="frame" x="8" y="8" width="584" height="115"/>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <gestureRecognizers/>
                                             <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                        </textView>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="pHr-Si-dze" firstAttribute="bottom" secondItem="kRi-1B-Za7" secondAttribute="bottomMargin" id="3V7-1V-vqR"/>
-                                        <constraint firstItem="pHr-Si-dze" firstAttribute="top" secondItem="kRi-1B-Za7" secondAttribute="topMargin" id="BsY-nD-WP5"/>
-                                        <constraint firstItem="pHr-Si-dze" firstAttribute="trailing" secondItem="kRi-1B-Za7" secondAttribute="trailingMargin" id="XWb-Vb-Mg9"/>
-                                        <constraint firstItem="pHr-Si-dze" firstAttribute="leading" secondItem="kRi-1B-Za7" secondAttribute="leadingMargin" id="Zyb-Tc-CdR"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="descriptionTextView" destination="pHr-Si-dze" id="2S6-Sa-biw"/>
-                                </connections>
-                            </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="LinkCell" id="flQ-mv-LRa" userLabel="LinkCell" customClass="SystemDetailLinkTableViewCell" customModule="WVU_Clinical_Skills" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="224" width="600" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="flQ-mv-LRa" id="cZJ-gM-87c">
-                                    <rect key="frame" x="0.0" y="0.0" width="567" height="43"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="YouTube Link" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7uQ-oL-f1c">
-                                            <rect key="frame" x="8" y="8" width="551" height="27"/>
-                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="7uQ-oL-f1c" firstAttribute="top" secondItem="cZJ-gM-87c" secondAttribute="topMargin" id="6sM-7i-QOL"/>
-                                        <constraint firstItem="7uQ-oL-f1c" firstAttribute="leading" secondItem="cZJ-gM-87c" secondAttribute="leadingMargin" id="GHd-Dv-lqa"/>
-                                        <constraint firstItem="7uQ-oL-f1c" firstAttribute="bottom" secondItem="cZJ-gM-87c" secondAttribute="bottomMargin" id="dvN-LF-yj9"/>
-                                        <constraint firstItem="7uQ-oL-f1c" firstAttribute="trailing" secondItem="cZJ-gM-87c" secondAttribute="trailingMargin" id="quW-LJ-ZcL"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="Kee-eh-Tn8" secondAttribute="bottom" id="df6-rW-e8v"/>
+                                        <constraint firstItem="Kee-eh-Tn8" firstAttribute="top" secondItem="bNC-Tn-KaM" secondAttribute="topMargin" id="eFI-7K-j8T"/>
+                                        <constraint firstItem="Kee-eh-Tn8" firstAttribute="leading" secondItem="bNC-Tn-KaM" secondAttribute="leadingMargin" id="uga-4P-q9e"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="Kee-eh-Tn8" secondAttribute="trailing" id="vf7-cc-xW6"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="linkLabel" destination="7uQ-oL-f1c" id="qHm-1v-NIN"/>
+                                    <outlet property="descriptionLabel" destination="Kee-eh-Tn8" id="asf-Vx-CWB"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LinkCell" id="G0h-43-fBn" userLabel="Link Cell" customClass="LinkTableViewCell" customModule="WVU_Clinical_Skills" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="224" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="G0h-43-fBn" id="3pC-kB-aWT">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Video Link" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5od-Hv-a2x" userLabel="Link Label">
+                                            <rect key="frame" x="8" y="8" width="584" height="27"/>
+                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailingMargin" secondItem="5od-Hv-a2x" secondAttribute="trailing" id="2TL-eG-xAx"/>
+                                        <constraint firstItem="5od-Hv-a2x" firstAttribute="top" secondItem="3pC-kB-aWT" secondAttribute="topMargin" id="3qe-ga-gzM"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="5od-Hv-a2x" secondAttribute="bottom" id="LNd-1c-d7K"/>
+                                        <constraint firstItem="5od-Hv-a2x" firstAttribute="leading" secondItem="3pC-kB-aWT" secondAttribute="leadingMargin" id="cU3-cT-HdV"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="linkLabel" destination="5od-Hv-a2x" id="T99-Bk-8b3"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
-                        <sections/>
                         <connections>
-                            <outlet property="dataSource" destination="3Qm-9F-gYl" id="GlD-DQ-mU2"/>
-                            <outlet property="delegate" destination="3Qm-9F-gYl" id="jVE-5r-BNH"/>
+                            <outlet property="dataSource" destination="vAG-KD-oGw" id="rsR-5b-pWO"/>
+                            <outlet property="delegate" destination="vAG-KD-oGw" id="qAg-BM-twQ"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Details" id="Cwo-i2-sKV"/>
-                    <connections>
-                        <segue destination="uR9-vv-G7X" kind="presentation" identifier="toVideoView" id="7FT-B3-GGK"/>
-                    </connections>
                 </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="aBa-BU-GGI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="w65-Ss-G8d" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2361" y="95"/>
-        </scene>
-        <!--Video View Controller-->
-        <scene sceneID="jPX-HK-Pdt">
-            <objects>
-                <viewController title="Video View Controller" automaticallyAdjustsScrollViewInsets="NO" id="Nlb-h8-hcU" customClass="VideoViewController" customModule="WVU_Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="42B-HM-VC3"/>
-                        <viewControllerLayoutGuide type="bottom" id="Pzu-J2-suk"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="mRE-wP-4vW">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z0m-xf-w75">
-                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <gestureRecognizers/>
-                            </webView>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Tae-NY-QCY">
-                                <rect key="frame" x="290" y="290" width="20" height="20"/>
-                            </activityIndicatorView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="Z0m-xf-w75" firstAttribute="leading" secondItem="mRE-wP-4vW" secondAttribute="leadingMargin" constant="-20" id="Dwy-yf-l84"/>
-                            <constraint firstItem="Tae-NY-QCY" firstAttribute="centerY" secondItem="mRE-wP-4vW" secondAttribute="centerY" id="KfO-9C-y0L"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Z0m-xf-w75" secondAttribute="trailing" constant="-20" id="ZU9-8a-TbX"/>
-                            <constraint firstItem="Pzu-J2-suk" firstAttribute="top" secondItem="Z0m-xf-w75" secondAttribute="bottom" id="cqG-Jy-yQA"/>
-                            <constraint firstItem="Z0m-xf-w75" firstAttribute="top" secondItem="42B-HM-VC3" secondAttribute="bottom" id="kqN-G8-tLW"/>
-                            <constraint firstItem="Tae-NY-QCY" firstAttribute="centerX" secondItem="mRE-wP-4vW" secondAttribute="centerX" id="taB-3D-e9M"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" title="Video" id="J0E-TO-MmY">
-                        <barButtonItem key="leftBarButtonItem" title="Close" id="rA8-5R-99l">
-                            <connections>
-                                <action selector="closeButtonPressed:" destination="Nlb-h8-hcU" id="wxi-CB-ned"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="activityIndicator" destination="Tae-NY-QCY" id="5uB-tM-5UP"/>
-                        <outlet property="videoWebView" destination="Z0m-xf-w75" id="JDa-bG-yKG"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="4H5-q2-C1p" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4016" y="95"/>
         </scene>
         <!--Subsystem Table View Controller-->
         <scene sceneID="Iub-hb-ncz">
@@ -231,7 +176,7 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <segue destination="3Qm-9F-gYl" kind="show" identifier="toDetailView" id="xfx-Cf-bcm"/>
+                        <segue destination="vAG-KD-oGw" kind="show" identifier="toDetailsView" id="SnT-N4-Rtp"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Sc-jm-hfD" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -256,26 +201,8 @@
             </objects>
             <point key="canvasLocation" x="793" y="531"/>
         </scene>
-        <!--Video Navigation Controller-->
-        <scene sceneID="SEx-C9-dYQ">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="uR9-vv-G7X" userLabel="Video Navigation Controller" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="MCP-Na-nZX">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="Nlb-h8-hcU" kind="relationship" relationship="rootViewController" id="Ili-r6-OaP"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="KLx-ax-Hjw" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3204" y="95"/>
-        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="xfx-Cf-bcm"/>
+        <segue reference="SnT-N4-Rtp"/>
     </inferredMetricsTieBreakers>
 </document>

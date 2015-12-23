@@ -20,7 +20,7 @@ class DataHelper: NSObject, NSURLConnectionDataDelegate {
 	let SHOULD_SEED = true
 	let SHOULD_PRINT_DATASTORE_CONTENTS = false
 	
-	let baseURLPath = "http://6a28aead.ngrok.io/"
+	let baseURLPath = "https://wvusom-data-server.herokuapp.com/"
 	
 	let context: NSManagedObjectContext
 	
@@ -55,10 +55,26 @@ class DataHelper: NSObject, NSURLConnectionDataDelegate {
 	func remoteSeed() {
 		let urlPath = self.baseURLPath + "systems/all.json"
 		if let url = NSURL(string: urlPath) {
-			let request = NSURLRequest(URL: url)
-			if let connection = NSURLConnection(request: request, delegate: self, startImmediately: false) {
-				connection.start()
-			}
+			let session = NSURLSession.sharedSession()
+			session.dataTaskWithURL(url, completionHandler: {
+				(data: NSData?, response: NSURLResponse?, error: NSError?) in
+				
+				if let statusCode = (response as? NSHTTPURLResponse)?.statusCode {
+					print("HTTP Response: \(statusCode) - \(NSHTTPURLResponse.localizedStringForStatusCode(statusCode))")
+				}
+				
+				if error != nil {
+					print("Error with remote seed:")
+					print(error)
+				}
+				
+				if data != nil {
+					self.parseSystem(JSON(data: data!))
+					let nc = NSNotificationCenter.defaultCenter()
+					nc.postNotificationName("SHOULD_PRINT_DATASTORE_CONTENTS", object: nil)
+					nc.postNotificationName("ReceivedSystemData", object: nil)
+				}
+			}).resume()
 		}
 	}
 	

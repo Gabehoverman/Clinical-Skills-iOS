@@ -8,17 +8,19 @@
 
 import UIKit
 import CoreData
+import SafariServices
 
-class SystemDetailViewController: UITableViewController, NSFetchedResultsControllerDelegate, UIGestureRecognizerDelegate {
-
+class SystemDetailViewController: UITableViewController, NSFetchedResultsControllerDelegate, UIGestureRecognizerDelegate, SFSafariViewControllerDelegate {
+	
 	var fetchedResultsController: NSFetchedResultsController?
 	
 	var system: System?
 	var links: [Link]?
 	
-	var didExpandDescriptionCell = false
+	var isExpanded = false
 	
 	override func viewDidLoad() {
+		super.viewDidLoad()
 		if self.system != nil {
 			self.fetchedResultsController = LinksFetchedResultsControllers.allVisibleLinksFetchedResultsController(self.system!, delegateController: self)
 			do {
@@ -27,10 +29,9 @@ class SystemDetailViewController: UITableViewController, NSFetchedResultsControl
 					self.links = allLinks
 				}
 			} catch {
-				print("Error fetching Links")
+				print("Error fetching links")
 			}
 		}
-		self.tableView.tableFooterView = UIView(frame: CGRectZero)
 	}
 	
 	override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -38,7 +39,7 @@ class SystemDetailViewController: UITableViewController, NSFetchedResultsControl
 	}
 	
 	override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-		switch (section) {
+		switch(section) {
 			case 0: return "Description"
 			case 1: return "Video Links"
 			default: return "Section \(section)"
@@ -46,33 +47,19 @@ class SystemDetailViewController: UITableViewController, NSFetchedResultsControl
 	}
 	
 	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		if (section == 0) {
+		if section == 0 {
 			return 1
-		} else {
-			return self.links!.count
 		}
-	}
-	
-	override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-		if indexPath.section == 0 {
-			if self.didExpandDescriptionCell {
-				return SystemDetailDescriptionTableViewCell.expandedHeight
-			}
-			return SystemDetailDescriptionTableViewCell.defaultHeight
-		}
-		return tableView.rowHeight
+		return self.links!.count
 	}
 	
 	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		if indexPath.section == 0 {
-			let cell = tableView.dequeueReusableCellWithIdentifier(StoryboardPrototypeCellIdentifiers.descriptionCell) as! SystemDetailDescriptionTableViewCell
-			let gestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("descriptionTextViewTapped:"))
-			gestureRecognizer.delegate = self
-			cell.descriptionTextView.addGestureRecognizer(gestureRecognizer)
-			//cell.descriptionTextView.text = self.system?.systemDescription
+			let cell = tableView.dequeueReusableCellWithIdentifier(StoryboardPrototypeCellIdentifiers.descriptionCell, forIndexPath: indexPath) as! DescriptionTableViewCell
+			cell.descriptionLabel.text = self.system!.systemDescription
 			return cell
 		} else {
-			let cell = tableView.dequeueReusableCellWithIdentifier(StoryboardPrototypeCellIdentifiers.linkCell) as! SystemDetailLinkTableViewCell
+			let cell = tableView.dequeueReusableCellWithIdentifier(StoryboardPrototypeCellIdentifiers.linkCell, forIndexPath: indexPath) as! LinkTableViewCell
 			cell.linkLabel.text = self.links![indexPath.row].title
 			return cell
 		}
@@ -80,37 +67,40 @@ class SystemDetailViewController: UITableViewController, NSFetchedResultsControl
 	
 	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 		if indexPath.section == 0 {
-			self.didExpandDescriptionCell = !self.didExpandDescriptionCell
-			tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+			self.isExpanded = !self.isExpanded
+			self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
 		} else {
 			if let link = self.links?[indexPath.row] {
-				self.performSegueWithIdentifier(StoryboardSegueIdentifiers.toVideoView, sender: link)
-			}
-		}
-	}
-	
-	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-		if let link = sender as? Link {
-			if segue.identifier == StoryboardSegueIdentifiers.toVideoView {
-				if let destinationNavVC = segue.destinationViewController as? UINavigationController {
-					if let destinationVC = destinationNavVC.viewControllers.first as? VideoViewController {
-						destinationVC.videoLink = link.link
-					}
+				if let url = NSURL(string: link.link) {
+					let safariViewController = SFSafariViewController(URL: url)
+					self.presentViewController(safariViewController, animated: true, completion: nil)
 				}
 			}
 		}
 	}
 	
-	func descriptionTextViewTapped(sender: AnyObject) {
-		if let textView = sender.view as? UITextView {
-			if var cellToSelect = textView.superview {
-				while !cellToSelect.isKindOfClass(UITableViewCell) {
-					cellToSelect = cellToSelect.superview!
-				}
-				if let cell = cellToSelect as? UITableViewCell {
-					self.tableView(self.tableView, didSelectRowAtIndexPath: self.tableView.indexPathForCell(cell)!)
-				}
-			}
-		}
+	func safariViewControllerDidFinish(controller: SFSafariViewController) {
+		self.dismissViewControllerAnimated(true, completion: nil)
 	}
+	
+	override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+		if indexPath.section == 0 {
+			if self.isExpanded {
+				return UITableViewAutomaticDimension
+			}
+			return DescriptionTableViewCell.defaultHeight
+		}
+		return LinkTableViewCell.defaultHeight
+	}
+	
+	override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+		if indexPath.section == 0 {
+			if self.isExpanded {
+				return UITableViewAutomaticDimension
+			}
+			return DescriptionTableViewCell.defaultHeight
+		}
+		return LinkTableViewCell.defaultHeight
+	}
+	
 }

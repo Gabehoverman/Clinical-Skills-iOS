@@ -35,7 +35,7 @@ class SystemsTableViewController: UITableViewController, NSFetchedResultsControl
 	
 	func foundNewData() {
 		self.fetchResults()
-		self.tableView.reloadData()
+		self.tableView.performSelectorOnMainThread(Selector("reloadData"), withObject: nil, waitUntilDone: false)
 	}
 	
 	override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
