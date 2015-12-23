@@ -16,36 +16,37 @@ import CoreData
 class SystemsTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, DataHelperDelegate {
 	
 	// MARK: - Properties
-	
-	var shouldAskForData = true
 	var fetchedResultsController: NSFetchedResultsController?
+	
+	var isInitialLoad = true
+	var dataHelper: DataHelper?
 	
 	// MARK: - View Controller Methods
 	
-	override func viewWillAppear(animated: Bool) {
-		if self.shouldAskForData {
-			if let context = (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext {
-				let dataHelper = DataHelper(context: context, delegate: self)
-				dataHelper.seed()
-			}
-		}
-	}
-	
 	override func viewWillDisappear(animated: Bool) {
-		self.shouldAskForData = false
+		self.isInitialLoad = false
 	}
 	
 	override func viewDidLoad() {
-		self.fetchResults()
+		if let context = (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext {
+			self.dataHelper = DataHelper(context: context, delegate: self)
+		}
+		self.refreshControl?.addTarget(self, action: Selector("handleRefresh:"), forControlEvents: .ValueChanged)
+		self.fetchResults(self.isInitialLoad)
 	}
 	
 	// MARK: - Data Methods
 	
-	func fetchResults() {
+	func fetchResults(shouldAskForData: Bool) {
 		if self.fetchedResultsController == nil {
 			self.fetchedResultsController = SystemFetchedResultsControllers.allVisibleSystemsResultController(self)
 		}
 		do {
+			if shouldAskForData {
+				if self.dataHelper != nil {
+					self.dataHelper!.seed()
+				}
+			}
 			try self.fetchedResultsController!.performFetch()
 		} catch {
 			print("Error occurred during System fetch")
@@ -53,7 +54,7 @@ class SystemsTableViewController: UITableViewController, NSFetchedResultsControl
 	}
 	
 	func foundNewData() {
-		self.fetchResults()
+		self.fetchResults(false)
 		self.tableView.performSelectorOnMainThread(Selector("reloadData"), withObject: nil, waitUntilDone: false)
 	}
 	
@@ -61,17 +62,24 @@ class SystemsTableViewController: UITableViewController, NSFetchedResultsControl
 		self.foundNewData()
 	}
 	
+	func handleRefresh(refreshControl: UIRefreshControl) {
+		print("Refreshing: \(refreshControl.refreshing)")
+		self.fetchResults(true)
+		self.tableView.reloadData()
+		self.refreshControl?.endRefreshing()
+	}
+	
 	// MARK: - Table View Methods
 	
 	override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-		if let sections = self.fetchedResultsController!.sections {
+		if let sections = self.fetchedResultsController?.sections {
 			return sections.count
 		}
 		return 0
 	}
 	
 	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		if let sections = self.fetchedResultsController!.sections {
+		if let sections = self.fetchedResultsController?.sections {
 			return sections[section].numberOfObjects
 		}
 		return 0
