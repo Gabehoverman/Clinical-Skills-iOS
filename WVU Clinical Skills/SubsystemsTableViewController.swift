@@ -9,29 +9,91 @@
 import UIKit
 import CoreData
 
-class SubsystemsTableViewController: UITableViewController, NSFetchedResultsControllerDelegate {
+class SubsystemsTableViewController: UITableViewController, UISearchBarDelegate, NSFetchedResultsControllerDelegate {
 
-	var parentSystem: System?
+	// MARK: - Properties
 	
+	let searchController = UISearchController(searchResultsController: nil)
 	var fetchedResultsController: NSFetchedResultsController?
+	
+	var isInitialLoad = true
+	var parentSystem: System?
+	var defaultSearchPredicate: NSPredicate?
+	var searchPhrase: String?
+	
+	// MARK: - View Controller Methods
 	
     override func viewDidLoad() {
         super.viewDidLoad()
-		if self.parentSystem != nil {
-			self.navigationItem.title = self.parentSystem!.systemName
-			self.fetchedResultsController = SubsystemsFetchedResultsControllers.allVisibleSubsystemsFetchedResultsController(self.parentSystem!, delegateController: self)
-			do {
-				try self.fetchedResultsController!.performFetch()
-			} catch {
-				print("Error fetching subsystems")
-			}
-		}
+		self.searchController.dimsBackgroundDuringPresentation = true
+		self.searchController.definesPresentationContext = true
+		self.searchController.searchBar.delegate = self
+		self.tableView.tableHeaderView = self.searchController.searchBar
+		self.fetchResults(false, shouldReload: self.isInitialLoad)
 	}
+	
+	override func viewWillDisappear(animated: Bool) {
+		self.isInitialLoad = false
+	}
+	
+	// MARK: - IB Actions
 	
 	@IBAction func detailsBarButtonPressed(sender: AnyObject) {
 		self.performSegueWithIdentifier(StoryboardSegueIdentifiers.toDetailView, sender: self.parentSystem)
 	}
 	
+	// MARK: - Data Methods
+	
+	func fetchResults(shouldAskForData: Bool, shouldReload: Bool) {
+		if self.fetchedResultsController == nil {
+			if self.parentSystem != nil {
+				self.fetchedResultsController = SubsystemsFetchedResultsControllers.allVisibleSubsystemsFetchedResultsController(self.parentSystem!, delegateController: self)
+				self.defaultSearchPredicate = self.fetchedResultsController!.fetchRequest.predicate
+			}
+		}
+		do {
+			try self.fetchedResultsController!.performFetch()
+			if shouldReload {
+				self.tableView.reloadData()
+			}
+		} catch {
+			print("Error fetching Subsystems")
+		}
+	}
+	
+	// MARK: - Search Methods
+	
+	func clearSearch() {
+		self.searchPhrase = nil
+		self.fetchedResultsController = SubsystemsFetchedResultsControllers.allVisibleSubsystemsFetchedResultsController(self.parentSystem!, delegateController: self)
+		self.fetchResults(false, shouldReload: true)
+	}
+	
+	func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+		if searchText != "" {
+			if self.defaultSearchPredicate != nil {
+				self.searchPhrase = searchText
+				var predicates = [self.defaultSearchPredicate!]
+				let filterPredicate = NSPredicate(format: "%K CONTAINS[cd] %@", "systemName", searchText)
+				predicates.append(filterPredicate)
+				let fullPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
+				self.fetchedResultsController!.fetchRequest.predicate = fullPredicate
+				self.fetchResults(false, shouldReload: true)
+			}
+		} else {
+			self.clearSearch()
+		}
+	}
+	
+	func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+		self.clearSearch()
+	}
+	
+	func searchBarTextDidEndEditing(searchBar: UISearchBar) {
+		searchBar.text = self.searchPhrase
+	}
+	
+	// MARK: - Table View Methods
 	
 	override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
 		if let sections = self.fetchedResultsController?.sections {
@@ -72,6 +134,8 @@ class SubsystemsTableViewController: UITableViewController, NSFetchedResultsCont
 			print("Error getting controller")
 		}
 	}
+	
+	// MARK: - Navigation Methods
 	
 	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
 		if let subsystem = sender as? System {
