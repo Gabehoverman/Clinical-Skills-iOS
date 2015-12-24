@@ -16,7 +16,8 @@ import CoreData
 class SystemsTableViewController: UITableViewController, UISearchBarDelegate, NSFetchedResultsControllerDelegate, DataHelperDelegate {
 	
 	// MARK: - Properties
-	let searchController = UISearchController(searchResultsController: nil)
+	var searchController: UISearchController!
+	var activityIndicator: UIActivityIndicatorView?
 	var fetchedResultsController: NSFetchedResultsController?
 	
 	var isInitialLoad = true
@@ -27,22 +28,23 @@ class SystemsTableViewController: UITableViewController, UISearchBarDelegate, NS
 	
 	// MARK: - View Controller Methods
 	
-	override func viewWillDisappear(animated: Bool) {
-		self.isInitialLoad = false
-	}
-	
 	override func viewDidLoad() {
+		super.viewDidLoad()
+		self.searchController = UISearchController(searchResultsController: nil)
 		if let context = (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext {
 			self.dataHelper = DataHelper(context: context, delegate: self)
 		}
 		self.refreshControl?.addTarget(self, action: Selector("handleRefresh:"), forControlEvents: .ValueChanged)
-		self.searchController.dimsBackgroundDuringPresentation = true
-		self.searchController.definesPresentationContext = true
-		self.searchController.searchBar.delegate = self
-		self.tableView.tableHeaderView = self.searchController.searchBar
+		self.initializeSearchController()
+		self.initializeActivityIndicator()
 		self.fetchResults(self.isInitialLoad, shouldReload: false)
 	}
 	
+	override func viewWillDisappear(animated: Bool) {
+		super.viewWillDisappear(animated)
+		self.isInitialLoad = false
+	}
+
 	// MARK: - Data Methods
 	
 	func fetchResults(shouldAskForData: Bool, shouldReload: Bool) {
@@ -71,16 +73,41 @@ class SystemsTableViewController: UITableViewController, UISearchBarDelegate, NS
 		self.tableView.performSelectorOnMainThread(Selector("reloadData"), withObject: nil, waitUntilDone: false)
 	}
 	
+	func didBeginDataRequest() {
+		if self.refreshControl != nil {
+			if !self.refreshControl!.refreshing {
+				self.performSelectorOnMainThread("showActivityIndicator", withObject: nil, waitUntilDone: false)
+			}
+		}
+	}
+	
 	func didReceiveData() {
 		self.foundNewData()
 	}
 	
+	func didFinishDataRequest() {
+		if self.refreshControl != nil {
+			if self.refreshControl!.refreshing {
+				self.refreshControl!.endRefreshing()
+			} else {
+				self.performSelectorOnMainThread("hideActivityIndicator", withObject: nil, waitUntilDone: false)
+			}
+		}
+	}
+	
 	func handleRefresh(refreshControl: UIRefreshControl) {
 		self.fetchResults(true, shouldReload: true)
-		self.refreshControl?.endRefreshing()
 	}
 	
 	// MARK: - Search Methods
+	
+	func initializeSearchController() {
+		self.searchController.dimsBackgroundDuringPresentation = true
+		self.searchController.definesPresentationContext = true
+		self.searchController.searchBar.delegate = self
+		self.tableView.tableHeaderView = self.searchController.searchBar
+		self.searchController.loadViewIfNeeded()
+	}
 	
 	func clearSearch() {
 		self.searchPhrase = nil
@@ -149,6 +176,25 @@ class SystemsTableViewController: UITableViewController, UISearchBarDelegate, NS
 		} else {
 			print("Error getting controller")
 		}
+	}
+	
+	// MARK: - Activity Indicator Methods
+	
+	func initializeActivityIndicator() {
+		self.activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+		self.activityIndicator!.frame = CGRect(x: 0, y: 0, width: 10, height: 10)
+		self.activityIndicator!.center = self.tableView.center
+		self.activityIndicator!.hidesWhenStopped = true
+		self.view.addSubview(self.activityIndicator!)
+		self.activityIndicator!.bringSubviewToFront(self.view)
+	}
+	
+	func showActivityIndicator() {
+		self.activityIndicator!.startAnimating()
+	}
+	
+	func hideActivityIndicator() {
+		self.activityIndicator!.stopAnimating()
 	}
 	
 	// MARK: - Navigation Methods

@@ -13,7 +13,7 @@ class SubsystemsTableViewController: UITableViewController, UISearchBarDelegate,
 
 	// MARK: - Properties
 	
-	let searchController = UISearchController(searchResultsController: nil)
+	var searchController: UISearchController!
 	var fetchedResultsController: NSFetchedResultsController?
 	
 	var isInitialLoad = true
@@ -25,14 +25,12 @@ class SubsystemsTableViewController: UITableViewController, UISearchBarDelegate,
 	
     override func viewDidLoad() {
         super.viewDidLoad()
-		self.searchController.dimsBackgroundDuringPresentation = true
-		self.searchController.definesPresentationContext = true
-		self.searchController.searchBar.delegate = self
-		self.tableView.tableHeaderView = self.searchController.searchBar
+		self.initializeSearchController()
 		self.fetchResults(false, shouldReload: self.isInitialLoad)
 	}
 	
 	override func viewWillDisappear(animated: Bool) {
+		super.viewWillDisappear(animated)
 		self.isInitialLoad = false
 	}
 	
@@ -62,6 +60,15 @@ class SubsystemsTableViewController: UITableViewController, UISearchBarDelegate,
 	}
 	
 	// MARK: - Search Methods
+	
+	func initializeSearchController() {
+		self.searchController = UISearchController(searchResultsController: nil)
+		self.searchController.dimsBackgroundDuringPresentation = true
+		self.searchController.definesPresentationContext = true
+		self.searchController.searchBar.delegate = self
+		self.tableView.tableHeaderView = self.searchController.searchBar
+		self.searchController.loadViewIfNeeded()
+	}
 	
 	func clearSearch() {
 		self.searchPhrase = nil

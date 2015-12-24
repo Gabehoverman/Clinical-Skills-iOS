@@ -12,8 +12,10 @@ import SwiftyJSON
 
 // MARK: - Data Helper Protocol
 
-protocol DataHelperDelegate {
+@objc protocol DataHelperDelegate {
+	optional func didBeginDataRequest()
 	func didReceiveData()
+	optional func didFinishDataRequest()
 }
 
 // MARK: - Data Helper Class
@@ -75,7 +77,14 @@ class DataHelper: NSObject, NSURLConnectionDataDelegate {
 						self.delegate!.didReceiveData()
 					}
 				}
+				
+				if self.delegate != nil {
+					self.delegate!.didFinishDataRequest?()
+				}
 			}).resume()
+			if self.delegate != nil {
+				self.delegate!.didBeginDataRequest?()
+			}
 		}
 	}
 	
