@@ -13,13 +13,17 @@ import CoreData
 /**
 	Table View displaying all System data inside the database
 */
-class SystemsTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, DataHelperDelegate {
+class SystemsTableViewController: UITableViewController, UISearchBarDelegate, NSFetchedResultsControllerDelegate, DataHelperDelegate {
 	
 	// MARK: - Properties
+	let searchController = UISearchController(searchResultsController: nil)
 	var fetchedResultsController: NSFetchedResultsController?
 	
 	var isInitialLoad = true
 	var dataHelper: DataHelper?
+	
+	var defaultSearchPredicate: NSPredicate?
+	var searchPhrase: String?
 	
 	// MARK: - View Controller Methods
 	
@@ -32,14 +36,19 @@ class SystemsTableViewController: UITableViewController, NSFetchedResultsControl
 			self.dataHelper = DataHelper(context: context, delegate: self)
 		}
 		self.refreshControl?.addTarget(self, action: Selector("handleRefresh:"), forControlEvents: .ValueChanged)
-		self.fetchResults(self.isInitialLoad)
+		self.searchController.dimsBackgroundDuringPresentation = true
+		self.searchController.definesPresentationContext = true
+		self.searchController.searchBar.delegate = self
+		self.tableView.tableHeaderView = self.searchController.searchBar
+		self.fetchResults(self.isInitialLoad, shouldReload: false)
 	}
 	
 	// MARK: - Data Methods
 	
-	func fetchResults(shouldAskForData: Bool) {
+	func fetchResults(shouldAskForData: Bool, shouldReload: Bool) {
 		if self.fetchedResultsController == nil {
 			self.fetchedResultsController = SystemFetchedResultsControllers.allVisibleSystemsResultController(self)
+			self.defaultSearchPredicate = self.fetchedResultsController?.fetchRequest.predicate
 		}
 		do {
 			if shouldAskForData {
@@ -48,13 +57,17 @@ class SystemsTableViewController: UITableViewController, NSFetchedResultsControl
 				}
 			}
 			try self.fetchedResultsController!.performFetch()
+			
+			if shouldReload {
+				self.tableView.reloadData()
+			}
 		} catch {
 			print("Error occurred during System fetch")
 		}
 	}
 	
 	func foundNewData() {
-		self.fetchResults(false)
+		self.fetchResults(false, shouldReload: false)
 		self.tableView.performSelectorOnMainThread(Selector("reloadData"), withObject: nil, waitUntilDone: false)
 	}
 	
@@ -63,10 +76,40 @@ class SystemsTableViewController: UITableViewController, NSFetchedResultsControl
 	}
 	
 	func handleRefresh(refreshControl: UIRefreshControl) {
-		print("Refreshing: \(refreshControl.refreshing)")
-		self.fetchResults(true)
-		self.tableView.reloadData()
+		self.fetchResults(true, shouldReload: true)
 		self.refreshControl?.endRefreshing()
+	}
+	
+	// MARK: - Search Methods
+	
+	func clearSearch() {
+		self.searchPhrase = nil
+		self.fetchedResultsController = SystemFetchedResultsControllers.allVisibleSystemsResultController(self)
+		self.fetchResults(false, shouldReload: true)
+	}
+	
+	func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+		if searchText != "" {
+			if self.defaultSearchPredicate != nil {
+				self.searchPhrase = searchText
+				var predicates = [self.defaultSearchPredicate!]
+				let filterPredicate = NSPredicate(format: "%K CONTAINS[cd] %@", "systemName", searchText)
+				predicates.append(filterPredicate)
+				let fullPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
+				self.fetchedResultsController?.fetchRequest.predicate = fullPredicate
+				self.fetchResults(false, shouldReload: true)
+			}
+		} else {
+			self.clearSearch()
+		}
+	}
+	
+	func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+		self.clearSearch()
+	}
+	
+	func searchBarTextDidEndEditing(searchBar: UISearchBar) {
+		searchBar.text = self.searchPhrase
 	}
 	
 	// MARK: - Table View Methods
