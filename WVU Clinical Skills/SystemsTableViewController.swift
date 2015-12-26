@@ -16,6 +16,7 @@ import CoreData
 class SystemsTableViewController: UITableViewController, UISearchBarDelegate, NSFetchedResultsControllerDelegate, DataHelperDelegate {
 	
 	// MARK: - Properties
+	
 	var searchController: UISearchController!
 	var activityIndicator: UIActivityIndicatorView?
 	var fetchedResultsController: NSFetchedResultsController?
@@ -73,6 +74,12 @@ class SystemsTableViewController: UITableViewController, UISearchBarDelegate, NS
 		self.tableView.performSelectorOnMainThread(Selector("reloadData"), withObject: nil, waitUntilDone: false)
 	}
 	
+	func handleRefresh(refreshControl: UIRefreshControl) {
+		self.fetchResults(true, shouldReload: true)
+	}
+	
+	// MARK: - Data Helper Delegate Methods
+	
 	func didBeginDataRequest() {
 		if self.refreshControl != nil {
 			if !self.refreshControl!.refreshing {
@@ -95,10 +102,6 @@ class SystemsTableViewController: UITableViewController, UISearchBarDelegate, NS
 		}
 	}
 	
-	func handleRefresh(refreshControl: UIRefreshControl) {
-		self.fetchResults(true, shouldReload: true)
-	}
-	
 	// MARK: - Search Methods
 	
 	func initializeSearchController() {
@@ -106,6 +109,7 @@ class SystemsTableViewController: UITableViewController, UISearchBarDelegate, NS
 		self.searchController.definesPresentationContext = true
 		self.searchController.searchBar.delegate = self
 		self.tableView.tableHeaderView = self.searchController.searchBar
+		self.tableView.contentOffset = CGPointMake(0, self.searchController.searchBar.frame.size.height)
 		self.searchController.loadViewIfNeeded()
 	}
 	

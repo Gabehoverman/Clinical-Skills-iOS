@@ -25,6 +25,10 @@ import SwiftyJSON
 */
 class DataHelper: NSObject, NSURLConnectionDataDelegate {
 	
+	// TODO: Break up into Local and Remote Data Requests
+	// TODO: Handle all CRUD actions
+	// TODO: Revert to local storage in event of no Internet
+	
 	// MARK: - Properties
 	
 	let SHOULD_SEED = true

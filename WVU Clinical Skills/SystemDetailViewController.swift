@@ -12,12 +12,16 @@ import SafariServices
 
 class SystemDetailViewController: UITableViewController, NSFetchedResultsControllerDelegate, UIGestureRecognizerDelegate, SFSafariViewControllerDelegate {
 	
+	// MARK: - Properties
+	
 	var fetchedResultsController: NSFetchedResultsController?
 	
 	var system: System?
 	var links: [Link]?
 	
 	var isExpanded = false
+	
+	// MARK: - View Controller Methods
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -33,6 +37,8 @@ class SystemDetailViewController: UITableViewController, NSFetchedResultsControl
 			}
 		}
 	}
+	
+	// MARK: - Table View Methods
 	
 	override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
 		return 2
@@ -82,8 +88,14 @@ class SystemDetailViewController: UITableViewController, NSFetchedResultsControl
 		}
 	}
 	
-	func safariViewControllerDidFinish(controller: SFSafariViewController) {
-		self.dismissViewControllerAnimated(true, completion: nil)
+	override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+		if indexPath.section == 0 {
+			if self.isExpanded {
+				return UITableViewAutomaticDimension
+			}
+			return DescriptionTableViewCell.defaultHeight
+		}
+		return LinkTableViewCell.defaultHeight
 	}
 	
 	override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -96,15 +108,13 @@ class SystemDetailViewController: UITableViewController, NSFetchedResultsControl
 		return LinkTableViewCell.defaultHeight
 	}
 	
-	override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-		if indexPath.section == 0 {
-			if self.isExpanded {
-				return UITableViewAutomaticDimension
-			}
-			return DescriptionTableViewCell.defaultHeight
-		}
-		return LinkTableViewCell.defaultHeight
+	// MARK: - Safari View Controller Methods
+	
+	func safariViewControllerDidFinish(controller: SFSafariViewController) {
+		self.dismissViewControllerAnimated(true, completion: nil)
 	}
+	
+	// MARK: - Utility Methods
 	
 	func propagateTap(sender: UIGestureRecognizer) {
 		if let textView = sender.view as? UITextView {
