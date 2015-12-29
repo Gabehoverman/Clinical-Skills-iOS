@@ -61,14 +61,14 @@ class SystemDetailViewController: UITableViewController, NSFetchedResultsControl
 	
 	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		if indexPath.section == 0 {
-			let cell = tableView.dequeueReusableCellWithIdentifier(StoryboardPrototypeCellIdentifiers.descriptionCell, forIndexPath: indexPath) as! DescriptionTableViewCell
+			let cell = tableView.dequeueReusableCellWithIdentifier(StoryboardPrototypeCellIdentifiers.Description.rawValue, forIndexPath: indexPath) as! DescriptionTableViewCell
 			let propagateTap = UITapGestureRecognizer(target: self, action: Selector("propagateTap:"))
 			propagateTap.delegate = self
 			cell.descriptionTextView.addGestureRecognizer(propagateTap)
 			cell.descriptionTextView.text = self.system!.systemDescription
 			return cell
 		} else {
-			let cell = tableView.dequeueReusableCellWithIdentifier(StoryboardPrototypeCellIdentifiers.linkCell, forIndexPath: indexPath) as! LinkTableViewCell
+			let cell = tableView.dequeueReusableCellWithIdentifier(StoryboardPrototypeCellIdentifiers.Link.rawValue, forIndexPath: indexPath) as! LinkTableViewCell
 			cell.linkLabel.text = self.links![indexPath.row].title
 			return cell
 		}

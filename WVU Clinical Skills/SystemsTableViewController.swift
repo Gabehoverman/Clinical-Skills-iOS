@@ -76,6 +76,7 @@ class SystemsTableViewController: UITableViewController, UISearchBarDelegate, NS
 	
 	func handleRefresh(refreshControl: UIRefreshControl) {
 		self.fetchResults(true, shouldReload: true)
+		refreshControl.endRefreshing()
 	}
 	
 	// MARK: - Data Helper Delegate Methods
@@ -160,7 +161,7 @@ class SystemsTableViewController: UITableViewController, UISearchBarDelegate, NS
 	}
 	
 	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCellWithIdentifier(StoryboardPrototypeCellIdentifiers.systemCell) as! SystemTableViewCell
+		let cell = tableView.dequeueReusableCellWithIdentifier(StoryboardPrototypeCellIdentifiers.System.rawValue) as! SystemTableViewCell
 		let system = self.fetchedResultsController!.objectAtIndexPath(indexPath) as! System
 		cell.systemNameLabel.text = system.systemName
 		return cell
@@ -170,9 +171,9 @@ class SystemsTableViewController: UITableViewController, UISearchBarDelegate, NS
 		if let controller = self.fetchedResultsController {
 			if let system = controller.objectAtIndexPath(indexPath) as? System {
 				if system.subsystems == nil || system.subsystems?.count == 0 {
-					performSegueWithIdentifier(StoryboardSegueIdentifiers.toDetailView, sender: system)
+					performSegueWithIdentifier(StoryboardSegueIdentifiers.ToDetailsView.rawValue, sender: system)
 				} else {
-					performSegueWithIdentifier(StoryboardSegueIdentifiers.toSubsystemView, sender: system)
+					performSegueWithIdentifier(StoryboardSegueIdentifiers.ToSubsystemView.rawValue, sender: system)
 				}
 			} else {
 				print("Error getting System")
@@ -205,12 +206,12 @@ class SystemsTableViewController: UITableViewController, UISearchBarDelegate, NS
 	
 	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
 		if let system = sender as? System {
-			if segue.identifier == StoryboardSegueIdentifiers.toDetailView {
+			if segue.identifier == StoryboardSegueIdentifiers.ToDetailsView.rawValue {
 				if let destination = segue.destinationViewController as? SystemDetailViewController {
 					destination.navigationItem.title = system.systemName
 					destination.system = system
 				}
-			} else if segue.identifier == StoryboardSegueIdentifiers.toSubsystemView {
+			} else if segue.identifier == StoryboardSegueIdentifiers.ToSubsystemView.rawValue {
 				if let destination = segue.destinationViewController as? SubsystemsTableViewController {
 					destination.navigationItem.title = system.systemName
 					destination.parentSystem = system
