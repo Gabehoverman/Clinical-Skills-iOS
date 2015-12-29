@@ -14,7 +14,7 @@ class SubsystemsFetchedResultsControllers {
 	static let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
 	
 	class func allSubsystemsFetchedResultsController(parentSystem: System, delegateController: NSFetchedResultsControllerDelegate) -> NSFetchedResultsController {
-		let request = NSFetchRequest(entityName: "System")
+		let request = NSFetchRequest(entityName: ManagedObjectEntityNames.System.rawValue)
 		request.predicate = NSPredicate(format: "%K = %@", "parentSystem", parentSystem)
 		request.sortDescriptors = [NSSortDescriptor(key: "systemName", ascending: true)]
 		let controller = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
@@ -23,7 +23,7 @@ class SubsystemsFetchedResultsControllers {
 	}
 	
 	class func allVisibleSubsystemsFetchedResultsController(parentSystem: System, delegateController: NSFetchedResultsControllerDelegate) -> NSFetchedResultsController {
-		let request = NSFetchRequest(entityName: "System")
+		let request = NSFetchRequest(entityName: ManagedObjectEntityNames.System.rawValue)
 		var predicates = [NSPredicate]()
 		predicates.append(NSPredicate(format: "%K = %@", "visible", true))
 		predicates.append(NSPredicate(format: "%K = %@", "parentSystem", parentSystem))

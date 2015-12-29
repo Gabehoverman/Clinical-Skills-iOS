@@ -14,7 +14,7 @@ class LinksFetchedResultsControllers {
 	static let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
 	
 	class func allLinksFetchedResultsController(system: System, delegateController: NSFetchedResultsControllerDelegate) -> NSFetchedResultsController {
-		let request = NSFetchRequest(entityName: "Link")
+		let request = NSFetchRequest(entityName: ManagedObjectEntityNames.Link.rawValue)
 //		request.predicate = NSPredicate(format: "%K = %@", "system.systemName", system.systemName)
 		request.predicate = (NSPredicate(format: "%K CONTAINS %@", "systems", system))
 		request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true, selector: Selector("localizedStandardCompare:"))]
@@ -24,7 +24,7 @@ class LinksFetchedResultsControllers {
 	}
 	
 	class func allVisibleLinksFetchedResultsController(system: System, delegateController: NSFetchedResultsControllerDelegate) -> NSFetchedResultsController {
-		let request = NSFetchRequest(entityName: "Link")
+		let request = NSFetchRequest(entityName: ManagedObjectEntityNames.Link.rawValue)
 		var predicates = [NSPredicate]()
 		predicates.append(NSPredicate(format: "%K = %@", "visible", true))
 //		predicates.append(NSPredicate(format: "%K = %@", "system.systemName", system.systemName))
