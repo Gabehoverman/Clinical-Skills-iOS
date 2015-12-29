@@ -17,6 +17,11 @@ class RemoteConnectionManager : NSObject {
 	
 	// MARK: - Initializers
 	
+	override init() {
+		self.delegate = nil
+		self.receivedData = NSMutableData()
+	}
+	
 	init(delegate: RemoteConnectionManagerDelegate?) {
 		self.delegate = delegate
 		self.receivedData = NSMutableData()
@@ -25,19 +30,19 @@ class RemoteConnectionManager : NSObject {
 	// MARK: - Fetch Methods
 	
 	func fetchSystems() {
-		if let remoteURL = NSURL(string: RemoteDataURLStrings.systems) {
+		if let remoteURL = NSURL(string: RemoteDataURLStrings.Systems.rawValue) {
 			self.fetchWithURL(remoteURL)
 		}
 	}
 	
 	func fetchSubsystems() {
-		if let remoteURL = NSURL(string: RemoteDataURLStrings.subsystems) {
+		if let remoteURL = NSURL(string: RemoteDataURLStrings.Subsystems.rawValue) {
 			self.fetchWithURL(remoteURL)
 		}
 	}
 	
 	func fetchLinks() {
-		if let remoteURL = NSURL(string: RemoteDataURLStrings.links) {
+		if let remoteURL = NSURL(string: RemoteDataURLStrings.Links.rawValue) {
 			self.fetchWithURL(remoteURL)
 		}
 	}
@@ -66,7 +71,7 @@ class RemoteConnectionManager : NSObject {
 			self.receivedData.appendData(data!)
 		}
 		
-		self.delegate?.didFinishDataRequest?()
+		self.delegate?.didFinishDataRequestWithData?(self.receivedData)
 
 	}
 	

@@ -46,8 +46,8 @@
 //	
 //	func parseSystem(json: JSON) {
 //		for (_, system) in json {
-//			if !self.checkForDuplicate("System", key: "systemName", value: system["name"].string!) {
-//				let newSystem = NSEntityDescription.insertNewObjectForEntityForName("System", inManagedObjectContext: self.context) as! System
+//			if !self.checkForDuplicate(ManagedObjectEntityNames.System.rawValue, key: "systemName", value: system["name"].string!) {
+//				let newSystem = NSEntityDescription.insertNewObjectForEntityForName(ManagedObjectEntityNames.System.rawValue, inManagedObjectContext: self.context) as! System
 //				newSystem.systemName = system["name"].string!
 //				newSystem.systemDescription = system["description"].string!
 //				newSystem.visible = system["visible"].bool!
@@ -67,7 +67,7 @@
 //	}
 //	
 //	func parseParentSystem(system: System, parentName: String) {
-//		let parentFetchRequest = NSFetchRequest(entityName: "System")
+//		let parentFetchRequest = NSFetchRequest(entityName: ManagedObjectEntityNames.System.rawValue)
 //		parentFetchRequest.predicate = NSPredicate(format: "%K = %@", "systemName", parentName)
 //		if let parentSystem = try! self.context.executeFetchRequest(parentFetchRequest).first as? System {
 //			system.parentSystem = parentSystem
@@ -77,13 +77,13 @@
 //	func parseSubsystems(parentName: String, subsystemsJSON: [JSON]) {
 //		for subsystemJSON in subsystemsJSON {
 //			if let subsystemDict = subsystemJSON.dictionary {
-//				if !self.checkForDuplicate("System", key: "systemName", value: subsystemDict["name"]!.string!) {
-//					let newSubsystem = NSEntityDescription.insertNewObjectForEntityForName("System", inManagedObjectContext: self.context) as! System
+//				if !self.checkForDuplicate(ManagedObjectEntityNames.System.rawValue, key: "systemName", value: subsystemDict["name"]!.string!) {
+//					let newSubsystem = NSEntityDescription.insertNewObjectForEntityForName(ManagedObjectEntityNames.System.rawValue, inManagedObjectContext: self.context) as! System
 //					newSubsystem.systemName = subsystemDict["name"]!.string!
 //					newSubsystem.systemDescription = subsystemDict["description"]!.string!
 //					newSubsystem.visible = subsystemDict["visible"]!.bool!
 //					self.parseLinks(newSubsystem, linksJSON: subsystemDict["links"]!.array!)
-//					let parentSystemFetchRequest = NSFetchRequest(entityName: "System")
+//					let parentSystemFetchRequest = NSFetchRequest(entityName: ManagedObjectEntityNames.System.rawValue)
 //					parentSystemFetchRequest.predicate = NSPredicate(format: "%K = %@", "systemName", parentName)
 //					let parentSystem = try! self.context.executeFetchRequest(parentSystemFetchRequest).first as! System
 //					newSubsystem.parentSystem = parentSystem
@@ -97,15 +97,15 @@
 //		//TODO: Prevent Duplicate Links
 //		for linkJSON in linksJSON {
 //			let linkDict = linkJSON.dictionary!
-////			if !self.checkForDuplicate("Link", key: "title", value: linkDict["title"]!.string!) {
-//				let newLink = NSEntityDescription.insertNewObjectForEntityForName("Link", inManagedObjectContext: self.context) as! Link
+////			if !self.checkForDuplicate(ManagedObjectEntityNames.Link.rawValue, key: "title", value: linkDict["title"]!.string!) {
+//				let newLink = NSEntityDescription.insertNewObjectForEntityForName(ManagedObjectEntityNames.Link.rawValue, inManagedObjectContext: self.context) as! Link
 //				newLink.title = linkDict["title"]!.string!
 //				newLink.link = linkDict["link"]!.string!
 //				newLink.visible = linkDict["visible"]!.bool!
 //				newLink.addSystem(system)
 //				system.addLink(newLink)
 ////			} else {
-////				let linkFetchRequest = NSFetchRequest(entityName: "Link")
+////				let linkFetchRequest = NSFetchRequest(entityName: ManagedObjectEntityNames.Link.rawValue)
 ////				linkFetchRequest.predicate = NSPredicate(format: "%K = %@", "title", linkDict["title"]!.string!)
 ////				if let link = try! self.context.executeFetchRequest(linkFetchRequest).first as? Link {
 ////					link.addSystem(system)
@@ -133,7 +133,7 @@
 //		Prints all System data currently in the database
 //	*/
 //	func printAllSystems() {
-//		let systemFetchRequest = NSFetchRequest(entityName: "System")
+//		let systemFetchRequest = NSFetchRequest(entityName: ManagedObjectEntityNames.System.rawValue)
 //		systemFetchRequest.predicate = NSPredicate(format: "parentSystem = nil")
 //		systemFetchRequest.sortDescriptors = [NSSortDescriptor(key: "systemName", ascending: true)]
 //		let allSystems = (try! self.context.executeFetchRequest(systemFetchRequest)) as! [System]
@@ -147,7 +147,7 @@
 //		Prints all Subsystem data currently in the database
 //	*/
 //	func printAllSubsystems() {
-//		let subsystemFetchRequest = NSFetchRequest(entityName: "System")
+//		let subsystemFetchRequest = NSFetchRequest(entityName: ManagedObjectEntityNames.System.rawValue)
 //		subsystemFetchRequest.predicate = NSPredicate(format: "parentSystem != nil")
 //		subsystemFetchRequest.sortDescriptors = [NSSortDescriptor(key: "systemName", ascending: true)]
 //		let allSubsystems = (try! self.context.executeFetchRequest(subsystemFetchRequest)) as! [System]
@@ -159,7 +159,7 @@
 //	}
 //	
 //	func printAllLinks() {
-//		let linkFetchRequest = NSFetchRequest(entityName: "Link")
+//		let linkFetchRequest = NSFetchRequest(entityName: ManagedObjectEntityNames.Link.rawValue)
 //		linkFetchRequest.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
 //		let allLinks = try! self.context.executeFetchRequest(linkFetchRequest) as! [Link]
 //		print("LINKS")

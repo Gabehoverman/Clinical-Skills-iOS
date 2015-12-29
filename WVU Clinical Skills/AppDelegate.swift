@@ -9,17 +9,42 @@
 import UIKit
 import CoreData
 
-@UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+import SwiftyJSON
 
-	let SHOULD_REFRESH_DATABASE_ON_LAUNCH = true
+@UIApplicationMain
+class AppDelegate: UIResponder, UIApplicationDelegate, RemoteConnectionManagerDelegate, NSFetchedResultsControllerDelegate {
 	
     var window: UIWindow?
 	
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+		
+		let connector = RemoteConnectionManager(delegate: self)
+		connector.fetchSystems()
+		
         return true
     }
+	
+	func didBeginDataRequest() {
+		print("Beginning Request")
+	}
+	
+	func didFinishDataRequestWithData(receivedData: NSData) {
+		print("Finishing Requst")
+		let parser = JSONParser(jsonData: receivedData)
+		let systems = parser.parseSystems()
+		for system in systems {
+			self.managedObjectContext.insertObject(system)
+		}
+		do {
+			print("\(self.managedObjectContext.insertedObjects.count) Objects to be Saved")
+			print("Saving Managed Object Context")
+			try self.managedObjectContext.save()
+		} catch {
+			print("Error saving managed object context")
+			print(error)
+		}
+	}
 	
 	func applicationWillTerminate(application: UIApplication) {
 		// Save all data when app terminates
@@ -45,17 +70,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// Create the coordinator and store
 		let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
 		let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("WVUClinicalSkills")
-		
-		
-		if self.SHOULD_REFRESH_DATABASE_ON_LAUNCH {
-			do {
-				try NSFileManager.defaultManager().removeItemAtURL(url)
-			} catch _ {
-				print("Error removing the database at \(url)")
-			}
-		}
-		
-		
 		var failureReason = "There was an error creating or loading the application's saved data."
 		do {
 			try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil)

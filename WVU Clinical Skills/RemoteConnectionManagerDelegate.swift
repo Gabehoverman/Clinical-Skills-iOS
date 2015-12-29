@@ -11,4 +11,5 @@ import Foundation
 @objc protocol RemoteConnectionManagerDelegate {
 	optional func didBeginDataRequest()
 	optional func didFinishDataRequest()
+	optional func didFinishDataRequestWithData(receivedData: NSData)
 }
