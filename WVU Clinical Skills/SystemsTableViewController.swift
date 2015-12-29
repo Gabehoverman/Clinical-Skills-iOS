@@ -13,7 +13,7 @@ import CoreData
 /**
 	Table View displaying all System data inside the database
 */
-class SystemsTableViewController: UITableViewController, UISearchBarDelegate, NSFetchedResultsControllerDelegate, DataHelperDelegate {
+class SystemsTableViewController: UITableViewController, UISearchBarDelegate, NSFetchedResultsControllerDelegate {
 	
 	// MARK: - Properties
 	
@@ -22,7 +22,7 @@ class SystemsTableViewController: UITableViewController, UISearchBarDelegate, NS
 	var fetchedResultsController: NSFetchedResultsController?
 	
 	var isInitialLoad = true
-	var dataHelper: DataHelper?
+//	var dataHelper: DataHelper?
 	
 	var defaultSearchPredicate: NSPredicate?
 	var searchPhrase: String?
@@ -32,9 +32,9 @@ class SystemsTableViewController: UITableViewController, UISearchBarDelegate, NS
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		self.searchController = UISearchController(searchResultsController: nil)
-		if let context = (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext {
-			self.dataHelper = DataHelper(context: context, delegate: self)
-		}
+//		if let context = (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext {
+//			self.dataHelper = DataHelper(context: context, delegate: self)
+//		}
 		self.refreshControl?.addTarget(self, action: Selector("handleRefresh:"), forControlEvents: .ValueChanged)
 		self.initializeSearchController()
 		self.initializeActivityIndicator()
@@ -55,9 +55,9 @@ class SystemsTableViewController: UITableViewController, UISearchBarDelegate, NS
 		}
 		do {
 			if shouldAskForData {
-				if self.dataHelper != nil {
-					self.dataHelper!.seed()
-				}
+//				if self.dataHelper != nil {
+//					self.dataHelper!.seed()
+//				}
 			}
 			try self.fetchedResultsController!.performFetch()
 			
