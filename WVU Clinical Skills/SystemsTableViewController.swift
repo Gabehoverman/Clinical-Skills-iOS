@@ -79,6 +79,33 @@ class SystemsTableViewController: UITableViewController, UISearchBarDelegate, NS
 		refreshControl.endRefreshing()
 	}
 	
+	
+	@IBAction func clear(sender: AnyObject) {
+		let alert = UIAlertController(title: "Clear", message: "What should be cleared?", preferredStyle: .ActionSheet)
+		alert.addAction(UIAlertAction(title: "Clear All", style: .Destructive) { (action) -> Void in
+				(UIApplication.sharedApplication().delegate as! AppDelegate).clearAll()
+			}
+		)
+		alert.addAction(UIAlertAction(title: "Clear Systems", style: .Default) { (action) -> Void in
+				(UIApplication.sharedApplication().delegate as! AppDelegate).clearSystems()
+			}
+		)
+		alert.addAction(UIAlertAction(title: "Clear Subsystems", style: .Default) { (action) -> Void in
+				(UIApplication.sharedApplication().delegate as! AppDelegate).clearSubsystems()
+			}
+		)
+		alert.addAction(UIAlertAction(title: "Clear Links", style: .Default) { (action) -> Void in
+				(UIApplication.sharedApplication().delegate as! AppDelegate).clearLinks()
+			}
+		)
+		alert.addAction(UIAlertAction(title: "Nevermind", style: .Cancel) { (action) -> Void in
+				self.fetchResults(false, shouldReload: true)
+				self.dismissViewControllerAnimated(true, completion: nil)
+			}
+		)
+		self.presentViewController(alert, animated: true, completion: nil)
+	}
+	
 	// MARK: - Data Helper Delegate Methods
 	
 	func didBeginDataRequest() {

@@ -21,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RemoteConnectionManagerDe
 		
 		let connector = RemoteConnectionManager(delegate: self)
 		connector.fetchSystems()
+		connector.fetchSubsystems()
 		
         return true
     }
@@ -51,7 +52,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RemoteConnectionManagerDe
 		self.saveContext()
 	}
 	
-	// MARK: - Core Data stack
+	// MARK: - Core Data Methods
 	
 	lazy var applicationDocumentsDirectory: NSURL = {
 		// The directory the application uses to store the Core Data store file. This code uses a directory named "uk.co.plymouthsoftware.core_data" in the application's documents Application Support directory.
@@ -99,12 +100,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RemoteConnectionManagerDe
 		return managedObjectContext
 	}()
 	
-	// MARK: - Core Data Saving support
+	// MARK: - Core Data Save Methods
 	
 	func saveContext () {
 		if managedObjectContext.hasChanges {
 			do {
+				print("\(self.managedObjectContext.insertedObjects.count) Objects to be Inserted")
 				try managedObjectContext.save()
+				print("Saved Managed Object Context")
 			} catch {
 				// Replace this implementation with code to handle the error appropriately.
 				// abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
@@ -114,7 +117,71 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RemoteConnectionManagerDe
 			}
 		}
 	}
-
-
+	
+	// MARK: - Core Data Clear Methods
+	
+	func clearSystems() {
+		do {
+			let allSystemsRequest = NSFetchRequest(entityName: ManagedObjectEntityNames.System.rawValue)
+			allSystemsRequest.predicate = NSPredicate(format: "%K = nil", ManagedObjectEntityPropertyKeys.System.Parent.rawValue)
+			var allSystems = try self.managedObjectContext.executeFetchRequest(allSystemsRequest)
+			print("\(allSystems.count) Objects to be Deleted")
+			for system in allSystems {
+				self.managedObjectContext.deleteObject(system as! NSManagedObject)
+			}
+			allSystems.removeAll(keepCapacity: false)
+			print("Saving Managed Object Context")
+			try self.managedObjectContext.save()
+		} catch {
+		}
+	}
+	
+	func clearSubsystems() {
+		do {
+			let allSubsystemsRequest = NSFetchRequest(entityName: ManagedObjectEntityNames.System.rawValue)
+			allSubsystemsRequest.predicate = NSPredicate(format: "%K != nil", ManagedObjectEntityPropertyKeys.System.Parent.rawValue)
+			var allSubsystems = try self.managedObjectContext.executeFetchRequest(allSubsystemsRequest)
+			print("\(allSubsystems.count) Objects to be Deleted")
+			for subsystem in allSubsystems {
+				self.managedObjectContext.deleteObject(subsystem as! NSManagedObject)
+			}
+			allSubsystems.removeAll(keepCapacity: false)
+			print("Saving Managed Object Context")
+			try self.managedObjectContext.save()
+		} catch {
+		}
+	}
+	
+	func clearLinks() {
+		do {
+			let allLinksRequest = NSFetchRequest(entityName: ManagedObjectEntityNames.Link.rawValue)
+			var allLinks = try self.managedObjectContext.executeFetchRequest(allLinksRequest)
+			print("\(allLinks.count) Objects to be Deleted")
+			for link in allLinks {
+				self.managedObjectContext.deleteObject(link as! NSManagedObject)
+			}
+			allLinks.removeAll(keepCapacity: false)
+			print("Saving Managed Object Context")
+			try self.managedObjectContext.save()
+		} catch {
+		}
+	}
+	
+	func clearAll() {
+		for entityName in ManagedObjectEntityNames.allValues {
+			do {
+				let request = NSFetchRequest(entityName: entityName.rawValue)
+				var allObjects = try self.managedObjectContext.executeFetchRequest(request)
+				print("\(allObjects.count) Objects to be Deleted")
+				for object in allObjects {
+					self.managedObjectContext.deleteObject(object as! NSManagedObject)
+				}
+				allObjects.removeAll(keepCapacity: false)
+				print("Saving Managed Object Context")
+				try self.managedObjectContext.save()
+			} catch {
+			}
+		}
+	}
 }
 
