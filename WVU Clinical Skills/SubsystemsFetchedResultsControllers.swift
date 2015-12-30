@@ -15,8 +15,8 @@ class SubsystemsFetchedResultsControllers {
 	
 	class func allSubsystemsFetchedResultsController(parentSystem: System, delegateController: NSFetchedResultsControllerDelegate) -> NSFetchedResultsController {
 		let request = NSFetchRequest(entityName: ManagedObjectEntityNames.System.rawValue)
-		request.predicate = NSPredicate(format: "%K = %@", "parentSystem", parentSystem)
-		request.sortDescriptors = [NSSortDescriptor(key: "systemName", ascending: true)]
+		request.predicate = NSPredicate(format: "%K = %@", ManagedObjectEntityPropertyKeys.Subsystem.Parent.rawValue, parentSystem)
+		request.sortDescriptors = [NSSortDescriptor(key: ManagedObjectEntityPropertyKeys.Subsystem.Name.rawValue, ascending: true)]
 		let controller = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
 		controller.delegate = delegateController
 		return controller
@@ -25,10 +25,10 @@ class SubsystemsFetchedResultsControllers {
 	class func allVisibleSubsystemsFetchedResultsController(parentSystem: System, delegateController: NSFetchedResultsControllerDelegate) -> NSFetchedResultsController {
 		let request = NSFetchRequest(entityName: ManagedObjectEntityNames.System.rawValue)
 		var predicates = [NSPredicate]()
-		predicates.append(NSPredicate(format: "%K = %@", "visible", true))
-		predicates.append(NSPredicate(format: "%K = %@", "parentSystem", parentSystem))
+		predicates.append(NSPredicate(format: "%K = %@", ManagedObjectEntityPropertyKeys.Subsystem.Visible.rawValue, true))
+		predicates.append(NSPredicate(format: "%K = %@", ManagedObjectEntityPropertyKeys.Subsystem.Parent.rawValue, parentSystem))
 		request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
-		request.sortDescriptors = [NSSortDescriptor(key: "systemName", ascending: true)]
+		request.sortDescriptors = [NSSortDescriptor(key: ManagedObjectEntityPropertyKeys.Subsystem.Name.rawValue, ascending: true)]
 		let controller = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
 		controller.delegate = delegateController
 		return controller

@@ -15,9 +15,8 @@ class LinksFetchedResultsControllers {
 	
 	class func allLinksFetchedResultsController(system: System, delegateController: NSFetchedResultsControllerDelegate) -> NSFetchedResultsController {
 		let request = NSFetchRequest(entityName: ManagedObjectEntityNames.Link.rawValue)
-//		request.predicate = NSPredicate(format: "%K = %@", "system.systemName", system.systemName)
-		request.predicate = (NSPredicate(format: "%K CONTAINS %@", "systems", system))
-		request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true, selector: Selector("localizedStandardCompare:"))]
+		request.predicate = (NSPredicate(format: "%K CONTAINS %@", ManagedObjectEntityPropertyKeys.Link.Systems.rawValue , system))
+		request.sortDescriptors = [NSSortDescriptor(key: ManagedObjectEntityPropertyKeys.Link.Title.rawValue, ascending: true, selector: Selector("localizedStandardCompare:"))]
 		let controller = NSFetchedResultsController(fetchRequest: request, managedObjectContext: self.context, sectionNameKeyPath: nil, cacheName: nil)
 		controller.delegate = delegateController
 		return controller
@@ -26,11 +25,10 @@ class LinksFetchedResultsControllers {
 	class func allVisibleLinksFetchedResultsController(system: System, delegateController: NSFetchedResultsControllerDelegate) -> NSFetchedResultsController {
 		let request = NSFetchRequest(entityName: ManagedObjectEntityNames.Link.rawValue)
 		var predicates = [NSPredicate]()
-		predicates.append(NSPredicate(format: "%K = %@", "visible", true))
-//		predicates.append(NSPredicate(format: "%K = %@", "system.systemName", system.systemName))
-		predicates.append(NSPredicate(format: "%K CONTAINS %@", "systems", system))
+		predicates.append(NSPredicate(format: "%K = %@", ManagedObjectEntityPropertyKeys.Link.Visible.rawValue, true))
+		predicates.append(NSPredicate(format: "%K CONTAINS %@", ManagedObjectEntityPropertyKeys.Link.Systems.rawValue, system))
 		request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
-		request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true, selector: Selector("localizedStandardCompare:"))]
+		request.sortDescriptors = [NSSortDescriptor(key: ManagedObjectEntityPropertyKeys.Link.Title.rawValue, ascending: true, selector: Selector("localizedStandardCompare:"))]
 		let controller = NSFetchedResultsController(fetchRequest: request, managedObjectContext: self.context, sectionNameKeyPath: nil, cacheName: nil)
 		controller.delegate = delegateController
 		return controller

@@ -125,7 +125,7 @@ class SystemsTableViewController: UITableViewController, UISearchBarDelegate, NS
 			if self.defaultSearchPredicate != nil {
 				self.searchPhrase = searchText
 				var predicates = [self.defaultSearchPredicate!]
-				let filterPredicate = NSPredicate(format: "%K CONTAINS[cd] %@", "systemName", searchText)
+				let filterPredicate = NSPredicate(format: "%K CONTAINS[cd] %@", ManagedObjectEntityPropertyKeys.System.Name.rawValue, searchText)
 				predicates.append(filterPredicate)
 				let fullPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
 				self.fetchedResultsController?.fetchRequest.predicate = fullPredicate
