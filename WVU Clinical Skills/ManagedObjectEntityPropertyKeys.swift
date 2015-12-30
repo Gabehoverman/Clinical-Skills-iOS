@@ -15,7 +15,7 @@ enum ManagedObjectEntityPropertyKeys {
 		case Description = "systemDescription"
 		case Visible = "visible"
 		case Links = "links"
-		case Parent = "parent"
+		case Parent = "parentSystem"
 		case Subsystems = "subsystems"
 	}
 	
@@ -24,7 +24,8 @@ enum ManagedObjectEntityPropertyKeys {
 		case Description = "systemDescription"
 		case Visible = "visible"
 		case Links = "links"
-		case Parent = "parent"
+		case Parent = "parentSystem"
+		case ParentName = "parent_name"
 		case Subsystems = "subsystems"
 	}
 	

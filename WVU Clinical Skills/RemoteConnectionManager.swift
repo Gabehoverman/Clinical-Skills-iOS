@@ -12,19 +12,16 @@ class RemoteConnectionManager : NSObject {
 	
 	// MARK: - Properties
 	
-	private var receivedData: NSMutableData
 	var delegate: RemoteConnectionManagerDelegate?
 	
 	// MARK: - Initializers
 	
 	override init() {
 		self.delegate = nil
-		self.receivedData = NSMutableData()
 	}
 	
 	init(delegate: RemoteConnectionManagerDelegate?) {
 		self.delegate = delegate
-		self.receivedData = NSMutableData()
 	}
 	
 	// MARK: - Fetch Methods
@@ -68,10 +65,8 @@ class RemoteConnectionManager : NSObject {
 		}
 		
 		if data != nil {
-			self.receivedData.appendData(data!)
+			self.delegate?.didFinishDataRequestWithData?(data!)
 		}
-		
-		self.delegate?.didFinishDataRequestWithData?(self.receivedData)
 
 	}
 	

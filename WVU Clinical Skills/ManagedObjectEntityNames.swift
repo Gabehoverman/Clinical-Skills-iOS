@@ -9,6 +9,9 @@
 import Foundation
 
 enum ManagedObjectEntityNames : String {
+	
+	static let allValues = [System, Link]
+	
 	case System = "System"
 	case Link = "Link"
 }
