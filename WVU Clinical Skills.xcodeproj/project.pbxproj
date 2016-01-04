@@ -18,6 +18,7 @@
 		01394CBB1C23702600D555B4 /* subsystems.json in Resources */ = {isa = PBXBuildFile; fileRef = 01394CBA1C23702600D555B4 /* subsystems.json */; };
 		01394CBF1C23745F00D555B4 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01394CBE1C23745F00D555B4 /* SwiftyJSON.framework */; };
 		013D8AF51C2014300026B574 /* SystemDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013D8AF41C2014300026B574 /* SystemDetailViewController.swift */; };
+		0143CE1B1C34D811002F7755 /* RemoteDataJSONKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0143CE1A1C34D811002F7755 /* RemoteDataJSONKeys.swift */; };
 		01733F031C3269F10025BDBD /* ManagedObjectEntityNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01733F021C3269F10025BDBD /* ManagedObjectEntityNames.swift */; };
 		019597141C20A2740004E579 /* SystemFetchedResultsControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019597131C20A2740004E579 /* SystemFetchedResultsControllers.swift */; };
 		01B259301C1FC8CD0075964F /* WVUClinicalSkillsCoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 01B2592E1C1FC8CD0075964F /* WVUClinicalSkillsCoreDataModel.xcdatamodeld */; };
@@ -71,6 +72,7 @@
 		01394CBA1C23702600D555B4 /* subsystems.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = subsystems.json; sourceTree = "<group>"; };
 		01394CBE1C23745F00D555B4 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
 		013D8AF41C2014300026B574 /* SystemDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemDetailViewController.swift; sourceTree = "<group>"; };
+		0143CE1A1C34D811002F7755 /* RemoteDataJSONKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteDataJSONKeys.swift; sourceTree = "<group>"; };
 		01733F021C3269F10025BDBD /* ManagedObjectEntityNames.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedObjectEntityNames.swift; sourceTree = "<group>"; };
 		019597131C20A2740004E579 /* SystemFetchedResultsControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemFetchedResultsControllers.swift; sourceTree = "<group>"; };
 		01B2592F1C1FC8CD0075964F /* WVUClinicalSkillsCoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WVUClinicalSkillsCoreDataModel.xcdatamodel; sourceTree = "<group>"; };
@@ -167,6 +169,7 @@
 				01F2D0A01C24CC0B0056F039 /* StoryboardPrototypeCellIdentifiers.swift */,
 				01733F021C3269F10025BDBD /* ManagedObjectEntityNames.swift */,
 				01B87F321C33A17C00A83420 /* ManagedObjectEntityPropertyKeys.swift */,
+				0143CE1A1C34D811002F7755 /* RemoteDataJSONKeys.swift */,
 				01D3B84F1C2F5E8E007CE1D2 /* RemoteDataURLStrings.swift */,
 				01C994811C1F887900491F94 /* Assets.xcassets */,
 				01C994831C1F887900491F94 /* LaunchScreen.storyboard */,
@@ -432,6 +435,7 @@
 				0118E6EF1C229E9700989F34 /* StoryboardSegueIdentifiers.swift in Sources */,
 				01D3B84C1C2F56B7007CE1D2 /* DatastoreManagerDelegate.swift in Sources */,
 				01D3B84A1C2F5643007CE1D2 /* SeedManager.swift in Sources */,
+				0143CE1B1C34D811002F7755 /* RemoteDataJSONKeys.swift in Sources */,
 				01F2D0A11C24CC0B0056F039 /* StoryboardPrototypeCellIdentifiers.swift in Sources */,
 				0116CADF1C1FB1920006706C /* SystemsTableViewController.swift in Sources */,
 				011FF5F31C239B9B0097BD6A /* Link.swift in Sources */,

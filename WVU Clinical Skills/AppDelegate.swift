@@ -32,19 +32,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RemoteConnectionManagerDe
 	
 	func didFinishDataRequestWithData(receivedData: NSData) {
 		print("Finishing Requst")
+		
+		let manager = DatastoreManager()
 		let parser = JSONParser(jsonData: receivedData)
-		let systems = parser.parseSystems()
-		for system in systems {
-			self.managedObjectContext.insertObject(system)
+		if let type = parser.dataType?.lowercaseString where type == "system" {
+			let systemDicts = parser.parseSystems()
+			for systemDict in systemDicts {
+				manager.storeSystemFromDictionary(systemDict)
+			}
+		} else if let type = parser.dataType?.lowercaseString where type == "subsystem" {
+			let subsystemDicts = parser.parseSubsystems()
+			for subsystemDict in subsystemDicts {
+				manager.storeSubsystemFromDictionary(subsystemDict)
+			}
 		}
-		do {
-			print("\(self.managedObjectContext.insertedObjects.count) Objects to be Saved")
-			print("Saving Managed Object Context")
-			try self.managedObjectContext.save()
-		} catch {
-			print("Error saving managed object context")
-			print(error)
-		}
+		manager.save()
 	}
 	
 	func applicationWillTerminate(application: UIApplication) {
@@ -105,9 +107,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RemoteConnectionManagerDe
 	func saveContext () {
 		if managedObjectContext.hasChanges {
 			do {
-				print("\(self.managedObjectContext.insertedObjects.count) Objects to be Inserted")
 				try managedObjectContext.save()
-				print("Saved Managed Object Context")
 			} catch {
 				// Replace this implementation with code to handle the error appropriately.
 				// abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
