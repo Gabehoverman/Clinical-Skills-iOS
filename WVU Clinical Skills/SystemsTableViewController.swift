@@ -9,36 +9,40 @@
 import Foundation
 import UIKit
 import CoreData
+import BRYXBanner
 
 /**
 	Table View displaying all System data inside the database
 */
-class SystemsTableViewController: UITableViewController, UISearchBarDelegate, NSFetchedResultsControllerDelegate {
+class SystemsTableViewController: UITableViewController, UISearchBarDelegate, NSFetchedResultsControllerDelegate, RemoteConnectionManagerDelegate, DatastoreManagerDelegate {
 	
 	// MARK: - Properties
 	
 	var searchController: UISearchController!
 	var activityIndicator: UIActivityIndicatorView?
 	var fetchedResultsController: NSFetchedResultsController?
+	var remoteConnectionManager: RemoteConnectionManager?
 	
 	var isInitialLoad = true
-//	var dataHelper: DataHelper?
 	
 	var defaultSearchPredicate: NSPredicate?
 	var searchPhrase: String?
 	
 	// MARK: - View Controller Methods
 	
+	override func viewWillAppear(animated: Bool) {
+		if self.isInitialLoad {
+			self.remoteConnectionManager = RemoteConnectionManager(delegate: self)
+			self.remoteConnectionManager!.fetchSystems()
+		}
+	}
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		self.searchController = UISearchController(searchResultsController: nil)
-//		if let context = (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext {
-//			self.dataHelper = DataHelper(context: context, delegate: self)
-//		}
 		self.refreshControl?.addTarget(self, action: Selector("handleRefresh:"), forControlEvents: .ValueChanged)
 		self.initializeSearchController()
 		self.initializeActivityIndicator()
-		self.fetchResults(self.isInitialLoad, shouldReload: false)
 	}
 	
 	override func viewWillDisappear(animated: Bool) {
@@ -48,19 +52,13 @@ class SystemsTableViewController: UITableViewController, UISearchBarDelegate, NS
 
 	// MARK: - Data Methods
 	
-	func fetchResults(shouldAskForData: Bool, shouldReload: Bool) {
+	func fetchResultsWithReload(shouldReload: Bool) {
 		if self.fetchedResultsController == nil {
 			self.fetchedResultsController = SystemFetchedResultsControllers.allVisibleSystemsResultController(self)
-			self.defaultSearchPredicate = self.fetchedResultsController?.fetchRequest.predicate
+			self.defaultSearchPredicate = self.fetchedResultsController!.fetchRequest.predicate
 		}
 		do {
-			if shouldAskForData {
-//				if self.dataHelper != nil {
-//					self.dataHelper!.seed()
-//				}
-			}
 			try self.fetchedResultsController!.performFetch()
-			
 			if shouldReload {
 				self.tableView.reloadData()
 			}
@@ -69,13 +67,8 @@ class SystemsTableViewController: UITableViewController, UISearchBarDelegate, NS
 		}
 	}
 	
-	func foundNewData() {
-		self.fetchResults(false, shouldReload: false)
-		self.tableView.performSelectorOnMainThread(Selector("reloadData"), withObject: nil, waitUntilDone: false)
-	}
-	
 	func handleRefresh(refreshControl: UIRefreshControl) {
-		self.fetchResults(true, shouldReload: true)
+		self.fetchResultsWithReload(true)
 		refreshControl.endRefreshing()
 	}
 	
@@ -99,14 +92,14 @@ class SystemsTableViewController: UITableViewController, UISearchBarDelegate, NS
 			}
 		)
 		alert.addAction(UIAlertAction(title: "Nevermind", style: .Cancel) { (action) -> Void in
-				self.fetchResults(false, shouldReload: true)
+				self.fetchResultsWithReload(true)
 				self.dismissViewControllerAnimated(true, completion: nil)
 			}
 		)
 		self.presentViewController(alert, animated: true, completion: nil)
 	}
 	
-	// MARK: - Data Helper Delegate Methods
+	// MARK: - Remote Connection Manager Delegate Methods
 	
 	func didBeginDataRequest() {
 		if self.refreshControl != nil {
@@ -116,18 +109,26 @@ class SystemsTableViewController: UITableViewController, UISearchBarDelegate, NS
 		}
 	}
 	
-	func didReceiveData() {
-		self.foundNewData()
+	func didFinishDataRequestWithData(receivedData: NSData) {
+		let parser = JSONParser(jsonData: receivedData)
+		let manager = DatastoreManager(delegate: self)
+		if parser.dataType == JSONParser.DataTypes.System.rawValue {
+			manager.storeSystems(parser.parseSystems())
+			self.remoteConnectionManager!.fetchSubsystems()
+			self.performSelectorOnMainThread(Selector("showBanner"), withObject: nil, waitUntilDone: true)
+		} else if parser.dataType == JSONParser.DataTypes.Subsystem.rawValue {
+			manager.storeSubsystems(parser.parseSubsystems())
+		}
 	}
 	
 	func didFinishDataRequest() {
-		if self.refreshControl != nil {
-			if self.refreshControl!.refreshing {
-				self.refreshControl!.endRefreshing()
-			} else {
-				self.performSelectorOnMainThread("hideActivityIndicator", withObject: nil, waitUntilDone: false)
-			}
-		}
+		self.performSelectorOnMainThread("hideActivityIndicator", withObject: nil, waitUntilDone: false)
+	}
+	
+	// MARK: - Datastore Manager Delegate Methods
+	
+	func didFinishStoring() {
+		self.performSelectorOnMainThread("fetchResultsWithReload:", withObject: true, waitUntilDone: false)
 	}
 	
 	// MARK: - Search Methods
@@ -144,7 +145,7 @@ class SystemsTableViewController: UITableViewController, UISearchBarDelegate, NS
 	func clearSearch() {
 		self.searchPhrase = nil
 		self.fetchedResultsController = SystemFetchedResultsControllers.allVisibleSystemsResultController(self)
-		self.fetchResults(false, shouldReload: true)
+		self.fetchResultsWithReload(true)
 	}
 	
 	func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
@@ -156,7 +157,7 @@ class SystemsTableViewController: UITableViewController, UISearchBarDelegate, NS
 				predicates.append(filterPredicate)
 				let fullPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
 				self.fetchedResultsController?.fetchRequest.predicate = fullPredicate
-				self.fetchResults(false, shouldReload: true)
+				self.fetchResultsWithReload(true)
 			}
 		} else {
 			self.clearSearch()
@@ -189,18 +190,18 @@ class SystemsTableViewController: UITableViewController, UISearchBarDelegate, NS
 	
 	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCellWithIdentifier(StoryboardPrototypeCellIdentifiers.System.rawValue) as! SystemTableViewCell
-		let system = self.fetchedResultsController!.objectAtIndexPath(indexPath) as! System
-		cell.systemNameLabel.text = system.systemName
+		let system = self.fetchedResultsController!.objectAtIndexPath(indexPath) as! SystemManagedObject
+		cell.systemNameLabel.text = system.name
 		return cell
 	}
 	
 	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 		if let controller = self.fetchedResultsController {
-			if let system = controller.objectAtIndexPath(indexPath) as? System {
-				if system.subsystems == nil || system.subsystems?.count == 0 {
-					performSegueWithIdentifier(StoryboardSegueIdentifiers.ToDetailsView.rawValue, sender: system)
+			if let managedSystem = controller.objectAtIndexPath(indexPath) as? SystemManagedObject {
+				if managedSystem.subsystems.count == 0 {
+					performSegueWithIdentifier(StoryboardSegueIdentifiers.ToDetailsView.rawValue, sender: managedSystem)
 				} else {
-					performSegueWithIdentifier(StoryboardSegueIdentifiers.ToSubsystemView.rawValue, sender: system)
+					performSegueWithIdentifier(StoryboardSegueIdentifiers.ToSubsystemView.rawValue, sender: managedSystem)
 				}
 			} else {
 				print("Error getting System")
@@ -232,19 +233,32 @@ class SystemsTableViewController: UITableViewController, UISearchBarDelegate, NS
 	// MARK: - Navigation Methods
 	
 	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-		if let system = sender as? System {
+		if let managedSystem = sender as? SystemManagedObject {
 			if segue.identifier == StoryboardSegueIdentifiers.ToDetailsView.rawValue {
 				if let destination = segue.destinationViewController as? SystemDetailViewController {
-					destination.navigationItem.title = system.systemName
-					destination.system = system
+					destination.navigationItem.title = managedSystem.name
+					destination.managedSystem = managedSystem
 				}
 			} else if segue.identifier == StoryboardSegueIdentifiers.ToSubsystemView.rawValue {
 				if let destination = segue.destinationViewController as? SubsystemsTableViewController {
-					destination.navigationItem.title = system.systemName
-					destination.parentSystem = system
+					destination.navigationItem.title = managedSystem.name
+					destination.managedParentSystem = managedSystem
 				}
 			}
 		}
+	}
+	
+	// MARK: - Utility Methods
+	
+	func showBanner() {
+		var color = UIColor.whiteColor()
+		if self.remoteConnectionManager!.statusSuccess {
+			color = UIColor(red: 90.0/255.0, green: 212.0/255.0, blue: 39.0/255.0, alpha: 0.9)
+		} else {
+			color = UIColor(red: 255.0/255.0, green: 91.0/255.0, blue: 55.0/255.0, alpha: 0.9)
+		}
+		let banner = Banner(title: "HTTP Response", subtitle: self.remoteConnectionManager!.statusMessage, image: nil, backgroundColor: color, didTapBlock: nil)
+		banner.show()
 	}
 	
 }

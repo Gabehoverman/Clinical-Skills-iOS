@@ -16,8 +16,8 @@ class SystemDetailViewController: UITableViewController, NSFetchedResultsControl
 	
 	var fetchedResultsController: NSFetchedResultsController?
 	
-	var system: System?
-	var links: [Link]?
+	var managedSystem: SystemManagedObject?
+	var managedLinks: [LinkManagedObject]?
 	
 	var isExpanded = false
 	
@@ -25,12 +25,12 @@ class SystemDetailViewController: UITableViewController, NSFetchedResultsControl
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		if self.system != nil {
-			self.fetchedResultsController = LinksFetchedResultsControllers.allVisibleLinksFetchedResultsController(self.system!, delegateController: self)
+		if self.managedSystem != nil {
+			self.fetchedResultsController = LinksFetchedResultsControllers.allVisibleLinksFetchedResultsController(self.managedSystem!, delegateController: self)
 			do {
 				try self.fetchedResultsController!.performFetch()
-				if let allLinks = self.fetchedResultsController!.fetchedObjects as? [Link] {
-					self.links = allLinks
+				if let allLinks = self.fetchedResultsController!.fetchedObjects as? [LinkManagedObject] {
+					self.managedLinks = allLinks
 				}
 			} catch {
 				print("Error fetching links")
@@ -56,7 +56,11 @@ class SystemDetailViewController: UITableViewController, NSFetchedResultsControl
 		if section == 0 {
 			return 1
 		}
-		return self.links!.count
+		if self.managedLinks != nil {
+			return self.managedLinks!.count
+		} else {
+			return 0
+		}
 	}
 	
 	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -65,11 +69,11 @@ class SystemDetailViewController: UITableViewController, NSFetchedResultsControl
 			let propagateTap = UITapGestureRecognizer(target: self, action: Selector("propagateTap:"))
 			propagateTap.delegate = self
 			cell.descriptionTextView.addGestureRecognizer(propagateTap)
-			cell.descriptionTextView.text = self.system!.systemDescription
+			cell.descriptionTextView.text = self.managedSystem!.details
 			return cell
 		} else {
 			let cell = tableView.dequeueReusableCellWithIdentifier(StoryboardPrototypeCellIdentifiers.Link.rawValue, forIndexPath: indexPath) as! LinkTableViewCell
-			cell.linkLabel.text = self.links![indexPath.row].title
+			cell.linkLabel.text = self.managedLinks![indexPath.row].title
 			return cell
 		}
 	}
@@ -79,7 +83,7 @@ class SystemDetailViewController: UITableViewController, NSFetchedResultsControl
 			self.isExpanded = !self.isExpanded
 			self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
 		} else {
-			if let link = self.links?[indexPath.row] {
+			if let link = self.managedLinks?[indexPath.row] {
 				if let url = NSURL(string: link.link) {
 					let safariViewController = SFSafariViewController(URL: url)
 					self.presentViewController(safariViewController, animated: true, completion: nil)

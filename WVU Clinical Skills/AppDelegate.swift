@@ -18,36 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RemoteConnectionManagerDe
 	
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-		
-		let connector = RemoteConnectionManager(delegate: self)
-		connector.fetchSystems()
-		connector.fetchSubsystems()
-		
         return true
     }
-	
-	func didBeginDataRequest() {
-		print("Beginning Request")
-	}
-	
-	func didFinishDataRequestWithData(receivedData: NSData) {
-		print("Finishing Requst")
-		
-		let manager = DatastoreManager()
-		let parser = JSONParser(jsonData: receivedData)
-		if let type = parser.dataType?.lowercaseString where type == "system" {
-			let systemDicts = parser.parseSystems()
-			for systemDict in systemDicts {
-				manager.storeSystemFromDictionary(systemDict)
-			}
-		} else if let type = parser.dataType?.lowercaseString where type == "subsystem" {
-			let subsystemDicts = parser.parseSubsystems()
-			for subsystemDict in subsystemDicts {
-				manager.storeSubsystemFromDictionary(subsystemDict)
-			}
-		}
-		manager.save()
-	}
 	
 	func applicationWillTerminate(application: UIApplication) {
 		// Save all data when app terminates
@@ -130,7 +102,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RemoteConnectionManagerDe
 				self.managedObjectContext.deleteObject(system as! NSManagedObject)
 			}
 			allSystems.removeAll(keepCapacity: false)
-			print("Saving Managed Object Context")
+			print("Saving Managed Object Context\n")
 			try self.managedObjectContext.save()
 		} catch {
 		}
@@ -146,7 +118,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RemoteConnectionManagerDe
 				self.managedObjectContext.deleteObject(subsystem as! NSManagedObject)
 			}
 			allSubsystems.removeAll(keepCapacity: false)
-			print("Saving Managed Object Context")
+			print("Saving Managed Object Context\n")
 			try self.managedObjectContext.save()
 		} catch {
 		}
@@ -161,7 +133,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RemoteConnectionManagerDe
 				self.managedObjectContext.deleteObject(link as! NSManagedObject)
 			}
 			allLinks.removeAll(keepCapacity: false)
-			print("Saving Managed Object Context")
+			print("Saving Managed Object Context\n")
 			try self.managedObjectContext.save()
 		} catch {
 		}
@@ -177,7 +149,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RemoteConnectionManagerDe
 					self.managedObjectContext.deleteObject(object as! NSManagedObject)
 				}
 				allObjects.removeAll(keepCapacity: false)
-				print("Saving Managed Object Context")
+				print("Saving Managed Object Context\n")
 				try self.managedObjectContext.save()
 			} catch {
 			}

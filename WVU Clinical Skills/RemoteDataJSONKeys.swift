@@ -12,14 +12,14 @@ enum RemoteDataJSONKeys {
 	
 	enum System: String {
 		case Name = "name"
-		case Description = "description"
+		case Details = "details"
 		case Visible = "visible"
 		case Links = "links"
 	}
 	
 	enum Subsystem: String {
 		case Name = "name"
-		case Description = "description"
+		case Details = "details"
 		case Visible = "visible"
 		case Links = "links"
 		case ParentName = "parent_name"

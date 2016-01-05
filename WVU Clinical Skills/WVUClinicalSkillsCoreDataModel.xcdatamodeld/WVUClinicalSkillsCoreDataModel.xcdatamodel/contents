@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="15C50" minimumToolsVersion="Xcode 7.0">
-    <entity name="Link" representedClassName="Link" syncable="YES">
+    <entity name="Link" representedClassName="LinkManagedObject" syncable="YES">
         <attribute name="link" attributeType="String" syncable="YES"/>
         <attribute name="title" attributeType="String" syncable="YES"/>
         <attribute name="visible" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <relationship name="systems" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="System" inverseName="links" inverseEntity="System" syncable="YES"/>
+        <relationship name="systems" toMany="YES" deletionRule="Nullify" destinationEntity="System" inverseName="links" inverseEntity="System" syncable="YES"/>
     </entity>
-    <entity name="System" representedClassName="System" syncable="YES">
-        <attribute name="systemDescription" attributeType="String" syncable="YES"/>
-        <attribute name="systemName" attributeType="String" syncable="YES"/>
+    <entity name="System" representedClassName="SystemManagedObject" syncable="YES">
+        <attribute name="details" attributeType="String" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
         <attribute name="visible" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <relationship name="links" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Link" inverseName="systems" inverseEntity="Link" syncable="YES"/>
+        <relationship name="links" toMany="YES" deletionRule="Cascade" destinationEntity="Link" inverseName="systems" inverseEntity="Link" syncable="YES"/>
         <relationship name="parentSystem" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="System" inverseName="subsystems" inverseEntity="System" syncable="YES"/>
-        <relationship name="subsystems" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="System" inverseName="parentSystem" inverseEntity="System" syncable="YES"/>
+        <relationship name="subsystems" toMany="YES" deletionRule="Cascade" destinationEntity="System" inverseName="parentSystem" inverseEntity="System" syncable="YES"/>
     </entity>
     <elements>
         <element name="Link" positionX="-54" positionY="36" width="128" height="105"/>

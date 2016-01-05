@@ -17,11 +17,13 @@ class JSONParser : NSObject {
 	
 	let json: JSON
 	
-	var dataType: String? {
+	var dataType: String {
 		get {
-			var type: String? = "unknown"
+			var type = "unknown"
 			for (_, subJSON) in self.json {
-				type = subJSON.dictionary?.keys.first
+				if let key = subJSON.dictionary?.keys.first?.lowercaseString {
+					type = key
+				}
 			}
 			return type
 		}
@@ -35,73 +37,77 @@ class JSONParser : NSObject {
 		self.json = JSON(data: jsonData)
 	}
 	
-	func parseSystems() -> [[String : AnyObject]] {
-		var systemDictionaries = [[String : AnyObject]]()
+	func parseSystems() -> [System] {
+		var systems = [System]()
 		for (_, data) in self.json {
 			for (_, system) in data {
-				var newDictionary = [String : AnyObject]()
-				newDictionary[ManagedObjectEntityPropertyKeys.System.Name.rawValue] = system[RemoteDataJSONKeys.System.Name.rawValue].string!
-				newDictionary[ManagedObjectEntityPropertyKeys.System.Description.rawValue] = system[RemoteDataJSONKeys.System.Description.rawValue].string!
-				newDictionary[ManagedObjectEntityPropertyKeys.System.Visible.rawValue] = system[RemoteDataJSONKeys.System.Visible.rawValue].bool!
-				newDictionary[ManagedObjectEntityPropertyKeys.System.Links.rawValue] = self.parseLinksForSystemWithName(system[RemoteDataJSONKeys.System.Name.rawValue].string!)
-				systemDictionaries.append(newDictionary)
+				let name = system[RemoteDataJSONKeys.System.Name.rawValue].stringValue
+				let details = system[RemoteDataJSONKeys.System.Details.rawValue].stringValue
+				let visible = system[RemoteDataJSONKeys.System.Visible.rawValue].boolValue
+				let links = self.parseLinksForSystemWithName(name)
+				let system = System(name: name, details: details, visible: visible, links: links)
+				systems.append(system)
 			}
 		}
-		return systemDictionaries
+		return systems
 	}
 	
-	func parseSubsystems() -> [[String : AnyObject]] {
-		var subsystemDictionary = [[String : AnyObject]]()
+	func parseSubsystems() -> [System] {
+		var subsystems = [System]()
 		for (_, data) in self.json {
 			for (_, subsystem) in data {
-				var newDictionary = [String : AnyObject]()
-				newDictionary[ManagedObjectEntityPropertyKeys.Subsystem.Name.rawValue] = subsystem[RemoteDataJSONKeys.Subsystem.Name.rawValue].string!
-				newDictionary[ManagedObjectEntityPropertyKeys.Subsystem.Description.rawValue] = subsystem[RemoteDataJSONKeys.Subsystem.Description.rawValue].string!
-				newDictionary[ManagedObjectEntityPropertyKeys.Subsystem.Visible.rawValue] = subsystem[RemoteDataJSONKeys.Subsystem.Visible.rawValue].bool!
-				newDictionary[ManagedObjectEntityPropertyKeys.Subsystem.ParentName.rawValue] = subsystem[RemoteDataJSONKeys.Subsystem.ParentName.rawValue].string!
-				newDictionary[ManagedObjectEntityPropertyKeys.Subsystem.Links.rawValue] = self.parseLinksForSubsystemWithName(subsystem[RemoteDataJSONKeys.Subsystem.Name.rawValue].string!)
-				subsystemDictionary.append(newDictionary)
-
+				let name = subsystem[RemoteDataJSONKeys.Subsystem.Name.rawValue].stringValue
+				let details = subsystem[RemoteDataJSONKeys.Subsystem.Details.rawValue].stringValue
+				let visible = subsystem[RemoteDataJSONKeys.Subsystem.Visible.rawValue].boolValue
+				let parentName = subsystem[RemoteDataJSONKeys.Subsystem.ParentName.rawValue].stringValue
+				let links = self.parseLinksForSubsystemWithName(name)
+				let system = System(name: name, details: details, visible: visible, parentName: parentName, links: links)
+				subsystems.append(system)
 			}
 		}
-		return subsystemDictionary
+		return subsystems
 	}
 	
-	func parseLinksForSystemWithName(name: String) -> [[String : AnyObject]] {
-		var links = [[String : AnyObject]]()
+	func parseLinksForSystemWithName(name: String) -> NSMutableSet {
+		
+		let links = NSMutableSet()
+		
 		for (_, data) in self.json {
 			for (_, system) in data {
-				if let systemName = system.dictionary?[RemoteDataJSONKeys.System.Name.rawValue]?.string {
-					if (systemName == name) {
+				if let systemName = system[RemoteDataJSONKeys.System.Name.rawValue].string {
+					if systemName == name {
 						for (_, link) in system[ManagedObjectEntityPropertyKeys.System.Links.rawValue] {
-							if let linkDict = link.dictionary?[ManagedObjectEntityNames.Link.rawValue.lowercaseString]?.dictionary {
-								var dict = [String : AnyObject]()
-								dict[ManagedObjectEntityPropertyKeys.Link.Title.rawValue] = linkDict[ManagedObjectEntityPropertyKeys.Link.Title.rawValue]?.string
-								dict[ManagedObjectEntityPropertyKeys.Link.Link.rawValue] = linkDict[ManagedObjectEntityPropertyKeys.Link.Link.rawValue]?.string
-								dict[ManagedObjectEntityPropertyKeys.Link.Visible.rawValue] = linkDict[ManagedObjectEntityPropertyKeys.Link.Visible.rawValue]?.bool
-								links.append(dict)
+							if let linkDict = link[ManagedObjectEntityNames.Link.rawValue.lowercaseString].dictionary {
+								let title = linkDict[ManagedObjectEntityPropertyKeys.Link.Title.rawValue]!.stringValue
+								let linkString = linkDict[ManagedObjectEntityPropertyKeys.Link.Link.rawValue]!.stringValue
+								let visible = linkDict[ManagedObjectEntityPropertyKeys.Link.Visible.rawValue]!.boolValue
+								let link = Link(title: title, link: linkString, visible: visible)
+								links.addObject(link)
 							}
 						}
 					}
 				}
 			}
 		}
+		
 		return links
 	}
 	
-	func parseLinksForSubsystemWithName(name: String) -> [[String : AnyObject]] {
-		var links = [[String : AnyObject]]()
+	func parseLinksForSubsystemWithName(name: String) -> NSMutableSet {
+		
+		let links = NSMutableSet()
+		
 		for (_, data) in self.json {
 			for (_, subsystem) in data {
-				if let subsystemName = subsystem.dictionary?[RemoteDataJSONKeys.Subsystem.Name.rawValue]?.string {
-					if (subsystemName == name) {
-						for (_, link) in subsystem[ManagedObjectEntityPropertyKeys.Subsystem.Links.rawValue] {
-							if let linkDict = link.dictionary?[ManagedObjectEntityNames.Link.rawValue.lowercaseString]?.dictionary {
-								var dict = [String : AnyObject]()
-								dict[ManagedObjectEntityPropertyKeys.Link.Title.rawValue] = linkDict[ManagedObjectEntityPropertyKeys.Link.Title.rawValue]?.string
-								dict[ManagedObjectEntityPropertyKeys.Link.Link.rawValue] = linkDict[ManagedObjectEntityPropertyKeys.Link.Link.rawValue]?.string
-								dict[ManagedObjectEntityPropertyKeys.Link.Visible.rawValue] = linkDict[ManagedObjectEntityPropertyKeys.Link.Visible.rawValue]?.bool
-								links.append(dict)
+				if let subsystemName = subsystem[RemoteDataJSONKeys.System.Name.rawValue].string {
+					if subsystemName == name {
+						for (_, link) in subsystem[ManagedObjectEntityPropertyKeys.System.Links.rawValue] {
+							if let linkDict = link[ManagedObjectEntityNames.Link.rawValue.lowercaseString].dictionary {
+								let title = linkDict[ManagedObjectEntityPropertyKeys.Link.Title.rawValue]!.stringValue
+								let linkString = linkDict[ManagedObjectEntityPropertyKeys.Link.Link.rawValue]!.stringValue
+								let visible = linkDict[ManagedObjectEntityPropertyKeys.Link.Visible.rawValue]!.boolValue
+								let link = Link(title: title, link: linkString, visible: visible)
+								links.addObject(link)
 							}
 						}
 					}
@@ -109,11 +115,17 @@ class JSONParser : NSObject {
 			}
 		}
 		return links
-
 	}
 	
 	func printJSON() {
 		print(self.json)
+	}
+	
+	enum DataTypes: String {
+		case System = "system"
+		case Subsystem = "subsystem"
+		case Link = "link"
+		case Unknown = "unknown"
 	}
 	
 }

@@ -6,26 +6,34 @@
 //  Copyright © 2015 Nick. All rights reserved.
 //
 
-import UIKit
-import CoreData
+import Foundation
 
-@objc(Link)
-class Link: NSManagedObject {
-
-	@NSManaged var title: String
-	@NSManaged var link: String
-	@NSManaged var visible: Bool
-	@NSManaged var systems: NSMutableSet?
+class Link: NSObject {
 	
-	func addSystem(system: System) {
-		if self.systems == nil {
-			self.systems = NSMutableSet()
+	var title: String
+	var link: String
+	var visible: Bool
+	var systems: NSMutableSet
+	
+	override var description: String {
+		get {
+			return "\(self.title) -> \(self.link)"
 		}
-		self.systems?.addObject(system)
 	}
 	
-	func toString() -> String {
-		return "\(self.title) -> \(self.link)"
+	init(title: String, link: String, visible: Bool, systems: NSMutableSet) {
+		self.title = title
+		self.link = link
+		self.visible = visible
+		self.systems = systems
+	}
+	
+	convenience init(title: String, link: String, visible: Bool) {
+		self.init(title: title, link: link, visible: visible, systems: NSMutableSet())
+	}
+	
+	func addSystem(system: System) {
+		self.systems.addObject(system)
 	}
 	
 }

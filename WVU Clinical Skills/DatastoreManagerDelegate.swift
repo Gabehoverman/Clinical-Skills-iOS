@@ -10,4 +10,7 @@ import Foundation
 
 @objc protocol DatastoreManagerDelegate {
 	
+	optional func didBeginStoring()
+	optional func didFinishStoring()
+	
 }

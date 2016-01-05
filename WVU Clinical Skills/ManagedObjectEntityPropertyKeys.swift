@@ -11,8 +11,8 @@ import Foundation
 enum ManagedObjectEntityPropertyKeys {
 	
 	enum System: String {
-		case Name = "systemName"
-		case Description = "systemDescription"
+		case Name = "name"
+		case Description = "details"
 		case Visible = "visible"
 		case Links = "links"
 		case Parent = "parentSystem"
@@ -20,8 +20,8 @@ enum ManagedObjectEntityPropertyKeys {
 	}
 	
 	enum Subsystem: String {
-		case Name = "systemName"
-		case Description = "systemDescription"
+		case Name = "name"
+		case Description = "details"
 		case Visible = "visible"
 		case Links = "links"
 		case Parent = "parentSystem"

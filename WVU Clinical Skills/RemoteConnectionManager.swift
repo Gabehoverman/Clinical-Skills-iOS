@@ -11,35 +11,51 @@ import Foundation
 class RemoteConnectionManager : NSObject {
 	
 	// MARK: - Properties
-	
+
+	var statusCode: Int
+	var statusMessage: String {
+		get {
+			if self.statusCode == 0 {
+				return "No Response"
+			}
+			return "Status Code \(statusCode): \(NSHTTPURLResponse.localizedStringForStatusCode(statusCode).capitalizedString)"
+		}
+	}
+	var statusSuccess: Bool {
+		get {
+			return self.statusCode >= 200 && self.statusCode < 300
+		}
+	}
 	var delegate: RemoteConnectionManagerDelegate?
 	
 	// MARK: - Initializers
 	
 	override init() {
+		self.statusCode = 0
 		self.delegate = nil
 	}
 	
 	init(delegate: RemoteConnectionManagerDelegate?) {
+		self.statusCode = 0
 		self.delegate = delegate
 	}
 	
 	// MARK: - Fetch Methods
 	
 	func fetchSystems() {
-		if let remoteURL = NSURL(string: RemoteDataURLStrings.Systems.rawValue) {
+		if let remoteURL = NSURL(string: DataURLStrings.Remote.Systems.rawValue) {
 			self.fetchWithURL(remoteURL)
 		}
 	}
 	
 	func fetchSubsystems() {
-		if let remoteURL = NSURL(string: RemoteDataURLStrings.Subsystems.rawValue) {
+		if let remoteURL = NSURL(string: DataURLStrings.Remote.Subsystems.rawValue) {
 			self.fetchWithURL(remoteURL)
 		}
 	}
 	
 	func fetchLinks() {
-		if let remoteURL = NSURL(string: RemoteDataURLStrings.Links.rawValue) {
+		if let remoteURL = NSURL(string: DataURLStrings.Remote.Links.rawValue) {
 			self.fetchWithURL(remoteURL)
 		}
 	}
@@ -57,7 +73,7 @@ class RemoteConnectionManager : NSObject {
 	
 	private func completedDataTaskReceivingData(data: NSData?, response: NSURLResponse?, error: NSError?) {
 		if let statusCode = (response as? NSHTTPURLResponse)?.statusCode {
-			print(self.messageForHTTPStatusCode(statusCode))
+			self.statusCode = statusCode
 		}
 		
 		if error != nil {
@@ -67,11 +83,7 @@ class RemoteConnectionManager : NSObject {
 		if data != nil {
 			self.delegate?.didFinishDataRequestWithData?(data!)
 		}
-
-	}
-	
-	private func messageForHTTPStatusCode(statusCode: Int) -> String {
-		return "HTTP Response: \(statusCode) - \(NSHTTPURLResponse.localizedStringForStatusCode(statusCode))"
+		self.delegate?.didFinishDataRequest?()
 	}
 	
 	func messageForError(error: NSError) -> String {
