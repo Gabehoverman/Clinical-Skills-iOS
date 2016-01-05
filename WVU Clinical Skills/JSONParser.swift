@@ -12,6 +12,13 @@ import CoreData
 import SwiftyJSON
 
 class JSONParser : NSObject {
+	
+	enum DataTypes: String {
+		case System = "system"
+		case Subsystem = "subsystem"
+		case Link = "link"
+		case Unknown = "unknown"
+	}
 
 	let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
 	
@@ -33,8 +40,8 @@ class JSONParser : NSObject {
 		self.json = json
 	}
 	
-	init(jsonData: NSData) {
-		self.json = JSON(data: jsonData)
+	convenience init(jsonData: NSData) {
+		self.init(json: JSON(data: jsonData))
 	}
 	
 	func parseSystems() -> [System] {
@@ -69,9 +76,7 @@ class JSONParser : NSObject {
 	}
 	
 	func parseLinksForSystemWithName(name: String) -> NSMutableSet {
-		
 		let links = NSMutableSet()
-		
 		for (_, data) in self.json {
 			for (_, system) in data {
 				if let systemName = system[RemoteDataJSONKeys.System.Name.rawValue].string {
@@ -94,9 +99,7 @@ class JSONParser : NSObject {
 	}
 	
 	func parseLinksForSubsystemWithName(name: String) -> NSMutableSet {
-		
 		let links = NSMutableSet()
-		
 		for (_, data) in self.json {
 			for (_, subsystem) in data {
 				if let subsystemName = subsystem[RemoteDataJSONKeys.System.Name.rawValue].string {
@@ -119,13 +122,6 @@ class JSONParser : NSObject {
 	
 	func printJSON() {
 		print(self.json)
-	}
-	
-	enum DataTypes: String {
-		case System = "system"
-		case Subsystem = "subsystem"
-		case Link = "link"
-		case Unknown = "unknown"
 	}
 	
 }

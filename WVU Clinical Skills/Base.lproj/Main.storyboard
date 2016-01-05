@@ -51,6 +51,11 @@
                                 <action selector="clear:" destination="1Lz-Nd-jFp" id="y4N-lT-eli"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Print" id="aaA-iQ-nlh">
+                            <connections>
+                                <action selector="print:" destination="1Lz-Nd-jFp" id="KLa-jr-2WR"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="Oed-wu-0c7">
                         <autoresizingMask key="autoresizingMask"/>

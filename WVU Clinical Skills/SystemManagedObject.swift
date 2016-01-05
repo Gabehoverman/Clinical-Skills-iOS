@@ -33,7 +33,11 @@ class SystemManagedObject: NSManagedObject {
 	
 	override var description: String {
 		get {
-			return "(Managed) \(self.name): \(self.details)"
+			if self.parentSystem == nil {
+				return "(Managed) [\(self.visible ? "Visible" : "Invisible")] \(self.name):\t\(self.details)"
+			} else {
+				return "(Managed) [\(self.visible ? "Visible" : "Invisible")] \(self.parentSystem!.name) > \(self.name): \t \(self.details)"
+			}
 		}
 	}
 	
@@ -43,6 +47,20 @@ class SystemManagedObject: NSManagedObject {
 	
 	func addLink(link: LinkManagedObject) {
 		self.links.addObject(link)
+	}
+	
+	func equalTo(object: AnyObject?) -> Bool {
+		if object != nil {
+			if let systemManagedObject = object! as? SystemManagedObject {
+				var equal = true
+				equal = equal && self.name == systemManagedObject.name
+				equal = equal && self.details == systemManagedObject.details
+				equal = equal && self.visible == systemManagedObject.visible
+				equal = equal && self.links == systemManagedObject.links
+				return equal
+			}
+		}
+		return false
 	}
 	
 }

@@ -21,7 +21,9 @@ class SystemsTableViewController: UITableViewController, UISearchBarDelegate, NS
 	var searchController: UISearchController!
 	var activityIndicator: UIActivityIndicatorView?
 	var fetchedResultsController: NSFetchedResultsController?
+	
 	var remoteConnectionManager: RemoteConnectionManager?
+	var datastoreManager: DatastoreManager?
 	
 	var isInitialLoad = true
 	
@@ -32,6 +34,7 @@ class SystemsTableViewController: UITableViewController, UISearchBarDelegate, NS
 	
 	override func viewWillAppear(animated: Bool) {
 		if self.isInitialLoad {
+			self.datastoreManager = DatastoreManager(delegate: self)
 			self.remoteConnectionManager = RemoteConnectionManager(delegate: self)
 			self.remoteConnectionManager!.fetchSystems()
 		}
@@ -68,8 +71,7 @@ class SystemsTableViewController: UITableViewController, UISearchBarDelegate, NS
 	}
 	
 	func handleRefresh(refreshControl: UIRefreshControl) {
-		self.fetchResultsWithReload(true)
-		refreshControl.endRefreshing()
+		self.remoteConnectionManager!.fetchSystems()
 	}
 	
 	
@@ -99,36 +101,66 @@ class SystemsTableViewController: UITableViewController, UISearchBarDelegate, NS
 		self.presentViewController(alert, animated: true, completion: nil)
 	}
 	
+	@IBAction func print(sender: AnyObject) {
+		let alert = UIAlertController(title: "Print", message: "What should be printed?", preferredStyle: .ActionSheet)
+		alert.addAction(UIAlertAction(title: "Print All", style: .Destructive) { (action) -> Void in
+				self.datastoreManager!.printContents()
+			}
+		)
+		alert.addAction(UIAlertAction(title: "Print Systems", style: .Default) { (action) -> Void in
+				self.datastoreManager!.printSystems()
+			}
+		)
+		alert.addAction(UIAlertAction(title: "Print Subsystems", style: .Default) { (action) -> Void in
+				self.datastoreManager!.printSubsystems()
+			}
+		)
+		alert.addAction(UIAlertAction(title: "Print Links", style: .Default) { (action) -> Void in
+				self.datastoreManager!.printLinks()
+			}
+		)
+		alert.addAction(UIAlertAction(title: "Nevermind", style: .Cancel) { (action) -> Void in
+				self.dismissViewControllerAnimated(true, completion: nil)
+			}
+		)
+		self.presentViewController(alert, animated: true, completion: nil)
+	}
+	
 	// MARK: - Remote Connection Manager Delegate Methods
 	
 	func didBeginDataRequest() {
 		if self.refreshControl != nil {
 			if !self.refreshControl!.refreshing {
-				self.performSelectorOnMainThread("showActivityIndicator", withObject: nil, waitUntilDone: false)
+				self.performSelectorOnMainThread(Selector("showActivityIndicator"), withObject: nil, waitUntilDone: false)
 			}
 		}
 	}
 	
 	func didFinishDataRequestWithData(receivedData: NSData) {
 		let parser = JSONParser(jsonData: receivedData)
-		let manager = DatastoreManager(delegate: self)
 		if parser.dataType == JSONParser.DataTypes.System.rawValue {
-			manager.storeSystems(parser.parseSystems())
+			self.datastoreManager!.storeSystems(parser.parseSystems())
 			self.remoteConnectionManager!.fetchSubsystems()
 			self.performSelectorOnMainThread(Selector("showBanner"), withObject: nil, waitUntilDone: true)
 		} else if parser.dataType == JSONParser.DataTypes.Subsystem.rawValue {
-			manager.storeSubsystems(parser.parseSubsystems())
+			self.datastoreManager!.storeSubsystems(parser.parseSubsystems())
 		}
 	}
 	
 	func didFinishDataRequest() {
-		self.performSelectorOnMainThread("hideActivityIndicator", withObject: nil, waitUntilDone: false)
+		if self.refreshControl != nil {
+			if self.refreshControl!.refreshing {
+				self.refreshControl!.endRefreshing()
+			}
+		}
+		self.performSelectorOnMainThread(Selector("fetchResultsWithReload:"), withObject: true, waitUntilDone: true)
+		self.performSelectorOnMainThread(Selector("hideActivityIndicator"), withObject: nil, waitUntilDone: false)
 	}
 	
 	// MARK: - Datastore Manager Delegate Methods
 	
 	func didFinishStoring() {
-		self.performSelectorOnMainThread("fetchResultsWithReload:", withObject: true, waitUntilDone: false)
+		self.performSelectorOnMainThread(Selector("fetchResultsWithReload:"), withObject: true, waitUntilDone: false)
 	}
 	
 	// MARK: - Search Methods
@@ -190,8 +222,8 @@ class SystemsTableViewController: UITableViewController, UISearchBarDelegate, NS
 	
 	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCellWithIdentifier(StoryboardPrototypeCellIdentifiers.System.rawValue) as! SystemTableViewCell
-		let system = self.fetchedResultsController!.objectAtIndexPath(indexPath) as! SystemManagedObject
-		cell.systemNameLabel.text = system.name
+		let managedSystem = self.fetchedResultsController!.objectAtIndexPath(indexPath) as! SystemManagedObject
+		cell.systemNameLabel.text = managedSystem.name
 		return cell
 	}
 	
@@ -258,7 +290,7 @@ class SystemsTableViewController: UITableViewController, UISearchBarDelegate, NS
 			color = UIColor(red: 255.0/255.0, green: 91.0/255.0, blue: 55.0/255.0, alpha: 0.9)
 		}
 		let banner = Banner(title: "HTTP Response", subtitle: self.remoteConnectionManager!.statusMessage, image: nil, backgroundColor: color, didTapBlock: nil)
-		banner.show()
+		banner.show(self.navigationController?.view, duration: 1.5)
 	}
 	
 }

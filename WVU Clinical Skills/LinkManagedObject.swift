@@ -19,12 +19,26 @@ class LinkManagedObject: NSManagedObject {
 	
 	override var description: String {
 		get {
-			return "(Managed) \(self.title) -> \(self.link)"
+			return "(Managed) [\(self.visible ? "Visible" : "Invisible")] \(self.title): \t \(self.link)"
 		}
 	}
 	
 	func addSystem(system: SystemManagedObject) {
 		self.systems.addObject(system)
+	}
+	
+	func equalTo(object: AnyObject?) -> Bool {
+		if object != nil {
+			if let linkManagedObject = object! as? LinkManagedObject {
+				var equal = false
+				equal = equal && self.title == linkManagedObject.title
+				equal = equal && self.link == linkManagedObject.link
+				equal = equal && self.visible == linkManagedObject.visible
+				equal = equal && self.systems == linkManagedObject.systems
+				return equal
+			}
+		}
+		return false
 	}
 	
 }

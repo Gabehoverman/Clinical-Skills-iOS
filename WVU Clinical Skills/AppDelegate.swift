@@ -14,6 +14,8 @@ import SwiftyJSON
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, RemoteConnectionManagerDelegate, NSFetchedResultsControllerDelegate {
 	
+	let SHOULD_REFRESH_DATASTORE_ON_LAUNCH = true
+	
     var window: UIWindow?
 	
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -45,6 +47,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RemoteConnectionManagerDe
 		// Create the coordinator and store
 		let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
 		let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("WVUClinicalSkills")
+		
+		if self.SHOULD_REFRESH_DATASTORE_ON_LAUNCH {
+			try! NSFileManager.defaultManager().removeItemAtURL(url)
+		}
+		
 		var failureReason = "There was an error creating or loading the application's saved data."
 		do {
 			try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil)

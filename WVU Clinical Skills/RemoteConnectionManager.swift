@@ -30,11 +30,6 @@ class RemoteConnectionManager : NSObject {
 	
 	// MARK: - Initializers
 	
-	override init() {
-		self.statusCode = 0
-		self.delegate = nil
-	}
-	
 	init(delegate: RemoteConnectionManagerDelegate?) {
 		self.statusCode = 0
 		self.delegate = delegate

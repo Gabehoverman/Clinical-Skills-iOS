@@ -131,6 +131,7 @@ class SubsystemsTableViewController: UITableViewController, UISearchBarDelegate,
 					performSegueWithIdentifier(StoryboardSegueIdentifiers.ToDetailsView.rawValue, sender: subsystem)
 				} else {
 					if let subsystemViewController = self.storyboard?.instantiateViewControllerWithIdentifier("SubsystemTableViewController") as? SubsystemsTableViewController {
+						subsystemViewController.title = subsystem.name
 						subsystemViewController.managedParentSystem = subsystem
 						self.navigationController?.pushViewController(subsystemViewController, animated: true)
 					}
