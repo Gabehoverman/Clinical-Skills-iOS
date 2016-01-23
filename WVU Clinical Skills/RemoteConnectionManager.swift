@@ -8,10 +8,26 @@
 
 import Foundation
 
+@objc protocol RemoteConnectionManagerDelegate {
+	optional func didBeginDataRequest()
+	optional func didFinishDataRequest()
+	optional func didFinishDataRequestWithData(receivedData: NSData)
+}
+
 class RemoteConnectionManager : NSObject {
+	
+	let localBaseURL = "http://localhost:3000/"
+	let remoteBaseURL = "https://wvusom-data-server.herokuapp.com/"
+	
+	struct dataURLs {
+		static let systems = "systems.json"
+		static let subsystems = "subsystems.json"
+		static let links = "links.json"
+	}
 	
 	// MARK: - Properties
 
+	var shouldRequestFromLocal: Bool
 	var statusCode: Int
 	var statusMessage: String {
 		get {
@@ -30,7 +46,8 @@ class RemoteConnectionManager : NSObject {
 	
 	// MARK: - Initializers
 	
-	init(delegate: RemoteConnectionManagerDelegate?) {
+	init(shouldRequestFromLocal: Bool, delegate: RemoteConnectionManagerDelegate?) {
+		self.shouldRequestFromLocal = shouldRequestFromLocal
 		self.statusCode = 0
 		self.delegate = delegate
 	}
@@ -38,20 +55,41 @@ class RemoteConnectionManager : NSObject {
 	// MARK: - Fetch Methods
 	
 	func fetchSystems() {
-		if let remoteURL = NSURL(string: DataURLStrings.Remote.Systems.rawValue) {
-			self.fetchWithURL(remoteURL)
+		var urlString: String
+		if self.shouldRequestFromLocal {
+			urlString = self.localBaseURL
+		} else {
+			urlString = self.remoteBaseURL
+		}
+		
+		if let url = NSURL(string: urlString + dataURLs.systems) {
+			self.fetchWithURL(url)
 		}
 	}
 	
 	func fetchSubsystems() {
-		if let remoteURL = NSURL(string: DataURLStrings.Remote.Subsystems.rawValue) {
-			self.fetchWithURL(remoteURL)
+		var urlString: String
+		if self.shouldRequestFromLocal {
+			urlString = self.localBaseURL
+		} else {
+			urlString = self.remoteBaseURL
+		}
+		
+		if let url = NSURL(string: urlString + dataURLs.subsystems) {
+			self.fetchWithURL(url)
 		}
 	}
 	
 	func fetchLinks() {
-		if let remoteURL = NSURL(string: DataURLStrings.Remote.Links.rawValue) {
-			self.fetchWithURL(remoteURL)
+		var urlString: String
+		if self.shouldRequestFromLocal {
+			urlString = self.localBaseURL
+		} else {
+			urlString = self.remoteBaseURL
+		}
+		
+		if let url = NSURL(string: urlString + dataURLs.links) {
+			self.fetchWithURL(url)
 		}
 	}
 	

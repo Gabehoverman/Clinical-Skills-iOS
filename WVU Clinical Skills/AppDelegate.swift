@@ -20,6 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RemoteConnectionManagerDe
 	
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+		
         return true
     }
 	
@@ -101,8 +102,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RemoteConnectionManagerDe
 	
 	func clearSystems() {
 		do {
-			let allSystemsRequest = NSFetchRequest(entityName: ManagedObjectEntityNames.System.rawValue)
-			allSystemsRequest.predicate = NSPredicate(format: "%K = nil", ManagedObjectEntityPropertyKeys.System.Parent.rawValue)
+			let allSystemsRequest = NSFetchRequest(entityName: SystemManagedObject.entityName)
+			allSystemsRequest.predicate = NSPredicate(format: "%K = nil", SystemManagedObject.propertyKeys.parent)
 			var allSystems = try self.managedObjectContext.executeFetchRequest(allSystemsRequest)
 			print("\(allSystems.count) Objects to be Deleted")
 			for system in allSystems {
@@ -117,8 +118,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RemoteConnectionManagerDe
 	
 	func clearSubsystems() {
 		do {
-			let allSubsystemsRequest = NSFetchRequest(entityName: ManagedObjectEntityNames.System.rawValue)
-			allSubsystemsRequest.predicate = NSPredicate(format: "%K != nil", ManagedObjectEntityPropertyKeys.System.Parent.rawValue)
+			let allSubsystemsRequest = NSFetchRequest(entityName: SystemManagedObject.entityName)
+			allSubsystemsRequest.predicate = NSPredicate(format: "%K != nil", SystemManagedObject.propertyKeys.parent)
 			var allSubsystems = try self.managedObjectContext.executeFetchRequest(allSubsystemsRequest)
 			print("\(allSubsystems.count) Objects to be Deleted")
 			for subsystem in allSubsystems {
@@ -133,7 +134,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RemoteConnectionManagerDe
 	
 	func clearLinks() {
 		do {
-			let allLinksRequest = NSFetchRequest(entityName: ManagedObjectEntityNames.Link.rawValue)
+			let allLinksRequest = NSFetchRequest(entityName: LinkManagedObject.entityName)
 			var allLinks = try self.managedObjectContext.executeFetchRequest(allLinksRequest)
 			print("\(allLinks.count) Objects to be Deleted")
 			for link in allLinks {
@@ -147,9 +148,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RemoteConnectionManagerDe
 	}
 	
 	func clearAll() {
-		for entityName in ManagedObjectEntityNames.allValues {
+		for entityName in [SystemManagedObject.entityName, LinkManagedObject.entityName] {
 			do {
-				let request = NSFetchRequest(entityName: entityName.rawValue)
+				let request = NSFetchRequest(entityName: entityName)
 				var allObjects = try self.managedObjectContext.executeFetchRequest(request)
 				print("\(allObjects.count) Objects to be Deleted")
 				for object in allObjects {

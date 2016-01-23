@@ -11,6 +11,7 @@ import UIKit
 class LinkTableViewCell: UITableViewCell {
 	
 	static let defaultHeight: CGFloat = 44
+	static let linkCellIdentifier = "LinkCell"
 	
 	@IBOutlet weak var linkLabel: UILabel!
 

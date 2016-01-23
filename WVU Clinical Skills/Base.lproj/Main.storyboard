@@ -53,7 +53,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Print" id="aaA-iQ-nlh">
                             <connections>
-                                <action selector="print:" destination="1Lz-Nd-jFp" id="KLa-jr-2WR"/>
+                                <action selector="printManagedObjects:" destination="1Lz-Nd-jFp" id="xa6-cU-stZ"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 import SafariServices
 
-class SystemDetailViewController: UITableViewController, NSFetchedResultsControllerDelegate, UIGestureRecognizerDelegate, SFSafariViewControllerDelegate {
+class SystemDetailViewController: UITableViewController {
 	
 	// MARK: - Properties
 	
@@ -38,7 +38,7 @@ class SystemDetailViewController: UITableViewController, NSFetchedResultsControl
 		}
 	}
 	
-	// MARK: - Table View Methods
+	// MARK: - Table View Controller Methods
 	
 	override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
 		return 2
@@ -65,14 +65,14 @@ class SystemDetailViewController: UITableViewController, NSFetchedResultsControl
 	
 	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		if indexPath.section == 0 {
-			let cell = tableView.dequeueReusableCellWithIdentifier(StoryboardPrototypeCellIdentifiers.Description.rawValue, forIndexPath: indexPath) as! DescriptionTableViewCell
+			let cell = tableView.dequeueReusableCellWithIdentifier(DescriptionTableViewCell.descriptionCellIdentifier, forIndexPath: indexPath) as! DescriptionTableViewCell
 			let propagateTap = UITapGestureRecognizer(target: self, action: Selector("propagateTap:"))
 			propagateTap.delegate = self
 			cell.descriptionTextView.addGestureRecognizer(propagateTap)
 			cell.descriptionTextView.text = self.managedSystem!.details
 			return cell
 		} else {
-			let cell = tableView.dequeueReusableCellWithIdentifier(StoryboardPrototypeCellIdentifiers.Link.rawValue, forIndexPath: indexPath) as! LinkTableViewCell
+			let cell = tableView.dequeueReusableCellWithIdentifier(LinkTableViewCell.linkCellIdentifier, forIndexPath: indexPath) as! LinkTableViewCell
 			cell.linkLabel.text = self.managedLinks![indexPath.row].title
 			return cell
 		}
@@ -112,12 +112,6 @@ class SystemDetailViewController: UITableViewController, NSFetchedResultsControl
 		return LinkTableViewCell.defaultHeight
 	}
 	
-	// MARK: - Safari View Controller Methods
-	
-	func safariViewControllerDidFinish(controller: SFSafariViewController) {
-		self.dismissViewControllerAnimated(true, completion: nil)
-	}
-	
 	// MARK: - Utility Methods
 	
 	func propagateTap(sender: UIGestureRecognizer) {
@@ -133,4 +127,24 @@ class SystemDetailViewController: UITableViewController, NSFetchedResultsControl
 		}
 	}
 	
+}
+
+// MARK: - Fetched Results Controller Delegate Methods
+
+extension SystemDetailViewController: NSFetchedResultsControllerDelegate {
+	// No Methods Required Currently
+}
+
+// MARK: - Gesture Recognizer Delegate Methods
+
+extension SystemDetailViewController: UIGestureRecognizerDelegate {
+	// No Methods Required Currently
+}
+
+// MARK: - Safari View Controller Delegate Methods
+
+extension SystemDetailViewController: SFSafariViewControllerDelegate {
+	func safariViewControllerDidFinish(controller: SFSafariViewController) {
+		self.dismissViewControllerAnimated(true, completion: nil)
+	}
 }

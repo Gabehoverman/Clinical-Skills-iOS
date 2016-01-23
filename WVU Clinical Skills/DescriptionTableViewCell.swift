@@ -11,6 +11,7 @@ import UIKit
 class DescriptionTableViewCell: UITableViewCell {
 
 	static let defaultHeight: CGFloat = 44
+	static let descriptionCellIdentifier = "DescriptionCell"
 	
 	@IBOutlet weak var descriptionTextView: UITextView!
 

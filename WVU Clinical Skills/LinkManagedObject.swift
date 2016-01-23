@@ -12,6 +12,14 @@ import CoreData
 @objc(LinkManagedObject)
 class LinkManagedObject: NSManagedObject {
 	
+	static let entityName = "Link"
+	struct propertyKeys {
+		static let title = "title"
+		static let link = "link"
+		static let visible = "visible"
+		static let systems = "systems"
+	}
+	
 	@NSManaged var title: String
 	@NSManaged var link: String
 	@NSManaged var visible: Bool

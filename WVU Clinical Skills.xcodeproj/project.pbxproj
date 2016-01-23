@@ -16,15 +16,10 @@
 		011FF5F71C23A4E70097BD6A /* LinksFetchedResultsControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011FF5F61C23A4E70097BD6A /* LinksFetchedResultsControllers.swift */; };
 		01211F8A1C2A0AF700DF034E /* DescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01211F891C2A0AF700DF034E /* DescriptionTableViewCell.swift */; };
 		01211F8C1C2A0C8B00DF034E /* LinkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01211F8B1C2A0C8B00DF034E /* LinkTableViewCell.swift */; };
-		01394CB91C236B1400D555B4 /* systems.json in Resources */ = {isa = PBXBuildFile; fileRef = 01394CB81C236B1400D555B4 /* systems.json */; };
-		01394CBB1C23702600D555B4 /* subsystems.json in Resources */ = {isa = PBXBuildFile; fileRef = 01394CBA1C23702600D555B4 /* subsystems.json */; };
 		013D8AF51C2014300026B574 /* SystemDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013D8AF41C2014300026B574 /* SystemDetailViewController.swift */; };
-		0143CE1B1C34D811002F7755 /* RemoteDataJSONKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0143CE1A1C34D811002F7755 /* RemoteDataJSONKeys.swift */; };
-		01733F031C3269F10025BDBD /* ManagedObjectEntityNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01733F021C3269F10025BDBD /* ManagedObjectEntityNames.swift */; };
 		019597141C20A2740004E579 /* SystemFetchedResultsControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019597131C20A2740004E579 /* SystemFetchedResultsControllers.swift */; };
 		01B259301C1FC8CD0075964F /* WVUClinicalSkillsCoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 01B2592E1C1FC8CD0075964F /* WVUClinicalSkillsCoreDataModel.xcdatamodeld */; };
 		01B259321C1FC98F0075964F /* System.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B259311C1FC98F0075964F /* System.swift */; };
-		01B87F331C33A17C00A83420 /* ManagedObjectEntityPropertyKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B87F321C33A17C00A83420 /* ManagedObjectEntityPropertyKeys.swift */; };
 		01C9947B1C1F887900491F94 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C9947A1C1F887900491F94 /* AppDelegate.swift */; };
 		01C994801C1F887900491F94 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01C9947E1C1F887900491F94 /* Main.storyboard */; };
 		01C994821C1F887900491F94 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01C994811C1F887900491F94 /* Assets.xcassets */; };
@@ -33,12 +28,7 @@
 		01C9949B1C1F887900491F94 /* WVU_Clinical_SkillsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C9949A1C1F887900491F94 /* WVU_Clinical_SkillsUITests.swift */; };
 		01D3B8461C2F5629007CE1D2 /* DatastoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D3B8451C2F5629007CE1D2 /* DatastoreManager.swift */; };
 		01D3B8481C2F5637007CE1D2 /* RemoteConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D3B8471C2F5637007CE1D2 /* RemoteConnectionManager.swift */; };
-		01D3B84A1C2F5643007CE1D2 /* SeedManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D3B8491C2F5643007CE1D2 /* SeedManager.swift */; };
-		01D3B84C1C2F56B7007CE1D2 /* DatastoreManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D3B84B1C2F56B7007CE1D2 /* DatastoreManagerDelegate.swift */; };
-		01D3B84E1C2F5735007CE1D2 /* RemoteConnectionManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D3B84D1C2F5735007CE1D2 /* RemoteConnectionManagerDelegate.swift */; };
-		01D3B8501C2F5E8E007CE1D2 /* DataURLStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D3B84F1C2F5E8E007CE1D2 /* DataURLStrings.swift */; };
 		01D3B8521C30ECDB007CE1D2 /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D3B8511C30ECDB007CE1D2 /* JSONParser.swift */; };
-		01F2D0A11C24CC0B0056F039 /* StoryboardPrototypeCellIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F2D0A01C24CC0B0056F039 /* StoryboardPrototypeCellIdentifiers.swift */; };
 		01F503351C21F5D700757799 /* SubsystemsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F503341C21F5D700757799 /* SubsystemsTableViewController.swift */; };
 		01F503371C21F62B00757799 /* SubsystemsFetchedResultsControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F503361C21F62B00757799 /* SubsystemsFetchedResultsControllers.swift */; };
 /* End PBXBuildFile section */
@@ -70,15 +60,10 @@
 		011FF5F61C23A4E70097BD6A /* LinksFetchedResultsControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinksFetchedResultsControllers.swift; sourceTree = "<group>"; };
 		01211F891C2A0AF700DF034E /* DescriptionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DescriptionTableViewCell.swift; sourceTree = "<group>"; };
 		01211F8B1C2A0C8B00DF034E /* LinkTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkTableViewCell.swift; sourceTree = "<group>"; };
-		01394CB81C236B1400D555B4 /* systems.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = systems.json; sourceTree = "<group>"; };
-		01394CBA1C23702600D555B4 /* subsystems.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = subsystems.json; sourceTree = "<group>"; };
 		013D8AF41C2014300026B574 /* SystemDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemDetailViewController.swift; sourceTree = "<group>"; };
-		0143CE1A1C34D811002F7755 /* RemoteDataJSONKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteDataJSONKeys.swift; sourceTree = "<group>"; };
-		01733F021C3269F10025BDBD /* ManagedObjectEntityNames.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedObjectEntityNames.swift; sourceTree = "<group>"; };
 		019597131C20A2740004E579 /* SystemFetchedResultsControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemFetchedResultsControllers.swift; sourceTree = "<group>"; };
 		01B2592F1C1FC8CD0075964F /* WVUClinicalSkillsCoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WVUClinicalSkillsCoreDataModel.xcdatamodel; sourceTree = "<group>"; };
 		01B259311C1FC98F0075964F /* System.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = System.swift; sourceTree = "<group>"; };
-		01B87F321C33A17C00A83420 /* ManagedObjectEntityPropertyKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedObjectEntityPropertyKeys.swift; sourceTree = "<group>"; };
 		01C994771C1F887900491F94 /* WVU Clinical Skills.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WVU Clinical Skills.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		01C9947A1C1F887900491F94 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		01C9947F1C1F887900491F94 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -93,12 +78,7 @@
 		01C9949C1C1F887900491F94 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		01D3B8451C2F5629007CE1D2 /* DatastoreManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatastoreManager.swift; sourceTree = "<group>"; };
 		01D3B8471C2F5637007CE1D2 /* RemoteConnectionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteConnectionManager.swift; sourceTree = "<group>"; };
-		01D3B8491C2F5643007CE1D2 /* SeedManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeedManager.swift; sourceTree = "<group>"; };
-		01D3B84B1C2F56B7007CE1D2 /* DatastoreManagerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatastoreManagerDelegate.swift; sourceTree = "<group>"; };
-		01D3B84D1C2F5735007CE1D2 /* RemoteConnectionManagerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteConnectionManagerDelegate.swift; sourceTree = "<group>"; };
-		01D3B84F1C2F5E8E007CE1D2 /* DataURLStrings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataURLStrings.swift; sourceTree = "<group>"; };
 		01D3B8511C30ECDB007CE1D2 /* JSONParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONParser.swift; sourceTree = "<group>"; };
-		01F2D0A01C24CC0B0056F039 /* StoryboardPrototypeCellIdentifiers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryboardPrototypeCellIdentifiers.swift; sourceTree = "<group>"; };
 		01F503341C21F5D700757799 /* SubsystemsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubsystemsTableViewController.swift; sourceTree = "<group>"; };
 		01F503361C21F62B00757799 /* SubsystemsFetchedResultsControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubsystemsFetchedResultsControllers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -175,11 +155,6 @@
 			children = (
 				01C9947A1C1F887900491F94 /* AppDelegate.swift */,
 				0118E6EE1C229E9700989F34 /* StoryboardSegueIdentifiers.swift */,
-				01F2D0A01C24CC0B0056F039 /* StoryboardPrototypeCellIdentifiers.swift */,
-				01733F021C3269F10025BDBD /* ManagedObjectEntityNames.swift */,
-				01B87F321C33A17C00A83420 /* ManagedObjectEntityPropertyKeys.swift */,
-				0143CE1A1C34D811002F7755 /* RemoteDataJSONKeys.swift */,
-				01D3B84F1C2F5E8E007CE1D2 /* DataURLStrings.swift */,
 				01C994811C1F887900491F94 /* Assets.xcassets */,
 				01C994831C1F887900491F94 /* LaunchScreen.storyboard */,
 				01C994861C1F887900491F94 /* Info.plist */,
@@ -200,13 +175,9 @@
 		01394CB31C2368B200D555B4 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				01D3B8531C30ED81007CE1D2 /* Protocols */,
 				01D3B8451C2F5629007CE1D2 /* DatastoreManager.swift */,
 				01D3B8471C2F5637007CE1D2 /* RemoteConnectionManager.swift */,
 				01D3B8511C30ECDB007CE1D2 /* JSONParser.swift */,
-				01D3B8491C2F5643007CE1D2 /* SeedManager.swift */,
-				01394CB81C236B1400D555B4 /* systems.json */,
-				01394CBA1C23702600D555B4 /* subsystems.json */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -268,15 +239,6 @@
 				01C9949C1C1F887900491F94 /* Info.plist */,
 			);
 			path = "WVU Clinical SkillsUITests";
-			sourceTree = "<group>";
-		};
-		01D3B8531C30ED81007CE1D2 /* Protocols */ = {
-			isa = PBXGroup;
-			children = (
-				01D3B84B1C2F56B7007CE1D2 /* DatastoreManagerDelegate.swift */,
-				01D3B84D1C2F5735007CE1D2 /* RemoteConnectionManagerDelegate.swift */,
-			);
-			name = Protocols;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -387,9 +349,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				01394CB91C236B1400D555B4 /* systems.json in Resources */,
 				01C994851C1F887900491F94 /* LaunchScreen.storyboard in Resources */,
-				01394CBB1C23702600D555B4 /* subsystems.json in Resources */,
 				01C994821C1F887900491F94 /* Assets.xcassets in Resources */,
 				01C994801C1F887900491F94 /* Main.storyboard in Resources */,
 			);
@@ -438,20 +398,12 @@
 				01029FF11C3A5ED80046BC46 /* SystemManagedObject.swift in Sources */,
 				01B259321C1FC98F0075964F /* System.swift in Sources */,
 				01211F8C1C2A0C8B00DF034E /* LinkTableViewCell.swift in Sources */,
-				01B87F331C33A17C00A83420 /* ManagedObjectEntityPropertyKeys.swift in Sources */,
 				0116CAE11C1FB4C60006706C /* SystemTableViewCell.swift in Sources */,
 				01D3B8521C30ECDB007CE1D2 /* JSONParser.swift in Sources */,
 				0118E6EF1C229E9700989F34 /* StoryboardSegueIdentifiers.swift in Sources */,
-				01D3B84C1C2F56B7007CE1D2 /* DatastoreManagerDelegate.swift in Sources */,
-				01D3B84A1C2F5643007CE1D2 /* SeedManager.swift in Sources */,
-				0143CE1B1C34D811002F7755 /* RemoteDataJSONKeys.swift in Sources */,
-				01F2D0A11C24CC0B0056F039 /* StoryboardPrototypeCellIdentifiers.swift in Sources */,
 				0116CADF1C1FB1920006706C /* SystemsTableViewController.swift in Sources */,
 				011FF5F31C239B9B0097BD6A /* Link.swift in Sources */,
-				01D3B84E1C2F5735007CE1D2 /* RemoteConnectionManagerDelegate.swift in Sources */,
-				01D3B8501C2F5E8E007CE1D2 /* DataURLStrings.swift in Sources */,
 				011FF5F71C23A4E70097BD6A /* LinksFetchedResultsControllers.swift in Sources */,
-				01733F031C3269F10025BDBD /* ManagedObjectEntityNames.swift in Sources */,
 				01D3B8461C2F5629007CE1D2 /* DatastoreManager.swift in Sources */,
 				01029FF31C3A5EE40046BC46 /* LinkManagedObject.swift in Sources */,
 				01B259301C1FC8CD0075964F /* WVUClinicalSkillsCoreDataModel.xcdatamodeld in Sources */,

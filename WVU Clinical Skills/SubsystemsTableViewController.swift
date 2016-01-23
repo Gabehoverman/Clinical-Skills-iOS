@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class SubsystemsTableViewController: UITableViewController, UISearchBarDelegate, NSFetchedResultsControllerDelegate {
+class SubsystemsTableViewController: UITableViewController {
 
 	// MARK: - Properties
 	
@@ -34,74 +34,7 @@ class SubsystemsTableViewController: UITableViewController, UISearchBarDelegate,
 		self.isInitialLoad = false
 	}
 	
-	// MARK: - IB Actions
-	
-	@IBAction func detailsBarButtonPressed(sender: AnyObject) {
-		self.performSegueWithIdentifier(StoryboardSegueIdentifiers.ToDetailsView.rawValue, sender: self.managedParentSystem)
-	}
-	
-	// MARK: - Data Methods
-	
-	func fetchResults(shouldAskForData: Bool, shouldReload: Bool) {
-		if self.fetchedResultsController == nil {
-			if self.managedParentSystem != nil {
-				self.fetchedResultsController = SubsystemsFetchedResultsControllers.allVisibleSubsystemsFetchedResultsController(self.managedParentSystem!, delegateController: self)
-				self.defaultSearchPredicate = self.fetchedResultsController!.fetchRequest.predicate
-			}
-		}
-		do {
-			try self.fetchedResultsController!.performFetch()
-			if shouldReload {
-				self.tableView.reloadData()
-			}
-		} catch {
-			print("Error fetching Subsystems")
-		}
-	}
-	
-	// MARK: - Search Methods
-	
-	func initializeSearchController() {
-		self.searchController = UISearchController(searchResultsController: nil)
-		self.searchController.dimsBackgroundDuringPresentation = true
-		self.searchController.definesPresentationContext = true
-		self.searchController.searchBar.delegate = self
-		self.tableView.tableHeaderView = self.searchController.searchBar
-		self.tableView.contentOffset = CGPointMake(0, self.searchController.searchBar.frame.size.height)
-		self.searchController.loadViewIfNeeded()
-	}
-	
-	func clearSearch() {
-		self.searchPhrase = nil
-		self.fetchedResultsController = SubsystemsFetchedResultsControllers.allVisibleSubsystemsFetchedResultsController(self.managedParentSystem!, delegateController: self)
-		self.fetchResults(false, shouldReload: true)
-	}
-	
-	func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-		if searchText != "" {
-			if self.defaultSearchPredicate != nil {
-				self.searchPhrase = searchText
-				var predicates = [self.defaultSearchPredicate!]
-				let filterPredicate = NSPredicate(format: "%K CONTAINS[cd] %@", ManagedObjectEntityPropertyKeys.Subsystem.Name.rawValue, searchText)
-				predicates.append(filterPredicate)
-				let fullPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
-				self.fetchedResultsController!.fetchRequest.predicate = fullPredicate
-				self.fetchResults(false, shouldReload: true)
-			}
-		} else {
-			self.clearSearch()
-		}
-	}
-	
-	func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-		self.clearSearch()
-	}
-	
-	func searchBarTextDidEndEditing(searchBar: UISearchBar) {
-		searchBar.text = self.searchPhrase
-	}
-	
-	// MARK: - Table View Methods
+	// MARK: - Table View Controller Methods
 	
 	override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
 		if let sections = self.fetchedResultsController?.sections {
@@ -118,7 +51,7 @@ class SubsystemsTableViewController: UITableViewController, UISearchBarDelegate,
 	}
 	
 	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCellWithIdentifier(StoryboardPrototypeCellIdentifiers.Subsystem.rawValue) as! SystemTableViewCell
+		let cell = tableView.dequeueReusableCellWithIdentifier(SystemTableViewCell.subsystemCellIdentifier) as! SystemTableViewCell
 		let subsystem = self.fetchedResultsController!.objectAtIndexPath(indexPath) as! SystemManagedObject
 		cell.systemNameLabel.text = subsystem.name
 		return cell
@@ -144,6 +77,31 @@ class SubsystemsTableViewController: UITableViewController, UISearchBarDelegate,
 		}
 	}
 	
+	// MARK: - Fetch Methods
+	
+	func fetchResults(shouldAskForData: Bool, shouldReload: Bool) {
+		if self.fetchedResultsController == nil {
+			if self.managedParentSystem != nil {
+				self.fetchedResultsController = SubsystemsFetchedResultsControllers.allVisibleSubsystemsFetchedResultsController(self.managedParentSystem!, delegateController: self)
+				self.defaultSearchPredicate = self.fetchedResultsController!.fetchRequest.predicate
+			}
+		}
+		do {
+			try self.fetchedResultsController!.performFetch()
+			if shouldReload {
+				self.tableView.reloadData()
+			}
+		} catch {
+			print("Error fetching Subsystems")
+		}
+	}
+	
+	// MARK: - User Interface Actions
+	
+	@IBAction func detailsBarButtonPressed(sender: AnyObject) {
+		self.performSegueWithIdentifier(StoryboardSegueIdentifiers.ToDetailsView.rawValue, sender: self.managedParentSystem)
+	}
+	
 	// MARK: - Navigation Methods
 	
 	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -157,4 +115,52 @@ class SubsystemsTableViewController: UITableViewController, UISearchBarDelegate,
 		}
 	}
 
+}
+
+extension SubsystemsTableViewController: NSFetchedResultsControllerDelegate {
+	// No Methods Required Currently
+}
+
+// MARK: - Search Delegate Methods
+
+extension SubsystemsTableViewController: UISearchBarDelegate {
+	func initializeSearchController() {
+		self.searchController = UISearchController(searchResultsController: nil)
+		self.searchController.dimsBackgroundDuringPresentation = true
+		self.searchController.definesPresentationContext = true
+		self.searchController.searchBar.delegate = self
+		self.tableView.tableHeaderView = self.searchController.searchBar
+		self.tableView.contentOffset = CGPointMake(0, self.searchController.searchBar.frame.size.height)
+		self.searchController.loadViewIfNeeded()
+	}
+	
+	func clearSearch() {
+		self.searchPhrase = nil
+		self.fetchedResultsController = SubsystemsFetchedResultsControllers.allVisibleSubsystemsFetchedResultsController(self.managedParentSystem!, delegateController: self)
+		self.fetchResults(false, shouldReload: true)
+	}
+	
+	func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+		if searchText != "" {
+			if self.defaultSearchPredicate != nil {
+				self.searchPhrase = searchText
+				var predicates = [self.defaultSearchPredicate!]
+				let filterPredicate = NSPredicate(format: "%K CONTAINS[cd] %@", SystemManagedObject.propertyKeys.name, searchText)
+				predicates.append(filterPredicate)
+				let fullPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
+				self.fetchedResultsController!.fetchRequest.predicate = fullPredicate
+				self.fetchResults(false, shouldReload: true)
+			}
+		} else {
+			self.clearSearch()
+		}
+	}
+	
+	func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+		self.clearSearch()
+	}
+	
+	func searchBarTextDidEndEditing(searchBar: UISearchBar) {
+		searchBar.text = self.searchPhrase
+	}
 }

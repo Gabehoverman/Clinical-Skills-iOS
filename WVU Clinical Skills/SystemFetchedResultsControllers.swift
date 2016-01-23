@@ -11,25 +11,25 @@ import CoreData
 
 class SystemFetchedResultsControllers {
 	
-	static let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+	static let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
 	
 	class func allSystemsResultController(delegateController: NSFetchedResultsControllerDelegate) -> NSFetchedResultsController {
-		let request = NSFetchRequest(entityName: ManagedObjectEntityNames.System.rawValue)
-		request.predicate = NSPredicate(format: "%K = nil", ManagedObjectEntityPropertyKeys.System.Parent.rawValue)
-		request.sortDescriptors = [NSSortDescriptor(key: ManagedObjectEntityPropertyKeys.System.Name.rawValue, ascending: true)]
-		let controller = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+		let request = NSFetchRequest(entityName: SystemManagedObject.entityName)
+		request.predicate = NSPredicate(format: "%K = nil", SystemManagedObject.propertyKeys.parent)
+		request.sortDescriptors = [NSSortDescriptor(key: SystemManagedObject.propertyKeys.name, ascending: true)]
+		let controller = NSFetchedResultsController(fetchRequest: request, managedObjectContext: managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
 		controller.delegate = delegateController
 		return controller
 	}
 	
 	class func allVisibleSystemsResultController(delegateController: NSFetchedResultsControllerDelegate) -> NSFetchedResultsController {
-		let request = NSFetchRequest(entityName: ManagedObjectEntityNames.System.rawValue)
+		let request = NSFetchRequest(entityName: SystemManagedObject.entityName)
 		var predicates = [NSPredicate]()
-		predicates.append(NSPredicate(format: "%K = nil", ManagedObjectEntityPropertyKeys.System.Parent.rawValue))
-		predicates.append(NSPredicate(format: "%K = %@", ManagedObjectEntityPropertyKeys.System.Visible.rawValue, true))
+		predicates.append(NSPredicate(format: "%K = nil", SystemManagedObject.propertyKeys.parent))
+		predicates.append(NSPredicate(format: "%K = %@", SystemManagedObject.propertyKeys.visible, true))
 		request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
-		request.sortDescriptors = [NSSortDescriptor(key: ManagedObjectEntityPropertyKeys.System.Name.rawValue, ascending: true)]
-		let controller = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+		request.sortDescriptors = [NSSortDescriptor(key: SystemManagedObject.propertyKeys.name, ascending: true)]
+		let controller = NSFetchedResultsController(fetchRequest: request, managedObjectContext: managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
 		controller.delegate = delegateController
 		return controller
 	}

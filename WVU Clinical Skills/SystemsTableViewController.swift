@@ -14,7 +14,7 @@ import BRYXBanner
 /**
 	Table View displaying all System data inside the database
 */
-class SystemsTableViewController: UITableViewController, UISearchBarDelegate, NSFetchedResultsControllerDelegate, RemoteConnectionManagerDelegate, DatastoreManagerDelegate {
+class SystemsTableViewController: UITableViewController {
 	
 	// MARK: - Properties
 	
@@ -35,7 +35,7 @@ class SystemsTableViewController: UITableViewController, UISearchBarDelegate, NS
 	override func viewWillAppear(animated: Bool) {
 		if self.isInitialLoad {
 			self.datastoreManager = DatastoreManager(delegate: self)
-			self.remoteConnectionManager = RemoteConnectionManager(delegate: self)
+			self.remoteConnectionManager = RemoteConnectionManager(shouldRequestFromLocal: false, delegate: self)
 			self.remoteConnectionManager!.fetchSystems()
 		}
 	}
@@ -52,159 +52,8 @@ class SystemsTableViewController: UITableViewController, UISearchBarDelegate, NS
 		super.viewWillDisappear(animated)
 		self.isInitialLoad = false
 	}
-
-	// MARK: - Data Methods
 	
-	func fetchResultsWithReload(shouldReload: Bool) {
-		if self.fetchedResultsController == nil {
-			self.fetchedResultsController = SystemFetchedResultsControllers.allVisibleSystemsResultController(self)
-			self.defaultSearchPredicate = self.fetchedResultsController!.fetchRequest.predicate
-		}
-		do {
-			try self.fetchedResultsController!.performFetch()
-			if shouldReload {
-				self.tableView.reloadData()
-			}
-		} catch {
-			print("Error occurred during System fetch")
-		}
-	}
-	
-	func handleRefresh(refreshControl: UIRefreshControl) {
-		self.remoteConnectionManager!.fetchSystems()
-	}
-	
-	
-	@IBAction func clear(sender: AnyObject) {
-		let alert = UIAlertController(title: "Clear", message: "What should be cleared?", preferredStyle: .ActionSheet)
-		alert.addAction(UIAlertAction(title: "Clear All", style: .Destructive) { (action) -> Void in
-				(UIApplication.sharedApplication().delegate as! AppDelegate).clearAll()
-			}
-		)
-		alert.addAction(UIAlertAction(title: "Clear Systems", style: .Default) { (action) -> Void in
-				(UIApplication.sharedApplication().delegate as! AppDelegate).clearSystems()
-			}
-		)
-		alert.addAction(UIAlertAction(title: "Clear Subsystems", style: .Default) { (action) -> Void in
-				(UIApplication.sharedApplication().delegate as! AppDelegate).clearSubsystems()
-			}
-		)
-		alert.addAction(UIAlertAction(title: "Clear Links", style: .Default) { (action) -> Void in
-				(UIApplication.sharedApplication().delegate as! AppDelegate).clearLinks()
-			}
-		)
-		alert.addAction(UIAlertAction(title: "Nevermind", style: .Cancel) { (action) -> Void in
-				self.fetchResultsWithReload(true)
-				self.dismissViewControllerAnimated(true, completion: nil)
-			}
-		)
-		self.presentViewController(alert, animated: true, completion: nil)
-	}
-	
-	@IBAction func print(sender: AnyObject) {
-		let alert = UIAlertController(title: "Print", message: "What should be printed?", preferredStyle: .ActionSheet)
-		alert.addAction(UIAlertAction(title: "Print All", style: .Destructive) { (action) -> Void in
-				self.datastoreManager!.printContents()
-			}
-		)
-		alert.addAction(UIAlertAction(title: "Print Systems", style: .Default) { (action) -> Void in
-				self.datastoreManager!.printSystems()
-			}
-		)
-		alert.addAction(UIAlertAction(title: "Print Subsystems", style: .Default) { (action) -> Void in
-				self.datastoreManager!.printSubsystems()
-			}
-		)
-		alert.addAction(UIAlertAction(title: "Print Links", style: .Default) { (action) -> Void in
-				self.datastoreManager!.printLinks()
-			}
-		)
-		alert.addAction(UIAlertAction(title: "Nevermind", style: .Cancel) { (action) -> Void in
-				self.dismissViewControllerAnimated(true, completion: nil)
-			}
-		)
-		self.presentViewController(alert, animated: true, completion: nil)
-	}
-	
-	// MARK: - Remote Connection Manager Delegate Methods
-	
-	func didBeginDataRequest() {
-		if self.refreshControl != nil {
-			if !self.refreshControl!.refreshing {
-				self.performSelectorOnMainThread(Selector("showActivityIndicator"), withObject: nil, waitUntilDone: false)
-			}
-		}
-	}
-	
-	func didFinishDataRequestWithData(receivedData: NSData) {
-		let parser = JSONParser(jsonData: receivedData)
-		if parser.dataType == JSONParser.DataTypes.System.rawValue {
-			self.datastoreManager!.storeSystems(parser.parseSystems())
-			self.remoteConnectionManager!.fetchSubsystems()
-			self.performSelectorOnMainThread(Selector("showBanner"), withObject: nil, waitUntilDone: true)
-		} else if parser.dataType == JSONParser.DataTypes.Subsystem.rawValue {
-			self.datastoreManager!.storeSubsystems(parser.parseSubsystems())
-		}
-	}
-	
-	func didFinishDataRequest() {
-		if self.refreshControl != nil {
-			if self.refreshControl!.refreshing {
-				self.refreshControl!.endRefreshing()
-			}
-		}
-		self.performSelectorOnMainThread(Selector("fetchResultsWithReload:"), withObject: true, waitUntilDone: true)
-		self.performSelectorOnMainThread(Selector("hideActivityIndicator"), withObject: nil, waitUntilDone: false)
-	}
-	
-	// MARK: - Datastore Manager Delegate Methods
-	
-	func didFinishStoring() {
-		self.performSelectorOnMainThread(Selector("fetchResultsWithReload:"), withObject: true, waitUntilDone: false)
-	}
-	
-	// MARK: - Search Methods
-	
-	func initializeSearchController() {
-		self.searchController.dimsBackgroundDuringPresentation = true
-		self.searchController.definesPresentationContext = true
-		self.searchController.searchBar.delegate = self
-		self.tableView.tableHeaderView = self.searchController.searchBar
-		self.tableView.contentOffset = CGPointMake(0, self.searchController.searchBar.frame.size.height)
-		self.searchController.loadViewIfNeeded()
-	}
-	
-	func clearSearch() {
-		self.searchPhrase = nil
-		self.fetchedResultsController = SystemFetchedResultsControllers.allVisibleSystemsResultController(self)
-		self.fetchResultsWithReload(true)
-	}
-	
-	func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-		if searchText != "" {
-			if self.defaultSearchPredicate != nil {
-				self.searchPhrase = searchText
-				var predicates = [self.defaultSearchPredicate!]
-				let filterPredicate = NSPredicate(format: "%K CONTAINS[cd] %@", ManagedObjectEntityPropertyKeys.System.Name.rawValue, searchText)
-				predicates.append(filterPredicate)
-				let fullPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
-				self.fetchedResultsController?.fetchRequest.predicate = fullPredicate
-				self.fetchResultsWithReload(true)
-			}
-		} else {
-			self.clearSearch()
-		}
-	}
-	
-	func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-		self.clearSearch()
-	}
-	
-	func searchBarTextDidEndEditing(searchBar: UISearchBar) {
-		searchBar.text = self.searchPhrase
-	}
-	
-	// MARK: - Table View Methods
+	// MARK: - Table View Controller Methods
 	
 	override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
 		if let sections = self.fetchedResultsController?.sections {
@@ -221,7 +70,7 @@ class SystemsTableViewController: UITableViewController, UISearchBarDelegate, NS
 	}
 	
 	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCellWithIdentifier(StoryboardPrototypeCellIdentifiers.System.rawValue) as! SystemTableViewCell
+		let cell = tableView.dequeueReusableCellWithIdentifier(SystemTableViewCell.systemCellIdentifier) as! SystemTableViewCell
 		let managedSystem = self.fetchedResultsController!.objectAtIndexPath(indexPath) as! SystemManagedObject
 		cell.systemNameLabel.text = managedSystem.name
 		return cell
@@ -243,6 +92,27 @@ class SystemsTableViewController: UITableViewController, UISearchBarDelegate, NS
 		}
 	}
 	
+	// MARK: - Refresh Methods
+	
+	func fetchResultsWithReload(shouldReload: Bool) {
+		if self.fetchedResultsController == nil {
+			self.fetchedResultsController = SystemFetchedResultsControllers.allVisibleSystemsResultController(self)
+			self.defaultSearchPredicate = self.fetchedResultsController!.fetchRequest.predicate
+		}
+		do {
+			try self.fetchedResultsController!.performFetch()
+			if shouldReload {
+				self.tableView.reloadData()
+			}
+		} catch {
+			print("Error occurred during System fetch")
+		}
+	}
+	
+	func handleRefresh(refreshControl: UIRefreshControl) {
+		self.remoteConnectionManager!.fetchSystems()
+	}
+	
 	// MARK: - Activity Indicator Methods
 	
 	func initializeActivityIndicator() {
@@ -260,6 +130,59 @@ class SystemsTableViewController: UITableViewController, UISearchBarDelegate, NS
 	
 	func hideActivityIndicator() {
 		self.activityIndicator!.stopAnimating()
+	}
+	
+	// MARK: - User Interface Actions
+	
+	@IBAction func clear(sender: AnyObject) {
+		let alert = UIAlertController(title: "Clear", message: "What should be cleared?", preferredStyle: .ActionSheet)
+		alert.addAction(UIAlertAction(title: "Clear All", style: .Destructive) { (action) -> Void in
+			(UIApplication.sharedApplication().delegate as! AppDelegate).clearAll()
+			}
+		)
+		alert.addAction(UIAlertAction(title: "Clear Systems", style: .Default) { (action) -> Void in
+			(UIApplication.sharedApplication().delegate as! AppDelegate).clearSystems()
+			}
+		)
+		alert.addAction(UIAlertAction(title: "Clear Subsystems", style: .Default) { (action) -> Void in
+			(UIApplication.sharedApplication().delegate as! AppDelegate).clearSubsystems()
+			}
+		)
+		alert.addAction(UIAlertAction(title: "Clear Links", style: .Default) { (action) -> Void in
+			(UIApplication.sharedApplication().delegate as! AppDelegate).clearLinks()
+			}
+		)
+		alert.addAction(UIAlertAction(title: "Nevermind", style: .Cancel) { (action) -> Void in
+			self.fetchResultsWithReload(true)
+			self.dismissViewControllerAnimated(true, completion: nil)
+			}
+		)
+		self.presentViewController(alert, animated: true, completion: nil)
+	}
+	
+	@IBAction func printManagedObjects(sender: AnyObject) {
+		let alert = UIAlertController(title: "Print", message: "What should be printed?", preferredStyle: .ActionSheet)
+		alert.addAction(UIAlertAction(title: "Print All", style: .Destructive) { (action) -> Void in
+			self.datastoreManager!.printContents()
+			}
+		)
+		alert.addAction(UIAlertAction(title: "Print Systems", style: .Default) { (action) -> Void in
+			self.datastoreManager!.printSystems()
+			}
+		)
+		alert.addAction(UIAlertAction(title: "Print Subsystems", style: .Default) { (action) -> Void in
+			self.datastoreManager!.printSubsystems()
+			}
+		)
+		alert.addAction(UIAlertAction(title: "Print Links", style: .Default) { (action) -> Void in
+			self.datastoreManager!.printLinks()
+			}
+		)
+		alert.addAction(UIAlertAction(title: "Nevermind", style: .Cancel) { (action) -> Void in
+			self.dismissViewControllerAnimated(true, completion: nil)
+			}
+		)
+		self.presentViewController(alert, animated: true, completion: nil)
 	}
 	
 	// MARK: - Navigation Methods
@@ -280,7 +203,96 @@ class SystemsTableViewController: UITableViewController, UISearchBarDelegate, NS
 		}
 	}
 	
-	// MARK: - Utility Methods
+}
+
+// MARK: - Fetched Results Controller Delegate Methods
+
+extension SystemsTableViewController: NSFetchedResultsControllerDelegate {
+	// No Methods Required Currently
+}
+
+// MARK: - Search Delegate Methods
+
+extension SystemsTableViewController: UISearchBarDelegate {
+	func initializeSearchController() {
+		self.searchController.dimsBackgroundDuringPresentation = true
+		self.searchController.definesPresentationContext = true
+		self.searchController.searchBar.delegate = self
+		self.tableView.tableHeaderView = self.searchController.searchBar
+		self.tableView.contentOffset = CGPointMake(0, self.searchController.searchBar.frame.size.height)
+		self.searchController.loadViewIfNeeded()
+	}
+	
+	func clearSearch() {
+		self.searchPhrase = nil
+		self.fetchedResultsController = SystemFetchedResultsControllers.allVisibleSystemsResultController(self)
+		self.fetchResultsWithReload(true)
+	}
+	
+	func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+		if searchText != "" {
+			if self.defaultSearchPredicate != nil {
+				self.searchPhrase = searchText
+				var predicates = [self.defaultSearchPredicate!]
+				let filterPredicate = NSPredicate(format: "%K CONTAINS[cd] %@", SystemManagedObject.propertyKeys.name, searchText)
+				predicates.append(filterPredicate)
+				let fullPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
+				self.fetchedResultsController?.fetchRequest.predicate = fullPredicate
+				self.fetchResultsWithReload(true)
+			}
+		} else {
+			self.clearSearch()
+		}
+	}
+	
+	func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+		self.clearSearch()
+	}
+	
+	func searchBarTextDidEndEditing(searchBar: UISearchBar) {
+		searchBar.text = self.searchPhrase
+	}
+}
+
+// MARK: - Remote Connection Manager Delegate Methods
+
+extension SystemsTableViewController: RemoteConnectionManagerDelegate {
+	func didBeginDataRequest() {
+		print("Requesting")
+		if self.refreshControl != nil {
+			if !self.refreshControl!.refreshing {
+				dispatch_async(dispatch_get_main_queue(), { () -> Void in
+					self.showActivityIndicator()
+				})
+			}
+		}
+	}
+	
+	func didFinishDataRequestWithData(receivedData: NSData) {
+		let parser = JSONParser(jsonData: receivedData)
+		if parser.dataType == JSONParser.dataTypes.system {
+			self.datastoreManager!.storeSystems(parser.parseSystems())
+			self.remoteConnectionManager!.fetchSubsystems()
+			dispatch_async(dispatch_get_main_queue(), { () -> Void in
+				self.showBanner()
+			})
+		} else if parser.dataType == JSONParser.dataTypes.subsystem {
+			self.datastoreManager!.storeSubsystems(parser.parseSubsystems())
+		}
+	}
+	
+	func didFinishDataRequest() {
+		if self.refreshControl != nil {
+			if self.refreshControl!.refreshing {
+				self.refreshControl!.endRefreshing()
+			}
+		}
+		
+		dispatch_async(dispatch_get_main_queue()) { () -> Void in
+			self.fetchResultsWithReload(true)
+			self.hideActivityIndicator()
+		}
+	}
 	
 	func showBanner() {
 		var color = UIColor.whiteColor()
@@ -292,5 +304,14 @@ class SystemsTableViewController: UITableViewController, UISearchBarDelegate, NS
 		let banner = Banner(title: "HTTP Response", subtitle: self.remoteConnectionManager!.statusMessage, image: nil, backgroundColor: color, didTapBlock: nil)
 		banner.show(self.navigationController?.view, duration: 1.5)
 	}
-	
+}
+
+// MARK: - Datastore Manager Delegate Methods
+
+extension SystemsTableViewController: DatastoreManagerDelegate {
+	func didFinishStoring() {
+		dispatch_async(dispatch_get_main_queue()) { () -> Void in
+			self.fetchResultsWithReload(true)
+		}
+	}
 }

@@ -15,6 +15,17 @@ Represents a high-level anatomical System of the human body
 @objc(SystemManagedObject)
 class SystemManagedObject: NSManagedObject {
 	
+	static let entityName = "System"
+	struct propertyKeys {
+		static let name = "name"
+		static let details = "details"
+		static let visible = "visible"
+		static let links = "links"
+		static let parent = "parentSystem"
+		static let parentName = "parent_name"
+		static let subsystems = "subsystems"
+	}
+	
 	@NSManaged var name: String
 	@NSManaged var details : String
 	@NSManaged var visible: Bool
