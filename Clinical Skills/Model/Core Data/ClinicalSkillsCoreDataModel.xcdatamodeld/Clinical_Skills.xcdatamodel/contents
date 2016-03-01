@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="14F27" minimumToolsVersion="Automatic">
+    <entity name="Link" representedClassName="LinkManagedObject" syncable="YES">
+        <attribute name="link" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="visible" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <relationship name="systems" toMany="YES" deletionRule="Nullify" destinationEntity="System" inverseName="links" inverseEntity="System" syncable="YES"/>
+    </entity>
+    <entity name="System" representedClassName="SystemManagedObject" syncable="YES">
+        <attribute name="details" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="visible" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <relationship name="links" toMany="YES" deletionRule="Cascade" destinationEntity="Link" inverseName="systems" inverseEntity="Link" syncable="YES"/>
+        <relationship name="parentSystem" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="System" inverseName="subsystems" inverseEntity="System" syncable="YES"/>
+        <relationship name="subsystems" toMany="YES" deletionRule="Cascade" destinationEntity="System" inverseName="parentSystem" inverseEntity="System" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Link" positionX="-63" positionY="-18" width="128" height="105"/>
+        <element name="System" positionX="-54" positionY="18" width="128" height="135"/>
+    </elements>
+</model>
