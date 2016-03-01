@@ -1,2 +1,6 @@
+<<<<<<< HEAD
 github "bryx-inc/BRYXBanner" "0.5.2"
+=======
+github "bryx-inc/BRYXBanner" "0.5.0"
+>>>>>>> 8a7afeee3b852b2c639fbf22eff6466535bec1ca
 github "SwiftyJSON/SwiftyJSON" "2.3.3"
