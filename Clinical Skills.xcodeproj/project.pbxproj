@@ -33,6 +33,7 @@
 		011E01BB1C864C1A00AB8BA0 /* ClinicalSkillsCoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 011E01B91C864C1A00AB8BA0 /* ClinicalSkillsCoreDataModel.xcdatamodeld */; };
 		01CD863A1C865F2E00E4437D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01CD86381C865F2E00E4437D /* LaunchScreen.storyboard */; };
 		01CD863B1C865F2E00E4437D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01CD86391C865F2E00E4437D /* Main.storyboard */; };
+		01CD86451C86A5F000E4437D /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 01CD86441C86A5F000E4437D /* Settings.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +65,7 @@
 		01CD86381C865F2E00E4437D /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		01CD86391C865F2E00E4437D /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		01CD86401C865FB900E4437D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		01CD86441C86A5F000E4437D /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,6 +164,7 @@
 				011E01611C86463400AB8BA0 /* AppDelegate.swift */,
 				011E016B1C86463400AB8BA0 /* Assets.xcassets */,
 				01CD86401C865FB900E4437D /* Info.plist */,
+				01CD86441C86A5F000E4437D /* Settings.bundle */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -267,6 +270,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				01CD86451C86A5F000E4437D /* Settings.bundle in Resources */,
 				01CD863A1C865F2E00E4437D /* LaunchScreen.storyboard in Resources */,
 				011E016C1C86463400AB8BA0 /* Assets.xcassets in Resources */,
 				01CD863B1C865F2E00E4437D /* Main.storyboard in Resources */,

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>StringsTable</key>
+	<string>Root</string>
+	<key>PreferenceSpecifiers</key>
+	<array>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string>Personnel</string>
+			<key>FooterText</key>
+			<string>CREATOR
+
+Shaun Raganyi, OMS-III, Clinical Sciences Graduate Teaching Assistant at West Virginia School of Osteopathic Medicine
+
+Under supervision of Dr. Gail Swarm, D.O.
+
+
+--
+
+
+DEVELOPER
+
+Nicholas Alexander, Marshall University
+
+Under supervision of Dr. Paulus Wahjudi, Ph.D.
+
+
+--
+
+
+CONTRIBUTORS
+
+Dr. Kathleen Martin, M.D.
+Dr. Jill Cochran, Ph.D., C-FNP
+Dr. Thomas Steele, D.O.
+Dr. Craig Boisvert, D.O.
+Dr. Kristina McGraw, D.O.
+&amp; All Clinical Sciences Faculty at West Virginia School of Osteopathic Medicine
+
+
+--
+
+
+In memory of Dr. Daryn Straley, D.O.</string>
+		</dict>
+	</array>
+</dict>
+</plist>
