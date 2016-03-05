@@ -21,10 +21,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RemoteConnectionManagerDe
 	
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-		window = UIWindow(frame: UIScreen.mainScreen().bounds)
-		let drawerContainerViewController = DrawerContainerViewController()
-		window!.rootViewController = drawerContainerViewController
-		window!.makeKeyAndVisible()
 		
 		if SHOW_LAUNCH_SCREEN {
 			NSThread.sleepForTimeInterval(NSTimeInterval(500.0));

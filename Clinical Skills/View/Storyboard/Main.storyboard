@@ -1,95 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Du2-Kh-XVf">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Settings Drawer View Controller-->
-        <scene sceneID="WQn-6d-w00">
-            <objects>
-                <viewController storyboardIdentifier="SettingsDrawerViewController" title="Settings Drawer View Controller" useStoryboardIdentifierAsRestorationIdentifier="YES" id="aF7-3Q-I1v" customClass="SettingsDrawerViewController" customModule="WVU_Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="phu-u6-tts"/>
-                        <viewControllerLayoutGuide type="bottom" id="mHb-Mb-cr3"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="lOA-ma-Ret">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="OMT-VP-w41">
-                                <rect key="frame" x="0.0" y="28" width="600" height="572"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SettingToggleCell" id="3rX-Mb-ZjH" customClass="SettingToggleTableViewCell" customModule="WVU_Clinical_Skills" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="600" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3rX-Mb-ZjH" id="R0p-9S-m8e">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="H8e-5d-YDE">
-                                                    <rect key="frame" x="8" y="6" width="51" height="31"/>
-                                                </switch>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Requset From Local Host" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kiu-cO-InX">
-                                                    <rect key="frame" x="202" y="11" width="197" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="H8e-5d-YDE" firstAttribute="leading" secondItem="R0p-9S-m8e" secondAttribute="leadingMargin" id="SMP-so-XAJ"/>
-                                                <constraint firstItem="kiu-cO-InX" firstAttribute="centerY" secondItem="R0p-9S-m8e" secondAttribute="centerY" id="b47-S4-i2J"/>
-                                                <constraint firstItem="kiu-cO-InX" firstAttribute="centerX" secondItem="R0p-9S-m8e" secondAttribute="centerX" id="c1s-TL-zp6"/>
-                                                <constraint firstItem="H8e-5d-YDE" firstAttribute="centerY" secondItem="R0p-9S-m8e" secondAttribute="centerY" id="oLz-Td-cGC"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="titleLabel" destination="kiu-cO-InX" id="X0e-M0-GDp"/>
-                                            <outlet property="toggleSwitch" destination="H8e-5d-YDE" id="8vp-Ua-aQW"/>
-                                        </connections>
-                                    </tableViewCell>
-                                </prototypes>
-                                <connections>
-                                    <outlet property="dataSource" destination="aF7-3Q-I1v" id="cT6-HZ-r0o"/>
-                                    <outlet property="delegate" destination="aF7-3Q-I1v" id="jLk-Bu-bz8"/>
-                                </connections>
-                            </tableView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="mHb-Mb-cr3" firstAttribute="top" secondItem="OMT-VP-w41" secondAttribute="bottom" id="EVX-dp-Epj"/>
-                            <constraint firstItem="OMT-VP-w41" firstAttribute="top" secondItem="lOA-ma-Ret" secondAttribute="topMargin" id="P0l-3s-Qi3"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="OMT-VP-w41" secondAttribute="trailing" constant="-20" id="h0Z-Qj-9EE"/>
-                            <constraint firstItem="OMT-VP-w41" firstAttribute="top" secondItem="phu-u6-tts" secondAttribute="bottom" constant="8" id="oyq-nq-Uff"/>
-                            <constraint firstItem="OMT-VP-w41" firstAttribute="top" secondItem="lOA-ma-Ret" secondAttribute="topMargin" id="s2a-fn-dpb"/>
-                            <constraint firstItem="OMT-VP-w41" firstAttribute="leading" secondItem="lOA-ma-Ret" secondAttribute="leadingMargin" constant="-20" id="vBy-pV-t78"/>
-                            <constraint firstItem="OMT-VP-w41" firstAttribute="top" secondItem="phu-u6-tts" secondAttribute="bottom" constant="128" id="yhz-3e-Guf"/>
-                        </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="P0l-3s-Qi3"/>
-                                <exclude reference="s2a-fn-dpb"/>
-                                <exclude reference="yhz-3e-Guf"/>
-                            </mask>
-                        </variation>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="fvj-U9-nsp" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="911" y="531"/>
-        </scene>
         <!--Systems Table View Controller-->
         <scene sceneID="y25-gg-7EJ">
             <objects>
-                <tableViewController storyboardIdentifier="SystemsTableViewController" title="Systems Table View Controller" id="1Lz-Nd-jFp" customClass="SystemsTableViewController" customModule="WVU_Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="SystemsTableViewController" title="Systems Table View Controller" id="1Lz-Nd-jFp" customClass="SystemsTableViewController" customModule="Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="bX3-Bn-OUd">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="SystemCell" id="jig-Zq-dLD" customClass="SystemTableViewCell" customModule="WVU_Clinical_Skills" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="SystemCell" id="jig-Zq-dLD" customClass="SystemTableViewCell" customModule="Clinical_Skills" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jig-Zq-dLD" id="ETk-ci-Wwa">
@@ -151,18 +76,18 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Myo-E9-iSL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1601" y="531"/>
+            <point key="canvasLocation" x="5661" y="531"/>
         </scene>
         <!--System Detail View Controller-->
         <scene sceneID="rYr-Sx-ea8">
             <objects>
-                <tableViewController storyboardIdentifier="SystemDetailViewController" id="vAG-KD-oGw" customClass="SystemDetailViewController" customModule="WVU_Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="SystemDetailViewController" id="vAG-KD-oGw" customClass="SystemDetailViewController" customModule="Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="hby-B7-Vyf" userLabel="Details Table View">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DescriptionCell" rowHeight="132" id="YnK-fe-hEv" userLabel="Description Cell" customClass="DescriptionTableViewCell" customModule="WVU_Clinical_Skills" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DescriptionCell" rowHeight="132" id="YnK-fe-hEv" userLabel="Description Cell" customClass="DescriptionTableViewCell" customModule="Clinical_Skills" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="92" width="600" height="132"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YnK-fe-hEv" id="bNC-Tn-KaM">
@@ -188,7 +113,7 @@
                                     <outlet property="descriptionTextView" destination="vCl-F0-bRU" id="3Jj-6J-Kc4"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LinkCell" id="G0h-43-fBn" userLabel="Link Cell" customClass="LinkTableViewCell" customModule="WVU_Clinical_Skills" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LinkCell" id="G0h-43-fBn" userLabel="Link Cell" customClass="LinkTableViewCell" customModule="Clinical_Skills" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="224" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="G0h-43-fBn" id="3pC-kB-aWT">
@@ -222,18 +147,18 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="w65-Ss-G8d" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2361" y="95"/>
+            <point key="canvasLocation" x="6421" y="95"/>
         </scene>
         <!--Subsystem Table View Controller-->
         <scene sceneID="Iub-hb-ncz">
             <objects>
-                <tableViewController storyboardIdentifier="SubsystemTableViewController" title="Subsystem Table View Controller" id="FIX-bn-2gn" customClass="SubsystemsTableViewController" customModule="WVU_Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="SubsystemTableViewController" title="Subsystem Table View Controller" id="FIX-bn-2gn" customClass="SubsystemsTableViewController" customModule="Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="yNm-cQ-kfX">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="SystemCell" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="SubsystemCell" id="ZEO-Mz-5Gk" userLabel="SystemCell" customClass="SystemTableViewCell" customModule="WVU_Clinical_Skills" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="SystemCell" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="SubsystemCell" id="ZEO-Mz-5Gk" userLabel="SystemCell" customClass="SystemTableViewCell" customModule="Clinical_Skills" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZEO-Mz-5Gk" id="2Yr-2t-uFA">
@@ -279,7 +204,83 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Sc-jm-hfD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2361" y="912"/>
+            <point key="canvasLocation" x="6421" y="912"/>
+        </scene>
+        <!--Clinical Skills-->
+        <scene sceneID="BpW-7l-0qo">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="DPO-nQ-hdc" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Clinical Skills" id="hr4-Xg-USx"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="GOz-Ne-Gtu">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="1Lz-Nd-jFp" kind="relationship" relationship="rootViewController" id="7R6-u0-nrI"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wN8-Hx-UiL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4849" y="531"/>
+        </scene>
+        <!--History Guide-->
+        <scene sceneID="DvW-ad-YTl">
+            <objects>
+                <viewController id="naU-fq-aVx" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="z8Y-J1-UIW"/>
+                        <viewControllerLayoutGuide type="bottom" id="2ek-6n-wsA"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="y6u-Mw-7I6">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="History Guide" id="fNE-xq-5Aw" userLabel="History Guide"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tTr-ec-2uY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4849" y="1298"/>
+        </scene>
+        <!--Outline-->
+        <scene sceneID="41F-fo-ghO">
+            <objects>
+                <viewController id="lEi-D1-wzR" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="1ip-J1-QBS"/>
+                        <viewControllerLayoutGuide type="bottom" id="3bq-p8-SUF"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="xTt-Yp-ifC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Outline" id="tUL-59-k3c"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QNK-2Q-mui" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4849" y="2082"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="hEI-No-rlq">
+            <objects>
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="Du2-Kh-XVf" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="jje-6b-R5X">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="DPO-nQ-hdc" kind="relationship" relationship="viewControllers" id="q1F-WM-ikm"/>
+                        <segue destination="naU-fq-aVx" kind="relationship" relationship="viewControllers" id="tK7-AR-LBq"/>
+                        <segue destination="lEi-D1-wzR" kind="relationship" relationship="viewControllers" id="F1F-fZ-0hb"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PnC-CV-asC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4037" y="531"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

@@ -11,15 +11,12 @@
 		011E016C1C86463400AB8BA0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 011E016B1C86463400AB8BA0 /* Assets.xcassets */; };
 		011E01881C864A0500AB8BA0 /* DatastoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011E01871C864A0500AB8BA0 /* DatastoreManager.swift */; };
 		011E018A1C864A0A00AB8BA0 /* DescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011E01891C864A0A00AB8BA0 /* DescriptionTableViewCell.swift */; };
-		011E018C1C864A2000AB8BA0 /* DrawerContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011E018B1C864A2000AB8BA0 /* DrawerContainerViewController.swift */; };
 		011E018E1C864A2900AB8BA0 /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011E018D1C864A2900AB8BA0 /* JSONParser.swift */; };
 		011E01911C864A3E00AB8BA0 /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011E01901C864A3E00AB8BA0 /* Link.swift */; };
 		011E01931C864A4200AB8BA0 /* LinkManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011E01921C864A4200AB8BA0 /* LinkManagedObject.swift */; };
 		011E01961C864A5F00AB8BA0 /* LinksFetchedResultsControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011E01951C864A5F00AB8BA0 /* LinksFetchedResultsControllers.swift */; };
 		011E01981C864A6500AB8BA0 /* LinkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011E01971C864A6500AB8BA0 /* LinkTableViewCell.swift */; };
 		011E019A1C864A6A00AB8BA0 /* RemoteConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011E01991C864A6A00AB8BA0 /* RemoteConnectionManager.swift */; };
-		011E019C1C864A7000AB8BA0 /* SettingsDrawerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011E019B1C864A7000AB8BA0 /* SettingsDrawerViewController.swift */; };
-		011E019E1C864A7500AB8BA0 /* SettingToggleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011E019D1C864A7500AB8BA0 /* SettingToggleTableViewCell.swift */; };
 		011E01A01C864A7900AB8BA0 /* StoryboardSegueIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011E019F1C864A7900AB8BA0 /* StoryboardSegueIdentifiers.swift */; };
 		011E01A21C864A7D00AB8BA0 /* SubsystemsFetchedResultsControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011E01A11C864A7D00AB8BA0 /* SubsystemsFetchedResultsControllers.swift */; };
 		011E01A41C864A8200AB8BA0 /* SubsystemsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011E01A31C864A8200AB8BA0 /* SubsystemsTableViewController.swift */; };
@@ -42,15 +39,12 @@
 		011E016B1C86463400AB8BA0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		011E01871C864A0500AB8BA0 /* DatastoreManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatastoreManager.swift; sourceTree = "<group>"; };
 		011E01891C864A0A00AB8BA0 /* DescriptionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DescriptionTableViewCell.swift; sourceTree = "<group>"; };
-		011E018B1C864A2000AB8BA0 /* DrawerContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawerContainerViewController.swift; sourceTree = "<group>"; };
 		011E018D1C864A2900AB8BA0 /* JSONParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONParser.swift; sourceTree = "<group>"; };
 		011E01901C864A3E00AB8BA0 /* Link.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Link.swift; sourceTree = "<group>"; };
 		011E01921C864A4200AB8BA0 /* LinkManagedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkManagedObject.swift; sourceTree = "<group>"; };
 		011E01951C864A5F00AB8BA0 /* LinksFetchedResultsControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinksFetchedResultsControllers.swift; sourceTree = "<group>"; };
 		011E01971C864A6500AB8BA0 /* LinkTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkTableViewCell.swift; sourceTree = "<group>"; };
 		011E01991C864A6A00AB8BA0 /* RemoteConnectionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteConnectionManager.swift; sourceTree = "<group>"; };
-		011E019B1C864A7000AB8BA0 /* SettingsDrawerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsDrawerViewController.swift; sourceTree = "<group>"; };
-		011E019D1C864A7500AB8BA0 /* SettingToggleTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingToggleTableViewCell.swift; sourceTree = "<group>"; };
 		011E019F1C864A7900AB8BA0 /* StoryboardSegueIdentifiers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryboardSegueIdentifiers.swift; sourceTree = "<group>"; };
 		011E01A11C864A7D00AB8BA0 /* SubsystemsFetchedResultsControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubsystemsFetchedResultsControllers.swift; sourceTree = "<group>"; };
 		011E01A31C864A8200AB8BA0 /* SubsystemsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubsystemsTableViewController.swift; sourceTree = "<group>"; };
@@ -133,8 +127,6 @@
 				011E01AD1C864A9600AB8BA0 /* SystemsTableViewController.swift */,
 				011E01A71C864A8A00AB8BA0 /* SystemDetailViewController.swift */,
 				011E01A31C864A8200AB8BA0 /* SubsystemsTableViewController.swift */,
-				011E018B1C864A2000AB8BA0 /* DrawerContainerViewController.swift */,
-				011E019B1C864A7000AB8BA0 /* SettingsDrawerViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -175,7 +167,6 @@
 				011E01AF1C864A9900AB8BA0 /* SystemTableViewCell.swift */,
 				011E01891C864A0A00AB8BA0 /* DescriptionTableViewCell.swift */,
 				011E01971C864A6500AB8BA0 /* LinkTableViewCell.swift */,
-				011E019D1C864A7500AB8BA0 /* SettingToggleTableViewCell.swift */,
 			);
 			path = "Table View Cells";
 			sourceTree = "<group>";
@@ -307,7 +298,6 @@
 				011E01A61C864A8600AB8BA0 /* System.swift in Sources */,
 				011E01BB1C864C1A00AB8BA0 /* ClinicalSkillsCoreDataModel.xcdatamodeld in Sources */,
 				011E018A1C864A0A00AB8BA0 /* DescriptionTableViewCell.swift in Sources */,
-				011E019C1C864A7000AB8BA0 /* SettingsDrawerViewController.swift in Sources */,
 				011E01AE1C864A9600AB8BA0 /* SystemsTableViewController.swift in Sources */,
 				011E019A1C864A6A00AB8BA0 /* RemoteConnectionManager.swift in Sources */,
 				011E01B21C864A9D00AB8BA0 /* UserDefaultsManager.swift in Sources */,
@@ -322,8 +312,6 @@
 				011E01A21C864A7D00AB8BA0 /* SubsystemsFetchedResultsControllers.swift in Sources */,
 				011E01621C86463400AB8BA0 /* AppDelegate.swift in Sources */,
 				011E01B01C864A9900AB8BA0 /* SystemTableViewCell.swift in Sources */,
-				011E019E1C864A7500AB8BA0 /* SettingToggleTableViewCell.swift in Sources */,
-				011E018C1C864A2000AB8BA0 /* DrawerContainerViewController.swift in Sources */,
 				011E01A41C864A8200AB8BA0 /* SubsystemsTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

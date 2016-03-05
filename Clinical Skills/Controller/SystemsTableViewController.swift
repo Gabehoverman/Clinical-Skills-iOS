@@ -55,7 +55,8 @@ class SystemsTableViewController: UITableViewController {
 			self.remoteConnectionManager = RemoteConnectionManager(shouldRequestFromLocal: UserDefaultsManager.userDefaults.boolForKey(UserDefaultsManager.userDefaultsKeys.requestFromLocalHost), delegate: self)
 			self.remoteConnectionManager!.fetchSystems()
 		}
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("remoteConnectionFetchLocationChanged:"), name: UserDefaultsManager.userDefaultsKeys.requestFromLocalHost, object: nil)
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("defaultsChanged"), name: NSUserDefaultsDidChangeNotification, object: nil)
+//		NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("remoteConnectionFetchLocationChanged:"), name: UserDefaultsManager.userDefaultsKeys.requestFromLocalHost, object: nil)
 	}
 	
 	override func viewDidLoad() {
@@ -324,5 +325,11 @@ extension SystemsTableViewController: DatastoreManagerDelegate {
 		dispatch_async(dispatch_get_main_queue()) { () -> Void in
 			self.fetchResultsWithReload(true)
 		}
+	}
+}
+
+extension SystemsTableViewController {
+	func defaultsChanged() {
+		remoteConnectionManager!.shouldRequestFromLocal = UserDefaultsManager.userDefaults.boolForKey(UserDefaultsManager.userDefaultsKeys.requestFromLocalHost)
 	}
 }
