@@ -10,52 +10,23 @@ import Foundation
 
 class System: NSObject {
 	
+	var id: Int
 	var name: String
 	var details: String
-	var visible: Bool
-	var parentName: String?
-	var subsystems: NSMutableSet
-	var links: NSMutableSet
+	var components: [Component]
 	
-	override var description: String {
-		get {
-			return "(Visible: \(self.visible)) \(self.name): \(self.details)"
-		}
-	}
-	
-	init(name: String, details: String, visible: Bool, parentName: String?, subsystems: NSMutableSet, links: NSMutableSet) {
+	init(id: Int, name: String, details: String) {
+		self.id = id
 		self.name = name
 		self.details = details
-		self.visible = visible
-		self.parentName = parentName
-		self.subsystems = subsystems
-		self.links = links
-	}
-	
-	convenience init(name: String, details: String, visible: Bool, parentName: String, links: NSMutableSet) {
-		self.init(name: name, details: details, visible: visible, parentName: parentName, subsystems: NSMutableSet(), links: links)
-	}
-	
-	convenience init(name: String, details: String, visible: Bool, links: NSMutableSet) {
-		self.init(name: name, details: details, visible: visible, parentName: nil, subsystems: NSMutableSet(), links: links)
-	}
-	
-	func addSubsystem(subsystem: System) {
-		self.subsystems.addObject(subsystems)
-	}
-	
-	func addLink(link: Link) {
-		self.links.addObject(link)
+		self.components = []
 	}
 	
 	class func systemFromManagedObject(systemManagedObject: SystemManagedObject) -> System {
+		let id = systemManagedObject.id
 		let name = systemManagedObject.name
 		let details = systemManagedObject.details
-		let visible = systemManagedObject.visible
-		let links = systemManagedObject.links
-		let parentName = systemManagedObject.parentName
-		let subsystems = systemManagedObject.subsystems
-		return System(name: name, details: details, visible: visible, parentName: parentName, subsystems: subsystems, links: links)
+		return System(id: id, name: name, details: details)
 	}
 	
 }

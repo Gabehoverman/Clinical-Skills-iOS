@@ -21,7 +21,6 @@ class SystemDetailViewController: UITableViewController {
 	var fetchedResultsController: NSFetchedResultsController?
 	
 	var managedSystem: SystemManagedObject?
-	var managedLinks: [LinkManagedObject]?
 	
 	var isExpanded = false
 	
@@ -30,15 +29,7 @@ class SystemDetailViewController: UITableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		if self.managedSystem != nil {
-			self.fetchedResultsController = LinksFetchedResultsControllers.allVisibleLinksFetchedResultsController(self.managedSystem!, delegateController: self)
-			do {
-				try self.fetchedResultsController!.performFetch()
-				if let allLinks = self.fetchedResultsController!.fetchedObjects as? [LinkManagedObject] {
-					self.managedLinks = allLinks
-				}
-			} catch {
-				print("Error fetching links")
-			}
+			
 		}
 	}
 	
@@ -60,11 +51,7 @@ class SystemDetailViewController: UITableViewController {
 		if section == 0 {
 			return 1
 		}
-		if self.managedLinks != nil {
-			return self.managedLinks!.count
-		} else {
-			return 0
-		}
+		return 0
 	}
 	
 	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -77,7 +64,6 @@ class SystemDetailViewController: UITableViewController {
 			return cell
 		} else {
 			let cell = tableView.dequeueReusableCellWithIdentifier(LinkTableViewCell.linkCellIdentifier, forIndexPath: indexPath) as! LinkTableViewCell
-			cell.linkLabel.text = self.managedLinks![indexPath.row].title
 			return cell
 		}
 	}
@@ -86,13 +72,6 @@ class SystemDetailViewController: UITableViewController {
 		if indexPath.section == 0 {
 			self.isExpanded = !self.isExpanded
 			self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-		} else {
-			if let link = self.managedLinks?[indexPath.row] {
-				if let url = NSURL(string: link.link) {
-					let safariViewController = SFSafariViewController(URL: url)
-					self.presentViewController(safariViewController, animated: true, completion: nil)
-				}
-			}
 		}
 	}
 	

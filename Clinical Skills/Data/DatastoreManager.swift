@@ -41,14 +41,14 @@ class DatastoreManager : NSObject {
 		
 	}
 	
-	func storeSubsystems(subsystems: [System]) {
+	func storeComponents(components: [Component]) {
 		self.delegate?.didBeginStoring?()
-		for subsystem in subsystems {
-			self.storeSubsystem(subsystem)
+		for component in components {
+			self.storeComponent(component)
 		}
 		self.save()
 		self.delegate?.didFinishStoring?()
-	}
+}
 	
 	func storeSystem(system: System) {
 		let existingManagedSystem = self.retrieveSystemWithName(system.name)
@@ -57,66 +57,26 @@ class DatastoreManager : NSObject {
 			if let newManagedSystem = NSManagedObject(entity: entity, insertIntoManagedObjectContext: self.managedObjectContext) as? SystemManagedObject {
 				newManagedSystem.name = system.name
 				newManagedSystem.details = system.details
-				newManagedSystem.visible = system.visible
-				newManagedSystem.links = self.storeLinks(system.links, forManagedSystem: newManagedSystem)
 			}
 		}
 	}
 	
-	func storeSubsystem(subsystem: System) {
-		if !self.containsSystemWithName(subsystem.name) {
-			let entity = NSEntityDescription.entityForName(SystemManagedObject.entityName, inManagedObjectContext: self.managedObjectContext)!
-			if let newManagedSubsystem = NSManagedObject(entity: entity, insertIntoManagedObjectContext: self.managedObjectContext) as? SystemManagedObject {
-				newManagedSubsystem.name = subsystem.name
-				newManagedSubsystem.details = subsystem.details
-				newManagedSubsystem.visible = subsystem.visible
-				newManagedSubsystem.parentSystem = self.retrieveSystemWithName(subsystem.parentName)
-				newManagedSubsystem.parentSystem?.addSubsystem(newManagedSubsystem)
-				newManagedSubsystem.links = self.storeLinks(subsystem.links, forManagedSystem: newManagedSubsystem)
-			}
-		}
-	}
-	
-	func storeLinks(links: NSMutableSet, forManagedSystem: SystemManagedObject) -> NSMutableSet {
-		let storedLinks = NSMutableSet()
-		for link in links {
-			if let link = link as? Link {
-				if self.containsLinkWithTitle(link.title) {
-					if let managedLink = self.retrieveLinkWithTitle(link.title) {
-						managedLink.addSystem(forManagedSystem)
-						forManagedSystem.addLink(managedLink)
-						storedLinks.addObject(managedLink)
-					}
-				} else {
-					let entity = NSEntityDescription.entityForName(LinkManagedObject.entityName, inManagedObjectContext: self.managedObjectContext)!
-					if let newManagedLink = NSManagedObject(entity: entity, insertIntoManagedObjectContext: self.managedObjectContext) as? LinkManagedObject {
-						newManagedLink.title = link.title
-						newManagedLink.link = link.link
-						newManagedLink.visible = link.visible
-						newManagedLink.addSystem(forManagedSystem)
-						forManagedSystem.addLink(newManagedLink)
-						storedLinks.addObject(newManagedLink)
-					}
+	func storeComponent(component: Component) {
+		if !self.containsComponentWithID(component.id) {
+			let entity = NSEntityDescription.entityForName(ComponentManagedObject.entityName, inManagedObjectContext: self.managedObjectContext)!
+			if let newManagedComponent = NSManagedObject(entity: entity, insertIntoManagedObjectContext: self.managedObjectContext) as? ComponentManagedObject {
+				newManagedComponent.id = component.id
+				newManagedComponent.name = component.name
+				newManagedComponent.inspection = component.inspection
+				newManagedComponent.notes = component.notes
+				
+				let systemRequest = NSFetchRequest(entityName: SystemManagedObject.entityName)
+				systemRequest.predicate = NSPredicate(format: "%K = %@", SystemManagedObject.propertyKeys.id, component.parentSystem.id)
+				if let managedSystem = try! self.managedObjectContext.executeFetchRequest(systemRequest).first as? SystemManagedObject {
+					newManagedComponent.parentSystem = managedSystem
 				}
 			}
 		}
-		return storedLinks
-	}
-	
-	func updateLinksForNewSystem(newManagedSystem: SystemManagedObject, fromManagedSystem: SystemManagedObject) -> NSMutableSet {
-		let newManagedLinks = NSMutableSet()
-		let request = NSFetchRequest(entityName: LinkManagedObject.entityName)
-		request.predicate = NSPredicate(format: "%K CONTAINS[cd] %@", LinkManagedObject.propertyKeys.systems, fromManagedSystem)
-		if let allManagedLinks = try! self.managedObjectContext.executeFetchRequest(request) as? [LinkManagedObject] {
-			for managedLink in allManagedLinks {
-				managedLink.systems.removeObject(fromManagedSystem)
-				fromManagedSystem.links.removeObject(managedLink)
-				managedLink.systems.addObject(newManagedSystem)
-				newManagedSystem.links.addObject(managedLink)
-				newManagedLinks.addObject(managedLink)
-			}
-		}
-		return newManagedLinks
 	}
 	
 	// MARK: - Retrieve Methods
@@ -133,42 +93,18 @@ class DatastoreManager : NSObject {
 		return nil
 	}
 	
-	func retrieveSubsystemWithName(name: String?) -> SystemManagedObject? {
-		guard let name = name else {
-			return nil
-		}
-		let request = NSFetchRequest(entityName: SystemManagedObject.entityName)
-		request.predicate = NSPredicate(format: "%K = %@", SystemManagedObject.propertyKeys.name, name)
-		if let managedSystem = try! self.managedObjectContext.executeFetchRequest(request).first as? SystemManagedObject {
-			return managedSystem
-		}
-		return nil
-	}
-	
-	func retrieveLinkWithTitle(title: String?) -> LinkManagedObject? {
-		guard let title = title else {
-			return nil
-		}
-		let request = NSFetchRequest(entityName: LinkManagedObject.entityName)
-		request.predicate = NSPredicate(format: "%K = %@", LinkManagedObject.propertyKeys.title, title)
-		if let managedLink = try! self.managedObjectContext.executeFetchRequest(request).first as? LinkManagedObject {
-			return managedLink
-		}
-		return nil
-	}
-	
 	// MARK: - Utility Methods
 	
-	func containsSystemWithName(name: String) -> Bool {
+	func containsSystemWithID(id: Int) -> Bool {
 		let request = NSFetchRequest(entityName: SystemManagedObject.entityName)
-		request.predicate = NSPredicate(format: "%K = %@", SystemManagedObject.propertyKeys.name, name)
+		request.predicate = NSPredicate(format: "%K = %@", SystemManagedObject.propertyKeys.id, id)
 		let results = try! self.managedObjectContext.executeFetchRequest(request)
 		return results.count != 0
 	}
 	
-	func containsLinkWithTitle(title: String) -> Bool {
-		let request = NSFetchRequest(entityName: LinkManagedObject.entityName)
-		request.predicate = NSPredicate(format: "%K = %@", LinkManagedObject.propertyKeys.title, title)
+	func containsComponentWithID(id: Int) -> Bool {
+		let request = NSFetchRequest(entityName: ComponentManagedObject.entityName)
+		request.predicate = NSPredicate(format: "%K = %d", ComponentManagedObject.propertyKeys.id, id)
 		let results = try! self.managedObjectContext.executeFetchRequest(request)
 		return results.count != 0
 	}
@@ -189,7 +125,6 @@ class DatastoreManager : NSObject {
 	func clearSystems() {
 		do {
 			let allSystemsRequest = NSFetchRequest(entityName: SystemManagedObject.entityName)
-			allSystemsRequest.predicate = NSPredicate(format: "%K = nil", SystemManagedObject.propertyKeys.parent)
 			var allSystems = try self.managedObjectContext.executeFetchRequest(allSystemsRequest)
 			print("\(allSystems.count) Objects to be Deleted")
 			for system in allSystems {
@@ -204,43 +139,8 @@ class DatastoreManager : NSObject {
 		}
 	}
 	
-	func clearSubsystems() {
-		do {
-			let allSubsystemsRequest = NSFetchRequest(entityName: SystemManagedObject.entityName)
-			allSubsystemsRequest.predicate = NSPredicate(format: "%K != nil", SystemManagedObject.propertyKeys.parent)
-			var allSubsystems = try self.managedObjectContext.executeFetchRequest(allSubsystemsRequest)
-			print("\(allSubsystems.count) Objects to be Deleted")
-			for subsystem in allSubsystems {
-				self.managedObjectContext.deleteObject(subsystem as! NSManagedObject)
-			}
-			allSubsystems.removeAll(keepCapacity: false)
-			print("Saving Managed Object Context\n")
-			try self.managedObjectContext.save()
-		} catch {
-			print("Error Clearing Subsystems")
-			print("\(error)")
-		}
-	}
-	
-	func clearLinks() {
-		do {
-			let allLinksRequest = NSFetchRequest(entityName: LinkManagedObject.entityName)
-			var allLinks = try self.managedObjectContext.executeFetchRequest(allLinksRequest)
-			print("\(allLinks.count) Objects to be Deleted")
-			for link in allLinks {
-				self.managedObjectContext.deleteObject(link as! NSManagedObject)
-			}
-			allLinks.removeAll(keepCapacity: false)
-			print("Saving Managed Object Context\n")
-			try self.managedObjectContext.save()
-		} catch {
-			print("Error Clearing Links")
-			print("\(error)")
-		}
-	}
-	
 	func clearAll() {
-		for entityName in [SystemManagedObject.entityName, LinkManagedObject.entityName] {
+		for entityName in [SystemManagedObject.entityName] {
 			do {
 				let request = NSFetchRequest(entityName: entityName)
 				var allObjects = try self.managedObjectContext.executeFetchRequest(request)
@@ -262,14 +162,11 @@ class DatastoreManager : NSObject {
 	
 	func printContents() {
 		self.printSystems()
-		self.printSubsystems()
-		self.printLinks()
+		self.printComponents()
 	}
 	
 	func printSystems() {
 		let request = NSFetchRequest(entityName: SystemManagedObject.entityName)
-		request.predicate = NSPredicate(format: "%K = nil", SystemManagedObject.propertyKeys.parent)
-		request.sortDescriptors = [NSSortDescriptor(key: SystemManagedObject.propertyKeys.visible, ascending: false)]
 		request.sortDescriptors!.append(NSSortDescriptor(key: SystemManagedObject.propertyKeys.name, ascending: true))
 		if let allManagedSystems = try! self.managedObjectContext.executeFetchRequest(request) as? [SystemManagedObject] {
 			print("MANAGED SYSTEMS:")
@@ -280,35 +177,14 @@ class DatastoreManager : NSObject {
 		print("")
 	}
 	
-	func printSubsystems() {
-		let request = NSFetchRequest(entityName: SystemManagedObject.entityName)
-		request.predicate = NSPredicate(format: "%K != nil", SystemManagedObject.propertyKeys.parent)
-		request.sortDescriptors = [NSSortDescriptor(key: SystemManagedObject.propertyKeys.visible, ascending: false)]
-		request.sortDescriptors!.append(NSSortDescriptor(key: SystemManagedObject.propertyKeys.name, ascending: true))
-		if let allManagedSubsystems = try! self.managedObjectContext.executeFetchRequest(request) as? [SystemManagedObject] {
-			print("MANAGED SUBSYSTEMS:")
-			for managedSubsystem in allManagedSubsystems {
-				print("\t\(managedSubsystem)")
+	func printComponents() {
+		let request = NSFetchRequest(entityName: ComponentManagedObject.entityName)
+		if let allManagedComponents = try! self.managedObjectContext.executeFetchRequest(request) as? [ComponentManagedObject] {
+			print("MANAGED COMPONENTS:")
+			for managedComponent in allManagedComponents {
+				print("\t\(managedComponent)")
 			}
 		}
-		print("")
-	}
-	
-	func printLinks() {
-		let request = NSFetchRequest(entityName: LinkManagedObject.entityName)
-		request.sortDescriptors = [NSSortDescriptor(key: LinkManagedObject.propertyKeys.visible, ascending: false)]
-		request.sortDescriptors!.append(NSSortDescriptor(key: LinkManagedObject.propertyKeys.title, ascending: true))
-		if let allManagedLinks = try! self.managedObjectContext.executeFetchRequest(request) as? [LinkManagedObject] {
-			print("MANAGED LINKS:")
-			for managedLink in allManagedLinks {
-				print("\t\(managedLink) + \(managedLink.systems.count)")
-				for system in managedLink.systems {
-					let system = system as! SystemManagedObject
-					print("\t\t\(system.name)")
-				}
-			}
-		}
-		print("")
 	}
 	
 }

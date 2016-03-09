@@ -54,25 +54,17 @@ class SubsystemsTableViewController: UITableViewController {
 		return 0
 	}
 	
-	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCellWithIdentifier(SystemTableViewCell.subsystemCellIdentifier) as! SystemTableViewCell
-		let subsystem = self.fetchedResultsController!.objectAtIndexPath(indexPath) as! SystemManagedObject
-		cell.systemNameLabel.text = subsystem.name
-		return cell
-	}
+//	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+//		let cell = tableView.dequeueReusableCellWithIdentifier(SystemTableViewCell.subsystemCellIdentifier) as! SystemTableViewCell
+//		let subsystem = self.fetchedResultsController!.objectAtIndexPath(indexPath) as! SystemManagedObject
+//		cell.systemNameLabel.text = subsystem.name
+//		return cell
+//	}
 	
 	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 		if let controller = self.fetchedResultsController {
-			if let subsystem = controller.objectAtIndexPath(indexPath) as? SystemManagedObject {
-				if subsystem.subsystems.count == 0 {
-					performSegueWithIdentifier(StoryboardSegueIdentifiers.ToDetailsView.rawValue, sender: subsystem)
-				} else {
-					if let subsystemViewController = self.storyboard?.instantiateViewControllerWithIdentifier("SubsystemTableViewController") as? SubsystemsTableViewController {
-						subsystemViewController.title = subsystem.name
-						subsystemViewController.managedParentSystem = subsystem
-						self.navigationController?.pushViewController(subsystemViewController, animated: true)
-					}
-				}
+			if let _ = controller.objectAtIndexPath(indexPath) as? SystemManagedObject {
+				
 			} else {
 				print("Error getting Subsystem")
 			}
@@ -86,7 +78,6 @@ class SubsystemsTableViewController: UITableViewController {
 	func fetchResults(shouldAskForData: Bool, shouldReload: Bool) {
 		if self.fetchedResultsController == nil {
 			if self.managedParentSystem != nil {
-				self.fetchedResultsController = SubsystemsFetchedResultsControllers.allVisibleSubsystemsFetchedResultsController(self.managedParentSystem!, delegateController: self)
 				self.defaultSearchPredicate = self.fetchedResultsController!.fetchRequest.predicate
 			}
 		}
@@ -103,20 +94,20 @@ class SubsystemsTableViewController: UITableViewController {
 	// MARK: - User Interface Actions
 	
 	@IBAction func detailsBarButtonPressed(sender: AnyObject) {
-		self.performSegueWithIdentifier(StoryboardSegueIdentifiers.ToDetailsView.rawValue, sender: self.managedParentSystem)
+//		self.performSegueWithIdentifier(StoryboardSegueIdentifiers.ToDetailsView.rawValue, sender: self.managedParentSystem)
 	}
 	
 	// MARK: - Navigation Methods
 	
 	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-		if let subsystem = sender as? SystemManagedObject {
-			if segue.identifier == StoryboardSegueIdentifiers.ToDetailsView.rawValue {
-				if let destinationVC = segue.destinationViewController as? SystemDetailViewController {
-					destinationVC.navigationItem.title = subsystem.name
-					destinationVC.managedSystem = subsystem
-				}
-			}
-		}
+//		if let subsystem = sender as? SystemManagedObject {
+//			if segue.identifier == StoryboardSegueIdentifiers.ToDetailsView.rawValue {
+//				if let destinationVC = segue.destinationViewController as? SystemDetailViewController {
+//					destinationVC.navigationItem.title = subsystem.name
+//					destinationVC.managedSystem = subsystem
+//				}
+//			}
+//		}
 	}
 
 }
@@ -140,7 +131,6 @@ extension SubsystemsTableViewController: UISearchBarDelegate {
 	
 	func clearSearch() {
 		self.searchPhrase = nil
-		self.fetchedResultsController = SubsystemsFetchedResultsControllers.allVisibleSubsystemsFetchedResultsController(self.managedParentSystem!, delegateController: self)
 		self.fetchResults(false, shouldReload: true)
 	}
 	

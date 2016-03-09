@@ -11,16 +11,6 @@ import UIKit
 import CoreData
 import BRYXBanner
 
-// MARK: - Drawer Main View Controller Delegate Protocol
-
-@objc
-protocol DrawerMainViewControllerDelegate {
-	var drawerOpen: Bool { get }
-	optional func toggleLeftDrawer()
-	optional func tiggleRightDrawer()
-	optional func closeBothDrawers()
-}
-
 /**
 	Table View displaying all System data inside the database
 */
@@ -36,8 +26,6 @@ class SystemsTableViewController: UITableViewController {
 	var activityIndicator: UIActivityIndicatorView?
 	var fetchedResultsController: NSFetchedResultsController?
 	
-	var delegate: DrawerMainViewControllerDelegate?
-	
 	var remoteConnectionManager: RemoteConnectionManager?
 	var datastoreManager: DatastoreManager?
 	
@@ -46,10 +34,13 @@ class SystemsTableViewController: UITableViewController {
 	var defaultSearchPredicate: NSPredicate?
 	var searchPhrase: String?
 	
+	var selectedSystem: System?
+	
 	// MARK: - View Controller Methods
 	
 	override func viewWillAppear(animated: Bool) {
 		if self.isInitialLoad {
+			self.fetchedResultsController = SystemFetchedResultsControllers.allSystemsResultController(self)
 			self.datastoreManager = DatastoreManager(delegate: self)
 			self.datastoreManager!.clearAll()
 			self.remoteConnectionManager = RemoteConnectionManager(shouldRequestFromLocal: UserDefaultsManager.userDefaults.boolForKey(UserDefaultsManager.userDefaultsKeys.requestFromLocalHost), delegate: self)
@@ -97,20 +88,14 @@ class SystemsTableViewController: UITableViewController {
 	}
 	
 	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-		if self.delegate?.drawerOpen != true {
-			if let controller = self.fetchedResultsController {
-				if let managedSystem = controller.objectAtIndexPath(indexPath) as? SystemManagedObject {
-					if managedSystem.subsystems.count == 0 {
-						performSegueWithIdentifier(StoryboardSegueIdentifiers.ToDetailsView.rawValue, sender: managedSystem)
-					} else {
-						performSegueWithIdentifier(StoryboardSegueIdentifiers.ToSubsystemView.rawValue, sender: managedSystem)
-					}
-				} else {
-					print("Error getting System")
-				}
+		if let controller = self.fetchedResultsController {
+			if let managedSystem = controller.objectAtIndexPath(indexPath) as? SystemManagedObject {
+				self.performSegueWithIdentifier(StoryboardSegueIdentifiers.outlinedReviewToComponentsView.rawValue, sender: managedSystem)
 			} else {
-				print("Error getting controller")
+				print("Error getting System")
 			}
+		} else {
+			print("Error getting controller")
 		}
 	}
 	
@@ -118,7 +103,6 @@ class SystemsTableViewController: UITableViewController {
 	
 	func fetchResultsWithReload(shouldReload: Bool) {
 		if self.fetchedResultsController == nil {
-			self.fetchedResultsController = SystemFetchedResultsControllers.allVisibleSystemsResultController(self)
 			self.defaultSearchPredicate = self.fetchedResultsController!.fetchRequest.predicate
 		}
 		do {
@@ -157,10 +141,6 @@ class SystemsTableViewController: UITableViewController {
 	
 	// MARK: - User Interface Actions
 	
-	@IBAction func toggleSettings(sender: AnyObject) {
-		self.delegate?.toggleLeftDrawer?()
-	}
-	
 	@IBAction func printManagedObjects(sender: AnyObject) {
 		let alert = UIAlertController(title: "Print", message: "What should be printed?", preferredStyle: .ActionSheet)
 		alert.addAction(UIAlertAction(title: "Print All", style: .Destructive) { (action) -> Void in
@@ -169,14 +149,6 @@ class SystemsTableViewController: UITableViewController {
 		)
 		alert.addAction(UIAlertAction(title: "Print Systems", style: .Default) { (action) -> Void in
 			self.datastoreManager!.printSystems()
-			}
-		)
-		alert.addAction(UIAlertAction(title: "Print Subsystems", style: .Default) { (action) -> Void in
-			self.datastoreManager!.printSubsystems()
-			}
-		)
-		alert.addAction(UIAlertAction(title: "Print Links", style: .Default) { (action) -> Void in
-			self.datastoreManager!.printLinks()
 			}
 		)
 		alert.addAction(UIAlertAction(title: "Nevermind", style: .Cancel) { (action) -> Void in
@@ -198,20 +170,14 @@ class SystemsTableViewController: UITableViewController {
 	
 	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
 		if let managedSystem = sender as? SystemManagedObject {
-			if segue.identifier == StoryboardSegueIdentifiers.ToDetailsView.rawValue {
-				if let destination = segue.destinationViewController as? SystemDetailViewController {
+			if segue.identifier == StoryboardSegueIdentifiers.outlinedReviewToComponentsView.rawValue {
+				if let destination = segue.destinationViewController as? ComponentsTableViewController {
 					destination.navigationItem.title = managedSystem.name
-					destination.managedSystem = managedSystem
-				}
-			} else if segue.identifier == StoryboardSegueIdentifiers.ToSubsystemView.rawValue {
-				if let destination = segue.destinationViewController as? SubsystemsTableViewController {
-					destination.navigationItem.title = managedSystem.name
-					destination.managedParentSystem = managedSystem
+					destination.parentSystem = System.systemFromManagedObject(managedSystem)
 				}
 			}
 		}
 	}
-	
 }
 
 // MARK: - Fetched Results Controller Delegate Methods
@@ -234,7 +200,6 @@ extension SystemsTableViewController: UISearchBarDelegate {
 	
 	func clearSearch() {
 		self.searchPhrase = nil
-		self.fetchedResultsController = SystemFetchedResultsControllers.allVisibleSystemsResultController(self)
 		self.fetchResultsWithReload(true)
 	}
 	
@@ -281,12 +246,9 @@ extension SystemsTableViewController: RemoteConnectionManagerDelegate {
 		let parser = JSONParser(jsonData: receivedData)
 		if parser.dataType == JSONParser.dataTypes.system {
 			self.datastoreManager!.storeSystems(parser.parseSystems())
-			self.remoteConnectionManager!.fetchSubsystems()
 			dispatch_async(dispatch_get_main_queue(), { () -> Void in
 				self.showBanner()
 			})
-		} else if parser.dataType == JSONParser.dataTypes.subsystem {
-			self.datastoreManager!.storeSubsystems(parser.parseSubsystems())
 		}
 	}
 	
