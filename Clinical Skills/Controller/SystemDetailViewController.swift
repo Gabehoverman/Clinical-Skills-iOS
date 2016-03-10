@@ -63,8 +63,8 @@ class SystemDetailViewController: UITableViewController {
 			cell.descriptionTextView.text = self.managedSystem!.details
 			return cell
 		} else {
-			let cell = tableView.dequeueReusableCellWithIdentifier(LinkTableViewCell.linkCellIdentifier, forIndexPath: indexPath) as! LinkTableViewCell
-			return cell
+//			let cell = tableView.dequeueReusableCellWithIdentifier(LinkTableViewCell.linkCellIdentifier, forIndexPath: indexPath) as! LinkTableViewCell
+			return UITableViewCell()
 		}
 	}
 	
@@ -82,7 +82,8 @@ class SystemDetailViewController: UITableViewController {
 			}
 			return DescriptionTableViewCell.defaultHeight
 		}
-		return LinkTableViewCell.defaultHeight
+		return 0
+//		return LinkTableViewCell.defaultHeight
 	}
 	
 	override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -92,7 +93,8 @@ class SystemDetailViewController: UITableViewController {
 			}
 			return DescriptionTableViewCell.defaultHeight
 		}
-		return LinkTableViewCell.defaultHeight
+		return 0
+//		return LinkTableViewCell.defaultHeight
 	}
 	
 	// MARK: - Utility Methods

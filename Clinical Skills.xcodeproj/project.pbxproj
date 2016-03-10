@@ -12,7 +12,6 @@
 		011E01881C864A0500AB8BA0 /* DatastoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011E01871C864A0500AB8BA0 /* DatastoreManager.swift */; };
 		011E018A1C864A0A00AB8BA0 /* DescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011E01891C864A0A00AB8BA0 /* DescriptionTableViewCell.swift */; };
 		011E018E1C864A2900AB8BA0 /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011E018D1C864A2900AB8BA0 /* JSONParser.swift */; };
-		011E01981C864A6500AB8BA0 /* LinkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011E01971C864A6500AB8BA0 /* LinkTableViewCell.swift */; };
 		011E019A1C864A6A00AB8BA0 /* RemoteConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011E01991C864A6A00AB8BA0 /* RemoteConnectionManager.swift */; };
 		011E01A01C864A7900AB8BA0 /* StoryboardSegueIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011E019F1C864A7900AB8BA0 /* StoryboardSegueIdentifiers.swift */; };
 		011E01A41C864A8200AB8BA0 /* SubsystemsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011E01A31C864A8200AB8BA0 /* SubsystemsTableViewController.swift */; };
@@ -43,7 +42,6 @@
 		011E01871C864A0500AB8BA0 /* DatastoreManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatastoreManager.swift; sourceTree = "<group>"; };
 		011E01891C864A0A00AB8BA0 /* DescriptionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DescriptionTableViewCell.swift; sourceTree = "<group>"; };
 		011E018D1C864A2900AB8BA0 /* JSONParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONParser.swift; sourceTree = "<group>"; };
-		011E01971C864A6500AB8BA0 /* LinkTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkTableViewCell.swift; sourceTree = "<group>"; };
 		011E01991C864A6A00AB8BA0 /* RemoteConnectionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteConnectionManager.swift; sourceTree = "<group>"; };
 		011E019F1C864A7900AB8BA0 /* StoryboardSegueIdentifiers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryboardSegueIdentifiers.swift; sourceTree = "<group>"; };
 		011E01A31C864A8200AB8BA0 /* SubsystemsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubsystemsTableViewController.swift; sourceTree = "<group>"; };
@@ -175,7 +173,6 @@
 			children = (
 				011E01AF1C864A9900AB8BA0 /* SystemTableViewCell.swift */,
 				011E01891C864A0A00AB8BA0 /* DescriptionTableViewCell.swift */,
-				011E01971C864A6500AB8BA0 /* LinkTableViewCell.swift */,
 				018FF8941C9010000087FB81 /* ComponentTableViewCell.swift */,
 			);
 			path = "Table View Cells";
@@ -320,7 +317,6 @@
 				011E01A81C864A8A00AB8BA0 /* SystemDetailViewController.swift in Sources */,
 				011E018E1C864A2900AB8BA0 /* JSONParser.swift in Sources */,
 				018FF8971C9010BF0087FB81 /* ComponentsTableViewController.swift in Sources */,
-				011E01981C864A6500AB8BA0 /* LinkTableViewCell.swift in Sources */,
 				011E01621C86463400AB8BA0 /* AppDelegate.swift in Sources */,
 				018FF8951C9010000087FB81 /* ComponentTableViewCell.swift in Sources */,
 				011E01B01C864A9900AB8BA0 /* SystemTableViewCell.swift in Sources */,
