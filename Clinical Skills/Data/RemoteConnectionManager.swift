@@ -22,8 +22,7 @@ class RemoteConnectionManager : NSObject {
 	
 	struct dataURLs {
 		static let systems = "systems.json"
-		static let subsystems = "subsystems.json"
-		static let links = "links.json"
+		static let components = "components.json"
 	}
 	
 	// MARK: - Properties
@@ -68,7 +67,7 @@ class RemoteConnectionManager : NSObject {
 		}
 	}
 	
-	func fetchSubsystems() {
+	func fetchComponents(forSystem: System) {
 		var urlString: String
 		if self.shouldRequestFromLocal {
 			urlString = self.localBaseURL
@@ -76,20 +75,9 @@ class RemoteConnectionManager : NSObject {
 			urlString = self.remoteBaseURL
 		}
 		
-		if let url = NSURL(string: urlString + dataURLs.subsystems) {
-			self.fetchWithURL(url)
-		}
-	}
-	
-	func fetchLinks() {
-		var urlString: String
-		if self.shouldRequestFromLocal {
-			urlString = self.localBaseURL
-		} else {
-			urlString = self.remoteBaseURL
-		}
+		urlString = urlString + dataURLs.components + "?system=" + forSystem.name
 		
-		if let url = NSURL(string: urlString + dataURLs.links) {
+		if let url = NSURL(string: urlString) {
 			self.fetchWithURL(url)
 		}
 	}

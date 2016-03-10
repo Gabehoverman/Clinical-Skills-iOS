@@ -8,7 +8,7 @@
         <!--Systems Table View Controller-->
         <scene sceneID="y25-gg-7EJ">
             <objects>
-                <tableViewController storyboardIdentifier="SystemsTableViewController" title="Systems Table View Controller" id="1Lz-Nd-jFp" customClass="SystemsTableViewController" customModule="Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="ClinicalSkillsSystemsTableViewController" title="Systems Table View Controller" id="1Lz-Nd-jFp" customClass="SystemsTableViewController" customModule="Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="bX3-Bn-OUd">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -45,18 +45,12 @@
                             <outlet property="delegate" destination="1Lz-Nd-jFp" id="UNd-ef-1em"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Systems" id="vXZ-xS-Xnc">
-                        <barButtonItem key="rightBarButtonItem" title="Print" id="aaA-iQ-nlh">
-                            <connections>
-                                <action selector="printManagedObjects:" destination="1Lz-Nd-jFp" id="xa6-cU-stZ"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Systems" id="vXZ-xS-Xnc"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="Oed-wu-0c7">
                         <autoresizingMask key="autoresizingMask"/>
                         <attributedString key="attributedTitle">
-                            <fragment content="Checking for New Systems">
+                            <fragment content="Updating Systems">
                                 <attributes>
                                     <font key="NSFont" size="14" name=".AppleSystemUIFont"/>
                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
@@ -65,141 +59,12 @@
                         </attributedString>
                     </refreshControl>
                     <connections>
-                        <segue destination="FIX-bn-2gn" kind="show" identifier="toSubsystemView" id="snw-ct-kJv"/>
-                        <segue destination="vAG-KD-oGw" kind="show" identifier="toDetailsView" id="LJH-69-7Tz"/>
+                        <segue destination="yzK-o4-xGa" kind="show" identifier="toComponentsView" id="8YB-yd-AEx"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Myo-E9-iSL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5661" y="531"/>
-        </scene>
-        <!--System Detail View Controller-->
-        <scene sceneID="rYr-Sx-ea8">
-            <objects>
-                <tableViewController storyboardIdentifier="SystemDetailViewController" id="vAG-KD-oGw" customClass="SystemDetailViewController" customModule="Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="hby-B7-Vyf" userLabel="Details Table View">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DescriptionCell" rowHeight="132" id="YnK-fe-hEv" userLabel="Description Cell" customClass="DescriptionTableViewCell" customModule="Clinical_Skills" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="92" width="600" height="132"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YnK-fe-hEv" id="bNC-Tn-KaM">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="131"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vCl-F0-bRU">
-                                            <rect key="frame" x="8" y="8" width="584" height="115"/>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                        </textView>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="bottomMargin" secondItem="vCl-F0-bRU" secondAttribute="bottom" id="7Rg-xv-4LP"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="vCl-F0-bRU" secondAttribute="trailing" id="VvO-EQ-Zgi"/>
-                                        <constraint firstItem="vCl-F0-bRU" firstAttribute="leading" secondItem="bNC-Tn-KaM" secondAttribute="leadingMargin" id="XXt-Hz-fnd"/>
-                                        <constraint firstItem="vCl-F0-bRU" firstAttribute="top" secondItem="bNC-Tn-KaM" secondAttribute="topMargin" id="rwd-dd-63P"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="descriptionTextView" destination="vCl-F0-bRU" id="3Jj-6J-Kc4"/>
-                                </connections>
-                            </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LinkCell" id="G0h-43-fBn" userLabel="Link Cell" customClass="LinkTableViewCell" customModule="Clinical_Skills" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="224" width="600" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="G0h-43-fBn" id="3pC-kB-aWT">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Video Link" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5od-Hv-a2x" userLabel="Link Label">
-                                            <rect key="frame" x="8" y="8" width="584" height="27"/>
-                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="trailingMargin" secondItem="5od-Hv-a2x" secondAttribute="trailing" id="2TL-eG-xAx"/>
-                                        <constraint firstItem="5od-Hv-a2x" firstAttribute="top" secondItem="3pC-kB-aWT" secondAttribute="topMargin" id="3qe-ga-gzM"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="5od-Hv-a2x" secondAttribute="bottom" id="LNd-1c-d7K"/>
-                                        <constraint firstItem="5od-Hv-a2x" firstAttribute="leading" secondItem="3pC-kB-aWT" secondAttribute="leadingMargin" id="cU3-cT-HdV"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="linkLabel" destination="5od-Hv-a2x" id="T99-Bk-8b3"/>
-                                </connections>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="vAG-KD-oGw" id="rsR-5b-pWO"/>
-                            <outlet property="delegate" destination="vAG-KD-oGw" id="qAg-BM-twQ"/>
-                        </connections>
-                    </tableView>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="w65-Ss-G8d" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="6421" y="-5"/>
-        </scene>
-        <!--Subsystem Table View Controller-->
-        <scene sceneID="Iub-hb-ncz">
-            <objects>
-                <tableViewController storyboardIdentifier="SubsystemTableViewController" title="Subsystem Table View Controller" id="FIX-bn-2gn" customClass="SubsystemsTableViewController" customModule="Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="yNm-cQ-kfX">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="SystemCell" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="SubsystemCell" id="ZEO-Mz-5Gk" userLabel="SystemCell" customClass="SystemTableViewCell" customModule="Clinical_Skills" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZEO-Mz-5Gk" id="2Yr-2t-uFA">
-                                    <rect key="frame" x="0.0" y="0.0" width="567" height="43"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subsystem Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lTe-UT-DGy">
-                                            <rect key="frame" x="16" y="8" width="551" height="27"/>
-                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="lTe-UT-DGy" firstAttribute="trailing" secondItem="2Yr-2t-uFA" secondAttribute="trailingMargin" constant="8" id="EVk-PN-3wc"/>
-                                        <constraint firstItem="lTe-UT-DGy" firstAttribute="top" secondItem="2Yr-2t-uFA" secondAttribute="topMargin" id="FGh-Mq-Og0"/>
-                                        <constraint firstItem="lTe-UT-DGy" firstAttribute="leading" secondItem="2Yr-2t-uFA" secondAttribute="leadingMargin" constant="8" id="OYE-RW-HYo"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="lTe-UT-DGy" secondAttribute="bottom" id="aUx-P3-BtT"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="systemNameLabel" destination="lTe-UT-DGy" id="0tr-BG-LcN"/>
-                                </connections>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="FIX-bn-2gn" id="VRc-dc-v9X"/>
-                            <outlet property="delegate" destination="FIX-bn-2gn" id="rsM-Vu-6Xy"/>
-                        </connections>
-                    </tableView>
-                    <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Subsystems" id="y0P-in-rjG">
-                        <barButtonItem key="rightBarButtonItem" title="Details" id="xQA-7i-RKB">
-                            <connections>
-                                <action selector="detailsBarButtonPressed:" destination="FIX-bn-2gn" id="lqv-eb-HTO"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
-                    <connections>
-                        <segue destination="vAG-KD-oGw" kind="show" identifier="toDetailsView" id="SnT-N4-Rtp"/>
-                    </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="7Sc-jm-hfD" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="6421" y="766"/>
         </scene>
         <!--Clinical Skills-->
         <scene sceneID="BpW-7l-0qo">
@@ -291,35 +156,6 @@
             </objects>
             <point key="canvasLocation" x="4849" y="1310"/>
         </scene>
-        <!--Table View Controller-->
-        <scene sceneID="ByH-Wv-KKi">
-            <objects>
-                <tableViewController id="KRd-Li-3Ug" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="bkt-vl-rwK">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="8ji-Nw-8eE">
-                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8ji-Nw-8eE" id="XbF-t3-BA8">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="KRd-Li-3Ug" id="6sw-Fo-Pn5"/>
-                            <outlet property="delegate" destination="KRd-Li-3Ug" id="2hi-js-apZ"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" id="4da-Kv-3pr"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="xOT-ZW-vZC" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="5661" y="2118"/>
-        </scene>
         <!--Outlined Review-->
         <scene sceneID="bHm-Xz-QwG">
             <objects>
@@ -332,12 +168,187 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="KRd-Li-3Ug" kind="relationship" relationship="rootViewController" id="hJW-Fl-ytd"/>
+                        <segue destination="vXe-lr-Rna" kind="relationship" relationship="rootViewController" id="DEs-qM-i4Q"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7gj-kg-Rop" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4849" y="2118"/>
+        </scene>
+        <!--Systems Table View Controller-->
+        <scene sceneID="wmv-z0-BQc">
+            <objects>
+                <tableViewController storyboardIdentifier="OutlinedReviewSystemsTableViewController" title="Systems Table View Controller" id="vXe-lr-Rna" customClass="SystemsTableViewController" customModule="Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="umg-d3-BCv">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="SystemCell" id="wyL-KJ-SIG" customClass="SystemTableViewCell" customModule="Clinical_Skills" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wyL-KJ-SIG" id="yHN-IL-VNn">
+                                    <rect key="frame" x="0.0" y="0.0" width="567" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="System Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o6y-E4-WB2">
+                                            <rect key="frame" x="16" y="8" width="551" height="27"/>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="o6y-E4-WB2" firstAttribute="leading" secondItem="yHN-IL-VNn" secondAttribute="leadingMargin" constant="8" id="22J-rS-hMy"/>
+                                        <constraint firstItem="o6y-E4-WB2" firstAttribute="top" secondItem="yHN-IL-VNn" secondAttribute="topMargin" id="Hhb-Br-R55"/>
+                                        <constraint firstItem="o6y-E4-WB2" firstAttribute="trailing" secondItem="yHN-IL-VNn" secondAttribute="trailingMargin" constant="8" id="Y7L-jM-UKa"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="o6y-E4-WB2" secondAttribute="bottom" id="tcY-Rb-U4O"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="systemNameLabel" destination="o6y-E4-WB2" id="faU-9a-Ezu"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="vXe-lr-Rna" id="uml-tn-Xqq"/>
+                            <outlet property="delegate" destination="vXe-lr-Rna" id="vgc-yD-YLl"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Systems" id="3kq-S0-008"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="c7C-JX-FAI">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <attributedString key="attributedTitle">
+                            <fragment content="Updating Systems">
+                                <attributes>
+                                    <font key="NSFont" size="14" name=".AppleSystemUIFont"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
+                    </refreshControl>
+                    <connections>
+                        <segue destination="O6Y-Bg-GKe" kind="show" identifier="toComponentsView" id="CEx-oT-HAx"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="h7H-XA-GeL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5661" y="2118"/>
+        </scene>
+        <!--Components Table View Controller-->
+        <scene sceneID="8pv-SO-2n9">
+            <objects>
+                <tableViewController title="Components Table View Controller" id="O6Y-Bg-GKe" customClass="ComponentsTableViewController" customModule="Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="WgV-AU-UvC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ComponentTableViewCell" id="9oV-Wq-w9s" customClass="ComponentTableViewCell" customModule="Clinical_Skills" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9oV-Wq-w9s" id="Lhs-f6-cgh">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Component Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zha-2C-Ccg">
+                                            <rect key="frame" x="8" y="8" width="584" height="27"/>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Zha-2C-Ccg" firstAttribute="bottom" secondItem="Lhs-f6-cgh" secondAttribute="bottomMargin" id="VV4-jj-kNa"/>
+                                        <constraint firstItem="Zha-2C-Ccg" firstAttribute="trailing" secondItem="Lhs-f6-cgh" secondAttribute="trailingMargin" id="cSx-it-Kvk"/>
+                                        <constraint firstItem="Zha-2C-Ccg" firstAttribute="leading" secondItem="Lhs-f6-cgh" secondAttribute="leadingMargin" id="kzU-B7-fHe"/>
+                                        <constraint firstItem="Zha-2C-Ccg" firstAttribute="top" secondItem="Lhs-f6-cgh" secondAttribute="topMargin" id="yJn-sZ-ISU"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="componentNameLabel" destination="Zha-2C-Ccg" id="Zg0-FD-7Vp"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="O6Y-Bg-GKe" id="t1g-aP-JE5"/>
+                            <outlet property="delegate" destination="O6Y-Bg-GKe" id="lP3-of-6Fr"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Components" id="qJK-Zr-Ovh"/>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="zXk-KS-3GR">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <attributedString key="attributedTitle">
+                            <fragment content="Updating Components">
+                                <attributes>
+                                    <font key="NSFont" metaFont="smallSystem"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
+                    </refreshControl>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NM7-h0-O0F" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6487" y="2118"/>
+        </scene>
+        <!--Components Table View Controller-->
+        <scene sceneID="3Qg-fz-pmt">
+            <objects>
+                <tableViewController title="Components Table View Controller" id="yzK-o4-xGa" customClass="ComponentsTableViewController" customModule="Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="KXf-4k-kZN">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ComponentTableViewCell" id="Uo6-af-IhL" customClass="ComponentTableViewCell" customModule="Clinical_Skills" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Uo6-af-IhL" id="Ize-sp-fkC">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Component Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mBC-dG-EwH">
+                                            <rect key="frame" x="8" y="8" width="584" height="27"/>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="mBC-dG-EwH" firstAttribute="leading" secondItem="Ize-sp-fkC" secondAttribute="leadingMargin" id="030-jR-UbX"/>
+                                        <constraint firstItem="mBC-dG-EwH" firstAttribute="trailing" secondItem="Ize-sp-fkC" secondAttribute="trailingMargin" id="6Qy-a7-T5o"/>
+                                        <constraint firstItem="mBC-dG-EwH" firstAttribute="top" secondItem="Ize-sp-fkC" secondAttribute="topMargin" id="JRB-I0-oe7"/>
+                                        <constraint firstItem="mBC-dG-EwH" firstAttribute="bottom" secondItem="Ize-sp-fkC" secondAttribute="bottomMargin" id="Ro3-yk-Twp"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="componentNameLabel" destination="mBC-dG-EwH" id="CvF-TZ-Cbt"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="yzK-o4-xGa" id="gir-Cy-ZmI"/>
+                            <outlet property="delegate" destination="yzK-o4-xGa" id="F0Q-bO-5fu"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Components" id="e0A-xJ-kPD"/>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="PtH-QV-t63">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <attributedString key="attributedTitle">
+                            <fragment content="Updating Components">
+                                <attributes>
+                                    <font key="NSFont" metaFont="smallSystem"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
+                    </refreshControl>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="u46-bO-75k" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6487" y="531"/>
         </scene>
     </scenes>
     <resources>
@@ -345,7 +356,4 @@
         <image name="OutlinedReviewTabBarIcon" width="25" height="25"/>
         <image name="PocketHistoryTabBarIcon" width="25" height="25"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="SnT-N4-Rtp"/>
-    </inferredMetricsTieBreakers>
 </document>

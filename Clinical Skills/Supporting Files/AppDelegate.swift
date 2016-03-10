@@ -15,16 +15,12 @@ import SwiftyJSON
 class AppDelegate: UIResponder, UIApplicationDelegate, RemoteConnectionManagerDelegate, NSFetchedResultsControllerDelegate {
 	
 	let SHOW_LAUNCH_SCREEN = false
-	let SHOULD_REFRESH_DATASTORE_ON_LAUNCH = false
+	let SHOULD_REFRESH_DATASTORE_ON_LAUNCH = true
 	
     var window: UIWindow?
 	
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-		
-		if let url = NSBundle.mainBundle().URLForResource("Pocket History Guide", withExtension: "pdf") {
-			print(url)
-		}
 		
 		if SHOW_LAUNCH_SCREEN {
 			NSThread.sleepForTimeInterval(NSTimeInterval(500.0));
