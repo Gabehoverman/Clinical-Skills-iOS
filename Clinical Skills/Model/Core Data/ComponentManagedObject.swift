@@ -17,14 +17,14 @@ class ComponentManagedObject : NSManagedObject {
 		static let name = "name"
 		static let inspection = "inspection"
 		static let notes = "notes"
-		static let parentSystem = "parentSystem"
+		static let parent = "parentSystem"
 	}
 	
 	@NSManaged var id: Int
 	@NSManaged var name: String
 	@NSManaged var inspection: String
 	@NSManaged var notes: String
-	@NSManaged var parentSystem: SystemManagedObject
+	@NSManaged var parent: SystemManagedObject
 	
 	override var description: String {
 		get {

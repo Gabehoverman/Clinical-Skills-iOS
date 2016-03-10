@@ -14,6 +14,5 @@ import Foundation
 //}
 
 enum StoryboardSegueIdentifiers: String {
-	case clinicalSkillsToComponentsView = "clinicalSkillsToComponentsView"
-	case outlinedReviewToComponentsView = "outlinedReviewToComponentsView"
+	case toComponentsView = "toComponentsView"
 }

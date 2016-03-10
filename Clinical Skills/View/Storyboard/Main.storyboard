@@ -50,7 +50,7 @@
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="Oed-wu-0c7">
                         <autoresizingMask key="autoresizingMask"/>
                         <attributedString key="attributedTitle">
-                            <fragment content="Checking for New Systems">
+                            <fragment content="Updating Systems">
                                 <attributes>
                                     <font key="NSFont" size="14" name=".AppleSystemUIFont"/>
                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
@@ -59,7 +59,7 @@
                         </attributedString>
                     </refreshControl>
                     <connections>
-                        <segue destination="yzK-o4-xGa" kind="show" identifier="clinicalSkillsToComponentsView" id="98J-m3-IBW"/>
+                        <segue destination="yzK-o4-xGa" kind="show" identifier="toComponentsView" id="8YB-yd-AEx"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Myo-E9-iSL" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -220,7 +220,7 @@
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="c7C-JX-FAI">
                         <autoresizingMask key="autoresizingMask"/>
                         <attributedString key="attributedTitle">
-                            <fragment content="Checking for New Systems">
+                            <fragment content="Updating Systems">
                                 <attributes>
                                     <font key="NSFont" size="14" name=".AppleSystemUIFont"/>
                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
@@ -229,7 +229,7 @@
                         </attributedString>
                     </refreshControl>
                     <connections>
-                        <segue destination="O6Y-Bg-GKe" kind="show" identifier="outlinedReviewToComponentsView" id="chr-pr-nPG"/>
+                        <segue destination="O6Y-Bg-GKe" kind="show" identifier="toComponentsView" id="CEx-oT-HAx"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h7H-XA-GeL" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -277,6 +277,17 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Components" id="qJK-Zr-Ovh"/>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="zXk-KS-3GR">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <attributedString key="attributedTitle">
+                            <fragment content="Updating Components">
+                                <attributes>
+                                    <font key="NSFont" metaFont="smallSystem"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
+                    </refreshControl>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NM7-h0-O0F" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -323,6 +334,17 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Components" id="e0A-xJ-kPD"/>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="PtH-QV-t63">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <attributedString key="attributedTitle">
+                            <fragment content="Updating Components">
+                                <attributes>
+                                    <font key="NSFont" metaFont="smallSystem"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
+                    </refreshControl>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="u46-bO-75k" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

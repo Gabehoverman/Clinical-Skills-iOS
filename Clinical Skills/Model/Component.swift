@@ -14,7 +14,7 @@ class Component {
 	var name: String
 	var inspection: String
 	var notes: String
-	var parentSystem: System
+	var parent: System
 	
 	var description: String {
 		get {
@@ -22,12 +22,12 @@ class Component {
 		}
 	}
 	
-	init(parentSystem: System, id: Int, name: String, inspection: String, notes: String) {
+	init(parent: System, id: Int, name: String, inspection: String, notes: String) {
 		self.id = id
 		self.name = name
 		self.inspection = inspection
 		self.notes = notes
-		self.parentSystem = parentSystem
+		self.parent = parent
 	}
 	
 	class func componentFromManagedObject(componentManagedObject: ComponentManagedObject) -> Component {
@@ -35,8 +35,8 @@ class Component {
 		let name = componentManagedObject.name
 		let inspection = componentManagedObject.inspection
 		let notes = componentManagedObject.notes
-		let system = System.systemFromManagedObject(componentManagedObject.parentSystem)
-		return Component(parentSystem: system, id: id, name: name, inspection: inspection, notes: notes)
+		let system = System.systemFromManagedObject(componentManagedObject.parent)
+		return Component(parent: system, id: id, name: name, inspection: inspection, notes: notes)
 	}
 	
 }

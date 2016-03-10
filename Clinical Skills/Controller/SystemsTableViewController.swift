@@ -34,20 +34,17 @@ class SystemsTableViewController: UITableViewController {
 	var defaultSearchPredicate: NSPredicate?
 	var searchPhrase: String?
 	
-	var selectedSystem: System?
-	
 	// MARK: - View Controller Methods
 	
 	override func viewWillAppear(animated: Bool) {
 		if self.isInitialLoad {
 			self.fetchedResultsController = SystemFetchedResultsControllers.allSystemsResultController(self)
+			self.defaultSearchPredicate = self.fetchedResultsController!.fetchRequest.predicate
 			self.datastoreManager = DatastoreManager(delegate: self)
-			self.datastoreManager!.clearAll()
 			self.remoteConnectionManager = RemoteConnectionManager(shouldRequestFromLocal: UserDefaultsManager.userDefaults.boolForKey(UserDefaultsManager.userDefaultsKeys.requestFromLocalHost), delegate: self)
 			self.remoteConnectionManager!.fetchSystems()
 		}
 		NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("defaultsChanged"), name: NSUserDefaultsDidChangeNotification, object: nil)
-//		NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("remoteConnectionFetchLocationChanged:"), name: UserDefaultsManager.userDefaultsKeys.requestFromLocalHost, object: nil)
 	}
 	
 	override func viewDidLoad() {
@@ -90,7 +87,7 @@ class SystemsTableViewController: UITableViewController {
 	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 		if let controller = self.fetchedResultsController {
 			if let managedSystem = controller.objectAtIndexPath(indexPath) as? SystemManagedObject {
-				self.performSegueWithIdentifier(StoryboardSegueIdentifiers.outlinedReviewToComponentsView.rawValue, sender: managedSystem)
+				self.performSegueWithIdentifier(StoryboardSegueIdentifiers.toComponentsView.rawValue, sender: System.systemFromManagedObject(managedSystem))
 			} else {
 				print("Error getting System")
 			}
@@ -102,9 +99,6 @@ class SystemsTableViewController: UITableViewController {
 	// MARK: - Refresh Methods
 	
 	func fetchResultsWithReload(shouldReload: Bool) {
-		if self.fetchedResultsController == nil {
-			self.defaultSearchPredicate = self.fetchedResultsController!.fetchRequest.predicate
-		}
 		do {
 			try self.fetchedResultsController!.performFetch()
 			if shouldReload {
@@ -116,7 +110,6 @@ class SystemsTableViewController: UITableViewController {
 	}
 	
 	func handleRefresh(refreshControl: UIRefreshControl) {
-		self.datastoreManager!.clearAll()
 		self.remoteConnectionManager!.fetchSystems()
 	}
 	
@@ -169,11 +162,11 @@ class SystemsTableViewController: UITableViewController {
 	// MARK: - Navigation Methods
 	
 	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-		if let managedSystem = sender as? SystemManagedObject {
-			if segue.identifier == StoryboardSegueIdentifiers.outlinedReviewToComponentsView.rawValue {
-				if let destination = segue.destinationViewController as? ComponentsTableViewController {
-					destination.navigationItem.title = managedSystem.name
-					destination.parentSystem = System.systemFromManagedObject(managedSystem)
+		if segue.identifier == StoryboardSegueIdentifiers.toComponentsView.rawValue {
+			if let destination = segue.destinationViewController as? ComponentsTableViewController {
+				if let system = sender as? System {
+					destination.navigationItem.title = system.name
+					destination.parentSystem = system
 				}
 			}
 		}
@@ -200,20 +193,22 @@ extension SystemsTableViewController: UISearchBarDelegate {
 	
 	func clearSearch() {
 		self.searchPhrase = nil
+		self.fetchedResultsController?.fetchRequest.predicate = self.defaultSearchPredicate
 		self.fetchResultsWithReload(true)
 	}
 	
 	func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
 		if searchText != "" {
-			if self.defaultSearchPredicate != nil {
-				self.searchPhrase = searchText
-				var predicates = [self.defaultSearchPredicate!]
-				let filterPredicate = NSPredicate(format: "%K CONTAINS[cd] %@", SystemManagedObject.propertyKeys.name, searchText)
-				predicates.append(filterPredicate)
-				let fullPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
-				self.fetchedResultsController?.fetchRequest.predicate = fullPredicate
-				self.fetchResultsWithReload(true)
+			var predicates = [NSPredicate]()
+			self.searchPhrase = searchText
+			if let predicate = self.defaultSearchPredicate {
+				predicates.append(predicate)
 			}
+			let filterPredicate = NSPredicate(format: "%K CONTAINS[cd] %@", SystemManagedObject.propertyKeys.name, searchText)
+			predicates.append(filterPredicate)
+			let fullPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
+			self.fetchedResultsController?.fetchRequest.predicate = fullPredicate
+			self.fetchResultsWithReload(true)
 		} else {
 			self.clearSearch()
 		}
@@ -232,7 +227,6 @@ extension SystemsTableViewController: UISearchBarDelegate {
 
 extension SystemsTableViewController: RemoteConnectionManagerDelegate {
 	func didBeginDataRequest() {
-		print("Requesting")
 		if self.refreshControl != nil {
 			if !self.refreshControl!.refreshing {
 				dispatch_async(dispatch_get_main_queue(), { () -> Void in
@@ -245,9 +239,10 @@ extension SystemsTableViewController: RemoteConnectionManagerDelegate {
 	func didFinishDataRequestWithData(receivedData: NSData) {
 		let parser = JSONParser(jsonData: receivedData)
 		if parser.dataType == JSONParser.dataTypes.system {
-			self.datastoreManager!.storeSystems(parser.parseSystems())
+			let systems = parser.parseSystems()
+			self.datastoreManager!.storeSystems(systems)
 			dispatch_async(dispatch_get_main_queue(), { () -> Void in
-				self.showBanner()
+				self.showNetworkStatusBanner()
 			})
 		}
 	}
@@ -262,11 +257,11 @@ extension SystemsTableViewController: RemoteConnectionManagerDelegate {
 		dispatch_async(dispatch_get_main_queue()) { () -> Void in
 			self.fetchResultsWithReload(true)
 			self.hideActivityIndicator()
-			self.showBanner()
+			self.showNetworkStatusBanner()
 		}
 	}
 	
-	func showBanner() {
+	func showNetworkStatusBanner() {
 		var color = UIColor.whiteColor()
 		if self.remoteConnectionManager!.statusSuccess {
 			color = UIColor(red: 90.0/255.0, green: 212.0/255.0, blue: 39.0/255.0, alpha: 0.95)

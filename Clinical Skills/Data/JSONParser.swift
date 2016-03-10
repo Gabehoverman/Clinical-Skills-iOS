@@ -65,7 +65,7 @@ class JSONParser : NSObject {
 				let name = component[ComponentManagedObject.propertyKeys.name].stringValue
 				let inspection = component[ComponentManagedObject.propertyKeys.inspection].stringValue
 				let notes = component[ComponentManagedObject.propertyKeys.notes].stringValue
-				components.append(Component(parentSystem: system, id: id, name: name, inspection: inspection, notes: notes))
+				components.append(Component(parent: system, id: id, name: name, inspection: inspection, notes: notes))
 			}
 		}
 		return components

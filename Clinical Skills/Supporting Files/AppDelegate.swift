@@ -15,7 +15,7 @@ import SwiftyJSON
 class AppDelegate: UIResponder, UIApplicationDelegate, RemoteConnectionManagerDelegate, NSFetchedResultsControllerDelegate {
 	
 	let SHOW_LAUNCH_SCREEN = false
-	let SHOULD_REFRESH_DATASTORE_ON_LAUNCH = false
+	let SHOULD_REFRESH_DATASTORE_ON_LAUNCH = true
 	
     var window: UIWindow?
 	

@@ -55,6 +55,7 @@ class DatastoreManager : NSObject {
 		if existingManagedSystem == nil {
 			let entity = NSEntityDescription.entityForName(SystemManagedObject.entityName, inManagedObjectContext: self.managedObjectContext)!
 			if let newManagedSystem = NSManagedObject(entity: entity, insertIntoManagedObjectContext: self.managedObjectContext) as? SystemManagedObject {
+				newManagedSystem.id = system.id
 				newManagedSystem.name = system.name
 				newManagedSystem.details = system.details
 			}
@@ -71,9 +72,10 @@ class DatastoreManager : NSObject {
 				newManagedComponent.notes = component.notes
 				
 				let systemRequest = NSFetchRequest(entityName: SystemManagedObject.entityName)
-				systemRequest.predicate = NSPredicate(format: "%K = %@", SystemManagedObject.propertyKeys.id, component.parentSystem.id)
+				systemRequest.predicate = NSPredicate(format: "%K = %d", SystemManagedObject.propertyKeys.id, component.parent.id)
+				
 				if let managedSystem = try! self.managedObjectContext.executeFetchRequest(systemRequest).first as? SystemManagedObject {
-					newManagedComponent.parentSystem = managedSystem
+					newManagedComponent.parent = managedSystem
 				}
 			}
 		}
@@ -139,8 +141,25 @@ class DatastoreManager : NSObject {
 		}
 	}
 	
+	func clearComponents() {
+		do {
+			let allComponentsRequest = NSFetchRequest(entityName: ComponentManagedObject.entityName)
+			var allComponents = try self.managedObjectContext.executeFetchRequest(allComponentsRequest)
+			print("\(allComponents.count) Objects to be Deleted")
+			for component in allComponents {
+				self.managedObjectContext.deleteObject(component as! NSManagedObject)
+			}
+			allComponents.removeAll(keepCapacity: false)
+			print("Saving Managed Object Context")
+			try self.managedObjectContext.save()
+		} catch {
+			print("Error Clearing Components")
+			print("\(error)")
+		}
+	}
+	
 	func clearAll() {
-		for entityName in [SystemManagedObject.entityName] {
+		for entityName in [SystemManagedObject.entityName, ComponentManagedObject.entityName] {
 			do {
 				let request = NSFetchRequest(entityName: entityName)
 				var allObjects = try self.managedObjectContext.executeFetchRequest(request)
