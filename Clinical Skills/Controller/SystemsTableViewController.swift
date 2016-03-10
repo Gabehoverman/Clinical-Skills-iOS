@@ -78,9 +78,11 @@ class SystemsTableViewController: UITableViewController {
 	}
 	
 	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCellWithIdentifier(SystemTableViewCell.systemCellIdentifier) as! SystemTableViewCell
 		let managedSystem = self.fetchedResultsController!.objectAtIndexPath(indexPath) as! SystemManagedObject
-		cell.systemNameLabel.text = managedSystem.name
+		let cell = UITableViewCell()
+		cell.accessoryType = .DisclosureIndicator
+		cell.textLabel?.font = UIFont.systemFontOfSize(18, weight: UIFontWeightSemibold)
+		cell.textLabel?.text = managedSystem.name
 		return cell
 	}
 	

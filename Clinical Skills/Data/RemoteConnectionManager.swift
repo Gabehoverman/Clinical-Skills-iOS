@@ -23,6 +23,7 @@ class RemoteConnectionManager : NSObject {
 	struct dataURLs {
 		static let systems = "systems.json"
 		static let components = "components.json"
+		static let specialTests = "special_tests.json"
 	}
 	
 	// MARK: - Properties
@@ -56,13 +57,15 @@ class RemoteConnectionManager : NSObject {
 	
 	func fetchSystems() {
 		var urlString: String
+		
 		if self.shouldRequestFromLocal {
 			urlString = self.localBaseURL
 		} else {
 			urlString = self.remoteBaseURL
 		}
 		
-		if let url = NSURL(string: urlString + dataURLs.systems) {
+		urlString += dataURLs.systems
+		if let url = NSURL(string: urlString) {
 			self.fetchWithURL(url)
 		}
 	}
@@ -75,7 +78,32 @@ class RemoteConnectionManager : NSObject {
 			urlString = self.remoteBaseURL
 		}
 		
-		urlString = urlString + dataURLs.components + "?system=" + forSystem.name
+		urlString += dataURLs.components
+		
+		var queryString = "?system=" + forSystem.name
+		queryString = queryString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
+		
+		urlString += queryString
+		
+		if let url = NSURL(string: urlString) {
+			self.fetchWithURL(url)
+		}
+	}
+	
+	func fetchSpecialTests(forComponent: Component) {
+		var urlString: String
+		if self.shouldRequestFromLocal {
+			urlString = self.localBaseURL
+		} else {
+			urlString = self.remoteBaseURL
+		}
+		
+		urlString += dataURLs.specialTests
+		
+		var queryString = "?component=" + forComponent.name
+		queryString = queryString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
+		
+		urlString += queryString
 		
 		if let url = NSURL(string: urlString) {
 			self.fetchWithURL(url)

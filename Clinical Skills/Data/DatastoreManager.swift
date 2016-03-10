@@ -48,7 +48,16 @@ class DatastoreManager : NSObject {
 		}
 		self.save()
 		self.delegate?.didFinishStoring?()
-}
+	}
+	
+	func storeSpecialTests(specialTests: [SpecialTest]) {
+		self.delegate?.didBeginStoring?()
+		for specialTest in specialTests {
+			self.storeSpecialTest(specialTest)
+		}
+		self.save()
+		self.delegate?.didFinishStoring?()
+	}
 	
 	func storeSystem(system: System) {
 		let existingManagedSystem = self.retrieveSystemWithName(system.name)
@@ -81,6 +90,25 @@ class DatastoreManager : NSObject {
 		}
 	}
 	
+	func storeSpecialTest(specialTest: SpecialTest) {
+		if !self.containsSpecialTestWithID(specialTest.id) {
+			let entity = NSEntityDescription.entityForName(SpecialTestManagedObject.entityName, inManagedObjectContext: self.managedObjectContext)!
+			if let newManagedSpecialTest = NSManagedObject(entity: entity, insertIntoManagedObjectContext: self.managedObjectContext) as? SpecialTestManagedObject {
+				newManagedSpecialTest.id = specialTest.id
+				newManagedSpecialTest.name = specialTest.name
+				newManagedSpecialTest.positiveSign = specialTest.positiveSign
+				newManagedSpecialTest.indication = specialTest.indication
+				newManagedSpecialTest.notes = specialTest.notes
+				
+				let componentRequest = NSFetchRequest(entityName: ComponentManagedObject.entityName)
+				componentRequest.predicate = NSPredicate(format: "%K = %d", ComponentManagedObject.propertyKeys.id, specialTest.component.id)
+				if let managedComponent = try! self.managedObjectContext.executeFetchRequest(componentRequest).first as? ComponentManagedObject {
+					newManagedSpecialTest.component = managedComponent
+				}
+			}
+		}
+	}
+	
 	// MARK: - Retrieve Methods
 	
 	func retrieveSystemWithName(name: String?) -> SystemManagedObject? {
@@ -106,6 +134,13 @@ class DatastoreManager : NSObject {
 	
 	func containsComponentWithID(id: Int) -> Bool {
 		let request = NSFetchRequest(entityName: ComponentManagedObject.entityName)
+		request.predicate = NSPredicate(format: "%K = %d", ComponentManagedObject.propertyKeys.id, id)
+		let results = try! self.managedObjectContext.executeFetchRequest(request)
+		return results.count != 0
+	}
+	
+	func containsSpecialTestWithID(id: Int) -> Bool {
+		let request = NSFetchRequest(entityName: SpecialTestManagedObject.entityName)
 		request.predicate = NSPredicate(format: "%K = %d", ComponentManagedObject.propertyKeys.id, id)
 		let results = try! self.managedObjectContext.executeFetchRequest(request)
 		return results.count != 0

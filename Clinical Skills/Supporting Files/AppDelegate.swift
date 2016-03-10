@@ -55,7 +55,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RemoteConnectionManagerDe
 		let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("ClinicalSkills")
 		
 		if self.SHOULD_REFRESH_DATASTORE_ON_LAUNCH {
-			try! NSFileManager.defaultManager().removeItemAtURL(url)
+			do {
+				try NSFileManager.defaultManager().removeItemAtURL(url)
+			} catch {
+				print("Datastore Not Found")
+			}
 		}
 		
 		var failureReason = "There was an error creating or loading the application's saved data."

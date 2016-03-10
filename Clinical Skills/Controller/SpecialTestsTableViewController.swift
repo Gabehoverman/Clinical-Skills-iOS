@@ -1,26 +1,27 @@
 //
-//  ComponentsTableViewController.swift
+//  SpecialTestsTableViewController.swift
 //  Clinical Skills
 //
-//  Created by Nick on 3/9/16.
+//  Created by Nick on 3/10/16.
 //  Copyright © 2016 Nick. All rights reserved.
 //
 
 import Foundation
 import UIKit
-import BRYXBanner
 import CoreData
+import BRYXBanner
 
-class ComponentsTableViewController : UITableViewController {
+class SpecialTestsTableViewController : UITableViewController {
 	
-	var parentSystem: System?
+	var parentComponent: Component?
 	
 	var fetchedResultsController: NSFetchedResultsController?
-	var searchController: UISearchController!
-	var activityIndicator: UIActivityIndicatorView?
 	
 	var datastoreManager: DatastoreManager?
 	var remoteConnectionManager: RemoteConnectionManager?
+	
+	var searchController: UISearchController!
+	var activityIndicator: UIActivityIndicatorView?
 	
 	var searchPhrase: String?
 	var defaultSearchPredicate: NSPredicate?
@@ -29,19 +30,14 @@ class ComponentsTableViewController : UITableViewController {
 	
 	override func viewWillAppear(animated: Bool) {
 		if self.isInitialLoad {
-			if self.parentSystem != nil {
-				self.fetchedResultsController = ComponentsFetchedResultsControllers.componentsFetchedResultsController(self.parentSystem!, delegateController: self)
-				self.datastoreManager = DatastoreManager(delegate: self)
-				self.remoteConnectionManager = RemoteConnectionManager(shouldRequestFromLocal: UserDefaultsManager.userDefaults.boolForKey(UserDefaultsManager.userDefaultsKeys.requestFromLocalHost), delegate: self)
-				self.remoteConnectionManager!.fetchComponents(self.parentSystem!)
-			}
+			self.fetchedResultsController = SpecialTestsFetchedResultsController.specialTestsFetchedResultsController(self.parentComponent!, delegateController: self)
+			self.datastoreManager = DatastoreManager(delegate: self)
+			self.remoteConnectionManager = RemoteConnectionManager(shouldRequestFromLocal: UserDefaultsManager.userDefaults.boolForKey(UserDefaultsManager.userDefaultsKeys.requestFromLocalHost), delegate: self)
+			self.remoteConnectionManager!.fetchSpecialTests(self.parentComponent!)
 		}
 	}
 	
 	override func viewDidLoad() {
-		if self.fetchedResultsController != nil {
-			self.defaultSearchPredicate = self.fetchedResultsController!.fetchRequest.predicate
-		}
 		self.refreshControl?.addTarget(self, action: Selector("handleRefresh:"), forControlEvents: .ValueChanged)
 		self.initializeSearchController()
 		self.initializeActivityIndicator()
@@ -64,22 +60,13 @@ class ComponentsTableViewController : UITableViewController {
 	
 	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		let cell = UITableViewCell()
-		cell.accessoryType = .DisclosureIndicator
 		cell.textLabel?.font = UIFont.systemFontOfSize(18, weight: UIFontWeightSemibold)
-		if let managedComponent = self.fetchedResultsController?.objectAtIndexPath(indexPath) as? ComponentManagedObject {
-			cell.textLabel?.text = managedComponent.name
+		if let managedSpecialTest = self.fetchedResultsController?.objectAtIndexPath(indexPath) as? SpecialTestManagedObject {
+			cell.textLabel?.text = managedSpecialTest.name
 		} else {
-			cell.textLabel?.text = "Error Fetching Component Name"
+			cell.textLabel?.text = "Error Fetching Special Test"
 		}
 		return cell
-	}
-	
-	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-		if self.fetchedResultsController != nil {
-			if let managedComponent = self.fetchedResultsController!.objectAtIndexPath(indexPath) as? ComponentManagedObject {
-				self.performSegueWithIdentifier(StoryboardSegueIdentifiers.toSpecialTestsView.rawValue, sender: managedComponent)
-			}
-		}
 	}
 	
 	func fetchResultsWithReload(shouldReload: Bool) {
@@ -89,15 +76,13 @@ class ComponentsTableViewController : UITableViewController {
 				self.tableView.reloadData()
 			}
 		} catch {
-			print("Error occurred during Component fetch")
+			print("Error occurred during Special Test fetch")
 		}
 	}
 	
 	func handleRefresh(refreshControl: UIRefreshControl) {
-		self.remoteConnectionManager!.fetchComponents(self.parentSystem!)
+		self.remoteConnectionManager!.fetchSpecialTests(self.parentComponent!)
 	}
-	
-	// MARK: - Activity Indicator Methods
 	
 	func initializeActivityIndicator() {
 		self.activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
@@ -116,32 +101,13 @@ class ComponentsTableViewController : UITableViewController {
 		self.activityIndicator!.stopAnimating()
 	}
 	
-	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-		if segue.identifier == StoryboardSegueIdentifiers.toSpecialTestsView.rawValue {
-			if let destination = segue.destinationViewController as? SpecialTestsTableViewController {
-				if let managedComponent = sender as? ComponentManagedObject {
-					destination.navigationItem.title = managedComponent.name
-					destination.parentComponent = Component.componentFromManagedObject(managedComponent)
-				}
-			}
-		}
-	}
+}
+
+extension SpecialTestsTableViewController : NSFetchedResultsControllerDelegate {
 	
 }
 
-extension ComponentsTableViewController : NSFetchedResultsControllerDelegate {
-	
-}
-
-extension ComponentsTableViewController : DatastoreManagerDelegate {
-	func didFinishStoring() {
-		dispatch_async(dispatch_get_main_queue()) { () -> Void in
-			self.fetchResultsWithReload(true)
-		}
-	}
-}
-
-extension ComponentsTableViewController : RemoteConnectionManagerDelegate {
+extension SpecialTestsTableViewController : RemoteConnectionManagerDelegate {
 	
 	func didBeginDataRequest() {
 		if self.refreshControl != nil {
@@ -155,15 +121,10 @@ extension ComponentsTableViewController : RemoteConnectionManagerDelegate {
 	
 	func didFinishDataRequestWithData(receivedData: NSData) {
 		let parser = JSONParser(jsonData: receivedData)
-		if parser.dataType == JSONParser.dataTypes.system {
-			self.datastoreManager!.storeSystems(parser.parseSystems())
-			dispatch_async(dispatch_get_main_queue(), { () -> Void in
-				self.showNetworkStatusBanner()
-			})
-		} else if parser.dataType == JSONParser.dataTypes.component {
-			if self.parentSystem != nil {
-				let components = parser.parseComponents(self.parentSystem!)
-				self.datastoreManager!.storeComponents(components)
+		if parser.dataType == JSONParser.dataTypes.specialTest {
+			if self.parentComponent != nil {
+				let specialTests = parser.parseSpecialTests(self.parentComponent!)
+				self.datastoreManager!.storeSpecialTests(specialTests)
 			}
 		}
 	}
@@ -194,9 +155,20 @@ extension ComponentsTableViewController : RemoteConnectionManagerDelegate {
 		banner.dismissesOnTap = true
 		banner.show(self.navigationController!.view, duration: 1.5)
 	}
+	
 }
 
-extension ComponentsTableViewController : UISearchBarDelegate {
+extension SpecialTestsTableViewController : DatastoreManagerDelegate {
+
+	func didFinishStoring() {
+		dispatch_async(dispatch_get_main_queue()) { () -> Void in
+			self.fetchResultsWithReload(true)
+		}
+	}
+	
+}
+
+extension SpecialTestsTableViewController : UISearchBarDelegate {
 	
 	func initializeSearchController() {
 		self.searchController = UISearchController(searchResultsController: nil)
@@ -221,7 +193,7 @@ extension ComponentsTableViewController : UISearchBarDelegate {
 			if let predicate = self.defaultSearchPredicate {
 				predicates.append(predicate)
 			}
-			let filterPredicate = NSPredicate(format: "%K CONTAINS[cd] %@", ComponentManagedObject.propertyKeys.name, searchText)
+			let filterPredicate = NSPredicate(format: "%K CONTAINS[cd] %@", SpecialTestManagedObject.propertyKeys.name, searchText)
 			predicates.append(filterPredicate)
 			let fullPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
 			self.fetchedResultsController?.fetchRequest.predicate = fullPredicate

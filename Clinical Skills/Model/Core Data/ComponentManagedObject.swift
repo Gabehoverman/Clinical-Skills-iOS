@@ -25,6 +25,7 @@ class ComponentManagedObject : NSManagedObject {
 	@NSManaged var inspection: String
 	@NSManaged var notes: String
 	@NSManaged var parent: SystemManagedObject
+	@NSManaged var specialTests: [SpecialTestManagedObject]
 	
 	override var description: String {
 		get {

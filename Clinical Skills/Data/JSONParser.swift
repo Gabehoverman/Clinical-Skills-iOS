@@ -16,6 +16,7 @@ class JSONParser : NSObject {
 	struct dataTypes {
 		static let system = "system"
 		static let component = "component"
+		static let specialTest = "special_test"
 		static let unknown = "unknown"
 	}
 
@@ -69,6 +70,21 @@ class JSONParser : NSObject {
 			}
 		}
 		return components
+	}
+	
+	func parseSpecialTests(component: Component) -> [SpecialTest] {
+		var specialTests = [SpecialTest]()
+		for (_, data) in self.json {
+			for (_, specialTest) in data {
+				let id = specialTest[SpecialTestManagedObject.propertyKeys.id].intValue
+				let name = specialTest[SpecialTestManagedObject.propertyKeys.name].stringValue
+				let positiveSign = specialTest[SpecialTestManagedObject.propertyKeys.positiveSign].stringValue
+				let indication = specialTest[SpecialTestManagedObject.propertyKeys.indication].stringValue
+				let notes = specialTest[SpecialTestManagedObject.propertyKeys.notes].stringValue
+				specialTests.append(SpecialTest(component: component, id: id, name: name, positiveSign: positiveSign, indication: indication, notes: notes))
+			}
+		}
+		return specialTests
 	}
 	
 	func printJSON() {
