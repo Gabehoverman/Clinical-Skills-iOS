@@ -28,27 +28,25 @@ class SpecialTestsTableViewController : UITableViewController {
 	var searchPhrase: String?
 	var defaultSearchPredicate: NSPredicate?
 	
-	var isInitialLoad: Bool = true
-	
 	// MARK: - View Controller Methods
 	
-	override func viewWillAppear(animated: Bool) {
-		if self.isInitialLoad {
+	override func viewDidLoad() {
+		if self.parentComponent != nil {
 			self.fetchedResultsController = SpecialTestsFetchedResultsController.specialTestsFetchedResultsController(self.parentComponent!)
+			self.fetchResultsWithReload(false)
+			
+			self.refreshControl?.addTarget(self, action: Selector("handleRefresh:"), forControlEvents: .ValueChanged)
+			
+			self.initializeSearchController()
+			self.initializeActivityIndicator()
+			
 			self.datastoreManager = DatastoreManager(delegate: self)
 			self.remoteConnectionManager = RemoteConnectionManager(delegate: self)
-			self.remoteConnectionManager!.fetchSpecialTests(self.parentComponent!)
+			
+			if let count = self.fetchedResultsController?.fetchedObjects?.count where count == 0 {
+				self.remoteConnectionManager?.fetchSpecialTests(self.parentComponent!)
+			}
 		}
-	}
-	
-	override func viewDidLoad() {
-		self.refreshControl?.addTarget(self, action: Selector("handleRefresh:"), forControlEvents: .ValueChanged)
-		self.initializeSearchController()
-		self.initializeActivityIndicator()
-	}
-	
-	override func viewWillDisappear(animated: Bool) {
-		self.isInitialLoad = false
 	}
 	
 	// MARK: - Table View Controller Methods
@@ -130,7 +128,7 @@ class SpecialTestsTableViewController : UITableViewController {
 	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
 		if let managedSpecialTest = sender as? SpecialTestManagedObject {
 			if let destination = segue.destinationViewController as? SpecialTestDetailTableViewController {
-				destination.specialTest = SpecialTest.specialTestFromManagedObject(managedSpecialTest)
+				destination.parentSpecialTest = SpecialTest.specialTestFromManagedObject(managedSpecialTest)
 			}
 		}
 	}
@@ -169,7 +167,6 @@ extension SpecialTestsTableViewController : RemoteConnectionManagerDelegate {
 		}
 		
 		dispatch_async(dispatch_get_main_queue()) { () -> Void in
-			self.fetchResultsWithReload(true)
 			self.hideActivityIndicator()
 			self.showNetworkStatusBanner()
 		}
@@ -207,6 +204,7 @@ extension SpecialTestsTableViewController : DatastoreManagerDelegate {
 extension SpecialTestsTableViewController : UISearchBarDelegate {
 	
 	func initializeSearchController() {
+		self.defaultSearchPredicate = self.fetchedResultsController!.fetchRequest.predicate
 		self.searchController = UISearchController(searchResultsController: nil)
 		self.searchController.dimsBackgroundDuringPresentation = true
 		self.searchController.definesPresentationContext = true

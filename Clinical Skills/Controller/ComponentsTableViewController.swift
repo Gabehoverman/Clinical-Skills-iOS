@@ -18,6 +18,7 @@ class ComponentsTableViewController : UITableViewController {
 	var parentSystem: System?
 	
 	var fetchedResultsController: NSFetchedResultsController?
+	
 	var searchController: UISearchController!
 	var activityIndicator: UIActivityIndicatorView?
 	
@@ -27,33 +28,25 @@ class ComponentsTableViewController : UITableViewController {
 	var searchPhrase: String?
 	var defaultSearchPredicate: NSPredicate?
 	
-	var isInitialLoad: Bool = true
-	
 	// MARK: - View Controller Methods
 	
-	override func viewWillAppear(animated: Bool) {
-		if self.isInitialLoad {
-			if self.parentSystem != nil {
-				self.fetchedResultsController = ComponentsFetchedResultsControllers.componentsFetchedResultsController(self.parentSystem!)
-				self.datastoreManager = DatastoreManager(delegate: self)
-				self.remoteConnectionManager = RemoteConnectionManager(delegate: self)
-				self.remoteConnectionManager!.fetchComponents(self.parentSystem!)
+	override func viewDidLoad() {
+		if self.parentSystem != nil {
+			self.fetchedResultsController = ComponentsFetchedResultsControllers.componentsFetchedResultsController(self.parentSystem!)
+			self.fetchResultsWithReload(false)
+		
+			self.refreshControl?.addTarget(self, action: Selector("handleRefresh:"), forControlEvents: .ValueChanged)
+			
+			self.initializeSearchController()
+			self.initializeActivityIndicator()
+			
+			self.datastoreManager = DatastoreManager(delegate: self)
+			self.remoteConnectionManager = RemoteConnectionManager(delegate: self)
+			
+			if let count = self.fetchedResultsController?.fetchedObjects?.count where count == 0 {
+				self.remoteConnectionManager?.fetchComponents(self.parentSystem!)
 			}
 		}
-	}
-	
-	override func viewDidLoad() {
-		self.tableView.rowHeight = UITableViewAutomaticDimension
-		if self.fetchedResultsController != nil {
-			self.defaultSearchPredicate = self.fetchedResultsController!.fetchRequest.predicate
-		}
-		self.refreshControl?.addTarget(self, action: Selector("handleRefresh:"), forControlEvents: .ValueChanged)
-		self.initializeSearchController()
-		self.initializeActivityIndicator()
-	}
-	
-	override func viewWillDisappear(animated: Bool) {
-		self.isInitialLoad = false
 	}
 	
 	// MARK: - Table View Controller Methods
@@ -161,12 +154,7 @@ extension ComponentsTableViewController : RemoteConnectionManagerDelegate {
 	
 	func didFinishDataRequestWithData(receivedData: NSData) {
 		let parser = JSONParser(rawData: receivedData)
-		if parser.dataType == JSONParser.dataTypes.system {
-			self.datastoreManager!.storeSystems(parser.parseSystems())
-			dispatch_async(dispatch_get_main_queue(), { () -> Void in
-				self.showNetworkStatusBanner()
-			})
-		} else if parser.dataType == JSONParser.dataTypes.component {
+		if parser.dataType == JSONParser.dataTypes.component {
 			if self.parentSystem != nil {
 				let components = parser.parseComponents(self.parentSystem!)
 				self.datastoreManager!.storeComponents(components)
@@ -182,7 +170,6 @@ extension ComponentsTableViewController : RemoteConnectionManagerDelegate {
 		}
 		
 		dispatch_async(dispatch_get_main_queue()) { () -> Void in
-			self.fetchResultsWithReload(true)
 			self.hideActivityIndicator()
 			self.showNetworkStatusBanner()
 		}
@@ -217,6 +204,7 @@ extension ComponentsTableViewController : DatastoreManagerDelegate {
 extension ComponentsTableViewController : UISearchBarDelegate {
 	
 	func initializeSearchController() {
+		self.defaultSearchPredicate = self.fetchedResultsController!.fetchRequest.predicate
 		self.searchController = UISearchController(searchResultsController: nil)
 		self.searchController.dimsBackgroundDuringPresentation = true
 		self.searchController.definesPresentationContext = true

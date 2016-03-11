@@ -8,47 +8,46 @@
 
 import Foundation
 import UIKit
-import SafariServices
 import CoreData
 import BRYXBanner
+import SafariServices
 
 class SpecialTestDetailTableViewController : UITableViewController {
 	
 	// MARK: - Properites
 	
-	var specialTest: SpecialTest?
+	var parentSpecialTest: SpecialTest?
 	
 	var fetchedResultsController: NSFetchedResultsController?
 	
-	var remoteConnectionManager: RemoteConnectionManager?
 	var datastoreManager: DatastoreManager?
+	var remoteConnectionManager: RemoteConnectionManager?
 	
 	var searchController: UISearchController!
 	var activityIndicator: UIActivityIndicatorView?
 	
 	var searchPhrase: String?
 	var defaultSearchPredicate: NSPredicate?
-	var isInitialLoad: Bool = true
 	
 	// MARK: - View Controller Methods
 	
-	override func viewWillAppear(animated: Bool) {
-		if self.isInitialLoad {
-			self.fetchedResultsController = VideoLinksFetchedResultsControllers.videoLinksFetchedResultsController(self.specialTest!)
+	override func viewDidLoad() {
+		if self.parentSpecialTest != nil {
+			self.fetchedResultsController = VideoLinksFetchedResultsControllers.videoLinksFetchedResultsController(self.parentSpecialTest!)
+			self.fetchResultsWithReload(false)
+			
+			self.refreshControl?.addTarget(self, action: Selector("handleRefresh:"), forControlEvents: .ValueChanged)
+			
+			self.initializeSearchController()
+			self.initializeActivityIndicator()
+			
 			self.datastoreManager = DatastoreManager(delegate: self)
 			self.remoteConnectionManager = RemoteConnectionManager(delegate: self)
-			self.remoteConnectionManager?.fetchVideoLinks(self.specialTest!)
+			
+			if let count = self.fetchedResultsController?.fetchedObjects?.count where count == 0 {
+				self.remoteConnectionManager?.fetchVideoLinks(self.parentSpecialTest!)
+			}
 		}
-	}
-	
-	override func viewDidLoad() {
-		self.refreshControl?.addTarget(self, action: Selector("handleRefresh:"), forControlEvents: .ValueChanged)
-		self.initializeSearchController()
-		self.initializeActivityIndicator()
-	}
-	
-	override func viewWillDisappear(animated: Bool) {
-		self.isInitialLoad = false
 	}
 	
 	// MARK: - Table View Controller Methods
@@ -85,9 +84,9 @@ class SpecialTestDetailTableViewController : UITableViewController {
 		cell.textLabel?.lineBreakMode = .ByWordWrapping
 		cell.textLabel?.font = UIFont.systemFontOfSize(16)
 		switch (indexPath.section) {
-			case 0: cell.textLabel?.text = self.specialTest?.name
-			case 1: cell.textLabel?.text = self.specialTest?.positiveSign
-			case 2: cell.textLabel?.text = self.specialTest?.indication
+			case 0: cell.textLabel?.text = self.parentSpecialTest?.name
+			case 1: cell.textLabel?.text = self.parentSpecialTest?.positiveSign
+			case 2: cell.textLabel?.text = self.parentSpecialTest?.indication
 			case 3:
 				if let managedVideoLink = self.fetchedResultsController?.objectAtIndexPath(fixedSectionIndexPath) as? VideoLinkManagedObject {
 					cell.textLabel?.text = managedVideoLink.title
@@ -126,7 +125,7 @@ class SpecialTestDetailTableViewController : UITableViewController {
 	// MARK: - Refresh Methods
 	
 	func handleRefresh(refreshControl: UIRefreshControl) {
-		self.remoteConnectionManager!.fetchVideoLinks(self.specialTest!)
+		self.remoteConnectionManager!.fetchVideoLinks(self.parentSpecialTest!)
 	}
 	
 	// MARK: - Activity Indicator Methods
@@ -166,8 +165,8 @@ extension SpecialTestDetailTableViewController : RemoteConnectionManagerDelegate
 	func didFinishDataRequestWithData(receivedData: NSData) {
 		let parser = JSONParser(rawData: receivedData)
 		if parser.dataType == JSONParser.dataTypes.videoLink {
-			if self.specialTest != nil {
-				let videoLinks = parser.parseVideoLinks(self.specialTest!)
+			if self.parentSpecialTest != nil {
+				let videoLinks = parser.parseVideoLinks(self.parentSpecialTest!)
 				self.datastoreManager?.storeVideoLinks(videoLinks)
 			}
 		}
@@ -181,7 +180,6 @@ extension SpecialTestDetailTableViewController : RemoteConnectionManagerDelegate
 		}
 		
 		dispatch_async(dispatch_get_main_queue()) { () -> Void in
-			self.fetchResultsWithReload(true)
 			self.hideActivityIndicator()
 			self.showNetworkStatusBanner()
 		}
@@ -209,8 +207,6 @@ extension SpecialTestDetailTableViewController : DatastoreManagerDelegate {
 		dispatch_async(dispatch_get_main_queue()) { () -> Void in
 			self.fetchResultsWithReload(true)
 		}
-		
-		self.datastoreManager?.printAll()
 	}
 	
 }
@@ -220,6 +216,7 @@ extension SpecialTestDetailTableViewController : DatastoreManagerDelegate {
 extension SpecialTestDetailTableViewController : UISearchBarDelegate {
 	
 	func initializeSearchController() {
+		self.defaultSearchPredicate = self.fetchedResultsController!.fetchRequest.predicate
 		self.searchController = UISearchController(searchResultsController: nil)
 		self.searchController.dimsBackgroundDuringPresentation = true
 		self.searchController.definesPresentationContext = true

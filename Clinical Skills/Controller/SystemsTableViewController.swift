@@ -15,54 +15,45 @@ class SystemsTableViewController: UITableViewController {
 	
 	// MARK: - Properties
 	
-	var searchController: UISearchController!
-	var activityIndicator: UIActivityIndicatorView?
 	var fetchedResultsController: NSFetchedResultsController?
 	
-	var remoteConnectionManager: RemoteConnectionManager?
+	var searchController: UISearchController?
+	var activityIndicator: UIActivityIndicatorView?
+	
 	var datastoreManager: DatastoreManager?
+	var remoteConnectionManager: RemoteConnectionManager?
 	
-	var isInitialLoad = true
-	
-	var defaultSearchPredicate: NSPredicate?
 	var searchPhrase: String?
+	var defaultSearchPredicate: NSPredicate?
 	
 	// MARK: - View Controller Methods
 	
-	override func viewWillAppear(animated: Bool) {
-		if self.isInitialLoad {
-			self.fetchedResultsController = SystemFetchedResultsControllers.allSystemsResultController()
-			self.defaultSearchPredicate = self.fetchedResultsController!.fetchRequest.predicate
-			self.datastoreManager = DatastoreManager(delegate: self)
-			self.remoteConnectionManager = RemoteConnectionManager(delegate: self)
-			self.remoteConnectionManager!.fetchSystems()
-		}
-	}
-	
 	override func viewDidLoad() {
-		super.viewDidLoad()
-		self.searchController = UISearchController(searchResultsController: nil)
+		self.fetchedResultsController = SystemFetchedResultsControllers.allSystemsResultController()
+		self.fetchResultsWithReload(false)
+		
 		self.refreshControl?.addTarget(self, action: Selector("handleRefresh:"), forControlEvents: .ValueChanged)
+		
 		self.initializeSearchController()
 		self.initializeActivityIndicator()
-	}
-	
-	override func viewWillDisappear(animated: Bool) {
-		self.isInitialLoad = false
+		
+		self.datastoreManager = DatastoreManager(delegate: self)
+		self.remoteConnectionManager = RemoteConnectionManager(delegate: self)
+		
+		if let count = self.fetchedResultsController?.fetchedObjects?.count where count == 0 {
+			self.remoteConnectionManager?.fetchSystems()
+		}
 	}
 	
 	// MARK: - Table View Controller Methods
 	
 	override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-		if let sections = self.fetchedResultsController?.sections {
-			return sections.count
-		}
-		return 0
+		return 1
 	}
 	
 	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		if let sections = self.fetchedResultsController?.sections {
-			return sections[section].numberOfObjects
+		if let count = self.fetchedResultsController?.fetchedObjects?.count {
+			return count
 		}
 		return 0
 	}
@@ -159,9 +150,6 @@ extension SystemsTableViewController: RemoteConnectionManagerDelegate {
 		if parser.dataType == JSONParser.dataTypes.system {
 			let systems = parser.parseSystems()
 			self.datastoreManager!.storeSystems(systems)
-			dispatch_async(dispatch_get_main_queue(), { () -> Void in
-				self.showNetworkStatusBanner()
-			})
 		}
 	}
 	
@@ -173,7 +161,6 @@ extension SystemsTableViewController: RemoteConnectionManagerDelegate {
 		}
 		
 		dispatch_async(dispatch_get_main_queue()) { () -> Void in
-			self.fetchResultsWithReload(true)
 			self.hideActivityIndicator()
 			self.showNetworkStatusBanner()
 		}
@@ -207,12 +194,14 @@ extension SystemsTableViewController: DatastoreManagerDelegate {
 
 extension SystemsTableViewController: UISearchBarDelegate {
 	func initializeSearchController() {
-		self.searchController.dimsBackgroundDuringPresentation = true
-		self.searchController.definesPresentationContext = true
-		self.searchController.searchBar.delegate = self
-		self.tableView.tableHeaderView = self.searchController.searchBar
-		self.tableView.contentOffset = CGPointMake(0, self.searchController.searchBar.frame.size.height)
-		self.searchController.loadViewIfNeeded()
+		self.defaultSearchPredicate = self.fetchedResultsController!.fetchRequest.predicate
+		self.searchController = UISearchController(searchResultsController: nil)
+		self.searchController?.dimsBackgroundDuringPresentation = true
+		self.searchController?.definesPresentationContext = true
+		self.searchController?.searchBar.delegate = self
+		self.tableView.tableHeaderView = self.searchController?.searchBar
+		self.tableView.contentOffset = CGPointMake(0, self.searchController!.searchBar.frame.size.height)
+		self.searchController?.loadViewIfNeeded()
 	}
 	
 	func clearSearch() {
