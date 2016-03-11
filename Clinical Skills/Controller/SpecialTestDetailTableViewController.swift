@@ -1,52 +1,47 @@
 //
-//  ComponentsTableViewController.swift
+//  SpecialTestDetailTableViewController.swift
 //  Clinical Skills
 //
-//  Created by Nick on 3/9/16.
+//  Created by Nick on 3/10/16.
 //  Copyright © 2016 Nick. All rights reserved.
 //
 
 import Foundation
 import UIKit
+import SafariServices
 import CoreData
 import BRYXBanner
 
-class ComponentsTableViewController : UITableViewController {
+class SpecialTestDetailTableViewController : UITableViewController {
 	
-	// MARK: - Properties
+	// MARK: - Properites
 	
-	var parentSystem: System?
+	var specialTest: SpecialTest?
 	
 	var fetchedResultsController: NSFetchedResultsController?
+	
+	var remoteConnectionManager: RemoteConnectionManager?
+	var datastoreManager: DatastoreManager?
+	
 	var searchController: UISearchController!
 	var activityIndicator: UIActivityIndicatorView?
 	
-	var datastoreManager: DatastoreManager?
-	var remoteConnectionManager: RemoteConnectionManager?
-	
 	var searchPhrase: String?
 	var defaultSearchPredicate: NSPredicate?
-	
 	var isInitialLoad: Bool = true
 	
 	// MARK: - View Controller Methods
 	
 	override func viewWillAppear(animated: Bool) {
 		if self.isInitialLoad {
-			if self.parentSystem != nil {
-				self.fetchedResultsController = ComponentsFetchedResultsControllers.componentsFetchedResultsController(self.parentSystem!)
-				self.datastoreManager = DatastoreManager(delegate: self)
-				self.remoteConnectionManager = RemoteConnectionManager(shouldRequestFromLocal: UserDefaultsManager.userDefaults.boolForKey(UserDefaultsManager.userDefaultsKeys.requestFromLocalHost), delegate: self)
-				self.remoteConnectionManager!.fetchComponents(self.parentSystem!)
-			}
+			self.fetchedResultsController = VideoLinksFetchedResultsControllers.videoLinksFetchedResultsController(self.specialTest!)
+			self.datastoreManager = DatastoreManager(delegate: self)
+			self.remoteConnectionManager = RemoteConnectionManager(shouldRequestFromLocal: UserDefaultsManager.userDefaults.boolForKey(UserDefaultsManager.userDefaultsKeys.requestFromLocalHost), delegate: self)
+			self.remoteConnectionManager?.fetchVideoLinks(self.specialTest!)
 		}
 	}
 	
 	override func viewDidLoad() {
-		self.tableView.rowHeight = UITableViewAutomaticDimension
-		if self.fetchedResultsController != nil {
-			self.defaultSearchPredicate = self.fetchedResultsController!.fetchRequest.predicate
-		}
 		self.refreshControl?.addTarget(self, action: Selector("handleRefresh:"), forControlEvents: .ValueChanged)
 		self.initializeSearchController()
 		self.initializeActivityIndicator()
@@ -59,37 +54,57 @@ class ComponentsTableViewController : UITableViewController {
 	// MARK: - Table View Controller Methods
 	
 	override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-		return 1
+		return 4
+	}
+	
+	override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+		switch (section) {
+			case 0: return "Name"
+			case 1: return "Positive Sign"
+			case 2: return "Indication"
+			case 3: return "Video Links"
+			default: return  "Section \(section)"
+		}
 	}
 	
 	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		if let count = self.fetchedResultsController?.fetchedObjects?.count {
-			return count
+		if section == 3 {
+			if let count = self.fetchedResultsController?.fetchedObjects?.count {
+				return count
+			} else {
+				return 0
+			}
 		}
-		return 0
+		return 1
 	}
 	
 	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+		let fixedSectionIndexPath = NSIndexPath(forRow: indexPath.row, inSection: 0) // NSIndexPath referencing section 0 to avoid "no section at index 3" error
 		let cell = UITableViewCell()
-		cell.accessoryType = .DisclosureIndicator
 		cell.textLabel?.numberOfLines = 0
 		cell.textLabel?.lineBreakMode = .ByWordWrapping
-		cell.textLabel?.font = UIFont.systemFontOfSize(18, weight: UIFontWeightSemibold)
-		if let managedComponent = self.fetchedResultsController?.objectAtIndexPath(indexPath) as? ComponentManagedObject {
-			cell.textLabel?.text = managedComponent.name
-		} else {
-			cell.textLabel?.text = "Error Fetching Component Name"
+		cell.textLabel?.font = UIFont.systemFontOfSize(16)
+		switch (indexPath.section) {
+			case 0: cell.textLabel?.text = self.specialTest?.name
+			case 1: cell.textLabel?.text = self.specialTest?.positiveSign
+			case 2: cell.textLabel?.text = self.specialTest?.indication
+			case 3:
+				if let managedVideoLink = self.fetchedResultsController?.objectAtIndexPath(fixedSectionIndexPath) as? VideoLinkManagedObject {
+					cell.textLabel?.text = managedVideoLink.title
+				}
+			default: cell.textLabel?.text = ""
 		}
 		return cell
 	}
 	
 	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-		if self.fetchedResultsController != nil {
-			if let managedComponent = self.fetchedResultsController!.objectAtIndexPath(indexPath) as? ComponentManagedObject {
-				if let selectedTabTitle = self.tabBarController?.selectedViewController?.tabBarItem.title {
-					if selectedTabTitle == StoryboardTabIdentifiers.outlinedReview.rawValue {
-						self.performSegueWithIdentifier(StoryboardSegueIdentifiers.toSpecialTestsView.rawValue, sender: managedComponent)
-					}
+		if indexPath.section == 3 {
+			let fixedSectionIndexPath = NSIndexPath(forRow: indexPath.row, inSection: 0) // NSIndexPath referencing section 0 to avoid "no section at index 3" error
+			if let managedVideoLink = self.fetchedResultsController?.objectAtIndexPath(fixedSectionIndexPath) as? VideoLinkManagedObject {
+				if let url = NSURL(string: managedVideoLink.link) {
+					let safariViewController = SFSafariViewController(URL: url)
+					safariViewController.delegate = self
+					self.presentViewController(safariViewController, animated: true, completion: nil)
 				}
 			}
 		}
@@ -104,14 +119,14 @@ class ComponentsTableViewController : UITableViewController {
 				self.tableView.reloadData()
 			}
 		} catch {
-			print("Error occurred during Component fetch")
+			print("Error occurred during Video Links fetch")
 		}
 	}
 	
 	// MARK: - Refresh Methods
 	
 	func handleRefresh(refreshControl: UIRefreshControl) {
-		self.remoteConnectionManager!.fetchComponents(self.parentSystem!)
+		self.remoteConnectionManager!.fetchVideoLinks(self.specialTest!)
 	}
 	
 	// MARK: - Activity Indicator Methods
@@ -119,7 +134,7 @@ class ComponentsTableViewController : UITableViewController {
 	func initializeActivityIndicator() {
 		self.activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
 		self.activityIndicator!.frame = CGRect(x: 0, y: 0, width: 10, height: 10)
-		self.activityIndicator!.center = self.tableView.center
+		self.activityIndicator!.center = CGPoint(x: self.tableView.center.x, y: self.tableView.center.y * 1.5)
 		self.activityIndicator!.hidesWhenStopped = true
 		self.view.addSubview(self.activityIndicator!)
 		self.activityIndicator!.bringSubviewToFront(self.view)
@@ -133,22 +148,11 @@ class ComponentsTableViewController : UITableViewController {
 		self.activityIndicator!.stopAnimating()
 	}
 	
-	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-		if segue.identifier == StoryboardSegueIdentifiers.toSpecialTestsView.rawValue {
-			if let destination = segue.destinationViewController as? SpecialTestsTableViewController {
-				if let managedComponent = sender as? ComponentManagedObject {
-					destination.parentComponent = Component.componentFromManagedObject(managedComponent)
-				}
-			}
-		}
-	}
-	
 }
 
 // MARK: - Remote Connection Manager Delegate Methods
 
-extension ComponentsTableViewController : RemoteConnectionManagerDelegate {
-	
+extension SpecialTestDetailTableViewController : RemoteConnectionManagerDelegate {
 	func didBeginDataRequest() {
 		if self.refreshControl != nil {
 			if !self.refreshControl!.refreshing {
@@ -161,15 +165,10 @@ extension ComponentsTableViewController : RemoteConnectionManagerDelegate {
 	
 	func didFinishDataRequestWithData(receivedData: NSData) {
 		let parser = JSONParser(jsonData: receivedData)
-		if parser.dataType == JSONParser.dataTypes.system {
-			self.datastoreManager!.storeSystems(parser.parseSystems())
-			dispatch_async(dispatch_get_main_queue(), { () -> Void in
-				self.showNetworkStatusBanner()
-			})
-		} else if parser.dataType == JSONParser.dataTypes.component {
-			if self.parentSystem != nil {
-				let components = parser.parseComponents(self.parentSystem!)
-				self.datastoreManager!.storeComponents(components)
+		if parser.dataType == JSONParser.dataTypes.videoLink {
+			if self.specialTest != nil {
+				let videoLinks = parser.parseVideoLinks(self.specialTest!)
+				self.datastoreManager?.storeVideoLinks(videoLinks)
 			}
 		}
 	}
@@ -204,17 +203,19 @@ extension ComponentsTableViewController : RemoteConnectionManagerDelegate {
 
 // MARK: - Datastore Manager Delegate Methods
 
-extension ComponentsTableViewController : DatastoreManagerDelegate {
+extension SpecialTestDetailTableViewController : DatastoreManagerDelegate {
+	
 	func didFinishStoring() {
 		dispatch_async(dispatch_get_main_queue()) { () -> Void in
 			self.fetchResultsWithReload(true)
 		}
 	}
+	
 }
 
 // MARK: - Search Bar Methods
 
-extension ComponentsTableViewController : UISearchBarDelegate {
+extension SpecialTestDetailTableViewController : UISearchBarDelegate {
 	
 	func initializeSearchController() {
 		self.searchController = UISearchController(searchResultsController: nil)
@@ -239,7 +240,7 @@ extension ComponentsTableViewController : UISearchBarDelegate {
 			if let predicate = self.defaultSearchPredicate {
 				predicates.append(predicate)
 			}
-			let filterPredicate = NSPredicate(format: "%K CONTAINS[cd] %@", ComponentManagedObject.propertyKeys.name, searchText)
+			let filterPredicate = NSPredicate(format: "%K CONTAINS[cd] %@", VideoLinkManagedObject.propertyKeys.title, searchText)
 			predicates.append(filterPredicate)
 			let fullPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
 			self.fetchedResultsController?.fetchRequest.predicate = fullPredicate
@@ -255,5 +256,13 @@ extension ComponentsTableViewController : UISearchBarDelegate {
 	
 	func searchBarTextDidEndEditing(searchBar: UISearchBar) {
 		searchBar.text = self.searchPhrase
+	}
+}
+
+// MARK: - Safari View Controller Delegate Methods
+
+extension SpecialTestDetailTableViewController : SFSafariViewControllerDelegate {
+	func safariViewControllerDidFinish(controller: SFSafariViewController) {
+		controller.dismissViewControllerAnimated(true, completion: nil)
 	}
 }

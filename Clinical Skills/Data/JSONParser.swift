@@ -17,6 +17,7 @@ class JSONParser : NSObject {
 		static let system = "system"
 		static let component = "component"
 		static let specialTest = "special_test"
+		static let videoLink = "video_link"
 		static let unknown = "unknown"
 	}
 
@@ -48,7 +49,7 @@ class JSONParser : NSObject {
 		var systems = [System]()
 		for (_, data) in self.json {
 			for (_, system) in data {
-				let id = system[SystemManagedObject.propertyKeys.id].intValue
+				let id = Int32(system[SystemManagedObject.propertyKeys.id].intValue)
 				let name = system[SystemManagedObject.propertyKeys.name].stringValue
 				let details = system[SystemManagedObject.propertyKeys.details].stringValue
 				let system = System(id: id, name: name, details: details)
@@ -62,7 +63,7 @@ class JSONParser : NSObject {
 		var components = [Component]()
 		for (_, data) in self.json {
 			for (_, component) in data {
-				let id = component[ComponentManagedObject.propertyKeys.id].intValue
+				let id = Int32(component[ComponentManagedObject.propertyKeys.id].intValue)
 				let name = component[ComponentManagedObject.propertyKeys.name].stringValue
 				let inspection = component[ComponentManagedObject.propertyKeys.inspection].stringValue
 				let notes = component[ComponentManagedObject.propertyKeys.notes].stringValue
@@ -76,7 +77,7 @@ class JSONParser : NSObject {
 		var specialTests = [SpecialTest]()
 		for (_, data) in self.json {
 			for (_, specialTest) in data {
-				let id = specialTest[SpecialTestManagedObject.propertyKeys.id].intValue
+				let id = Int32(specialTest[SpecialTestManagedObject.propertyKeys.id].intValue)
 				let name = specialTest[SpecialTestManagedObject.propertyKeys.name].stringValue
 				let positiveSign = specialTest[SpecialTestManagedObject.propertyKeys.positiveSign].stringValue
 				let indication = specialTest[SpecialTestManagedObject.propertyKeys.indication].stringValue
@@ -85,6 +86,19 @@ class JSONParser : NSObject {
 			}
 		}
 		return specialTests
+	}
+	
+	func parseVideoLinks(specialTest: SpecialTest) -> [VideoLink] {
+		var videoLinks = [VideoLink]()
+		for (_, data) in self.json {
+			for (_, videoLink) in data {
+				let id = Int32(videoLink[VideoLinkManagedObject.propertyKeys.id].intValue)
+				let title = videoLink[VideoLinkManagedObject.propertyKeys.title].stringValue
+				let link = videoLink[VideoLinkManagedObject.propertyKeys.link].stringValue
+				videoLinks.append(VideoLink(specialTest: specialTest, id: id, title: title, link: link))
+			}
+		}
+		return videoLinks
 	}
 	
 	func printJSON() {

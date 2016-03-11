@@ -59,6 +59,15 @@ class DatastoreManager : NSObject {
 		self.delegate?.didFinishStoring?()
 	}
 	
+	func storeVideoLinks(videoLinks: [VideoLink]) {
+		self.delegate?.didBeginStoring?()
+		for videoLink in videoLinks {
+			self.storeVideoLink(videoLink)
+		}
+		self.save()
+		self.delegate?.didFinishStoring?()
+	}
+	
 	func storeSystem(system: System) {
 		let existingManagedSystem = self.retrieveSystemWithName(system.name)
 		if existingManagedSystem == nil {
@@ -109,6 +118,23 @@ class DatastoreManager : NSObject {
 		}
 	}
 	
+	func storeVideoLink(videoLink: VideoLink) {
+		if !self.containsVideoLinkWithID(videoLink.id) {
+			let entity = NSEntityDescription.entityForName(VideoLinkManagedObject.entityName, inManagedObjectContext: self.managedObjectContext)!
+			if let newManagedVideoLink = NSManagedObject(entity: entity, insertIntoManagedObjectContext: self.managedObjectContext) as? VideoLinkManagedObject {
+				newManagedVideoLink.id = videoLink.id
+				newManagedVideoLink.title = videoLink.title
+				newManagedVideoLink.link = videoLink.link
+				
+				let specialTestRequest = NSFetchRequest(entityName: SpecialTestManagedObject.entityName)
+				specialTestRequest.predicate = NSPredicate(format: "%K = %d", SpecialTestManagedObject.propertyKeys.id, videoLink.specialTest.id)
+				if let managedSpecialTest = try! self.managedObjectContext.executeFetchRequest(specialTestRequest).first as? SpecialTestManagedObject {
+					newManagedVideoLink.specialTest = managedSpecialTest
+				}
+			}
+		}
+	}
+	
 	// MARK: - Retrieve Methods
 	
 	func retrieveSystemWithName(name: String?) -> SystemManagedObject? {
@@ -125,23 +151,30 @@ class DatastoreManager : NSObject {
 	
 	// MARK: - Utility Methods
 	
-	func containsSystemWithID(id: Int) -> Bool {
+	func containsSystemWithID(id: Int32) -> Bool {
 		let request = NSFetchRequest(entityName: SystemManagedObject.entityName)
 		request.predicate = NSPredicate(format: "%K = %@", SystemManagedObject.propertyKeys.id, id)
 		let results = try! self.managedObjectContext.executeFetchRequest(request)
 		return results.count != 0
 	}
 	
-	func containsComponentWithID(id: Int) -> Bool {
+	func containsComponentWithID(id: Int32) -> Bool {
 		let request = NSFetchRequest(entityName: ComponentManagedObject.entityName)
 		request.predicate = NSPredicate(format: "%K = %d", ComponentManagedObject.propertyKeys.id, id)
 		let results = try! self.managedObjectContext.executeFetchRequest(request)
 		return results.count != 0
 	}
 	
-	func containsSpecialTestWithID(id: Int) -> Bool {
+	func containsSpecialTestWithID(id: Int32) -> Bool {
 		let request = NSFetchRequest(entityName: SpecialTestManagedObject.entityName)
 		request.predicate = NSPredicate(format: "%K = %d", ComponentManagedObject.propertyKeys.id, id)
+		let results = try! self.managedObjectContext.executeFetchRequest(request)
+		return results.count != 0
+	}
+	
+	func containsVideoLinkWithID(id: Int32) -> Bool {
+		let request = NSFetchRequest(entityName: VideoLinkManagedObject.entityName)
+		request.predicate = NSPredicate(format: "%K = %d", VideoLinkManagedObject.propertyKeys.id , id)
 		let results = try! self.managedObjectContext.executeFetchRequest(request)
 		return results.count != 0
 	}

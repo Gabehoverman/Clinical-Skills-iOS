@@ -13,11 +13,10 @@ class SystemFetchedResultsControllers {
 	
 	static let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
 	
-	class func allSystemsResultController(delegateController: NSFetchedResultsControllerDelegate) -> NSFetchedResultsController {
+	class func allSystemsResultController() -> NSFetchedResultsController {
 		let request = NSFetchRequest(entityName: SystemManagedObject.entityName)
 		request.sortDescriptors = [NSSortDescriptor(key: SystemManagedObject.propertyKeys.name, ascending: true)]
 		let controller = NSFetchedResultsController(fetchRequest: request, managedObjectContext: managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
-		controller.delegate = delegateController
 		return controller
 	}
 	

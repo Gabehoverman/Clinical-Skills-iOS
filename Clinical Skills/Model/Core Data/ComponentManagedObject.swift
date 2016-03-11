@@ -17,10 +17,9 @@ class ComponentManagedObject : NSManagedObject {
 		static let name = "name"
 		static let inspection = "inspection"
 		static let notes = "notes"
-		static let parent = "parentSystem"
 	}
 	
-	@NSManaged var id: Int
+	@NSManaged var id: Int32
 	@NSManaged var name: String
 	@NSManaged var inspection: String
 	@NSManaged var notes: String

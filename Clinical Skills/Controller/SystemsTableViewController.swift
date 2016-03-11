@@ -11,14 +11,7 @@ import UIKit
 import CoreData
 import BRYXBanner
 
-/**
-	Table View displaying all System data inside the database
-*/
 class SystemsTableViewController: UITableViewController {
-	
-	// MARK: - Class Constants
-	
-	static let storyboardIdentifier = "SystemsTableViewController"
 	
 	// MARK: - Properties
 	
@@ -38,7 +31,7 @@ class SystemsTableViewController: UITableViewController {
 	
 	override func viewWillAppear(animated: Bool) {
 		if self.isInitialLoad {
-			self.fetchedResultsController = SystemFetchedResultsControllers.allSystemsResultController(self)
+			self.fetchedResultsController = SystemFetchedResultsControllers.allSystemsResultController()
 			self.defaultSearchPredicate = self.fetchedResultsController!.fetchRequest.predicate
 			self.datastoreManager = DatastoreManager(delegate: self)
 			self.remoteConnectionManager = RemoteConnectionManager(shouldRequestFromLocal: UserDefaultsManager.userDefaults.boolForKey(UserDefaultsManager.userDefaultsKeys.requestFromLocalHost), delegate: self)
@@ -81,6 +74,8 @@ class SystemsTableViewController: UITableViewController {
 		let managedSystem = self.fetchedResultsController!.objectAtIndexPath(indexPath) as! SystemManagedObject
 		let cell = UITableViewCell()
 		cell.accessoryType = .DisclosureIndicator
+		cell.textLabel?.numberOfLines = 0
+		cell.textLabel?.lineBreakMode = .ByWordWrapping
 		cell.textLabel?.font = UIFont.systemFontOfSize(18, weight: UIFontWeightSemibold)
 		cell.textLabel?.text = managedSystem.name
 		return cell
@@ -98,7 +93,7 @@ class SystemsTableViewController: UITableViewController {
 		}
 	}
 	
-	// MARK: - Refresh Methods
+	// MARK: - Fetch Methods
 	
 	func fetchResultsWithReload(shouldReload: Bool) {
 		do {
@@ -110,6 +105,8 @@ class SystemsTableViewController: UITableViewController {
 			print("Error occurred during System fetch")
 		}
 	}
+	
+	// MARK: - Refresh Methods
 	
 	func handleRefresh(refreshControl: UIRefreshControl) {
 		self.remoteConnectionManager!.fetchSystems()
@@ -134,94 +131,22 @@ class SystemsTableViewController: UITableViewController {
 		self.activityIndicator!.stopAnimating()
 	}
 	
-	// MARK: - User Interface Actions
-	
-	@IBAction func printManagedObjects(sender: AnyObject) {
-		let alert = UIAlertController(title: "Print", message: "What should be printed?", preferredStyle: .ActionSheet)
-		alert.addAction(UIAlertAction(title: "Print All", style: .Destructive) { (action) -> Void in
-			self.datastoreManager!.printContents()
-			}
-		)
-		alert.addAction(UIAlertAction(title: "Print Systems", style: .Default) { (action) -> Void in
-			self.datastoreManager!.printSystems()
-			}
-		)
-		alert.addAction(UIAlertAction(title: "Nevermind", style: .Cancel) { (action) -> Void in
-			self.dismissViewControllerAnimated(true, completion: nil)
-			}
-		)
-		self.presentViewController(alert, animated: true, completion: nil)
-	}
-	
-	// MARK: - NSNotification Observeration Methods
-	
-	func remoteConnectionFetchLocationChanged(notification: NSNotification) {
-		if let newValue = notification.object as? Bool {
-			self.remoteConnectionManager!.shouldRequestFromLocal = newValue
-		}
-	}
-	
 	// MARK: - Navigation Methods
 	
 	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
 		if segue.identifier == StoryboardSegueIdentifiers.toComponentsView.rawValue {
 			if let destination = segue.destinationViewController as? ComponentsTableViewController {
 				if let system = sender as? System {
-					destination.navigationItem.title = system.name
 					destination.parentSystem = system
 				}
 			}
 		}
 	}
-}
-
-// MARK: - Fetched Results Controller Delegate Methods
-
-extension SystemsTableViewController: NSFetchedResultsControllerDelegate {
-	// No Methods Required Currently
-}
-
-// MARK: - Search Delegate Methods
-
-extension SystemsTableViewController: UISearchBarDelegate {
-	func initializeSearchController() {
-		self.searchController.dimsBackgroundDuringPresentation = true
-		self.searchController.definesPresentationContext = true
-		self.searchController.searchBar.delegate = self
-		self.tableView.tableHeaderView = self.searchController.searchBar
-		self.tableView.contentOffset = CGPointMake(0, self.searchController.searchBar.frame.size.height)
-		self.searchController.loadViewIfNeeded()
-	}
 	
-	func clearSearch() {
-		self.searchPhrase = nil
-		self.fetchedResultsController?.fetchRequest.predicate = self.defaultSearchPredicate
-		self.fetchResultsWithReload(true)
-	}
+	// MARK: - Notification Center Observer Methods
 	
-	func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-		if searchText != "" {
-			var predicates = [NSPredicate]()
-			self.searchPhrase = searchText
-			if let predicate = self.defaultSearchPredicate {
-				predicates.append(predicate)
-			}
-			let filterPredicate = NSPredicate(format: "%K CONTAINS[cd] %@", SystemManagedObject.propertyKeys.name, searchText)
-			predicates.append(filterPredicate)
-			let fullPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
-			self.fetchedResultsController?.fetchRequest.predicate = fullPredicate
-			self.fetchResultsWithReload(true)
-		} else {
-			self.clearSearch()
-		}
-	}
-	
-	func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-		self.clearSearch()
-	}
-	
-	func searchBarTextDidEndEditing(searchBar: UISearchBar) {
-		searchBar.text = self.searchPhrase
+	func defaultsChanged() {
+		remoteConnectionManager!.shouldRequestFromLocal = UserDefaultsManager.userDefaults.boolForKey(UserDefaultsManager.userDefaultsKeys.requestFromLocalHost)
 	}
 }
 
@@ -287,8 +212,46 @@ extension SystemsTableViewController: DatastoreManagerDelegate {
 	}
 }
 
-extension SystemsTableViewController {
-	func defaultsChanged() {
-		remoteConnectionManager!.shouldRequestFromLocal = UserDefaultsManager.userDefaults.boolForKey(UserDefaultsManager.userDefaultsKeys.requestFromLocalHost)
+// MARK: - Search Delegate Methods
+
+extension SystemsTableViewController: UISearchBarDelegate {
+	func initializeSearchController() {
+		self.searchController.dimsBackgroundDuringPresentation = true
+		self.searchController.definesPresentationContext = true
+		self.searchController.searchBar.delegate = self
+		self.tableView.tableHeaderView = self.searchController.searchBar
+		self.tableView.contentOffset = CGPointMake(0, self.searchController.searchBar.frame.size.height)
+		self.searchController.loadViewIfNeeded()
+	}
+	
+	func clearSearch() {
+		self.searchPhrase = nil
+		self.fetchedResultsController?.fetchRequest.predicate = self.defaultSearchPredicate
+		self.fetchResultsWithReload(true)
+	}
+	
+	func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+		if searchText != "" {
+			var predicates = [NSPredicate]()
+			self.searchPhrase = searchText
+			if let predicate = self.defaultSearchPredicate {
+				predicates.append(predicate)
+			}
+			let filterPredicate = NSPredicate(format: "%K CONTAINS[cd] %@", SystemManagedObject.propertyKeys.name, searchText)
+			predicates.append(filterPredicate)
+			let fullPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
+			self.fetchedResultsController?.fetchRequest.predicate = fullPredicate
+			self.fetchResultsWithReload(true)
+		} else {
+			self.clearSearch()
+		}
+	}
+	
+	func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+		self.clearSearch()
+	}
+	
+	func searchBarTextDidEndEditing(searchBar: UISearchBar) {
+		searchBar.text = self.searchPhrase
 	}
 }

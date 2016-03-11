@@ -22,7 +22,7 @@ class SystemManagedObject: NSManagedObject {
 		static let components = "components"
 	}
 	
-	@NSManaged var id: Int
+	@NSManaged var id: Int32
 	@NSManaged var name: String
 	@NSManaged var details : String
 	@NSManaged var components: NSMutableSet

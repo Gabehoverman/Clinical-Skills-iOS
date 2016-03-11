@@ -24,6 +24,7 @@ class RemoteConnectionManager : NSObject {
 		static let systems = "systems.json"
 		static let components = "components.json"
 		static let specialTests = "special_tests.json"
+		static let videoLinks = "video_links.json"
 	}
 	
 	// MARK: - Properties
@@ -101,6 +102,26 @@ class RemoteConnectionManager : NSObject {
 		urlString += dataURLs.specialTests
 		
 		var queryString = "?component=" + forComponent.name
+		queryString = queryString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
+		
+		urlString += queryString
+		
+		if let url = NSURL(string: urlString) {
+			self.fetchWithURL(url)
+		}
+	}
+	
+	func fetchVideoLinks(forSpecialTest: SpecialTest) {
+		var urlString: String
+		if self.shouldRequestFromLocal {
+			urlString = self.localBaseURL
+		} else {
+			urlString = self.remoteBaseURL
+		}
+		
+		urlString += dataURLs.videoLinks
+		
+		var queryString = "?special_test=" + forSpecialTest.name
 		queryString = queryString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
 		
 		urlString += queryString

@@ -10,7 +10,7 @@ import Foundation
 
 class Component {
 	
-	var id: Int
+	var id: Int32
 	var name: String
 	var inspection: String
 	var notes: String
@@ -22,7 +22,7 @@ class Component {
 		}
 	}
 	
-	init(parent: System, id: Int, name: String, inspection: String, notes: String) {
+	init(parent: System, id: Int32, name: String, inspection: String, notes: String) {
 		self.id = id
 		self.name = name
 		self.inspection = inspection

@@ -13,6 +13,8 @@ import BRYXBanner
 
 class SpecialTestsTableViewController : UITableViewController {
 	
+	// MARK: - Properties
+	
 	var parentComponent: Component?
 	
 	var fetchedResultsController: NSFetchedResultsController?
@@ -28,9 +30,11 @@ class SpecialTestsTableViewController : UITableViewController {
 	
 	var isInitialLoad: Bool = true
 	
+	// MARK: - View Controller Methods
+	
 	override func viewWillAppear(animated: Bool) {
 		if self.isInitialLoad {
-			self.fetchedResultsController = SpecialTestsFetchedResultsController.specialTestsFetchedResultsController(self.parentComponent!, delegateController: self)
+			self.fetchedResultsController = SpecialTestsFetchedResultsController.specialTestsFetchedResultsController(self.parentComponent!)
 			self.datastoreManager = DatastoreManager(delegate: self)
 			self.remoteConnectionManager = RemoteConnectionManager(shouldRequestFromLocal: UserDefaultsManager.userDefaults.boolForKey(UserDefaultsManager.userDefaultsKeys.requestFromLocalHost), delegate: self)
 			self.remoteConnectionManager!.fetchSpecialTests(self.parentComponent!)
@@ -47,6 +51,8 @@ class SpecialTestsTableViewController : UITableViewController {
 		self.isInitialLoad = false
 	}
 	
+	// MARK: - Table View Controller Methods
+	
 	override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
 		return 1
 	}
@@ -58,8 +64,14 @@ class SpecialTestsTableViewController : UITableViewController {
 		return 0
 	}
 	
+	override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+		return UITableViewAutomaticDimension
+	}
+	
 	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		let cell = UITableViewCell()
+		cell.textLabel?.numberOfLines = 0
+		cell.textLabel?.lineBreakMode = .ByWordWrapping
 		cell.textLabel?.font = UIFont.systemFontOfSize(18, weight: UIFontWeightSemibold)
 		if let managedSpecialTest = self.fetchedResultsController?.objectAtIndexPath(indexPath) as? SpecialTestManagedObject {
 			cell.textLabel?.text = managedSpecialTest.name
@@ -68,6 +80,14 @@ class SpecialTestsTableViewController : UITableViewController {
 		}
 		return cell
 	}
+	
+	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+		if let managedSpecialTest = self.fetchedResultsController?.objectAtIndexPath(indexPath) as? SpecialTestManagedObject {
+			self.performSegueWithIdentifier(StoryboardSegueIdentifiers.toSpecialTestsDetailView.rawValue, sender: managedSpecialTest)
+		}
+	}
+	
+	// MARK: - Fetch Methods
 	
 	func fetchResultsWithReload(shouldReload: Bool) {
 		do {
@@ -80,9 +100,13 @@ class SpecialTestsTableViewController : UITableViewController {
 		}
 	}
 	
+	// MARK: - Refresh Methods
+	
 	func handleRefresh(refreshControl: UIRefreshControl) {
 		self.remoteConnectionManager!.fetchSpecialTests(self.parentComponent!)
 	}
+	
+	// MARK: - Activity Indicator Methods
 	
 	func initializeActivityIndicator() {
 		self.activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
@@ -101,11 +125,19 @@ class SpecialTestsTableViewController : UITableViewController {
 		self.activityIndicator!.stopAnimating()
 	}
 	
-}
-
-extension SpecialTestsTableViewController : NSFetchedResultsControllerDelegate {
+	// MARK: - Navigation Methods
+	
+	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+		if let managedSpecialTest = sender as? SpecialTestManagedObject {
+			if let destination = segue.destinationViewController as? SpecialTestDetailTableViewController {
+				destination.specialTest = SpecialTest.specialTestFromManagedObject(managedSpecialTest)
+			}
+		}
+	}
 	
 }
+
+// MARK: - Remote Connection Manager Delegate Methods
 
 extension SpecialTestsTableViewController : RemoteConnectionManagerDelegate {
 	
@@ -158,6 +190,8 @@ extension SpecialTestsTableViewController : RemoteConnectionManagerDelegate {
 	
 }
 
+// MARK: - Datastore Manager Delegate Methods
+
 extension SpecialTestsTableViewController : DatastoreManagerDelegate {
 
 	func didFinishStoring() {
@@ -167,6 +201,8 @@ extension SpecialTestsTableViewController : DatastoreManagerDelegate {
 	}
 	
 }
+
+// MARK: - Search Bar Methods
 
 extension SpecialTestsTableViewController : UISearchBarDelegate {
 	
