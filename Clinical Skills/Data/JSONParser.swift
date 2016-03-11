@@ -13,6 +13,8 @@ import SwiftyJSON
 
 class JSONParser : NSObject {
 	
+	// MARK: - JSON Data Type Keys
+	
 	struct dataTypes {
 		static let system = "system"
 		static let component = "component"
@@ -20,6 +22,8 @@ class JSONParser : NSObject {
 		static let videoLink = "video_link"
 		static let unknown = "unknown"
 	}
+	
+	// MARK: - Properties
 
 	let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
 	
@@ -37,13 +41,13 @@ class JSONParser : NSObject {
 		}
 	}
 	
-	init(json: JSON) {
-		self.json = json
+	// MARK: - Initializers
+	
+	init(rawData: NSData) {
+		self.json = JSON(data: rawData)
 	}
 	
-	convenience init(jsonData: NSData) {
-		self.init(json: JSON(data: jsonData))
-	}
+	// MARK: - Parse Methods
 	
 	func parseSystems() -> [System] {
 		var systems = [System]()
@@ -100,6 +104,8 @@ class JSONParser : NSObject {
 		}
 		return videoLinks
 	}
+	
+	// MARK: - Print Methods
 	
 	func printJSON() {
 		print(self.json)

@@ -36,7 +36,7 @@ class SpecialTestsTableViewController : UITableViewController {
 		if self.isInitialLoad {
 			self.fetchedResultsController = SpecialTestsFetchedResultsController.specialTestsFetchedResultsController(self.parentComponent!)
 			self.datastoreManager = DatastoreManager(delegate: self)
-			self.remoteConnectionManager = RemoteConnectionManager(shouldRequestFromLocal: UserDefaultsManager.userDefaults.boolForKey(UserDefaultsManager.userDefaultsKeys.requestFromLocalHost), delegate: self)
+			self.remoteConnectionManager = RemoteConnectionManager(delegate: self)
 			self.remoteConnectionManager!.fetchSpecialTests(self.parentComponent!)
 		}
 	}
@@ -152,7 +152,7 @@ extension SpecialTestsTableViewController : RemoteConnectionManagerDelegate {
 	}
 	
 	func didFinishDataRequestWithData(receivedData: NSData) {
-		let parser = JSONParser(jsonData: receivedData)
+		let parser = JSONParser(rawData: receivedData)
 		if parser.dataType == JSONParser.dataTypes.specialTest {
 			if self.parentComponent != nil {
 				let specialTests = parser.parseSpecialTests(self.parentComponent!)

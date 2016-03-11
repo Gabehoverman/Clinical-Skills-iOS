@@ -34,10 +34,9 @@ class SystemsTableViewController: UITableViewController {
 			self.fetchedResultsController = SystemFetchedResultsControllers.allSystemsResultController()
 			self.defaultSearchPredicate = self.fetchedResultsController!.fetchRequest.predicate
 			self.datastoreManager = DatastoreManager(delegate: self)
-			self.remoteConnectionManager = RemoteConnectionManager(shouldRequestFromLocal: UserDefaultsManager.userDefaults.boolForKey(UserDefaultsManager.userDefaultsKeys.requestFromLocalHost), delegate: self)
+			self.remoteConnectionManager = RemoteConnectionManager(delegate: self)
 			self.remoteConnectionManager!.fetchSystems()
 		}
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("defaultsChanged"), name: NSUserDefaultsDidChangeNotification, object: nil)
 	}
 	
 	override func viewDidLoad() {
@@ -49,9 +48,7 @@ class SystemsTableViewController: UITableViewController {
 	}
 	
 	override func viewWillDisappear(animated: Bool) {
-		super.viewWillDisappear(animated)
 		self.isInitialLoad = false
-		NSNotificationCenter.defaultCenter().removeObserver(self, name: UserDefaultsManager.userDefaultsKeys.requestFromLocalHost, object: nil)
 	}
 	
 	// MARK: - Table View Controller Methods
@@ -142,12 +139,6 @@ class SystemsTableViewController: UITableViewController {
 			}
 		}
 	}
-	
-	// MARK: - Notification Center Observer Methods
-	
-	func defaultsChanged() {
-		remoteConnectionManager!.shouldRequestFromLocal = UserDefaultsManager.userDefaults.boolForKey(UserDefaultsManager.userDefaultsKeys.requestFromLocalHost)
-	}
 }
 
 // MARK: - Remote Connection Manager Delegate Methods
@@ -164,7 +155,7 @@ extension SystemsTableViewController: RemoteConnectionManagerDelegate {
 	}
 	
 	func didFinishDataRequestWithData(receivedData: NSData) {
-		let parser = JSONParser(jsonData: receivedData)
+		let parser = JSONParser(rawData: receivedData)
 		if parser.dataType == JSONParser.dataTypes.system {
 			let systems = parser.parseSystems()
 			self.datastoreManager!.storeSystems(systems)

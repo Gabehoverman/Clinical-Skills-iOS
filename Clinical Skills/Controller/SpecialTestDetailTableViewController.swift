@@ -36,7 +36,7 @@ class SpecialTestDetailTableViewController : UITableViewController {
 		if self.isInitialLoad {
 			self.fetchedResultsController = VideoLinksFetchedResultsControllers.videoLinksFetchedResultsController(self.specialTest!)
 			self.datastoreManager = DatastoreManager(delegate: self)
-			self.remoteConnectionManager = RemoteConnectionManager(shouldRequestFromLocal: UserDefaultsManager.userDefaults.boolForKey(UserDefaultsManager.userDefaultsKeys.requestFromLocalHost), delegate: self)
+			self.remoteConnectionManager = RemoteConnectionManager(delegate: self)
 			self.remoteConnectionManager?.fetchVideoLinks(self.specialTest!)
 		}
 	}
@@ -164,7 +164,7 @@ extension SpecialTestDetailTableViewController : RemoteConnectionManagerDelegate
 	}
 	
 	func didFinishDataRequestWithData(receivedData: NSData) {
-		let parser = JSONParser(jsonData: receivedData)
+		let parser = JSONParser(rawData: receivedData)
 		if parser.dataType == JSONParser.dataTypes.videoLink {
 			if self.specialTest != nil {
 				let videoLinks = parser.parseVideoLinks(self.specialTest!)
@@ -209,6 +209,8 @@ extension SpecialTestDetailTableViewController : DatastoreManagerDelegate {
 		dispatch_async(dispatch_get_main_queue()) { () -> Void in
 			self.fetchResultsWithReload(true)
 		}
+		
+		self.datastoreManager?.printAll()
 	}
 	
 }

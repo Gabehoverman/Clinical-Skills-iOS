@@ -10,11 +10,6 @@ import Foundation
 import UIKit
 import CoreData
 
-@objc protocol DatastoreManagerDelegate {
-	optional func didBeginStoring()
-	optional func didFinishStoring()
-}
-
 class DatastoreManager : NSObject {
 	
 	// MARK: - Properties
@@ -29,7 +24,7 @@ class DatastoreManager : NSObject {
 		super.init()
 	}
 	
-	// MARK: - Store Methods
+	// MARK: - Store Collection Methods
 	
 	func storeSystems(systems: [System]) {
 		self.delegate?.didBeginStoring?()
@@ -68,9 +63,10 @@ class DatastoreManager : NSObject {
 		self.delegate?.didFinishStoring?()
 	}
 	
+	// MARK: - Store Instance Methods
+	
 	func storeSystem(system: System) {
-		let existingManagedSystem = self.retrieveSystemWithName(system.name)
-		if existingManagedSystem == nil {
+		if !self.containsSystemWithID(system.id) {
 			let entity = NSEntityDescription.entityForName(SystemManagedObject.entityName, inManagedObjectContext: self.managedObjectContext)!
 			if let newManagedSystem = NSManagedObject(entity: entity, insertIntoManagedObjectContext: self.managedObjectContext) as? SystemManagedObject {
 				newManagedSystem.id = system.id
@@ -88,11 +84,7 @@ class DatastoreManager : NSObject {
 				newManagedComponent.name = component.name
 				newManagedComponent.inspection = component.inspection
 				newManagedComponent.notes = component.notes
-				
-				let systemRequest = NSFetchRequest(entityName: SystemManagedObject.entityName)
-				systemRequest.predicate = NSPredicate(format: "%K = %d", SystemManagedObject.propertyKeys.id, component.parent.id)
-				
-				if let managedSystem = try! self.managedObjectContext.executeFetchRequest(systemRequest).first as? SystemManagedObject {
+				if let managedSystem = self.retrieveSystemWithID(component.parent.id) {
 					newManagedComponent.parent = managedSystem
 				}
 			}
@@ -108,10 +100,7 @@ class DatastoreManager : NSObject {
 				newManagedSpecialTest.positiveSign = specialTest.positiveSign
 				newManagedSpecialTest.indication = specialTest.indication
 				newManagedSpecialTest.notes = specialTest.notes
-				
-				let componentRequest = NSFetchRequest(entityName: ComponentManagedObject.entityName)
-				componentRequest.predicate = NSPredicate(format: "%K = %d", ComponentManagedObject.propertyKeys.id, specialTest.component.id)
-				if let managedComponent = try! self.managedObjectContext.executeFetchRequest(componentRequest).first as? ComponentManagedObject {
+				if let managedComponent = self.retrieveComponentWithID(specialTest.component.id) {
 					newManagedSpecialTest.component = managedComponent
 				}
 			}
@@ -125,10 +114,7 @@ class DatastoreManager : NSObject {
 				newManagedVideoLink.id = videoLink.id
 				newManagedVideoLink.title = videoLink.title
 				newManagedVideoLink.link = videoLink.link
-				
-				let specialTestRequest = NSFetchRequest(entityName: SpecialTestManagedObject.entityName)
-				specialTestRequest.predicate = NSPredicate(format: "%K = %d", SpecialTestManagedObject.propertyKeys.id, videoLink.specialTest.id)
-				if let managedSpecialTest = try! self.managedObjectContext.executeFetchRequest(specialTestRequest).first as? SpecialTestManagedObject {
+				if let managedSpecialTest = self.retrieveSpecialTestWithID(videoLink.specialTest.id) {
 					newManagedVideoLink.specialTest = managedSpecialTest
 				}
 			}
@@ -137,23 +123,47 @@ class DatastoreManager : NSObject {
 	
 	// MARK: - Retrieve Methods
 	
-	func retrieveSystemWithName(name: String?) -> SystemManagedObject? {
-		guard let name = name else {
-			return nil
-		}
+	func retrieveSystemWithID(id: Int32) -> SystemManagedObject? {
 		let request = NSFetchRequest(entityName: SystemManagedObject.entityName)
-		request.predicate = NSPredicate(format: "%K = %@", SystemManagedObject.propertyKeys.name, name)
+		request.predicate = NSPredicate(format: "%K = %d", SystemManagedObject.propertyKeys.id, id)
 		if let managedSystem = try! self.managedObjectContext.executeFetchRequest(request).first as? SystemManagedObject {
 			return managedSystem
 		}
 		return nil
 	}
 	
-	// MARK: - Utility Methods
+	func retrieveComponentWithID(id: Int32) -> ComponentManagedObject? {
+		let request = NSFetchRequest(entityName: ComponentManagedObject.entityName)
+		request.predicate = NSPredicate(format: "%K = %d", ComponentManagedObject.propertyKeys.id, id)
+		if let managedComponent = try! self.managedObjectContext.executeFetchRequest(request).first as? ComponentManagedObject {
+			return managedComponent
+		}
+		return nil
+	}
+	
+	func retrieveSpecialTestWithID(id: Int32) -> SpecialTestManagedObject? {
+		let request = NSFetchRequest(entityName: SpecialTestManagedObject.entityName)
+		request.predicate = NSPredicate(format: "%K = %d", SpecialTestManagedObject.propertyKeys.id, id)
+		if let managedSpecialTest = try! self.managedObjectContext.executeFetchRequest(request).first as? SpecialTestManagedObject {
+			return managedSpecialTest
+		}
+		return nil
+	}
+	
+	func retrieveVideoLinkWithID(id: Int32) -> VideoLinkManagedObject? {
+		let request = NSFetchRequest(entityName: VideoLinkManagedObject.entityName)
+		request.predicate = NSPredicate(format: "%K = %d", VideoLinkManagedObject.propertyKeys.id, id)
+		if let managedVideoLink = try! self.managedObjectContext.executeFetchRequest(request).first as? VideoLinkManagedObject {
+			return managedVideoLink
+		}
+		return nil
+	}
+	
+	// MARK: - Contains Methods
 	
 	func containsSystemWithID(id: Int32) -> Bool {
 		let request = NSFetchRequest(entityName: SystemManagedObject.entityName)
-		request.predicate = NSPredicate(format: "%K = %@", SystemManagedObject.propertyKeys.id, id)
+		request.predicate = NSPredicate(format: "%K = %d", SystemManagedObject.propertyKeys.id, id)
 		let results = try! self.managedObjectContext.executeFetchRequest(request)
 		return results.count != 0
 	}
@@ -179,6 +189,8 @@ class DatastoreManager : NSObject {
 		return results.count != 0
 	}
 	
+	// MARK: - Save Methods
+	
 	func save() {
 		do {
 			print("\(self.managedObjectContext.insertedObjects.count) Objects to be Inserted")
@@ -192,69 +204,49 @@ class DatastoreManager : NSObject {
 	
 	// MARK: - Clear Methods
 	
-	func clearSystems() {
+	func clear(entityName: String) {
 		do {
-			let allSystemsRequest = NSFetchRequest(entityName: SystemManagedObject.entityName)
-			var allSystems = try self.managedObjectContext.executeFetchRequest(allSystemsRequest)
-			print("\(allSystems.count) Objects to be Deleted")
-			for system in allSystems {
-				self.managedObjectContext.deleteObject(system as! NSManagedObject)
+			let request = NSFetchRequest(entityName: entityName)
+			var allObjects = try self.managedObjectContext.executeFetchRequest(request)
+			print("\(allObjects.count) Objects to be Deleted")
+			for object in allObjects {
+				self.managedObjectContext.deleteObject(object as! NSManagedObject)
 			}
-			allSystems.removeAll(keepCapacity: false)
-			print("Saving Managed Object Context\n")
+			allObjects.removeAll(keepCapacity: false)
 			try self.managedObjectContext.save()
 		} catch {
-			print("Error Clearing Systems")
-			print("\(error)")
+			print("Error clearing Entity: \(entityName)")
 		}
+	}
+	
+	func clearSystems() {
+		self.clear(SystemManagedObject.entityName)
 	}
 	
 	func clearComponents() {
-		do {
-			let allComponentsRequest = NSFetchRequest(entityName: ComponentManagedObject.entityName)
-			var allComponents = try self.managedObjectContext.executeFetchRequest(allComponentsRequest)
-			print("\(allComponents.count) Objects to be Deleted")
-			for component in allComponents {
-				self.managedObjectContext.deleteObject(component as! NSManagedObject)
-			}
-			allComponents.removeAll(keepCapacity: false)
-			print("Saving Managed Object Context")
-			try self.managedObjectContext.save()
-		} catch {
-			print("Error Clearing Components")
-			print("\(error)")
-		}
+		self.clear(ComponentManagedObject.entityName)
+	}
+	
+	func clearSpecialTests() {
+		self.clear(SpecialTestManagedObject.entityName)
+	}
+	
+	func clearVideoLinks() {
+		self.clear(VideoLinkManagedObject.entityName)
 	}
 	
 	func clearAll() {
-		for entityName in [SystemManagedObject.entityName, ComponentManagedObject.entityName] {
-			do {
-				let request = NSFetchRequest(entityName: entityName)
-				var allObjects = try self.managedObjectContext.executeFetchRequest(request)
-				print("\(allObjects.count) Objects to be Deleted")
-				for object in allObjects {
-					self.managedObjectContext.deleteObject(object as! NSManagedObject)
-				}
-				allObjects.removeAll(keepCapacity: false)
-				print("Saving Managed Object Context\n")
-				try self.managedObjectContext.save()
-			} catch {
-				print("Error Clearing All")
-				print("\(error)")
-			}
+		let allEntityNames = [SystemManagedObject.entityName, ComponentManagedObject.entityName, SpecialTestManagedObject.entityName, VideoLinkManagedObject.entityName]
+		for entityName in allEntityNames {
+			self.clear(entityName)
 		}
 	}
 	
-	// MARK: - Printing Methods
-	
-	func printContents() {
-		self.printSystems()
-		self.printComponents()
-	}
+	// MARK: - Print Methods
 	
 	func printSystems() {
 		let request = NSFetchRequest(entityName: SystemManagedObject.entityName)
-		request.sortDescriptors!.append(NSSortDescriptor(key: SystemManagedObject.propertyKeys.name, ascending: true))
+		request.sortDescriptors = [NSSortDescriptor(key: SystemManagedObject.propertyKeys.id, ascending: true)]
 		if let allManagedSystems = try! self.managedObjectContext.executeFetchRequest(request) as? [SystemManagedObject] {
 			print("MANAGED SYSTEMS:")
 			for managedSystem in allManagedSystems {
@@ -266,12 +258,52 @@ class DatastoreManager : NSObject {
 	
 	func printComponents() {
 		let request = NSFetchRequest(entityName: ComponentManagedObject.entityName)
+		request.sortDescriptors = [NSSortDescriptor(key: ComponentManagedObject.propertyKeys.id, ascending: true)]
 		if let allManagedComponents = try! self.managedObjectContext.executeFetchRequest(request) as? [ComponentManagedObject] {
 			print("MANAGED COMPONENTS:")
 			for managedComponent in allManagedComponents {
 				print("\t\(managedComponent)")
 			}
 		}
+		print("")
 	}
 	
+	func printSpecialTests() {
+		let request = NSFetchRequest(entityName: SpecialTestManagedObject.entityName)
+		request.sortDescriptors = [NSSortDescriptor(key: SpecialTestManagedObject.propertyKeys.id, ascending: true)]
+		if let allManagedSpecialLinks = try! self.managedObjectContext.executeFetchRequest(request) as? [SpecialTestManagedObject] {
+			print("MANAGED SPECIAL TESTS:")
+			for managedSpecialLink in allManagedSpecialLinks {
+				print("\t\(managedSpecialLink)")
+			}
+		}
+		print("")
+	}
+	
+	func printVideoLinks() {
+		let request = NSFetchRequest(entityName: VideoLinkManagedObject.entityName)
+		request.sortDescriptors = [NSSortDescriptor(key: VideoLinkManagedObject.propertyKeys.id, ascending: true)]
+		if let allManagedVideoLinks = try! self.managedObjectContext.executeFetchRequest(request) as? [VideoLinkManagedObject] {
+			print("MANAGED VIDEO LINKS:")
+			for managedVideoLink in allManagedVideoLinks {
+				print("\t\(managedVideoLink)")
+			}
+		}
+		print("")
+	}
+	
+	func printAll() {
+		self.printSystems()
+		self.printComponents()
+		self.printSpecialTests()
+		self.printVideoLinks()
+	}
+	
+}
+
+// MARK: - Datastore Manager Protocol
+
+@objc protocol DatastoreManagerDelegate {
+	optional func didBeginStoring()
+	optional func didFinishStoring()
 }

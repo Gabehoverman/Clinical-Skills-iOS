@@ -36,7 +36,7 @@ class ComponentsTableViewController : UITableViewController {
 			if self.parentSystem != nil {
 				self.fetchedResultsController = ComponentsFetchedResultsControllers.componentsFetchedResultsController(self.parentSystem!)
 				self.datastoreManager = DatastoreManager(delegate: self)
-				self.remoteConnectionManager = RemoteConnectionManager(shouldRequestFromLocal: UserDefaultsManager.userDefaults.boolForKey(UserDefaultsManager.userDefaultsKeys.requestFromLocalHost), delegate: self)
+				self.remoteConnectionManager = RemoteConnectionManager(delegate: self)
 				self.remoteConnectionManager!.fetchComponents(self.parentSystem!)
 			}
 		}
@@ -160,7 +160,7 @@ extension ComponentsTableViewController : RemoteConnectionManagerDelegate {
 	}
 	
 	func didFinishDataRequestWithData(receivedData: NSData) {
-		let parser = JSONParser(jsonData: receivedData)
+		let parser = JSONParser(rawData: receivedData)
 		if parser.dataType == JSONParser.dataTypes.system {
 			self.datastoreManager!.storeSystems(parser.parseSystems())
 			dispatch_async(dispatch_get_main_queue(), { () -> Void in

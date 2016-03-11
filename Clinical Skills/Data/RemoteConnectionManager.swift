@@ -8,14 +8,9 @@
 
 import Foundation
 
-@objc protocol RemoteConnectionManagerDelegate {
-	optional func didBeginDataRequest()
-	optional func didFinishDataRequest()
-	optional func didFinishDataRequestWithData(receivedData: NSData)
-	optional func didFinishDataRequestWithError(error: NSError)
-}
-
 class RemoteConnectionManager : NSObject {
+	
+	// MARK: - URL Constants
 	
 	let localBaseURL = "http://localhost:3000/"
 	let remoteBaseURL = "https://clinical-skills-data-server.herokuapp.com/"
@@ -28,7 +23,7 @@ class RemoteConnectionManager : NSObject {
 	}
 	
 	// MARK: - Properties
-
+	
 	var shouldRequestFromLocal: Bool
 	var statusCode: Int
 	var statusMessage: String {
@@ -44,14 +39,23 @@ class RemoteConnectionManager : NSObject {
 			return self.statusCode >= 200 && self.statusCode < 300
 		}
 	}
+	
 	var delegate: RemoteConnectionManagerDelegate?
 	
 	// MARK: - Initializers
 	
-	init(shouldRequestFromLocal: Bool, delegate: RemoteConnectionManagerDelegate?) {
-		self.shouldRequestFromLocal = shouldRequestFromLocal
+	init(delegate: RemoteConnectionManagerDelegate?) {
+		self.shouldRequestFromLocal = UserDefaultsManager.userDefaults.boolForKey(UserDefaultsManager.userDefaultsKeys.requestFromLocalHost).boolValue
 		self.statusCode = 0
 		self.delegate = delegate
+		super.init()
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("setShouldRequestFromLocal"), name: NSUserDefaultsDidChangeNotification, object: nil)
+	}
+	
+	// MARK: - Deinitializers
+	
+	deinit {
+		NSNotificationCenter.defaultCenter().removeObserver(self)
 	}
 	
 	// MARK: - Fetch Methods
@@ -141,7 +145,7 @@ class RemoteConnectionManager : NSObject {
 		self.delegate?.didBeginDataRequest?()
 	}
 	
-	// MARK: - Utility Methods
+	// MARK: - Completion Methods
 	
 	private func completedDataTaskReceivingData(data: NSData?, response: NSURLResponse?, error: NSError?) {
 		if let statusCode = (response as? NSHTTPURLResponse)?.statusCode {
@@ -161,8 +165,25 @@ class RemoteConnectionManager : NSObject {
 		self.delegate?.didFinishDataRequest?()
 	}
 	
+	// MARK: - Error Handling Methods
+	
 	func messageForError(error: NSError) -> String {
 		return "RemoteConnectionManager - Error fetching remote data" + "\n" + "\(error.localizedDescription)"
 	}
 	
+	// MARK: - Notification Center Observer Methods
+	
+	func setShouldRequestFromLocal() {
+		self.shouldRequestFromLocal = UserDefaultsManager.userDefaults.boolForKey(UserDefaultsManager.userDefaultsKeys.requestFromLocalHost).boolValue
+	}
+	
+}
+
+// MARK: - Remote Connection Manager Protocol
+
+@objc protocol RemoteConnectionManagerDelegate {
+	optional func didBeginDataRequest()
+	optional func didFinishDataRequest()
+	optional func didFinishDataRequestWithData(receivedData: NSData)
+	optional func didFinishDataRequestWithError(error: NSError)
 }
