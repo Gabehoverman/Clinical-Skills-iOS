@@ -20,6 +20,7 @@ class SpecialTestManagedObject : NSManagedObject {
 		static let indication = "indication"
 		static let notes = "notes"
 		static let component = "component"
+		static let imageLinks = "image_links"
 		static let videoLinks = "video_links"
 	}
 	
@@ -29,6 +30,7 @@ class SpecialTestManagedObject : NSManagedObject {
 	@NSManaged var indication: String
 	@NSManaged var notes: String
 	@NSManaged var component: ComponentManagedObject
+	@NSManaged var imageLinks: NSMutableSet
 	@NSManaged var videoLinks: NSMutableSet
 	
 	override var description: String {

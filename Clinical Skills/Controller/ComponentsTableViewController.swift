@@ -44,7 +44,7 @@ class ComponentsTableViewController : UITableViewController {
 			self.remoteConnectionManager = RemoteConnectionManager(delegate: self)
 			
 			if let count = self.fetchedResultsController?.fetchedObjects?.count where count == 0 {
-				self.remoteConnectionManager?.fetchComponents(self.parentSystem!)
+				self.remoteConnectionManager?.fetchComponents(forSystem: self.parentSystem!)
 			}
 		}
 	}
@@ -104,7 +104,7 @@ class ComponentsTableViewController : UITableViewController {
 	// MARK: - Refresh Methods
 	
 	func handleRefresh(refreshControl: UIRefreshControl) {
-		self.remoteConnectionManager!.fetchComponents(self.parentSystem!)
+		self.remoteConnectionManager!.fetchComponents(forSystem: self.parentSystem!)
 	}
 	
 	// MARK: - Activity Indicator Methods

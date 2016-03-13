@@ -26,7 +26,7 @@ class SystemsTableViewController: UITableViewController {
 	var searchPhrase: String?
 	var defaultSearchPredicate: NSPredicate?
 	
-	// MARK: - View Controller Methods
+	// MARK: - View Controller Methodsq
 	
 	override func viewDidLoad() {
 		self.fetchedResultsController = SystemFetchedResultsControllers.allSystemsResultController()

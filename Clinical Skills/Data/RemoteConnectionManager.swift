@@ -13,18 +13,22 @@ class RemoteConnectionManager : NSObject {
 	// MARK: - URL Constants
 	
 	let localBaseURL = "http://localhost:3000/"
+	let remoteImageURL = "http://res.cloudinary.com/"
 	let remoteBaseURL = "https://clinical-skills-data-server.herokuapp.com/"
 	
 	struct dataURLs {
 		static let systems = "systems.json"
 		static let components = "components.json"
 		static let specialTests = "special_tests.json"
+		static let imageLinks = "image_links.json"
 		static let videoLinks = "video_links.json"
+		static let images = "wvsom/image/upload/v1/"
 	}
 	
 	// MARK: - Properties
 	
 	var shouldRequestFromLocal: Bool
+	var isCloudinaryFetch: Bool
 	var statusCode: Int
 	var statusMessage: String {
 		get {
@@ -46,6 +50,7 @@ class RemoteConnectionManager : NSObject {
 	
 	init(delegate: RemoteConnectionManagerDelegate?) {
 		self.shouldRequestFromLocal = UserDefaultsManager.userDefaults.boolForKey(UserDefaultsManager.userDefaultsKeys.requestFromLocalHost).boolValue
+		self.isCloudinaryFetch = false
 		self.statusCode = 0
 		self.delegate = delegate
 		super.init()
@@ -61,6 +66,8 @@ class RemoteConnectionManager : NSObject {
 	// MARK: - Fetch Methods
 	
 	func fetchSystems() {
+		self.isCloudinaryFetch = false
+		
 		var urlString: String
 		
 		if self.shouldRequestFromLocal {
@@ -75,7 +82,9 @@ class RemoteConnectionManager : NSObject {
 		}
 	}
 	
-	func fetchComponents(forSystem: System) {
+	func fetchComponents(forSystem system: System) {
+		self.isCloudinaryFetch = false
+		
 		var urlString: String
 		if self.shouldRequestFromLocal {
 			urlString = self.localBaseURL
@@ -85,7 +94,7 @@ class RemoteConnectionManager : NSObject {
 		
 		urlString += dataURLs.components
 		
-		var queryString = "?system=" + forSystem.name
+		var queryString = "?system=\(system.name)"
 		queryString = queryString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
 		
 		urlString += queryString
@@ -95,7 +104,9 @@ class RemoteConnectionManager : NSObject {
 		}
 	}
 	
-	func fetchSpecialTests(forComponent: Component) {
+	func fetchSpecialTests(forComponent component: Component) {
+		self.isCloudinaryFetch = false
+		
 		var urlString: String
 		if self.shouldRequestFromLocal {
 			urlString = self.localBaseURL
@@ -105,7 +116,7 @@ class RemoteConnectionManager : NSObject {
 		
 		urlString += dataURLs.specialTests
 		
-		var queryString = "?component=" + forComponent.name
+		var queryString = "?component=\(component.name)"
 		queryString = queryString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
 		
 		urlString += queryString
@@ -115,7 +126,31 @@ class RemoteConnectionManager : NSObject {
 		}
 	}
 	
-	func fetchVideoLinks(forSpecialTest: SpecialTest) {
+	func fetchImageLinks(forSpecialTest specialTest: SpecialTest) {
+		self.isCloudinaryFetch = false
+		
+		var urlString: String
+		if self.shouldRequestFromLocal {
+			urlString = self.localBaseURL
+		} else {
+			urlString = self.remoteBaseURL
+		}
+		
+		urlString += dataURLs.imageLinks
+		
+		var queryString = "?special_test=\(specialTest.name)"
+		queryString = queryString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
+		
+		urlString += queryString
+		
+		if let url = NSURL(string: urlString) {
+			self.fetchWithURL(url)
+		}
+	}
+	
+	func fetchVideoLinks(forSpecialTest specialTest: SpecialTest) {
+		self.isCloudinaryFetch = false
+		
 		var urlString: String
 		if self.shouldRequestFromLocal {
 			urlString = self.localBaseURL
@@ -125,10 +160,20 @@ class RemoteConnectionManager : NSObject {
 		
 		urlString += dataURLs.videoLinks
 		
-		var queryString = "?special_test=" + forSpecialTest.name
+		var queryString = "?special_test=\(specialTest.name)"
 		queryString = queryString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
 		
 		urlString += queryString
+		
+		if let url = NSURL(string: urlString) {
+			self.fetchWithURL(url)
+		}
+	}
+	
+	func fetchImageData(forCloudinaryLink cloudinaryLink: String) {
+		self.isCloudinaryFetch = true
+		
+		let urlString = cloudinaryLink
 		
 		if let url = NSURL(string: urlString) {
 			self.fetchWithURL(url)
@@ -140,7 +185,7 @@ class RemoteConnectionManager : NSObject {
 		let session = NSURLSession.sharedSession()
 		session.dataTaskWithURL(url, completionHandler: {
 			(receivedData: NSData?, httpResponse: NSURLResponse?, error: NSError?) -> Void in
-			self.completedDataTaskReceivingData(receivedData, response: httpResponse, error: error)
+				self.completedDataTaskReceivingData(receivedData, response: httpResponse, error: error)
 		}).resume()
 		self.delegate?.didBeginDataRequest?()
 	}
@@ -160,7 +205,11 @@ class RemoteConnectionManager : NSObject {
 		}
 		
 		if data != nil {
-			self.delegate?.didFinishDataRequestWithData?(data!)
+			if self.isCloudinaryFetch {
+				self.delegate?.didFinishCloudinaryImageRequestWithData?(data!)
+			} else {
+				self.delegate?.didFinishDataRequestWithData?(data!)
+			}
 		}
 		self.delegate?.didFinishDataRequest?()
 	}
@@ -185,5 +234,6 @@ class RemoteConnectionManager : NSObject {
 	optional func didBeginDataRequest()
 	optional func didFinishDataRequest()
 	optional func didFinishDataRequestWithData(receivedData: NSData)
+	optional func didFinishCloudinaryImageRequestWithData(receivedData: NSData)
 	optional func didFinishDataRequestWithError(error: NSError)
 }

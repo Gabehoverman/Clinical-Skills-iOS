@@ -32,11 +32,16 @@
 		018FF8991C9013160087FB81 /* ComponentsFetchedResultsControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018FF8981C9013160087FB81 /* ComponentsFetchedResultsControllers.swift */; };
 		01BCAE671C8FC1920076ECE5 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BCAE661C8FC1920076ECE5 /* Component.swift */; };
 		01BCAE691C8FC2720076ECE5 /* ComponentManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BCAE681C8FC2720076ECE5 /* ComponentManagedObject.swift */; };
+		01BF47DF1C9555B6003B10CB /* ImagesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BF47DE1C9555B6003B10CB /* ImagesTableViewCell.swift */; };
 		01BF6F761C8D48D40067D804 /* Pocket History Guide.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 01BF6F751C8D48D40067D804 /* Pocket History Guide.pdf */; };
 		01BF6F781C8D4A410067D804 /* PocketHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BF6F771C8D4A410067D804 /* PocketHistoryViewController.swift */; };
 		01CD863A1C865F2E00E4437D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01CD86381C865F2E00E4437D /* LaunchScreen.storyboard */; };
 		01CD863B1C865F2E00E4437D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01CD86391C865F2E00E4437D /* Main.storyboard */; };
 		01CD86451C86A5F000E4437D /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 01CD86441C86A5F000E4437D /* Settings.bundle */; };
+		01D620EE1C95348B00756A7F /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D620ED1C95348B00756A7F /* ImageCollectionViewCell.swift */; };
+		01D620F01C953A5700756A7F /* ImageLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D620EF1C953A5700756A7F /* ImageLink.swift */; };
+		01D620F21C953A6500756A7F /* ImageLinkManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D620F11C953A6500756A7F /* ImageLinkManagedObject.swift */; };
+		01D620F41C953A7700756A7F /* ImageLinksFetchedResultsControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D620F31C953A7700756A7F /* ImageLinksFetchedResultsControllers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,12 +71,17 @@
 		018FF8981C9013160087FB81 /* ComponentsFetchedResultsControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentsFetchedResultsControllers.swift; sourceTree = "<group>"; };
 		01BCAE661C8FC1920076ECE5 /* Component.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
 		01BCAE681C8FC2720076ECE5 /* ComponentManagedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentManagedObject.swift; sourceTree = "<group>"; };
+		01BF47DE1C9555B6003B10CB /* ImagesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImagesTableViewCell.swift; path = Storyboard/ImagesTableViewCell.swift; sourceTree = "<group>"; };
 		01BF6F751C8D48D40067D804 /* Pocket History Guide.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Pocket History Guide.pdf"; sourceTree = "<group>"; };
 		01BF6F771C8D4A410067D804 /* PocketHistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PocketHistoryViewController.swift; sourceTree = "<group>"; };
 		01CD86381C865F2E00E4437D /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		01CD86391C865F2E00E4437D /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		01CD86401C865FB900E4437D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		01CD86441C86A5F000E4437D /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		01D620ED1C95348B00756A7F /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		01D620EF1C953A5700756A7F /* ImageLink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLink.swift; sourceTree = "<group>"; };
+		01D620F11C953A6500756A7F /* ImageLinkManagedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLinkManagedObject.swift; sourceTree = "<group>"; };
+		01D620F31C953A7700756A7F /* ImageLinksFetchedResultsControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLinksFetchedResultsControllers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +131,7 @@
 				011E01AB1C864A9200AB8BA0 /* SystemManagedObject.swift */,
 				01BCAE681C8FC2720076ECE5 /* ComponentManagedObject.swift */,
 				0105E41F1C915FFD00AC4F09 /* SpecialTestManagedObject.swift */,
+				01D620F11C953A6500756A7F /* ImageLinkManagedObject.swift */,
 				011F3DA41C927522002749E5 /* VideoLinkManagedObject.swift */,
 			);
 			path = "Core Data";
@@ -129,6 +140,8 @@
 		011E01771C8646A100AB8BA0 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				01BF47DE1C9555B6003B10CB /* ImagesTableViewCell.swift */,
+				01D620ED1C95348B00756A7F /* ImageCollectionViewCell.swift */,
 				011E01BC1C86500400AB8BA0 /* Storyboard */,
 			);
 			path = View;
@@ -184,6 +197,7 @@
 				011E01A51C864A8600AB8BA0 /* System.swift */,
 				01BCAE661C8FC1920076ECE5 /* Component.swift */,
 				0105E4211C91600300AC4F09 /* SpecialTest.swift */,
+				01D620EF1C953A5700756A7F /* ImageLink.swift */,
 				011F3DA21C927519002749E5 /* VideoLink.swift */,
 				011E01761C86469B00AB8BA0 /* Core Data */,
 				011E01941C864A4D00AB8BA0 /* Fetched Results Controlelr */,
@@ -197,6 +211,7 @@
 				011E01A91C864A8E00AB8BA0 /* SystemFetchedResultsControllers.swift */,
 				018FF8981C9013160087FB81 /* ComponentsFetchedResultsControllers.swift */,
 				0105E4231C9166CE00AC4F09 /* SpecialTestsFetchedResultsController.swift */,
+				01D620F31C953A7700756A7F /* ImageLinksFetchedResultsControllers.swift */,
 				011F3DAA1C928EEF002749E5 /* VideoLinksFetchedResultsControllers.swift */,
 			);
 			path = "Fetched Results Controlelr";
@@ -308,12 +323,15 @@
 				011E01A01C864A7900AB8BA0 /* StoryboardSegueIdentifiers.swift in Sources */,
 				0105E4221C91600300AC4F09 /* SpecialTest.swift in Sources */,
 				01694BC61C91E6B2008FBA91 /* StoryboardTabIdentifiers.swift in Sources */,
+				01D620F41C953A7700756A7F /* ImageLinksFetchedResultsControllers.swift in Sources */,
+				01D620F01C953A5700756A7F /* ImageLink.swift in Sources */,
 				01BCAE671C8FC1920076ECE5 /* Component.swift in Sources */,
 				011E01A61C864A8600AB8BA0 /* System.swift in Sources */,
 				011E01BB1C864C1A00AB8BA0 /* ClinicalSkillsCoreDataModel.xcdatamodeld in Sources */,
 				011E01AE1C864A9600AB8BA0 /* SystemsTableViewController.swift in Sources */,
 				01BCAE691C8FC2720076ECE5 /* ComponentManagedObject.swift in Sources */,
 				011E019A1C864A6A00AB8BA0 /* RemoteConnectionManager.swift in Sources */,
+				01BF47DF1C9555B6003B10CB /* ImagesTableViewCell.swift in Sources */,
 				011E01B21C864A9D00AB8BA0 /* UserDefaultsManager.swift in Sources */,
 				011E01AA1C864A8E00AB8BA0 /* SystemFetchedResultsControllers.swift in Sources */,
 				0105E41E1C9154A200AC4F09 /* SpecialTestsTableViewController.swift in Sources */,
@@ -327,7 +345,9 @@
 				01BF6F781C8D4A410067D804 /* PocketHistoryViewController.swift in Sources */,
 				011F3DAB1C928EEF002749E5 /* VideoLinksFetchedResultsControllers.swift in Sources */,
 				011E018E1C864A2900AB8BA0 /* JSONParser.swift in Sources */,
+				01D620F21C953A6500756A7F /* ImageLinkManagedObject.swift in Sources */,
 				018FF8971C9010BF0087FB81 /* ComponentsTableViewController.swift in Sources */,
+				01D620EE1C95348B00756A7F /* ImageCollectionViewCell.swift in Sources */,
 				011E01621C86463400AB8BA0 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -422,6 +442,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -431,6 +452,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.marshall.alexander.Clinical-Skills-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -438,6 +460,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",

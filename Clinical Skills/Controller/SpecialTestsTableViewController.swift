@@ -44,7 +44,7 @@ class SpecialTestsTableViewController : UITableViewController {
 			self.remoteConnectionManager = RemoteConnectionManager(delegate: self)
 			
 			if let count = self.fetchedResultsController?.fetchedObjects?.count where count == 0 {
-				self.remoteConnectionManager?.fetchSpecialTests(self.parentComponent!)
+				self.remoteConnectionManager?.fetchSpecialTests(forComponent: self.parentComponent!)
 			}
 		}
 	}
@@ -101,7 +101,7 @@ class SpecialTestsTableViewController : UITableViewController {
 	// MARK: - Refresh Methods
 	
 	func handleRefresh(refreshControl: UIRefreshControl) {
-		self.remoteConnectionManager!.fetchSpecialTests(self.parentComponent!)
+		self.remoteConnectionManager!.fetchSpecialTests(forComponent: self.parentComponent!)
 	}
 	
 	// MARK: - Activity Indicator Methods

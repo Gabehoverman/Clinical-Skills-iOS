@@ -54,6 +54,14 @@ class DatastoreManager : NSObject {
 		self.delegate?.didFinishStoring?()
 	}
 	
+	func storeImageLinks(imageLinks: [ImageLink]) {
+		self.delegate?.didBeginStoring?()
+		for imageLink in imageLinks {
+			self.storeImageLink(imageLink)
+		}
+		self.delegate?.didFinishStoring?()
+	}
+	
 	func storeVideoLinks(videoLinks: [VideoLink]) {
 		self.delegate?.didBeginStoring?()
 		for videoLink in videoLinks {
@@ -107,6 +115,20 @@ class DatastoreManager : NSObject {
 		}
 	}
 	
+	func storeImageLink(imageLink: ImageLink) {
+		if !self.containsImageLinkWithID(imageLink.id) {
+			let entity = NSEntityDescription.entityForName(ImageLinkManagedObject.entityName, inManagedObjectContext: self.managedObjectContext)!
+			if let newManagedImageLink = NSManagedObject(entity: entity, insertIntoManagedObjectContext: self.managedObjectContext) as? ImageLinkManagedObject {
+				newManagedImageLink.id = imageLink.id
+				newManagedImageLink.title = imageLink.title
+				newManagedImageLink.link = imageLink.link
+				if let managedSpecialTest = self.retrieveSpecialTestWithID(imageLink.specialTest.id) {
+					newManagedImageLink.specialTest = managedSpecialTest
+				}
+			}
+		}
+	}
+	
 	func storeVideoLink(videoLink: VideoLink) {
 		if !self.containsVideoLinkWithID(videoLink.id) {
 			let entity = NSEntityDescription.entityForName(VideoLinkManagedObject.entityName, inManagedObjectContext: self.managedObjectContext)!
@@ -150,6 +172,15 @@ class DatastoreManager : NSObject {
 		return nil
 	}
 	
+	func retrieveImageLinkWithID(id: Int32) -> ImageLinkManagedObject? {
+		let request = NSFetchRequest(entityName: ImageLinkManagedObject.entityName)
+		request.predicate = NSPredicate(format: "%K = %d", ImageLinkManagedObject.propertyKeys.id, id)
+		if let managedImageLink = try! self.managedObjectContext.executeFetchRequest(request).first as? ImageLinkManagedObject {
+			return managedImageLink
+		}
+		return nil
+	}
+	
 	func retrieveVideoLinkWithID(id: Int32) -> VideoLinkManagedObject? {
 		let request = NSFetchRequest(entityName: VideoLinkManagedObject.entityName)
 		request.predicate = NSPredicate(format: "%K = %d", VideoLinkManagedObject.propertyKeys.id, id)
@@ -178,6 +209,13 @@ class DatastoreManager : NSObject {
 	func containsSpecialTestWithID(id: Int32) -> Bool {
 		let request = NSFetchRequest(entityName: SpecialTestManagedObject.entityName)
 		request.predicate = NSPredicate(format: "%K = %d", ComponentManagedObject.propertyKeys.id, id)
+		let results = try! self.managedObjectContext.executeFetchRequest(request)
+		return results.count != 0
+	}
+	
+	func containsImageLinkWithID(id: Int32) -> Bool {
+		let request = NSFetchRequest(entityName: ImageLinkManagedObject.entityName)
+		request.predicate = NSPredicate(format: "%K = %d", ImageLinkManagedObject.propertyKeys.id, id)
 		let results = try! self.managedObjectContext.executeFetchRequest(request)
 		return results.count != 0
 	}
@@ -231,12 +269,16 @@ class DatastoreManager : NSObject {
 		self.clear(SpecialTestManagedObject.entityName)
 	}
 	
+	func clearImageLinks() {
+		self.clear(ImageLinkManagedObject.entityName)
+	}
+	
 	func clearVideoLinks() {
 		self.clear(VideoLinkManagedObject.entityName)
 	}
 	
 	func clearAll() {
-		let allEntityNames = [SystemManagedObject.entityName, ComponentManagedObject.entityName, SpecialTestManagedObject.entityName, VideoLinkManagedObject.entityName]
+		let allEntityNames = [SystemManagedObject.entityName, ComponentManagedObject.entityName, SpecialTestManagedObject.entityName, ImageLinkManagedObject.entityName, VideoLinkManagedObject.entityName]
 		for entityName in allEntityNames {
 			self.clear(entityName)
 		}
@@ -275,6 +317,18 @@ class DatastoreManager : NSObject {
 			print("MANAGED SPECIAL TESTS:")
 			for managedSpecialLink in allManagedSpecialLinks {
 				print("\t\(managedSpecialLink)")
+			}
+		}
+		print("")
+	}
+	
+	func printImageLinks() {
+		let request = NSFetchRequest(entityName: ImageLinkManagedObject.entityName)
+		request.sortDescriptors = [NSSortDescriptor(key: ImageLinkManagedObject.propertyKeys.id, ascending: true)]
+		if let allManagedImageLinks = try! self.managedObjectContext.executeFetchRequest(request) as? [ImageLinkManagedObject] {
+			print("MANAGED IMAGE LINKS:")
+			for managedImageLink in allManagedImageLinks {
+				print("\t\(managedImageLink)")
 			}
 		}
 		print("")

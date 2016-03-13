@@ -17,8 +17,12 @@ class SpecialTestDetailTableViewController : UITableViewController {
 	// MARK: - Properites
 	
 	var parentSpecialTest: SpecialTest?
+	var images: [UIImage]?
 	
-	var fetchedResultsController: NSFetchedResultsController?
+	weak var imagesCollectionView: UICollectionView?
+	
+	var imageLinksFetchedResultsController: NSFetchedResultsController?
+	var videoLinksFetchedResultsController: NSFetchedResultsController?
 	
 	var datastoreManager: DatastoreManager?
 	var remoteConnectionManager: RemoteConnectionManager?
@@ -33,7 +37,10 @@ class SpecialTestDetailTableViewController : UITableViewController {
 	
 	override func viewDidLoad() {
 		if self.parentSpecialTest != nil {
-			self.fetchedResultsController = VideoLinksFetchedResultsControllers.videoLinksFetchedResultsController(self.parentSpecialTest!)
+			self.images = [UIImage]()
+			
+			self.imageLinksFetchedResultsController = ImageLinksFetchedResultsControllers.imageLinksFetchedResultsController(self.parentSpecialTest!)
+			self.videoLinksFetchedResultsController = VideoLinksFetchedResultsControllers.videoLinksFetchedResultsController(self.parentSpecialTest!)
 			self.fetchResultsWithReload(false)
 			
 			self.refreshControl?.addTarget(self, action: Selector("handleRefresh:"), forControlEvents: .ValueChanged)
@@ -43,9 +50,11 @@ class SpecialTestDetailTableViewController : UITableViewController {
 			
 			self.datastoreManager = DatastoreManager(delegate: self)
 			self.remoteConnectionManager = RemoteConnectionManager(delegate: self)
-			
-			if let count = self.fetchedResultsController?.fetchedObjects?.count where count == 0 {
-				self.remoteConnectionManager?.fetchVideoLinks(self.parentSpecialTest!)
+		
+			if let count = self.videoLinksFetchedResultsController?.fetchedObjects?.count where count == 0 {
+				self.remoteConnectionManager?.fetchVideoLinks(forSpecialTest: self.parentSpecialTest!)
+			} else {
+				self.remoteConnectionManager?.fetchImageLinks(forSpecialTest: self.parentSpecialTest!)
 			}
 		}
 	}
@@ -53,7 +62,7 @@ class SpecialTestDetailTableViewController : UITableViewController {
 	// MARK: - Table View Controller Methods
 	
 	override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-		return 4
+		return 5
 	}
 	
 	override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -61,20 +70,29 @@ class SpecialTestDetailTableViewController : UITableViewController {
 			case 0: return "Name"
 			case 1: return "Positive Sign"
 			case 2: return "Indication"
-			case 3: return "Video Links"
+			case 3: return "Images"
+			case 4: return "Video Links"
 			default: return  "Section \(section)"
 		}
 	}
 	
 	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		if section == 3 {
-			if let count = self.fetchedResultsController?.fetchedObjects?.count {
+		if section == 4 {
+			if let count = self.videoLinksFetchedResultsController?.fetchedObjects?.count {
 				return count
 			} else {
 				return 0
 			}
 		}
 		return 1
+	}
+	
+	override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+		if indexPath.section == 3 {
+			return 132
+		} else {
+			return UITableViewAutomaticDimension
+		}
 	}
 	
 	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -88,7 +106,15 @@ class SpecialTestDetailTableViewController : UITableViewController {
 			case 1: cell.textLabel?.text = self.parentSpecialTest?.positiveSign
 			case 2: cell.textLabel?.text = self.parentSpecialTest?.indication
 			case 3:
-				if let managedVideoLink = self.fetchedResultsController?.objectAtIndexPath(fixedSectionIndexPath) as? VideoLinkManagedObject {
+				if let imagesCell = tableView.dequeueReusableCellWithIdentifier("ImagesCell") as? ImagesTableViewCell {
+					imagesCell.imagesCollectionView.backgroundColor = UIColor.clearColor()
+					imagesCell.imagesCollectionView.dataSource = self
+					imagesCell.imagesCollectionView.delegate = self
+					self.imagesCollectionView = imagesCell.imagesCollectionView
+					return imagesCell
+				}
+			case 4:
+				if let managedVideoLink = self.videoLinksFetchedResultsController?.objectAtIndexPath(fixedSectionIndexPath) as? VideoLinkManagedObject {
 					cell.textLabel?.text = managedVideoLink.title
 				}
 			default: cell.textLabel?.text = ""
@@ -97,9 +123,9 @@ class SpecialTestDetailTableViewController : UITableViewController {
 	}
 	
 	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-		if indexPath.section == 3 {
+		if indexPath.section == 4 {
 			let fixedSectionIndexPath = NSIndexPath(forRow: indexPath.row, inSection: 0) // NSIndexPath referencing section 0 to avoid "no section at index 3" error
-			if let managedVideoLink = self.fetchedResultsController?.objectAtIndexPath(fixedSectionIndexPath) as? VideoLinkManagedObject {
+			if let managedVideoLink = self.videoLinksFetchedResultsController?.objectAtIndexPath(fixedSectionIndexPath) as? VideoLinkManagedObject {
 				if let url = NSURL(string: managedVideoLink.link) {
 					let safariViewController = SFSafariViewController(URL: url)
 					safariViewController.delegate = self
@@ -113,19 +139,20 @@ class SpecialTestDetailTableViewController : UITableViewController {
 	
 	func fetchResultsWithReload(shouldReload: Bool) {
 		do {
-			try self.fetchedResultsController!.performFetch()
+			try self.imageLinksFetchedResultsController?.performFetch()
+			try self.videoLinksFetchedResultsController?.performFetch()
 			if shouldReload {
 				self.tableView.reloadData()
 			}
 		} catch {
-			print("Error occurred during Video Links fetch")
+			print("Error occurred during fetch")
 		}
 	}
 	
 	// MARK: - Refresh Methods
 	
 	func handleRefresh(refreshControl: UIRefreshControl) {
-		self.remoteConnectionManager!.fetchVideoLinks(self.parentSpecialTest!)
+		self.remoteConnectionManager!.fetchVideoLinks(forSpecialTest: self.parentSpecialTest!)
 	}
 	
 	// MARK: - Activity Indicator Methods
@@ -149,6 +176,47 @@ class SpecialTestDetailTableViewController : UITableViewController {
 	
 }
 
+extension SpecialTestDetailTableViewController : UICollectionViewDelegateFlowLayout {
+	func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+		let squareSize = 100
+		return CGSize(width: squareSize, height: squareSize)
+	}
+}
+
+// MARK: - Collection View Data Source Methods
+
+extension SpecialTestDetailTableViewController : UICollectionViewDataSource {
+	
+	func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+		return 1
+	}
+	
+	func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+		if let count = self.images?.count {
+			return count
+		} else {
+			return 0
+		}
+	}
+	
+	
+	func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+		if let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ImageCell", forIndexPath: indexPath) as? ImageCollectionViewCell {
+			if let image = self.images?[indexPath.row] {
+				cell.imageView.image = image
+			}
+			return cell
+		}
+		return UICollectionViewCell()
+	}
+}
+
+// MARK: - Collection View Delegate Methods
+
+extension SpecialTestDetailTableViewController : UICollectionViewDelegate {
+	
+}
+
 // MARK: - Remote Connection Manager Delegate Methods
 
 extension SpecialTestDetailTableViewController : RemoteConnectionManagerDelegate {
@@ -164,11 +232,32 @@ extension SpecialTestDetailTableViewController : RemoteConnectionManagerDelegate
 	
 	func didFinishDataRequestWithData(receivedData: NSData) {
 		let parser = JSONParser(rawData: receivedData)
-		if parser.dataType == JSONParser.dataTypes.videoLink {
+		if parser.dataType == JSONParser.dataTypes.imageLink {
+			if self.parentSpecialTest != nil {
+				let imageLinks = parser.parseImageLinks(self.parentSpecialTest!)
+				self.datastoreManager?.storeImageLinks(imageLinks)
+				for imageLink in imageLinks {
+					self.remoteConnectionManager?.fetchImageData(forCloudinaryLink: imageLink.link)
+				}
+			}
+		} else if parser.dataType == JSONParser.dataTypes.videoLink {
 			if self.parentSpecialTest != nil {
 				let videoLinks = parser.parseVideoLinks(self.parentSpecialTest!)
 				self.datastoreManager?.storeVideoLinks(videoLinks)
+				if let count = self.imageLinksFetchedResultsController?.fetchedObjects?.count where count == 0 {
+					self.remoteConnectionManager?.fetchImageLinks(forSpecialTest: self.parentSpecialTest!)
+				}
 			}
+		}
+	}
+	
+	func didFinishCloudinaryImageRequestWithData(receivedData: NSData) {
+		if let image = UIImage(data: receivedData) {
+			self.images!.append(image)
+		}
+		
+		dispatch_async(dispatch_get_main_queue()) { () -> Void in
+			self.imagesCollectionView?.reloadData()
 		}
 	}
 	
@@ -216,7 +305,7 @@ extension SpecialTestDetailTableViewController : DatastoreManagerDelegate {
 extension SpecialTestDetailTableViewController : UISearchBarDelegate {
 	
 	func initializeSearchController() {
-		self.defaultSearchPredicate = self.fetchedResultsController!.fetchRequest.predicate
+		self.defaultSearchPredicate = self.videoLinksFetchedResultsController!.fetchRequest.predicate
 		self.searchController = UISearchController(searchResultsController: nil)
 		self.searchController.dimsBackgroundDuringPresentation = true
 		self.searchController.definesPresentationContext = true
@@ -228,7 +317,7 @@ extension SpecialTestDetailTableViewController : UISearchBarDelegate {
 	
 	func clearSearch() {
 		self.searchPhrase = nil
-		self.fetchedResultsController?.fetchRequest.predicate = self.defaultSearchPredicate
+		self.videoLinksFetchedResultsController?.fetchRequest.predicate = self.defaultSearchPredicate
 		self.fetchResultsWithReload(true)
 	}
 	
@@ -242,7 +331,7 @@ extension SpecialTestDetailTableViewController : UISearchBarDelegate {
 			let filterPredicate = NSPredicate(format: "%K CONTAINS[cd] %@", VideoLinkManagedObject.propertyKeys.title, searchText)
 			predicates.append(filterPredicate)
 			let fullPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
-			self.fetchedResultsController?.fetchRequest.predicate = fullPredicate
+			self.videoLinksFetchedResultsController?.fetchRequest.predicate = fullPredicate
 			self.fetchResultsWithReload(true)
 		} else {
 			self.clearSearch()

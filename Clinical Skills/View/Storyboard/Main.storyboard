@@ -110,10 +110,10 @@
             </objects>
             <point key="canvasLocation" x="5661" y="1310"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Main Navigation Tab View Controller-->
         <scene sceneID="hEI-No-rlq">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="Du2-Kh-XVf" sceneMemberID="viewController">
+                <tabBarController title="Main Navigation Tab View Controller" automaticallyAdjustsScrollViewInsets="NO" id="Du2-Kh-XVf" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="jje-6b-R5X">
                         <autoresizingMask key="autoresizingMask"/>
@@ -404,7 +404,7 @@
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="VideoLinkCell" id="cmt-M6-H3c">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="VideoLinkCell" id="cmt-M6-H3c" userLabel="NoteCell">
                                 <rect key="frame" x="0.0" y="224" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cmt-M6-H3c" id="1X0-mA-o9s">
@@ -426,14 +426,72 @@
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NotesCell" id="HY1-WG-T6z">
-                                <rect key="frame" x="0.0" y="268" width="600" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ImagesCell" rowHeight="132" id="HY1-WG-T6z" userLabel="ImagesCell" customClass="ImagesTableViewCell" customModule="Clinical_Skills" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="268" width="600" height="132"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HY1-WG-T6z" id="Rq1-aX-6Dz">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="131"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" indicatorStyle="white" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="3AW-ll-yGt">
+                                            <rect key="frame" x="8" y="8" width="584" height="115"/>
+                                            <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="r4B-6l-oYE">
+                                                <size key="itemSize" width="50" height="50"/>
+                                                <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                                <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                            </collectionViewFlowLayout>
+                                            <cells>
+                                                <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ImageCell" id="jFt-Ru-LDV" customClass="ImageCollectionViewCell" customModule="Clinical_Skills" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="8" width="100" height="100"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                                        <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                                        <autoresizingMask key="autoresizingMask"/>
+                                                        <subviews>
+                                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="JBI-9X-Co8">
+                                                                <rect key="frame" x="8" y="8" width="84" height="84"/>
+                                                            </imageView>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    </view>
+                                                    <constraints>
+                                                        <constraint firstAttribute="trailingMargin" secondItem="JBI-9X-Co8" secondAttribute="trailing" id="bxT-lj-dQf"/>
+                                                        <constraint firstItem="JBI-9X-Co8" firstAttribute="top" secondItem="jFt-Ru-LDV" secondAttribute="topMargin" id="gsM-2n-Nam"/>
+                                                        <constraint firstItem="JBI-9X-Co8" firstAttribute="leading" secondItem="jFt-Ru-LDV" secondAttribute="leadingMargin" id="nDQ-9S-Jjd"/>
+                                                        <constraint firstAttribute="bottomMargin" secondItem="JBI-9X-Co8" secondAttribute="bottom" id="ta5-wp-PJy"/>
+                                                    </constraints>
+                                                    <size key="customSize" width="100" height="100"/>
+                                                    <connections>
+                                                        <outlet property="imageView" destination="JBI-9X-Co8" id="xLN-gj-xqT"/>
+                                                    </connections>
+                                                </collectionViewCell>
+                                            </cells>
+                                            <connections>
+                                                <outlet property="dataSource" destination="cUl-w5-RUd" id="0bE-Td-9cd"/>
+                                                <outlet property="delegate" destination="cUl-w5-RUd" id="LDg-JZ-u3v"/>
+                                            </connections>
+                                        </collectionView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="3AW-ll-yGt" firstAttribute="top" secondItem="Rq1-aX-6Dz" secondAttribute="topMargin" id="9jJ-bL-fug"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="3AW-ll-yGt" secondAttribute="trailing" id="SVh-sy-hib"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="3AW-ll-yGt" secondAttribute="bottom" id="Yiz-Nv-5cI"/>
+                                        <constraint firstItem="3AW-ll-yGt" firstAttribute="leading" secondItem="Rq1-aX-6Dz" secondAttribute="leadingMargin" id="dRK-HL-l6W"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="imagesCollectionView" destination="3AW-ll-yGt" id="0YF-pg-saQ"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NotesCell" id="NfU-Bw-syi" userLabel="VideoLinkCell">
+                                <rect key="frame" x="0.0" y="400" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NfU-Bw-syi" id="hUh-vs-xOi">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Video Links" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bcp-lE-imI">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Video Links" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X58-An-CtD">
                                             <rect key="frame" x="16" y="8" width="576" height="27"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -441,10 +499,10 @@
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="trailingMargin" secondItem="Bcp-lE-imI" secondAttribute="trailing" id="93b-LG-zEa"/>
-                                        <constraint firstItem="Bcp-lE-imI" firstAttribute="top" secondItem="Rq1-aX-6Dz" secondAttribute="topMargin" id="Pox-2J-xvh"/>
-                                        <constraint firstItem="Bcp-lE-imI" firstAttribute="leading" secondItem="Rq1-aX-6Dz" secondAttribute="leadingMargin" constant="8" id="blI-i6-zZs"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="Bcp-lE-imI" secondAttribute="bottom" id="cQO-ky-wRG"/>
+                                        <constraint firstItem="X58-An-CtD" firstAttribute="top" secondItem="hUh-vs-xOi" secondAttribute="topMargin" id="DJF-gT-BNw"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="X58-An-CtD" secondAttribute="trailing" id="ea0-Bl-eo0"/>
+                                        <constraint firstItem="X58-An-CtD" firstAttribute="leading" secondItem="hUh-vs-xOi" secondAttribute="leadingMargin" constant="8" id="gT9-SS-fh8"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="X58-An-CtD" secondAttribute="bottom" id="mzN-ta-UVB"/>
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>

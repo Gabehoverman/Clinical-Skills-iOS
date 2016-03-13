@@ -19,6 +19,7 @@ class JSONParser : NSObject {
 		static let system = "system"
 		static let component = "component"
 		static let specialTest = "special_test"
+		static let imageLink = "image_link"
 		static let videoLink = "video_link"
 		static let unknown = "unknown"
 	}
@@ -90,6 +91,19 @@ class JSONParser : NSObject {
 			}
 		}
 		return specialTests
+	}
+	
+	func parseImageLinks(specialTest: SpecialTest) -> [ImageLink] {
+		var imageLinks = [ImageLink]()
+		for (_, data) in self.json {
+			for (_, imageLink) in data {
+				let id = Int32(imageLink[ImageLinkManagedObject.propertyKeys.id].intValue)
+				let title = imageLink[ImageLinkManagedObject.propertyKeys.title].stringValue
+				let link = imageLink[ImageLinkManagedObject.propertyKeys.link].stringValue
+				imageLinks.append(ImageLink(specialTest: specialTest, id: id, title: title, link: link))
+			}
+		}
+		return imageLinks
 	}
 	
 	func parseVideoLinks(specialTest: SpecialTest) -> [VideoLink] {
