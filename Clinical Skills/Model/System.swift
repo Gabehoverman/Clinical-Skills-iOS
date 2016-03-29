@@ -10,12 +10,12 @@ import Foundation
 
 class System: NSObject {
 	
-	var id: Int
+	var id: Int32
 	var name: String
 	var details: String
 	var components: [Component]
 	
-	init(id: Int, name: String, details: String) {
+	init(id: Int32, name: String, details: String) {
 		self.id = id
 		self.name = name
 		self.details = details

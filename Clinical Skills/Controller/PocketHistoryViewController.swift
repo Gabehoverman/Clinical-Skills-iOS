@@ -11,9 +11,12 @@ import UIKit
 
 class PocketHistoryViewController : UIViewController {
 	
+	// MARK: - Properties
+	
 	var documentController: UIDocumentInteractionController?
 	var dismissing: Bool?
 	
+	// MARK: - View Controller Methods
 	
 	override func viewDidLoad() {
 		if let url = NSBundle.mainBundle().URLForResource("Pocket History Guide", withExtension: "pdf") {
@@ -31,10 +34,14 @@ class PocketHistoryViewController : UIViewController {
 		self.dismissing = false
 	}
 	
+	// MARK: - IB Actions
+	
 	@IBAction func show(sender: UIButton) {
 		self.dismissing = false
 		self.presentPreview()
 	}
+	
+	// MARK: - Utility Methods
 	
 	func presentPreview() {
 		if let dismissing = self.dismissing where dismissing == false {
@@ -45,6 +52,8 @@ class PocketHistoryViewController : UIViewController {
 	}
 	
 }
+
+// MARK: - Document Interface Controller Delegate Methods
 
 extension PocketHistoryViewController : UIDocumentInteractionControllerDelegate {
 	func documentInteractionControllerViewControllerForPreview(controller: UIDocumentInteractionController) -> UIViewController {

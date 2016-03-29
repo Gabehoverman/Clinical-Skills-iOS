@@ -6,6 +6,23 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="parent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="System" inverseName="components" inverseEntity="System" syncable="YES"/>
+        <relationship name="specialTests" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SpecialTest" inverseName="component" inverseEntity="SpecialTest" syncable="YES"/>
+    </entity>
+    <entity name="ImageLink" representedClassName="ImageLinkManagedObject" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="link" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="specialTest" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SpecialTest" inverseName="imageLinks" inverseEntity="SpecialTest" syncable="YES"/>
+    </entity>
+    <entity name="SpecialTest" representedClassName="SpecialTestManagedObject" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="indication" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="positiveSign" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="component" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Component" inverseName="specialTests" inverseEntity="Component" syncable="YES"/>
+        <relationship name="imageLinks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ImageLink" inverseName="specialTest" inverseEntity="ImageLink" syncable="YES"/>
+        <relationship name="videoLinks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="VideoLink" inverseName="specialTest" inverseEntity="VideoLink" syncable="YES"/>
     </entity>
     <entity name="System" representedClassName="SystemManagedObject" syncable="YES">
         <attribute name="details" optional="YES" attributeType="String" syncable="YES"/>
@@ -13,8 +30,17 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="components" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Component" inverseName="parent" inverseEntity="Component" syncable="YES"/>
     </entity>
+    <entity name="VideoLink" representedClassName="VideoLinkManagedObject" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="link" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="specialTest" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SpecialTest" inverseName="videoLinks" inverseEntity="SpecialTest" syncable="YES"/>
+    </entity>
     <elements>
-        <element name="Component" positionX="-54" positionY="-24" width="128" height="118"/>
-        <element name="System" positionX="198" positionY="-0" width="128" height="103"/>
+        <element name="Component" positionX="-54" positionY="-24" width="128" height="135"/>
+        <element name="ImageLink" positionX="72" positionY="63" width="128" height="105"/>
+        <element name="SpecialTest" positionX="72" positionY="27" width="128" height="165"/>
+        <element name="System" positionX="198" positionY="-0" width="128" height="105"/>
+        <element name="VideoLink" positionX="72" positionY="54" width="128" height="105"/>
     </elements>
 </model>

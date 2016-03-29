@@ -1,9 +1,9 @@
 //
-//  SystemsTableViewController.swift
-//  WVU Clinical Skills
+//  SpecialTestsTableViewController.swift
+//  Clinical Skills
 //
-//  Created by Nick on 12/14/15.
-//  Copyright © 2015 Nick. All rights reserved.
+//  Created by Nick on 3/10/16.
+//  Copyright © 2016 Nick. All rights reserved.
 //
 
 import Foundation
@@ -11,37 +11,41 @@ import UIKit
 import CoreData
 import BRYXBanner
 
-class SystemsTableViewController: UITableViewController {
+class SpecialTestsTableViewController : UITableViewController {
 	
 	// MARK: - Properties
 	
-	var fetchedResultsController: NSFetchedResultsController?
+	var parentComponent: Component?
 	
-	var searchController: UISearchController?
-	var activityIndicator: UIActivityIndicatorView?
+	var fetchedResultsController: NSFetchedResultsController?
 	
 	var datastoreManager: DatastoreManager?
 	var remoteConnectionManager: RemoteConnectionManager?
 	
+	var searchController: UISearchController!
+	var activityIndicator: UIActivityIndicatorView?
+	
 	var searchPhrase: String?
 	var defaultSearchPredicate: NSPredicate?
 	
-	// MARK: - View Controller Methodsq
+	// MARK: - View Controller Methods
 	
 	override func viewDidLoad() {
-		self.fetchedResultsController = SystemFetchedResultsControllers.allSystemsResultController()
-		self.fetchResultsWithReload(false)
-		
-		self.refreshControl?.addTarget(self, action: Selector("handleRefresh:"), forControlEvents: .ValueChanged)
-		
-		self.initializeSearchController()
-		self.initializeActivityIndicator()
-		
-		self.datastoreManager = DatastoreManager(delegate: self)
-		self.remoteConnectionManager = RemoteConnectionManager(delegate: self)
-		
-		if let count = self.fetchedResultsController?.fetchedObjects?.count where count == 0 {
-			self.remoteConnectionManager?.fetchSystems()
+		if self.parentComponent != nil {
+			self.fetchedResultsController = SpecialTestsFetchedResultsController.specialTestsFetchedResultsController(self.parentComponent!)
+			self.fetchResultsWithReload(false)
+			
+			self.refreshControl?.addTarget(self, action: Selector("handleRefresh:"), forControlEvents: .ValueChanged)
+			
+			self.initializeSearchController()
+			self.initializeActivityIndicator()
+			
+			self.datastoreManager = DatastoreManager(delegate: self)
+			self.remoteConnectionManager = RemoteConnectionManager(delegate: self)
+			
+			if let count = self.fetchedResultsController?.fetchedObjects?.count where count == 0 {
+				self.remoteConnectionManager?.fetchSpecialTests(forComponent: self.parentComponent!)
+			}
 		}
 	}
 	
@@ -58,26 +62,26 @@ class SystemsTableViewController: UITableViewController {
 		return 0
 	}
 	
+	override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+		return UITableViewAutomaticDimension
+	}
+	
 	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		let managedSystem = self.fetchedResultsController!.objectAtIndexPath(indexPath) as! SystemManagedObject
 		let cell = UITableViewCell()
-		cell.accessoryType = .DisclosureIndicator
 		cell.textLabel?.numberOfLines = 0
 		cell.textLabel?.lineBreakMode = .ByWordWrapping
 		cell.textLabel?.font = UIFont.systemFontOfSize(18, weight: UIFontWeightSemibold)
-		cell.textLabel?.text = managedSystem.name
+		if let managedSpecialTest = self.fetchedResultsController?.objectAtIndexPath(indexPath) as? SpecialTestManagedObject {
+			cell.textLabel?.text = managedSpecialTest.name
+		} else {
+			cell.textLabel?.text = "Error Fetching Special Test"
+		}
 		return cell
 	}
 	
 	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-		if let controller = self.fetchedResultsController {
-			if let managedSystem = controller.objectAtIndexPath(indexPath) as? SystemManagedObject {
-				self.performSegueWithIdentifier(StoryboardSegueIdentifiers.toComponentsView.rawValue, sender: System.systemFromManagedObject(managedSystem))
-			} else {
-				print("Error getting System")
-			}
-		} else {
-			print("Error getting controller")
+		if let managedSpecialTest = self.fetchedResultsController?.objectAtIndexPath(indexPath) as? SpecialTestManagedObject {
+			self.performSegueWithIdentifier(StoryboardSegueIdentifiers.toSpecialTestsDetailView.rawValue, sender: managedSpecialTest)
 		}
 	}
 	
@@ -90,14 +94,14 @@ class SystemsTableViewController: UITableViewController {
 				self.tableView.reloadData()
 			}
 		} catch {
-			print("Error occurred during System fetch")
+			print("Error occurred during Special Test fetch")
 		}
 	}
 	
 	// MARK: - Refresh Methods
 	
 	func handleRefresh(refreshControl: UIRefreshControl) {
-		self.remoteConnectionManager!.fetchSystems()
+		self.remoteConnectionManager!.fetchSpecialTests(forComponent: self.parentComponent!)
 	}
 	
 	// MARK: - Activity Indicator Methods
@@ -122,19 +126,19 @@ class SystemsTableViewController: UITableViewController {
 	// MARK: - Navigation Methods
 	
 	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-		if segue.identifier == StoryboardSegueIdentifiers.toComponentsView.rawValue {
-			if let destination = segue.destinationViewController as? ComponentsTableViewController {
-				if let system = sender as? System {
-					destination.parentSystem = system
-				}
+		if let managedSpecialTest = sender as? SpecialTestManagedObject {
+			if let destination = segue.destinationViewController as? SpecialTestDetailTableViewController {
+				destination.parentSpecialTest = SpecialTest.specialTestFromManagedObject(managedSpecialTest)
 			}
 		}
 	}
+	
 }
 
 // MARK: - Remote Connection Manager Delegate Methods
 
-extension SystemsTableViewController: RemoteConnectionManagerDelegate {
+extension SpecialTestsTableViewController : RemoteConnectionManagerDelegate {
+	
 	func didBeginDataRequest() {
 		if self.refreshControl != nil {
 			if !self.refreshControl!.refreshing {
@@ -147,9 +151,11 @@ extension SystemsTableViewController: RemoteConnectionManagerDelegate {
 	
 	func didFinishDataRequestWithData(receivedData: NSData) {
 		let parser = JSONParser(rawData: receivedData)
-		if parser.dataType == JSONParser.dataTypes.system {
-			let systems = parser.parseSystems()
-			self.datastoreManager!.storeSystems(systems)
+		if parser.dataType == JSONParser.dataTypes.specialTest {
+			if self.parentComponent != nil {
+				let specialTests = parser.parseSpecialTests(self.parentComponent!)
+				self.datastoreManager!.storeSpecialTests(specialTests)
+			}
 		}
 	}
 	
@@ -178,30 +184,34 @@ extension SystemsTableViewController: RemoteConnectionManagerDelegate {
 		banner.dismissesOnTap = true
 		banner.show(self.navigationController!.view, duration: 1.5)
 	}
+	
 }
 
 // MARK: - Datastore Manager Delegate Methods
 
-extension SystemsTableViewController: DatastoreManagerDelegate {
+extension SpecialTestsTableViewController : DatastoreManagerDelegate {
+
 	func didFinishStoring() {
 		dispatch_async(dispatch_get_main_queue()) { () -> Void in
 			self.fetchResultsWithReload(true)
 		}
 	}
+	
 }
 
-// MARK: - Search Delegate Methods
+// MARK: - Search Bar Methods
 
-extension SystemsTableViewController: UISearchBarDelegate {
+extension SpecialTestsTableViewController : UISearchBarDelegate {
+	
 	func initializeSearchController() {
 		self.defaultSearchPredicate = self.fetchedResultsController!.fetchRequest.predicate
 		self.searchController = UISearchController(searchResultsController: nil)
-		self.searchController?.dimsBackgroundDuringPresentation = true
-		self.searchController?.definesPresentationContext = true
-		self.searchController?.searchBar.delegate = self
-		self.tableView.tableHeaderView = self.searchController?.searchBar
-		self.tableView.contentOffset = CGPointMake(0, self.searchController!.searchBar.frame.size.height)
-		self.searchController?.loadViewIfNeeded()
+		self.searchController.dimsBackgroundDuringPresentation = true
+		self.searchController.definesPresentationContext = true
+		self.searchController.searchBar.delegate = self
+		self.tableView.tableHeaderView = self.searchController.searchBar
+		self.tableView.contentOffset = CGPointMake(0, self.searchController.searchBar.frame.size.height)
+		self.searchController.loadViewIfNeeded()
 	}
 	
 	func clearSearch() {
@@ -217,7 +227,7 @@ extension SystemsTableViewController: UISearchBarDelegate {
 			if let predicate = self.defaultSearchPredicate {
 				predicates.append(predicate)
 			}
-			let filterPredicate = NSPredicate(format: "%K CONTAINS[cd] %@", SystemManagedObject.propertyKeys.name, searchText)
+			let filterPredicate = NSPredicate(format: "%K CONTAINS[cd] %@", SpecialTestManagedObject.propertyKeys.name, searchText)
 			predicates.append(filterPredicate)
 			let fullPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
 			self.fetchedResultsController?.fetchRequest.predicate = fullPredicate

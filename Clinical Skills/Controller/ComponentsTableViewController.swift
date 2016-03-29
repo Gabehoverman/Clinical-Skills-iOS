@@ -8,14 +8,17 @@
 
 import Foundation
 import UIKit
-import BRYXBanner
 import CoreData
+import BRYXBanner
 
 class ComponentsTableViewController : UITableViewController {
+	
+	// MARK: - Properties
 	
 	var parentSystem: System?
 	
 	var fetchedResultsController: NSFetchedResultsController?
+	
 	var searchController: UISearchController!
 	var activityIndicator: UIActivityIndicatorView?
 	
@@ -25,31 +28,28 @@ class ComponentsTableViewController : UITableViewController {
 	var searchPhrase: String?
 	var defaultSearchPredicate: NSPredicate?
 	
-	var isInitialLoad: Bool = true
+	// MARK: - View Controller Methods
 	
-	override func viewWillAppear(animated: Bool) {
-		if self.isInitialLoad {
-			if self.parentSystem != nil {
-				self.fetchedResultsController = ComponentsFetchedResultsControllers.componentsFetchedResultsController(self.parentSystem!, delegateController: self)
-				self.datastoreManager = DatastoreManager(delegate: self)
-				self.remoteConnectionManager = RemoteConnectionManager(shouldRequestFromLocal: UserDefaultsManager.userDefaults.boolForKey(UserDefaultsManager.userDefaultsKeys.requestFromLocalHost), delegate: self)
-				self.remoteConnectionManager!.fetchComponents(self.parentSystem!)
+	override func viewDidLoad() {
+		if self.parentSystem != nil {
+			self.fetchedResultsController = ComponentsFetchedResultsControllers.componentsFetchedResultsController(self.parentSystem!)
+			self.fetchResultsWithReload(false)
+		
+			self.refreshControl?.addTarget(self, action: Selector("handleRefresh:"), forControlEvents: .ValueChanged)
+			
+			self.initializeSearchController()
+			self.initializeActivityIndicator()
+			
+			self.datastoreManager = DatastoreManager(delegate: self)
+			self.remoteConnectionManager = RemoteConnectionManager(delegate: self)
+			
+			if let count = self.fetchedResultsController?.fetchedObjects?.count where count == 0 {
+				self.remoteConnectionManager?.fetchComponents(forSystem: self.parentSystem!)
 			}
 		}
 	}
 	
-	override func viewDidLoad() {
-		if self.fetchedResultsController != nil {
-			self.defaultSearchPredicate = self.fetchedResultsController!.fetchRequest.predicate
-		}
-		self.refreshControl?.addTarget(self, action: Selector("handleRefresh:"), forControlEvents: .ValueChanged)
-		self.initializeSearchController()
-		self.initializeActivityIndicator()
-	}
-	
-	override func viewWillDisappear(animated: Bool) {
-		self.isInitialLoad = false
-	}
+	// MARK: - Table View Controller Methods
 	
 	override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
 		return 1
@@ -63,14 +63,32 @@ class ComponentsTableViewController : UITableViewController {
 	}
 	
 	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCellWithIdentifier("ComponentTableViewCell") as! ComponentTableViewCell
+		let cell = UITableViewCell()
+		cell.accessoryType = .DisclosureIndicator
+		cell.textLabel?.numberOfLines = 0
+		cell.textLabel?.lineBreakMode = .ByWordWrapping
+		cell.textLabel?.font = UIFont.systemFontOfSize(18, weight: UIFontWeightSemibold)
 		if let managedComponent = self.fetchedResultsController?.objectAtIndexPath(indexPath) as? ComponentManagedObject {
-			cell.componentNameLabel.text = managedComponent.name
+			cell.textLabel?.text = managedComponent.name
 		} else {
-			cell.componentNameLabel.text = "Error Fetching Component Name"
+			cell.textLabel?.text = "Error Fetching Component Name"
 		}
 		return cell
 	}
+	
+	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+		if self.fetchedResultsController != nil {
+			if let managedComponent = self.fetchedResultsController!.objectAtIndexPath(indexPath) as? ComponentManagedObject {
+				if let selectedTabTitle = self.tabBarController?.selectedViewController?.tabBarItem.title {
+					if selectedTabTitle == StoryboardTabIdentifiers.outlinedReview.rawValue {
+						self.performSegueWithIdentifier(StoryboardSegueIdentifiers.toSpecialTestsView.rawValue, sender: managedComponent)
+					}
+				}
+			}
+		}
+	}
+	
+	// MARK: - Fetch Methods
 	
 	func fetchResultsWithReload(shouldReload: Bool) {
 		do {
@@ -83,8 +101,10 @@ class ComponentsTableViewController : UITableViewController {
 		}
 	}
 	
+	// MARK: - Refresh Methods
+	
 	func handleRefresh(refreshControl: UIRefreshControl) {
-		self.remoteConnectionManager!.fetchComponents(self.parentSystem!)
+		self.remoteConnectionManager!.fetchComponents(forSystem: self.parentSystem!)
 	}
 	
 	// MARK: - Activity Indicator Methods
@@ -106,19 +126,19 @@ class ComponentsTableViewController : UITableViewController {
 		self.activityIndicator!.stopAnimating()
 	}
 	
-}
-
-extension ComponentsTableViewController : NSFetchedResultsControllerDelegate {
+	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+		if segue.identifier == StoryboardSegueIdentifiers.toSpecialTestsView.rawValue {
+			if let destination = segue.destinationViewController as? SpecialTestsTableViewController {
+				if let managedComponent = sender as? ComponentManagedObject {
+					destination.parentComponent = Component.componentFromManagedObject(managedComponent)
+				}
+			}
+		}
+	}
 	
 }
 
-extension ComponentsTableViewController : DatastoreManagerDelegate {
-	func didFinishStoring() {
-		dispatch_async(dispatch_get_main_queue()) { () -> Void in
-			self.fetchResultsWithReload(true)
-		}
-	}
-}
+// MARK: - Remote Connection Manager Delegate Methods
 
 extension ComponentsTableViewController : RemoteConnectionManagerDelegate {
 	
@@ -133,13 +153,8 @@ extension ComponentsTableViewController : RemoteConnectionManagerDelegate {
 	}
 	
 	func didFinishDataRequestWithData(receivedData: NSData) {
-		let parser = JSONParser(jsonData: receivedData)
-		if parser.dataType == JSONParser.dataTypes.system {
-			self.datastoreManager!.storeSystems(parser.parseSystems())
-			dispatch_async(dispatch_get_main_queue(), { () -> Void in
-				self.showNetworkStatusBanner()
-			})
-		} else if parser.dataType == JSONParser.dataTypes.component {
+		let parser = JSONParser(rawData: receivedData)
+		if parser.dataType == JSONParser.dataTypes.component {
 			if self.parentSystem != nil {
 				let components = parser.parseComponents(self.parentSystem!)
 				self.datastoreManager!.storeComponents(components)
@@ -155,7 +170,6 @@ extension ComponentsTableViewController : RemoteConnectionManagerDelegate {
 		}
 		
 		dispatch_async(dispatch_get_main_queue()) { () -> Void in
-			self.fetchResultsWithReload(true)
 			self.hideActivityIndicator()
 			self.showNetworkStatusBanner()
 		}
@@ -175,9 +189,22 @@ extension ComponentsTableViewController : RemoteConnectionManagerDelegate {
 	}
 }
 
+// MARK: - Datastore Manager Delegate Methods
+
+extension ComponentsTableViewController : DatastoreManagerDelegate {
+	func didFinishStoring() {
+		dispatch_async(dispatch_get_main_queue()) { () -> Void in
+			self.fetchResultsWithReload(true)
+		}
+	}
+}
+
+// MARK: - Search Bar Methods
+
 extension ComponentsTableViewController : UISearchBarDelegate {
 	
 	func initializeSearchController() {
+		self.defaultSearchPredicate = self.fetchedResultsController!.fetchRequest.predicate
 		self.searchController = UISearchController(searchResultsController: nil)
 		self.searchController.dimsBackgroundDuringPresentation = true
 		self.searchController.definesPresentationContext = true

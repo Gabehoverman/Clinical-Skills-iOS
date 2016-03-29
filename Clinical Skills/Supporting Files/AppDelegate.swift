@@ -14,15 +14,21 @@ import SwiftyJSON
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, RemoteConnectionManagerDelegate, NSFetchedResultsControllerDelegate {
 	
-	let SHOW_LAUNCH_SCREEN = false
+	// MARK: - Properties
+	
+	let SPIN_ON_LAUNCH_SCREEN = false
 	let SHOULD_REFRESH_DATASTORE_ON_LAUNCH = true
 	
     var window: UIWindow?
 	
+	// MARK: - UIApplication Methods
+	
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
 		
-		if SHOW_LAUNCH_SCREEN {
+		UserDefaultsManager.loadFromSettingsBundle()
+		
+		if SPIN_ON_LAUNCH_SCREEN {
 			NSThread.sleepForTimeInterval(NSTimeInterval(500.0));
 		}
 		
@@ -55,7 +61,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RemoteConnectionManagerDe
 		let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("ClinicalSkills")
 		
 		if self.SHOULD_REFRESH_DATASTORE_ON_LAUNCH {
-			try! NSFileManager.defaultManager().removeItemAtURL(url)
+			do {
+				try NSFileManager.defaultManager().removeItemAtURL(url)
+			} catch {
+				print("Datastore Not Found")
+			}
 		}
 		
 		var failureReason = "There was an error creating or loading the application's saved data."

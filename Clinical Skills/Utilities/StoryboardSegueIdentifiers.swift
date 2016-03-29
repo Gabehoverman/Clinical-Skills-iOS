@@ -8,11 +8,8 @@
 
 import Foundation
 
-//class StoryboardSegueIdentifiers {
-//	static let toDetailView = "toDetailsView"
-//	static let toSubsystemView = "toSubsystemView"
-//}
-
 enum StoryboardSegueIdentifiers: String {
 	case toComponentsView = "toComponentsView"
+	case toSpecialTestsView = "toSpecialTestsView"
+	case toSpecialTestsDetailView = "toSpecialTestsDetailView"
 }

@@ -22,22 +22,15 @@ class SystemManagedObject: NSManagedObject {
 		static let components = "components"
 	}
 	
-	@NSManaged var id: Int
+	@NSManaged var id: Int32
 	@NSManaged var name: String
 	@NSManaged var details : String
 	@NSManaged var components: NSMutableSet
 	
-	func equalTo(object: AnyObject?) -> Bool {
-		if object != nil {
-			if let systemManagedObject = object! as? SystemManagedObject {
-				var equal = true
-				equal = equal && self.id == systemManagedObject.id
-				equal = equal && self.name == systemManagedObject.name
-				equal = equal && self.details == systemManagedObject.details
-				return equal
-			}
+	override var description: String {
+		get {
+			return "ID: \(self.id)) \(self.name)"
 		}
-		return false
 	}
 	
 }

@@ -26,7 +26,7 @@ class UserDefaultsManager {
 		return splitString.capitalizedString
 	}
 	
-	static func readFromSettingsBundle() {
+	static func loadFromSettingsBundle() {
 		if let settingsBundle = NSBundle.mainBundle().pathForResource("Settings", ofType: "bundle") {
 			if let settings = NSDictionary(contentsOfFile: NSString(string: settingsBundle).stringByAppendingPathComponent("Root.plist")) {
 				if let preferences: [NSDictionary] = settings.objectForKey("PreferenceSpecifiers") as? [NSDictionary] {
@@ -36,7 +36,6 @@ class UserDefaultsManager {
 							defaultsToRegister[key] = preferenceSpecifier.objectForKey("DefaultValue")!
 						}
 					}
-					print(defaultsToRegister)
 					NSUserDefaults.standardUserDefaults().registerDefaults(defaultsToRegister)
 				} else {
 					print("Error reading Preferences")
