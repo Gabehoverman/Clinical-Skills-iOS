@@ -20,12 +20,14 @@ class SystemManagedObject: NSManagedObject {
 		static let name = "name"
 		static let details = "details"
 		static let components = "components"
+		static let rangesofMotion = "ranges_of_motion"
 	}
 	
 	@NSManaged var id: Int32
 	@NSManaged var name: String
 	@NSManaged var details : String
 	@NSManaged var components: NSMutableSet
+	@NSManaged var rangesOfMotion: NSMutableSet
 	
 	override var description: String {
 		get {

@@ -1,18 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="14F27" minimumToolsVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10171" systemVersion="15D21" minimumToolsVersion="Automatic">
     <entity name="Component" representedClassName="ComponentManagedObject" syncable="YES">
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="inspection" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="parent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="System" inverseName="components" inverseEntity="System" syncable="YES"/>
+        <relationship name="rangesOfMotion" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="RangeOfMotion" inverseName="component" inverseEntity="RangeOfMotion" syncable="YES"/>
         <relationship name="specialTests" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SpecialTest" inverseName="component" inverseEntity="SpecialTest" syncable="YES"/>
+        <relationship name="system" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="System" inverseName="components" inverseEntity="System" syncable="YES"/>
     </entity>
     <entity name="ImageLink" representedClassName="ImageLinkManagedObject" syncable="YES">
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="link" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="specialTest" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SpecialTest" inverseName="imageLinks" inverseEntity="SpecialTest" syncable="YES"/>
+    </entity>
+    <entity name="RangeOfMotion" representedClassName="RangeOfMotionManagedObject" syncable="YES">
+        <attribute name="degrees" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="motion" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="component" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Component" inverseName="rangesOfMotion" inverseEntity="Component" syncable="YES"/>
     </entity>
     <entity name="SpecialTest" representedClassName="SpecialTestManagedObject" syncable="YES">
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
@@ -28,7 +36,7 @@
         <attribute name="details" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="components" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Component" inverseName="parent" inverseEntity="Component" syncable="YES"/>
+        <relationship name="components" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Component" inverseName="system" inverseEntity="Component" syncable="YES"/>
     </entity>
     <entity name="VideoLink" representedClassName="VideoLinkManagedObject" syncable="YES">
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
@@ -37,10 +45,11 @@
         <relationship name="specialTest" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SpecialTest" inverseName="videoLinks" inverseEntity="SpecialTest" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Component" positionX="-54" positionY="-24" width="128" height="135"/>
-        <element name="ImageLink" positionX="72" positionY="63" width="128" height="105"/>
-        <element name="SpecialTest" positionX="72" positionY="27" width="128" height="165"/>
-        <element name="System" positionX="198" positionY="-0" width="128" height="105"/>
-        <element name="VideoLink" positionX="72" positionY="54" width="128" height="105"/>
+        <element name="Component" positionX="-92" positionY="-141" width="128" height="148"/>
+        <element name="ImageLink" positionX="-198" positionY="288" width="128" height="105"/>
+        <element name="RangeOfMotion" positionX="234" positionY="33" width="128" height="118"/>
+        <element name="SpecialTest" positionX="79" positionY="207" width="128" height="165"/>
+        <element name="System" positionX="223" positionY="-144" width="128" height="105"/>
+        <element name="VideoLink" positionX="-198" positionY="147" width="128" height="105"/>
     </elements>
 </model>

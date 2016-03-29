@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RemoteConnectionManagerDe
 	// MARK: - Properties
 	
 	let SPIN_ON_LAUNCH_SCREEN = false
-	let SHOULD_REFRESH_DATASTORE_ON_LAUNCH = true
+	let SHOULD_REFRESH_DATASTORE_ON_LAUNCH = false
 	
     var window: UIWindow?
 	

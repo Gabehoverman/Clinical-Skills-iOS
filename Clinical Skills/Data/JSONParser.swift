@@ -18,6 +18,7 @@ class JSONParser : NSObject {
 	struct dataTypes {
 		static let system = "system"
 		static let component = "component"
+		static let rangeOfMotion = "range_of_motion"
 		static let specialTest = "special_test"
 		static let imageLink = "image_link"
 		static let videoLink = "video_link"
@@ -72,10 +73,24 @@ class JSONParser : NSObject {
 				let name = component[ComponentManagedObject.propertyKeys.name].stringValue
 				let inspection = component[ComponentManagedObject.propertyKeys.inspection].stringValue
 				let notes = component[ComponentManagedObject.propertyKeys.notes].stringValue
-				components.append(Component(parent: system, id: id, name: name, inspection: inspection, notes: notes))
+				components.append(Component(system: system, id: id, name: name, inspection: inspection, notes: notes))
 			}
 		}
 		return components
+	}
+	
+	func parseRangeOfMotion(component: Component) -> [RangeOfMotion] {
+		var rangesOfMotion = [RangeOfMotion]()
+		for (_, data) in self.json {
+			for (_, rangeOfMotion) in data {
+				let id = Int32(rangeOfMotion[RangeOfMotionManagedObject.propertyKeys.id].intValue)
+				let motion = rangeOfMotion[RangeOfMotionManagedObject.propertyKeys.motion].stringValue
+				let degrees = rangeOfMotion[RangeOfMotionManagedObject.propertyKeys.degrees].stringValue
+				let notes = rangeOfMotion[RangeOfMotionManagedObject.propertyKeys.notes].stringValue
+				rangesOfMotion.append(RangeOfMotion(component: component, id: id, motion: motion, degrees: degrees, notes: notes))
+			}
+		}
+		return rangesOfMotion
 	}
 	
 	func parseSpecialTests(component: Component) -> [SpecialTest] {

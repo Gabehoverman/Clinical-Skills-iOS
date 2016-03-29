@@ -45,6 +45,15 @@ class DatastoreManager : NSObject {
 		self.delegate?.didFinishStoring?()
 	}
 	
+	func storeRangesOfMotion(rangesOfMotion: [RangeOfMotion]) {
+		self.delegate?.didBeginStoring?()
+		for rangeOfMotion in rangesOfMotion {
+			self.storeRangeOfMotion(rangeOfMotion)
+		}
+		self.save()
+		self.delegate?.didFinishStoring?()
+	}
+	
 	func storeSpecialTests(specialTests: [SpecialTest]) {
 		self.delegate?.didBeginStoring?()
 		for specialTest in specialTests {
@@ -92,8 +101,23 @@ class DatastoreManager : NSObject {
 				newManagedComponent.name = component.name
 				newManagedComponent.inspection = component.inspection
 				newManagedComponent.notes = component.notes
-				if let managedSystem = self.retrieveSystemWithID(component.parent.id) {
-					newManagedComponent.parent = managedSystem
+				if let managedSystem = self.retrieveSystemWithID(component.system.id) {
+					newManagedComponent.system = managedSystem
+				}
+			}
+		}
+	}
+	
+	func storeRangeOfMotion(rangeOfMotion: RangeOfMotion) {
+		if !self.containsRangeOfMotion(rangeOfMotion.id) {
+			let entity = NSEntityDescription.entityForName(RangeOfMotionManagedObject.entityName, inManagedObjectContext: self.managedObjectContext)!
+			if let newManagedRangeOfMotion = NSManagedObject(entity: entity, insertIntoManagedObjectContext: self.managedObjectContext) as? RangeOfMotionManagedObject {
+				newManagedRangeOfMotion.id = rangeOfMotion.id
+				newManagedRangeOfMotion.motion = rangeOfMotion.motion
+				newManagedRangeOfMotion.degrees = rangeOfMotion.degrees
+				newManagedRangeOfMotion.notes = rangeOfMotion.notes
+				if let managedComponent = self.retrieveComponentWithID(rangeOfMotion.component.id) {
+					newManagedRangeOfMotion.component = managedComponent
 				}
 			}
 		}
@@ -163,6 +187,15 @@ class DatastoreManager : NSObject {
 		return nil
 	}
 	
+	func retrieveRangeOfMotionWithID(id: Int32) -> RangeOfMotionManagedObject? {
+		let request = NSFetchRequest(entityName: RangeOfMotionManagedObject.entityName)
+		request.predicate = NSPredicate(format: "%K = %d", RangeOfMotionManagedObject.propertyKeys.id, id)
+		if let managedRangeOfMotion = try! self.managedObjectContext.executeFetchRequest(request).first as? RangeOfMotionManagedObject {
+			return managedRangeOfMotion
+		}
+		return nil
+	}
+	
 	func retrieveSpecialTestWithID(id: Int32) -> SpecialTestManagedObject? {
 		let request = NSFetchRequest(entityName: SpecialTestManagedObject.entityName)
 		request.predicate = NSPredicate(format: "%K = %d", SpecialTestManagedObject.propertyKeys.id, id)
@@ -202,6 +235,13 @@ class DatastoreManager : NSObject {
 	func containsComponentWithID(id: Int32) -> Bool {
 		let request = NSFetchRequest(entityName: ComponentManagedObject.entityName)
 		request.predicate = NSPredicate(format: "%K = %d", ComponentManagedObject.propertyKeys.id, id)
+		let results = try! self.managedObjectContext.executeFetchRequest(request)
+		return results.count != 0
+	}
+	
+	func containsRangeOfMotion(id: Int32) -> Bool {
+		let request = NSFetchRequest(entityName: RangeOfMotionManagedObject.entityName)
+		request.predicate = NSPredicate(format: "%K = %d", RangeOfMotionManagedObject.propertyKeys.id, id)
 		let results = try! self.managedObjectContext.executeFetchRequest(request)
 		return results.count != 0
 	}
