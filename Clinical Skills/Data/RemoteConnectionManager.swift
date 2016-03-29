@@ -55,7 +55,7 @@ class RemoteConnectionManager : NSObject {
 		self.statusCode = 0
 		self.delegate = delegate
 		super.init()
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.setShouldRequestFromLocal), name: NSUserDefaultsDidChangeNotification, object: nil)
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("setShouldRequestFromLocal"), name: NSUserDefaultsDidChangeNotification, object: nil)
 	}
 	
 	// MARK: - Deinitializers

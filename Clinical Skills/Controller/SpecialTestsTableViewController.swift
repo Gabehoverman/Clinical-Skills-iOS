@@ -35,7 +35,7 @@ class SpecialTestsTableViewController : UITableViewController {
 			self.fetchedResultsController = SpecialTestsFetchedResultsController.specialTestsFetchedResultsController(self.parentComponent!)
 			self.fetchResultsWithReload(false)
 			
-			self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), forControlEvents: .ValueChanged)
+			self.refreshControl?.addTarget(self, action: Selector("handleRefresh"), forControlEvents: .ValueChanged)
 			
 			self.initializeSearchController()
 			self.initializeActivityIndicator()
