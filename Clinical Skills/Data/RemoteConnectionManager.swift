@@ -19,6 +19,7 @@ class RemoteConnectionManager : NSObject {
 	struct dataURLs {
 		static let systems = "systems.json"
 		static let components = "components.json"
+		static let ranges_of_motion = "ranges_of_motion.json"
 		static let specialTests = "special_tests.json"
 		static let imageLinks = "image_links.json"
 		static let videoLinks = "video_links.json"
@@ -54,7 +55,7 @@ class RemoteConnectionManager : NSObject {
 		self.statusCode = 0
 		self.delegate = delegate
 		super.init()
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("setShouldRequestFromLocal"), name: NSUserDefaultsDidChangeNotification, object: nil)
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.setShouldRequestFromLocal), name: NSUserDefaultsDidChangeNotification, object: nil)
 	}
 	
 	// MARK: - Deinitializers
@@ -95,6 +96,28 @@ class RemoteConnectionManager : NSObject {
 		urlString += dataURLs.components
 		
 		var queryString = "?system=\(system.name)"
+		queryString = queryString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
+		
+		urlString += queryString
+		
+		if let url = NSURL(string: urlString) {
+			self.fetchWithURL(url)
+		}
+	}
+	
+	func fetchRangesOfMotion(forComponent component: Component) {
+		self.isCloudinaryFetch = false
+		
+		var urlString: String
+		if self.shouldRequestFromLocal {
+			urlString = self.localBaseURL
+		} else {
+			urlString = self.remoteBaseURL
+		}
+		
+		urlString += dataURLs.ranges_of_motion
+		
+		var queryString = "?component=\(component.name)"
 		queryString = queryString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
 		
 		urlString += queryString

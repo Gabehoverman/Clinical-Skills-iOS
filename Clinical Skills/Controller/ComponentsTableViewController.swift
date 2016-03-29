@@ -32,10 +32,12 @@ class ComponentsTableViewController : UITableViewController {
 	
 	override func viewDidLoad() {
 		if self.parentSystem != nil {
+			print(self.parentSystem?.components)
+			
 			self.fetchedResultsController = ComponentsFetchedResultsControllers.componentsFetchedResultsController(self.parentSystem!)
 			self.fetchResultsWithReload(false)
 		
-			self.refreshControl?.addTarget(self, action: Selector("handleRefresh:"), forControlEvents: .ValueChanged)
+			self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), forControlEvents: .ValueChanged)
 			
 			self.initializeSearchController()
 			self.initializeActivityIndicator()
@@ -80,7 +82,9 @@ class ComponentsTableViewController : UITableViewController {
 		if self.fetchedResultsController != nil {
 			if let managedComponent = self.fetchedResultsController!.objectAtIndexPath(indexPath) as? ComponentManagedObject {
 				if let selectedTabTitle = self.tabBarController?.selectedViewController?.tabBarItem.title {
-					if selectedTabTitle == StoryboardTabIdentifiers.outlinedReview.rawValue {
+					if selectedTabTitle == StoryboardTabIdentifiers.clinicalSkills.rawValue {
+						self.performSegueWithIdentifier(StoryboardSegueIdentifiers.toComponentDetailsView.rawValue, sender: managedComponent)
+					} else if selectedTabTitle == StoryboardTabIdentifiers.outlinedReview.rawValue {
 						self.performSegueWithIdentifier(StoryboardSegueIdentifiers.toSpecialTestsView.rawValue, sender: managedComponent)
 					}
 				}
@@ -127,7 +131,13 @@ class ComponentsTableViewController : UITableViewController {
 	}
 	
 	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-		if segue.identifier == StoryboardSegueIdentifiers.toSpecialTestsView.rawValue {
+		if segue.identifier == StoryboardSegueIdentifiers.toComponentDetailsView.rawValue {
+			if let destination = segue.destinationViewController as? ComponentDetailsTableViewController {
+				if let managedComponent = sender as? ComponentManagedObject {
+					destination.component = Component.componentFromManagedObject(managedComponent)
+				}
+			}
+		} else if segue.identifier == StoryboardSegueIdentifiers.toSpecialTestsView.rawValue {
 			if let destination = segue.destinationViewController as? SpecialTestsTableViewController {
 				if let managedComponent = sender as? ComponentManagedObject {
 					destination.parentComponent = Component.componentFromManagedObject(managedComponent)

@@ -32,7 +32,7 @@ class SystemsTableViewController: UITableViewController {
 		self.fetchedResultsController = SystemFetchedResultsControllers.allSystemsResultController()
 		self.fetchResultsWithReload(false)
 		
-		self.refreshControl?.addTarget(self, action: Selector("handleRefresh:"), forControlEvents: .ValueChanged)
+		self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), forControlEvents: .ValueChanged)
 		
 		self.initializeSearchController()
 		self.initializeActivityIndicator()

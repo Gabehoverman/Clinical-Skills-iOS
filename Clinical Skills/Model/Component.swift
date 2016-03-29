@@ -10,11 +10,11 @@ import Foundation
 
 class Component {
 	
+	var system: System
 	var id: Int32
 	var name: String
 	var inspection: String
 	var notes: String
-	var parent: System
 	
 	var description: String {
 		get {
@@ -22,12 +22,12 @@ class Component {
 		}
 	}
 	
-	init(parent: System, id: Int32, name: String, inspection: String, notes: String) {
+	init(system: System, id: Int32, name: String, inspection: String, notes: String) {
+		self.system = system
 		self.id = id
 		self.name = name
 		self.inspection = inspection
 		self.notes = notes
-		self.parent = parent
 	}
 	
 	class func componentFromManagedObject(componentManagedObject: ComponentManagedObject) -> Component {
@@ -35,8 +35,8 @@ class Component {
 		let name = componentManagedObject.name
 		let inspection = componentManagedObject.inspection
 		let notes = componentManagedObject.notes
-		let system = System.systemFromManagedObject(componentManagedObject.parent)
-		return Component(parent: system, id: id, name: name, inspection: inspection, notes: notes)
+		let system = System.systemFromManagedObject(componentManagedObject.system)
+		return Component(system: system, id: id, name: name, inspection: inspection, notes: notes)
 	}
 	
 }

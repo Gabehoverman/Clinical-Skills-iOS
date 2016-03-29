@@ -10,6 +10,7 @@ import Foundation
 
 enum StoryboardSegueIdentifiers: String {
 	case toComponentsView = "toComponentsView"
+	case toComponentDetailsView = "toComponentDetailsView"
 	case toSpecialTestsView = "toSpecialTestsView"
 	case toSpecialTestsDetailView = "toSpecialTestsDetailView"
 }
