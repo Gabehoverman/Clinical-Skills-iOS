@@ -19,7 +19,7 @@ class SpecialTestDetailTableViewController : UITableViewController {
 	// MARK: - Properites
 	
 	var parentSpecialTest: SpecialTest?
-	var images: [UIImage]?
+	var images: [BasicPhoto]?
 	
 	weak var imagesCollectionView: UICollectionView?
 	
@@ -36,7 +36,7 @@ class SpecialTestDetailTableViewController : UITableViewController {
 	override func viewDidLoad() {
 		
 		if self.parentSpecialTest != nil {
-			self.images = [UIImage]()
+			self.images = [BasicPhoto]()
 			
 			self.imageLinksFetchedResultsController = ImageLinksFetchedResultsControllers.imageLinksFetchedResultsController(self.parentSpecialTest!)
 			self.videoLinksFetchedResultsController = VideoLinksFetchedResultsControllers.videoLinksFetchedResultsController(self.parentSpecialTest!)
@@ -65,7 +65,7 @@ class SpecialTestDetailTableViewController : UITableViewController {
 	// MARK: - Table View Controller Methods
 	
 	override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-		return 5
+		return 6
 	}
 	
 	override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -73,14 +73,15 @@ class SpecialTestDetailTableViewController : UITableViewController {
 			case 0: return "Name"
 			case 1: return "Positive Sign"
 			case 2: return "Indication"
-			case 3: return "Images"
-			case 4: return "Video Links"
+			case 3: return "Notes"
+			case 4: return "Images"
+			case 5: return "Video Links"
 			default: return  "Section \(section)"
 		}
 	}
 	
 	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		if section == 4 {
+		if section == 5 {
 			if let count = self.videoLinksFetchedResultsController?.fetchedObjects?.count {
 				return count
 			} else {
@@ -91,7 +92,7 @@ class SpecialTestDetailTableViewController : UITableViewController {
 	}
 	
 	override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-		if indexPath.section == 3 {
+		if indexPath.section == 4 {
 			return 132
 		} else {
 			return UITableViewAutomaticDimension
@@ -108,7 +109,8 @@ class SpecialTestDetailTableViewController : UITableViewController {
 			case 0: cell.textLabel?.text = self.parentSpecialTest?.name
 			case 1: cell.textLabel?.text = self.parentSpecialTest?.positiveSign
 			case 2: cell.textLabel?.text = self.parentSpecialTest?.indication
-			case 3:
+			case 3: cell.textLabel?.text = self.parentSpecialTest?.notes
+			case 4:
 				if let imagesCell = tableView.dequeueReusableCellWithIdentifier("ImagesCell") as? ImagesTableViewCell {
 					imagesCell.imagesCollectionView.backgroundColor = UIColor.clearColor()
 					imagesCell.imagesCollectionView.dataSource = self
@@ -116,7 +118,7 @@ class SpecialTestDetailTableViewController : UITableViewController {
 					self.imagesCollectionView = imagesCell.imagesCollectionView
 					return imagesCell
 				}
-			case 4:
+			case 5:
 				if let managedVideoLink = self.videoLinksFetchedResultsController?.objectAtIndexPath(fixedSectionIndexPath) as? VideoLinkManagedObject {
 					cell.accessoryType = .DisclosureIndicator
 					cell.textLabel?.text = managedVideoLink.title
@@ -127,7 +129,7 @@ class SpecialTestDetailTableViewController : UITableViewController {
 	}
 	
 	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-		if indexPath.section == 4 {
+		if indexPath.section == 5 {
 			let fixedSectionIndexPath = NSIndexPath(forRow: indexPath.row, inSection: 0) // NSIndexPath referencing section 0 to avoid "no section at index 3" error
 			if let managedVideoLink = self.videoLinksFetchedResultsController?.objectAtIndexPath(fixedSectionIndexPath) as? VideoLinkManagedObject {
 				if let url = NSURL(string: managedVideoLink.link) {
@@ -204,23 +206,17 @@ extension SpecialTestDetailTableViewController : UICollectionViewDataSource {
 	}
 	
 	func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-		if let image = self.images?[indexPath.row] {
-			if let pngImage = UIImagePNGRepresentation(image) {
-				let imageData = NSData(data: pngImage)
-				let photo = BasicPhoto(image: image, imageData: imageData, captionTitle: NSAttributedString(string: "Image"))
-				var photos = [BasicPhoto]()
-				photos.append(photo)
-				let photosViewer = NYTPhotosViewController(photos: photos, initialPhoto: photo)
-				self.presentViewController(photosViewer, animated: true, completion: nil)
-			}
+		if let initialImage = self.images?.first {
+			let photosViewController = NYTPhotosViewController(photos: self.images, initialPhoto: initialImage)
+			self.presentViewController(photosViewController, animated: true, completion: nil)
 		}
 	}
 	
 	
 	func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
 		if let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ImageCell", forIndexPath: indexPath) as? ImageCollectionViewCell {
-			if let image = self.images?[indexPath.row] {
-				cell.imageView.image = image
+			if let photo = self.images?[indexPath.row] {
+				cell.imageView.image = photo.image
 			}
 			return cell
 		}
@@ -270,7 +266,8 @@ extension SpecialTestDetailTableViewController : RemoteConnectionManagerDelegate
 	
 	func didFinishCloudinaryImageRequestWithData(receivedData: NSData) {
 		if let image = UIImage(data: receivedData) {
-			self.images!.append(image)
+			let photo = BasicPhoto(image: image, imageData: receivedData, captionTitle: NSAttributedString(string: ""))
+			self.images!.append(photo)
 		}
 		Async.main {
 			self.imagesCollectionView?.reloadData()
