@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import CoreData
 import BRYXBanner
+import Async
 
 class SystemsTableViewController: UITableViewController {
 	
@@ -138,9 +139,9 @@ extension SystemsTableViewController: RemoteConnectionManagerDelegate {
 	func didBeginDataRequest() {
 		if self.refreshControl != nil {
 			if !self.refreshControl!.refreshing {
-				dispatch_async(dispatch_get_main_queue(), { () -> Void in
+				Async.main {
 					self.showActivityIndicator()
-				})
+				}
 			}
 		}
 	}
@@ -160,7 +161,7 @@ extension SystemsTableViewController: RemoteConnectionManagerDelegate {
 			}
 		}
 		
-		dispatch_async(dispatch_get_main_queue()) { () -> Void in
+		Async.main {
 			self.hideActivityIndicator()
 			self.showNetworkStatusBanner()
 		}
@@ -184,7 +185,7 @@ extension SystemsTableViewController: RemoteConnectionManagerDelegate {
 
 extension SystemsTableViewController: DatastoreManagerDelegate {
 	func didFinishStoring() {
-		dispatch_async(dispatch_get_main_queue()) { () -> Void in
+		Async.main {
 			self.fetchResultsWithReload(true)
 		}
 	}

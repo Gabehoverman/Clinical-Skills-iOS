@@ -1,3 +1,4 @@
+github "duemunk/Async" "1.7.2"
 github "bryx-inc/BRYXBanner" "0.5.2"
 github "Flipboard/FLAnimatedImage" "1.0.12"
 github "SwiftyJSON/SwiftyJSON" "2.3.3"
