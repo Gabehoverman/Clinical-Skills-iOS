@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import CoreData
 
-class SpecialTestsFetchedResultsController {
+class SpecialTestsFetchedResultsControllers {
 	
 	static let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
 	

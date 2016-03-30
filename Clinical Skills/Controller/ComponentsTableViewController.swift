@@ -32,12 +32,11 @@ class ComponentsTableViewController : UITableViewController {
 	
 	override func viewDidLoad() {
 		if self.parentSystem != nil {
-			print(self.parentSystem?.components)
 			
 			self.fetchedResultsController = ComponentsFetchedResultsControllers.componentsFetchedResultsController(self.parentSystem!)
 			self.fetchResultsWithReload(false)
 		
-			self.refreshControl?.addTarget(self, action: Selector("handleRefresh"), forControlEvents: .ValueChanged)
+			self.refreshControl?.addTarget(self, action: Selector("handleRefresh:"), forControlEvents: .ValueChanged)
 			
 			self.initializeSearchController()
 			self.initializeActivityIndicator()

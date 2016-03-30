@@ -9,6 +9,7 @@
 import Foundation
 
 class RangeOfMotion {
+	
 	var component: Component
 	var id: Int32
 	var motion: String
@@ -31,4 +32,5 @@ class RangeOfMotion {
 		let notes = managedObject.notes
 		return RangeOfMotion(component: component, id: id, motion: motion, degrees: degrees, notes: notes)
 	}
+	
 }

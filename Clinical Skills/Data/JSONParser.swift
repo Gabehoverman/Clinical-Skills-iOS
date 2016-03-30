@@ -19,6 +19,7 @@ class JSONParser : NSObject {
 		static let system = "system"
 		static let component = "component"
 		static let rangeOfMotion = "range_of_motion"
+		static let muscle = "muscle"
 		static let specialTest = "special_test"
 		static let imageLink = "image_link"
 		static let videoLink = "video_link"
@@ -79,7 +80,7 @@ class JSONParser : NSObject {
 		return components
 	}
 	
-	func parseRangeOfMotion(component: Component) -> [RangeOfMotion] {
+	func parseRangesOfMotion(component: Component) -> [RangeOfMotion] {
 		var rangesOfMotion = [RangeOfMotion]()
 		for (_, data) in self.json {
 			for (_, rangeOfMotion) in data {
@@ -91,6 +92,18 @@ class JSONParser : NSObject {
 			}
 		}
 		return rangesOfMotion
+	}
+	
+	func parseMuscles(component: Component) -> [Muscle] {
+		var muscles = [Muscle]()
+		for (_, data) in self.json {
+			for (_, muscle) in data {
+				let id = Int32(muscle[MuscleManagedObject.propertyKeys.id].intValue)
+				let name = muscle[MuscleManagedObject.propertyKeys.name].stringValue
+				muscles.append(Muscle(component: component, id: id, name: name))
+			}
+		}
+		return muscles
 	}
 	
 	func parseSpecialTests(component: Component) -> [SpecialTest] {

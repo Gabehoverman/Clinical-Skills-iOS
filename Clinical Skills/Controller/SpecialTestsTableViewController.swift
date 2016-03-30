@@ -32,10 +32,10 @@ class SpecialTestsTableViewController : UITableViewController {
 	
 	override func viewDidLoad() {
 		if self.parentComponent != nil {
-			self.fetchedResultsController = SpecialTestsFetchedResultsController.specialTestsFetchedResultsController(self.parentComponent!)
+			self.fetchedResultsController = SpecialTestsFetchedResultsControllers.specialTestsFetchedResultsController(self.parentComponent!)
 			self.fetchResultsWithReload(false)
 			
-			self.refreshControl?.addTarget(self, action: Selector("handleRefresh"), forControlEvents: .ValueChanged)
+			self.refreshControl?.addTarget(self, action: Selector("handleRefresh:"), forControlEvents: .ValueChanged)
 			
 			self.initializeSearchController()
 			self.initializeActivityIndicator()

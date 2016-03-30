@@ -16,20 +16,38 @@ class ComponentDetailsTableViewController : UITableViewController {
 	var component: Component?
 	
 	var rangesOfMotionFetchedResultsController: NSFetchedResultsController?
+	var musclesFetchedResultsController: NSFetchedResultsController?
+	var specialTestsFetchedResultsController: NSFetchedResultsController?
 	
 	var remoteConnectionManager: RemoteConnectionManager?
 	var datastoreManager: DatastoreManager?
 	
+	var activityIndicator: UIActivityIndicatorView?
+	
 	override func viewDidLoad() {
 		if (self.component != nil) {
 			self.rangesOfMotionFetchedResultsController = RangesOfMotionFetchedResultsControllers.rangesOfMotionFetchedResultsController(forComponent: self.component!)
+			self.musclesFetchedResultsController = MusclesFetchedResultsControllers.musclesFetchedResultsController(forComponent: self.component!)
+			self.specialTestsFetchedResultsController = SpecialTestsFetchedResultsControllers.specialTestsFetchedResultsController(self.component!)
 			self.fetchResultsWithReload(false)
+			
+			self.refreshControl?.addTarget(self, action: Selector("handleRefresh:"), forControlEvents: .ValueChanged)
+			
+			self.initializeActivityIndicator()
 			
 			self.datastoreManager = DatastoreManager(delegate: self)
 			self.remoteConnectionManager = RemoteConnectionManager(delegate: self)
 			
 			if let count = self.rangesOfMotionFetchedResultsController?.fetchedObjects?.count where count == 0 {
 				self.remoteConnectionManager?.fetchRangesOfMotion(forComponent: self.component!)
+			}
+			
+			if let count = self.musclesFetchedResultsController?.fetchedObjects?.count where count == 0 {
+				self.remoteConnectionManager?.fetchMuscles(forComponent: self.component!)
+			}
+			
+			if let count = self.specialTestsFetchedResultsController?.fetchedObjects?.count where count == 0 {
+				self.remoteConnectionManager?.fetchSpecialTests(forComponent: self.component!)
 			}
 		}
 	}
@@ -50,6 +68,25 @@ class ComponentDetailsTableViewController : UITableViewController {
 	}
 	
 	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		if section == 2 {
+			if let count = self.rangesOfMotionFetchedResultsController?.fetchedObjects?.count {
+				return count
+			} else {
+				return 0
+			}
+		} else if section == 3 {
+			if let count = self.musclesFetchedResultsController?.fetchedObjects?.count {
+				return count
+			} else {
+				return 0
+			}
+		} else if section == 4 {
+			if let count = self.specialTestsFetchedResultsController?.fetchedObjects?.count {
+				return count
+			} else {
+				0
+			}
+		}
 		return 1
 	}
 	
@@ -66,25 +103,47 @@ class ComponentDetailsTableViewController : UITableViewController {
 		let cell = UITableViewCell()
 		cell.textLabel?.numberOfLines = 0
 		cell.textLabel?.lineBreakMode = .ByWordWrapping
-		cell.textLabel?.font = UIFont.systemFontOfSize(16)
+		cell.textLabel?.font = UIFont.systemFontOfSize(14)
 		switch (indexPath.section) {
 			case 0: cell.textLabel?.text = self.component?.inspection
 			case 1: cell.textLabel?.text = "Palpation"
-			case 2: cell.textLabel?.text = "Range Of Motion"
-			case 3: cell.textLabel?.text = "Muscle Strength"
-			case 4: cell.textLabel?.text = "Special Tests"
+			case 2:
+				if let rangeOfMotionCell = tableView.dequeueReusableCellWithIdentifier("RangeOfMotionCell") as? RangeOfMotionTableViewCell {
+					if let managedRangeOfMotion = self.rangesOfMotionFetchedResultsController?.objectAtIndexPath(fixedSectionIndexPath) as? RangeOfMotionManagedObject {
+						rangeOfMotionCell.motionLabel.text = managedRangeOfMotion.motion
+						rangeOfMotionCell.degreesLabel.text = managedRangeOfMotion.degrees + "°"
+						rangeOfMotionCell.notesLabel.text = managedRangeOfMotion.notes
+					}
+					return rangeOfMotionCell
+				}
+			case 3:
+				if let managedMuscle = self.musclesFetchedResultsController?.objectAtIndexPath(fixedSectionIndexPath) as? MuscleManagedObject {
+					cell.textLabel?.text = managedMuscle.name
+				}
+			case 4:
+				if let managedSpecialTest = self.specialTestsFetchedResultsController?.objectAtIndexPath(fixedSectionIndexPath) as? SpecialTestManagedObject {
+					cell.accessoryType = .DisclosureIndicator
+					cell.textLabel?.text = managedSpecialTest.name
+				}
 			default: cell.textLabel?.text = ""
 		}
 		return cell
 	}
 	
 	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-		
+		if indexPath.section == 4 {
+			let fixedSectionIndexPath = NSIndexPath(forRow: indexPath.row, inSection: 0)
+			if let managedSpecialTest = self.specialTestsFetchedResultsController?.objectAtIndexPath(fixedSectionIndexPath) as? SpecialTestManagedObject {
+				self.performSegueWithIdentifier(StoryboardSegueIdentifiers.toSpecialTestsDetailView.rawValue, sender: managedSpecialTest)
+			}
+		}
 	}
 	
 	func fetchResultsWithReload(shouldReload: Bool) {
 		do {
 			try self.rangesOfMotionFetchedResultsController?.performFetch()
+			try self.musclesFetchedResultsController?.performFetch()
+			try self.specialTestsFetchedResultsController?.performFetch()
 			if shouldReload {
 				self.tableView.reloadData()
 			}
@@ -93,12 +152,105 @@ class ComponentDetailsTableViewController : UITableViewController {
 		}
 	}
 	
+	// MARK: - Refresh Methods
+	
+	func handleRefresh(refreshControl: UIRefreshControl) {
+		if self.component != nil {
+			self.remoteConnectionManager!.fetchRangesOfMotion(forComponent: self.component!)
+			self.remoteConnectionManager?.fetchMuscles(forComponent: self.component!)
+			self.remoteConnectionManager?.fetchSpecialTests(forComponent: self.component!)
+		}
+	}
+	
+	func initializeActivityIndicator() {
+		self.activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+		self.activityIndicator!.frame = CGRect(x: 0, y: 0, width: 10, height: 10)
+		self.activityIndicator!.center = CGPoint(x: self.tableView.center.x, y: self.tableView.center.y)
+		self.activityIndicator!.hidesWhenStopped = true
+		self.view.addSubview(self.activityIndicator!)
+		self.activityIndicator!.bringSubviewToFront(self.view)
+	}
+	
+	func showActivityIndicator() {
+		self.activityIndicator!.startAnimating()
+	}
+	
+	func hideActivityIndicator() {
+		self.activityIndicator!.stopAnimating()
+	}
+	
+	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+		if let managedSpecialTest = sender as? SpecialTestManagedObject {
+			if let destination = segue.destinationViewController as? SpecialTestDetailTableViewController {
+				destination.parentSpecialTest = SpecialTest.specialTestFromManagedObject(managedSpecialTest)
+			}
+		}
+	}
+	
 }
 
 extension ComponentDetailsTableViewController : RemoteConnectionManagerDelegate {
 	
+	func didBeginDataRequest() {
+		if self.refreshControl != nil {
+			if !self.refreshControl!.refreshing {
+				dispatch_async(dispatch_get_main_queue(), { () -> Void in
+					self.showActivityIndicator()
+				})
+			}
+		}
+	}
+	
+	func didFinishDataRequestWithData(receivedData: NSData) {
+		let parser = JSONParser(rawData: receivedData)
+		if self.component != nil {
+			if parser.dataType == JSONParser.dataTypes.rangeOfMotion {
+				let rangesOfMotion = parser.parseRangesOfMotion(self.component!)
+				self.datastoreManager?.storeRangesOfMotion(rangesOfMotion)
+			} else if parser.dataType == JSONParser.dataTypes.muscle {
+				let muscles = parser.parseMuscles(self.component!)
+				self.datastoreManager?.storeMuscles(muscles)
+			} else if parser.dataType == JSONParser.dataTypes.specialTest {
+				let specialTests = parser.parseSpecialTests(self.component!)
+				self.datastoreManager?.storeSpecialTests(specialTests)
+			}
+		}
+	}
+	
+	func didFinishDataRequest() {
+		if self.refreshControl != nil {
+			if self.refreshControl!.refreshing {
+				self.refreshControl!.endRefreshing()
+			}
+		}
+		
+		dispatch_async(dispatch_get_main_queue()) { () -> Void in
+			self.hideActivityIndicator()
+			self.showNetworkStatusBanner()
+		}
+	}
+	
+	func showNetworkStatusBanner() {
+		var color = UIColor.whiteColor()
+		if self.remoteConnectionManager!.statusSuccess {
+			color = UIColor(red: 90.0/255.0, green: 212.0/255.0, blue: 39.0/255.0, alpha: 0.95)
+		} else {
+			color = UIColor(red: 255.0/255.0, green: 80.0/255.0, blue: 44.0/255.0, alpha: 0.95)
+		}
+		let banner = Banner(title: "HTTP Response", subtitle: self.remoteConnectionManager!.statusMessage, image: nil, backgroundColor: color, didTapBlock: nil)
+		banner.dismissesOnSwipe = true
+		banner.dismissesOnTap = true
+		banner.show(self.navigationController!.view, duration: 1.5)
+	}
+	
 }
 
 extension ComponentDetailsTableViewController : DatastoreManagerDelegate {
+	
+	func didFinishStoring() {
+		dispatch_async(dispatch_get_main_queue()) { () -> Void in
+			self.fetchResultsWithReload(true)
+		}
+	}
 	
 }

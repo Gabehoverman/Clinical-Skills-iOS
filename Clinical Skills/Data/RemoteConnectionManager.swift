@@ -20,6 +20,7 @@ class RemoteConnectionManager : NSObject {
 		static let systems = "systems.json"
 		static let components = "components.json"
 		static let ranges_of_motion = "ranges_of_motion.json"
+		static let muscles = "muscles.json"
 		static let specialTests = "special_tests.json"
 		static let imageLinks = "image_links.json"
 		static let videoLinks = "video_links.json"
@@ -116,6 +117,28 @@ class RemoteConnectionManager : NSObject {
 		}
 		
 		urlString += dataURLs.ranges_of_motion
+		
+		var queryString = "?component=\(component.name)"
+		queryString = queryString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
+		
+		urlString += queryString
+		
+		if let url = NSURL(string: urlString) {
+			self.fetchWithURL(url)
+		}
+	}
+	
+	func fetchMuscles(forComponent component: Component) {
+		self.isCloudinaryFetch = false
+		
+		var urlString: String
+		if self.shouldRequestFromLocal {
+			urlString = self.localBaseURL
+		} else {
+			urlString = self.remoteBaseURL
+		}
+		
+		urlString += dataURLs.muscles
 		
 		var queryString = "?component=\(component.name)"
 		queryString = queryString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!

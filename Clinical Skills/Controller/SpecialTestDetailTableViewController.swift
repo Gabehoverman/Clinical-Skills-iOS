@@ -11,6 +11,7 @@ import UIKit
 import CoreData
 import BRYXBanner
 import SafariServices
+import NYTPhotoViewer
 
 class SpecialTestDetailTableViewController : UITableViewController {
 	
@@ -27,15 +28,12 @@ class SpecialTestDetailTableViewController : UITableViewController {
 	var datastoreManager: DatastoreManager?
 	var remoteConnectionManager: RemoteConnectionManager?
 	
-	var searchController: UISearchController!
 	var activityIndicator: UIActivityIndicatorView?
-	
-	var searchPhrase: String?
-	var defaultSearchPredicate: NSPredicate?
 	
 	// MARK: - View Controller Methods
 	
 	override func viewDidLoad() {
+		
 		if self.parentSpecialTest != nil {
 			self.images = [UIImage]()
 			
@@ -43,9 +41,7 @@ class SpecialTestDetailTableViewController : UITableViewController {
 			self.videoLinksFetchedResultsController = VideoLinksFetchedResultsControllers.videoLinksFetchedResultsController(self.parentSpecialTest!)
 			self.fetchResultsWithReload(false)
 			
-			self.refreshControl?.addTarget(self, action: Selector("handleRefresh"), forControlEvents: .ValueChanged)
-			
-			self.initializeSearchController()
+			self.refreshControl?.addTarget(self, action: Selector("handleRefresh:"), forControlEvents: .ValueChanged)
 			self.initializeActivityIndicator()
 			
 			self.datastoreManager = DatastoreManager(delegate: self)
@@ -53,8 +49,14 @@ class SpecialTestDetailTableViewController : UITableViewController {
 		
 			if let count = self.videoLinksFetchedResultsController?.fetchedObjects?.count where count == 0 {
 				self.remoteConnectionManager?.fetchVideoLinks(forSpecialTest: self.parentSpecialTest!)
-			} else {
+			}
+			
+			if let count = self.imageLinksFetchedResultsController?.fetchedObjects?.count where count == 0 {
 				self.remoteConnectionManager?.fetchImageLinks(forSpecialTest: self.parentSpecialTest!)
+			} else {
+				for managedImageLink in (self.imageLinksFetchedResultsController?.fetchedObjects as! [ImageLinkManagedObject]) {
+					self.remoteConnectionManager?.fetchImageData(forCloudinaryLink: managedImageLink.link)
+				}
 			}
 		}
 	}
@@ -100,7 +102,7 @@ class SpecialTestDetailTableViewController : UITableViewController {
 		let cell = UITableViewCell()
 		cell.textLabel?.numberOfLines = 0
 		cell.textLabel?.lineBreakMode = .ByWordWrapping
-		cell.textLabel?.font = UIFont.systemFontOfSize(16)
+		cell.textLabel?.font = UIFont.systemFontOfSize(14)
 		switch (indexPath.section) {
 			case 0: cell.textLabel?.text = self.parentSpecialTest?.name
 			case 1: cell.textLabel?.text = self.parentSpecialTest?.positiveSign
@@ -115,6 +117,7 @@ class SpecialTestDetailTableViewController : UITableViewController {
 				}
 			case 4:
 				if let managedVideoLink = self.videoLinksFetchedResultsController?.objectAtIndexPath(fixedSectionIndexPath) as? VideoLinkManagedObject {
+					cell.accessoryType = .DisclosureIndicator
 					cell.textLabel?.text = managedVideoLink.title
 				}
 			default: cell.textLabel?.text = ""
@@ -196,6 +199,19 @@ extension SpecialTestDetailTableViewController : UICollectionViewDataSource {
 			return count
 		} else {
 			return 0
+		}
+	}
+	
+	func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+		if let image = self.images?[indexPath.row] {
+			if let pngImage = UIImagePNGRepresentation(image) {
+				let imageData = NSData(data: pngImage)
+				let photo = BasicPhoto(image: image, imageData: imageData, captionTitle: NSAttributedString(string: "Image"))
+				var photos = [BasicPhoto]()
+				photos.append(photo)
+				let photosViewer = NYTPhotosViewController(photos: photos, initialPhoto: photo)
+				self.presentViewController(photosViewer, animated: true, completion: nil)
+			}
 		}
 	}
 	
@@ -298,53 +314,6 @@ extension SpecialTestDetailTableViewController : DatastoreManagerDelegate {
 		}
 	}
 	
-}
-
-// MARK: - Search Bar Methods
-
-extension SpecialTestDetailTableViewController : UISearchBarDelegate {
-	
-	func initializeSearchController() {
-		self.defaultSearchPredicate = self.videoLinksFetchedResultsController!.fetchRequest.predicate
-		self.searchController = UISearchController(searchResultsController: nil)
-		self.searchController.dimsBackgroundDuringPresentation = true
-		self.searchController.definesPresentationContext = true
-		self.searchController.searchBar.delegate = self
-		self.tableView.tableHeaderView = self.searchController.searchBar
-		self.tableView.contentOffset = CGPointMake(0, self.searchController.searchBar.frame.size.height)
-		self.searchController.loadViewIfNeeded()
-	}
-	
-	func clearSearch() {
-		self.searchPhrase = nil
-		self.videoLinksFetchedResultsController?.fetchRequest.predicate = self.defaultSearchPredicate
-		self.fetchResultsWithReload(true)
-	}
-	
-	func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-		if searchText != "" {
-			var predicates = [NSPredicate]()
-			self.searchPhrase = searchText
-			if let predicate = self.defaultSearchPredicate {
-				predicates.append(predicate)
-			}
-			let filterPredicate = NSPredicate(format: "%K CONTAINS[cd] %@", VideoLinkManagedObject.propertyKeys.title, searchText)
-			predicates.append(filterPredicate)
-			let fullPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
-			self.videoLinksFetchedResultsController?.fetchRequest.predicate = fullPredicate
-			self.fetchResultsWithReload(true)
-		} else {
-			self.clearSearch()
-		}
-	}
-	
-	func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-		self.clearSearch()
-	}
-	
-	func searchBarTextDidEndEditing(searchBar: UISearchBar) {
-		searchBar.text = self.searchPhrase
-	}
 }
 
 // MARK: - Safari View Controller Delegate Methods

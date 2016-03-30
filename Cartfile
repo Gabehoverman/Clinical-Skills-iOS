@@ -1,2 +1,3 @@
 github "SwiftyJSON/SwiftyJSON" >= 2.1.2
 github "bryx-inc/BRYXBanner"
+github "NYTimes/NYTPhotoViewer" "develop"

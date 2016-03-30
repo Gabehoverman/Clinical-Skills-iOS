@@ -10,7 +10,12 @@
 		0105E41E1C9154A200AC4F09 /* SpecialTestsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0105E41D1C9154A200AC4F09 /* SpecialTestsTableViewController.swift */; };
 		0105E4201C915FFD00AC4F09 /* SpecialTestManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0105E41F1C915FFD00AC4F09 /* SpecialTestManagedObject.swift */; };
 		0105E4221C91600300AC4F09 /* SpecialTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0105E4211C91600300AC4F09 /* SpecialTest.swift */; };
-		0105E4241C9166CE00AC4F09 /* SpecialTestsFetchedResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0105E4231C9166CE00AC4F09 /* SpecialTestsFetchedResultsController.swift */; };
+		011807061CABA5880061A64F /* Muscle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011807051CABA5880061A64F /* Muscle.swift */; };
+		011807081CABA5AC0061A64F /* MuscleManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011807071CABA5AC0061A64F /* MuscleManagedObject.swift */; };
+		0118070A1CABA5D90061A64F /* MusclesFetchedResultsControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011807091CABA5D90061A64F /* MusclesFetchedResultsControllers.swift */; };
+		0118070C1CABBFBA0061A64F /* SpecialTestsFetchedResultsControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0118070B1CABBFBA0061A64F /* SpecialTestsFetchedResultsControllers.swift */; };
+		0118070E1CABD4B50061A64F /* BasicPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0118070D1CABD4B50061A64F /* BasicPhoto.swift */; };
+		01195E331CAB515100CD7631 /* RangeOfMotionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01195E321CAB515100CD7631 /* RangeOfMotionTableViewCell.swift */; };
 		011E01621C86463400AB8BA0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011E01611C86463400AB8BA0 /* AppDelegate.swift */; };
 		011E016C1C86463400AB8BA0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 011E016B1C86463400AB8BA0 /* Assets.xcassets */; };
 		011E01881C864A0500AB8BA0 /* DatastoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011E01871C864A0500AB8BA0 /* DatastoreManager.swift */; };
@@ -52,7 +57,12 @@
 		0105E41D1C9154A200AC4F09 /* SpecialTestsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpecialTestsTableViewController.swift; sourceTree = "<group>"; };
 		0105E41F1C915FFD00AC4F09 /* SpecialTestManagedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpecialTestManagedObject.swift; sourceTree = "<group>"; };
 		0105E4211C91600300AC4F09 /* SpecialTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpecialTest.swift; sourceTree = "<group>"; };
-		0105E4231C9166CE00AC4F09 /* SpecialTestsFetchedResultsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpecialTestsFetchedResultsController.swift; sourceTree = "<group>"; };
+		011807051CABA5880061A64F /* Muscle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Muscle.swift; sourceTree = "<group>"; };
+		011807071CABA5AC0061A64F /* MuscleManagedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MuscleManagedObject.swift; sourceTree = "<group>"; };
+		011807091CABA5D90061A64F /* MusclesFetchedResultsControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusclesFetchedResultsControllers.swift; sourceTree = "<group>"; };
+		0118070B1CABBFBA0061A64F /* SpecialTestsFetchedResultsControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpecialTestsFetchedResultsControllers.swift; sourceTree = "<group>"; };
+		0118070D1CABD4B50061A64F /* BasicPhoto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicPhoto.swift; sourceTree = "<group>"; };
+		01195E321CAB515100CD7631 /* RangeOfMotionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RangeOfMotionTableViewCell.swift; sourceTree = "<group>"; };
 		011E015E1C86463400AB8BA0 /* Clinical Skills.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Clinical Skills.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		011E01611C86463400AB8BA0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		011E016B1C86463400AB8BA0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -142,6 +152,7 @@
 				0105E41F1C915FFD00AC4F09 /* SpecialTestManagedObject.swift */,
 				01D620F11C953A6500756A7F /* ImageLinkManagedObject.swift */,
 				011F3DA41C927522002749E5 /* VideoLinkManagedObject.swift */,
+				011807071CABA5AC0061A64F /* MuscleManagedObject.swift */,
 			);
 			path = "Core Data";
 			sourceTree = "<group>";
@@ -151,6 +162,7 @@
 			children = (
 				01BF47DE1C9555B6003B10CB /* ImagesTableViewCell.swift */,
 				01D620ED1C95348B00756A7F /* ImageCollectionViewCell.swift */,
+				01195E321CAB515100CD7631 /* RangeOfMotionTableViewCell.swift */,
 				011E01BC1C86500400AB8BA0 /* Storyboard */,
 			);
 			path = View;
@@ -172,9 +184,9 @@
 		011E01791C8646AA00AB8BA0 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				011E01871C864A0500AB8BA0 /* DatastoreManager.swift */,
 				011E01991C864A6A00AB8BA0 /* RemoteConnectionManager.swift */,
 				011E018D1C864A2900AB8BA0 /* JSONParser.swift */,
+				011E01871C864A0500AB8BA0 /* DatastoreManager.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -185,6 +197,7 @@
 				011E019F1C864A7900AB8BA0 /* StoryboardSegueIdentifiers.swift */,
 				01694BC51C91E6B2008FBA91 /* StoryboardTabIdentifiers.swift */,
 				011E01B11C864A9D00AB8BA0 /* UserDefaultsManager.swift */,
+				0118070D1CABD4B50061A64F /* BasicPhoto.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -207,6 +220,7 @@
 				011E01A51C864A8600AB8BA0 /* System.swift */,
 				01BCAE661C8FC1920076ECE5 /* Component.swift */,
 				01D42CB91CA503A900A2AFD3 /* RangeOfMotion.swift */,
+				011807051CABA5880061A64F /* Muscle.swift */,
 				0105E4211C91600300AC4F09 /* SpecialTest.swift */,
 				01D620EF1C953A5700756A7F /* ImageLink.swift */,
 				011F3DA21C927519002749E5 /* VideoLink.swift */,
@@ -221,10 +235,11 @@
 			children = (
 				011E01A91C864A8E00AB8BA0 /* SystemFetchedResultsControllers.swift */,
 				018FF8981C9013160087FB81 /* ComponentsFetchedResultsControllers.swift */,
-				0105E4231C9166CE00AC4F09 /* SpecialTestsFetchedResultsController.swift */,
+				0118070B1CABBFBA0061A64F /* SpecialTestsFetchedResultsControllers.swift */,
 				01D620F31C953A7700756A7F /* ImageLinksFetchedResultsControllers.swift */,
 				011F3DAA1C928EEF002749E5 /* VideoLinksFetchedResultsControllers.swift */,
 				01A2B4EA1CA666D500E4F3B8 /* RangesOfMotionFetchedResultsControllers.swift */,
+				011807091CABA5D90061A64F /* MusclesFetchedResultsControllers.swift */,
 			);
 			path = "Fetched Results Controlelr";
 			sourceTree = "<group>";
@@ -317,6 +332,9 @@
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/SwiftyJSON.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/BRYXBanner.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/NYTPhotoViewer.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/NYTPhotoViewerCore.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/FLAnimatedImage.framework",
 			);
 			outputPaths = (
 			);
@@ -331,16 +349,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0105E4241C9166CE00AC4F09 /* SpecialTestsFetchedResultsController.swift in Sources */,
+				011807061CABA5880061A64F /* Muscle.swift in Sources */,
 				01D42CBA1CA503A900A2AFD3 /* RangeOfMotion.swift in Sources */,
 				011E01A01C864A7900AB8BA0 /* StoryboardSegueIdentifiers.swift in Sources */,
 				01A610201CA4F20300A63ED6 /* ComponentDetailsTableViewController.swift in Sources */,
 				0105E4221C91600300AC4F09 /* SpecialTest.swift in Sources */,
 				01694BC61C91E6B2008FBA91 /* StoryboardTabIdentifiers.swift in Sources */,
 				01D620F41C953A7700756A7F /* ImageLinksFetchedResultsControllers.swift in Sources */,
+				011807081CABA5AC0061A64F /* MuscleManagedObject.swift in Sources */,
+				0118070A1CABA5D90061A64F /* MusclesFetchedResultsControllers.swift in Sources */,
 				01A610221CA4FB2600A63ED6 /* RangeOfMotionManagedObject.swift in Sources */,
 				01D620F01C953A5700756A7F /* ImageLink.swift in Sources */,
 				01BCAE671C8FC1920076ECE5 /* Component.swift in Sources */,
+				0118070C1CABBFBA0061A64F /* SpecialTestsFetchedResultsControllers.swift in Sources */,
 				011E01A61C864A8600AB8BA0 /* System.swift in Sources */,
 				011E01BB1C864C1A00AB8BA0 /* ClinicalSkillsCoreDataModel.xcdatamodeld in Sources */,
 				011E01AE1C864A9600AB8BA0 /* SystemsTableViewController.swift in Sources */,
@@ -358,10 +379,12 @@
 				011F3DA31C927519002749E5 /* VideoLink.swift in Sources */,
 				011F3DA11C920A5F002749E5 /* SpecialTestDetailTableViewController.swift in Sources */,
 				018FF8991C9013160087FB81 /* ComponentsFetchedResultsControllers.swift in Sources */,
+				0118070E1CABD4B50061A64F /* BasicPhoto.swift in Sources */,
 				01BF6F781C8D4A410067D804 /* PocketHistoryViewController.swift in Sources */,
 				011F3DAB1C928EEF002749E5 /* VideoLinksFetchedResultsControllers.swift in Sources */,
 				011E018E1C864A2900AB8BA0 /* JSONParser.swift in Sources */,
 				01D620F21C953A6500756A7F /* ImageLinkManagedObject.swift in Sources */,
+				01195E331CAB515100CD7631 /* RangeOfMotionTableViewCell.swift in Sources */,
 				018FF8971C9010BF0087FB81 /* ComponentsTableViewController.swift in Sources */,
 				01D620EE1C95348B00756A7F /* ImageCollectionViewCell.swift in Sources */,
 				011E01621C86463400AB8BA0 /* AppDelegate.swift in Sources */,
