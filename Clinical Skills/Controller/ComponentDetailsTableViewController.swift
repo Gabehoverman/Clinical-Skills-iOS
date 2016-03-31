@@ -155,7 +155,7 @@ class ComponentDetailsTableViewController : UITableViewController {
 		if indexPath.section == 4 {
 			let fixedSectionIndexPath = NSIndexPath(forRow: indexPath.row, inSection: 0)
 			if let managedSpecialTest = self.specialTestsFetchedResultsController?.objectAtIndexPath(fixedSectionIndexPath) as? SpecialTestManagedObject {
-				self.performSegueWithIdentifier(StoryboardSegueIdentifiers.toSpecialTestsDetailView.rawValue, sender: managedSpecialTest)
+				self.performSegueWithIdentifier(StoryboardIdentifiers.segue.toSpecialTestsDetailView, sender: managedSpecialTest)
 			}
 		}
 	}

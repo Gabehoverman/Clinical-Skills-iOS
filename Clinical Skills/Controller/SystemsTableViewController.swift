@@ -73,7 +73,7 @@ class SystemsTableViewController: UITableViewController {
 	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 		if let controller = self.fetchedResultsController {
 			if let managedSystem = controller.objectAtIndexPath(indexPath) as? SystemManagedObject {
-				self.performSegueWithIdentifier(StoryboardSegueIdentifiers.toComponentsView.rawValue, sender: System.systemFromManagedObject(managedSystem))
+				self.performSegueWithIdentifier(StoryboardIdentifiers.segue.toComponentsView, sender: System.systemFromManagedObject(managedSystem))
 			} else {
 				print("Error getting System")
 			}
@@ -123,7 +123,7 @@ class SystemsTableViewController: UITableViewController {
 	// MARK: - Navigation Methods
 	
 	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-		if segue.identifier == StoryboardSegueIdentifiers.toComponentsView.rawValue {
+		if segue.identifier == StoryboardIdentifiers.segue.toComponentsView {
 			if let destination = segue.destinationViewController as? ComponentsTableViewController {
 				if let system = sender as? System {
 					destination.parentSystem = system

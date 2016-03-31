@@ -82,7 +82,7 @@ class SpecialTestsTableViewController : UITableViewController {
 	
 	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 		if let managedSpecialTest = self.fetchedResultsController?.objectAtIndexPath(indexPath) as? SpecialTestManagedObject {
-			self.performSegueWithIdentifier(StoryboardSegueIdentifiers.toSpecialTestsDetailView.rawValue, sender: managedSpecialTest)
+			self.performSegueWithIdentifier(StoryboardIdentifiers.segue.toSpecialTestsView, sender: managedSpecialTest)
 		}
 	}
 	

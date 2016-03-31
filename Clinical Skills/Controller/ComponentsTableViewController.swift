@@ -82,10 +82,10 @@ class ComponentsTableViewController : UITableViewController {
 		if self.fetchedResultsController != nil {
 			if let managedComponent = self.fetchedResultsController!.objectAtIndexPath(indexPath) as? ComponentManagedObject {
 				if let selectedTabTitle = self.tabBarController?.selectedViewController?.tabBarItem.title {
-					if selectedTabTitle == StoryboardTabIdentifiers.clinicalSkills.rawValue {
-						self.performSegueWithIdentifier(StoryboardSegueIdentifiers.toComponentDetailsView.rawValue, sender: managedComponent)
-					} else if selectedTabTitle == StoryboardTabIdentifiers.outlinedReview.rawValue {
-						self.performSegueWithIdentifier(StoryboardSegueIdentifiers.toSpecialTestsView.rawValue, sender: managedComponent)
+					if selectedTabTitle == StoryboardIdentifiers.tab.clinicalSkills {
+						self.performSegueWithIdentifier(StoryboardIdentifiers.segue.toComponentDetailsView, sender: managedComponent)
+					} else if selectedTabTitle == StoryboardIdentifiers.tab.outlinedReview {
+						self.performSegueWithIdentifier(StoryboardIdentifiers.segue.toSpecialTestsView, sender: managedComponent)
 					}
 				}
 			}
@@ -131,13 +131,13 @@ class ComponentsTableViewController : UITableViewController {
 	}
 	
 	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-		if segue.identifier == StoryboardSegueIdentifiers.toComponentDetailsView.rawValue {
+		if segue.identifier == StoryboardIdentifiers.segue.toComponentDetailsView {
 			if let destination = segue.destinationViewController as? ComponentDetailsTableViewController {
 				if let managedComponent = sender as? ComponentManagedObject {
 					destination.component = Component.componentFromManagedObject(managedComponent)
 				}
 			}
-		} else if segue.identifier == StoryboardSegueIdentifiers.toSpecialTestsView.rawValue {
+		} else if segue.identifier == StoryboardIdentifiers.segue.toSpecialTestsView {
 			if let destination = segue.destinationViewController as? SpecialTestsTableViewController {
 				if let managedComponent = sender as? ComponentManagedObject {
 					destination.parentComponent = Component.componentFromManagedObject(managedComponent)
