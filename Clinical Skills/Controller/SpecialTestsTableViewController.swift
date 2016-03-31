@@ -47,8 +47,6 @@ class SpecialTestsTableViewController : UITableViewController {
 			if let count = self.fetchedResultsController?.fetchedObjects?.count where count == 0 {
 				self.remoteConnectionManager?.fetchSpecialTests(forComponent: self.component!)
 			}
-			
-			self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: .Top, animated: false)
 		}
 	}
 	
