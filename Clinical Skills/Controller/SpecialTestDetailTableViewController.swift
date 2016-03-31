@@ -81,14 +81,26 @@ class SpecialTestDetailTableViewController : UITableViewController {
 	}
 	
 	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		if section == 5 {
-			if let count = self.videoLinksFetchedResultsController?.fetchedObjects?.count {
-				return count
-			} else {
-				return 0
+		if self.parentSpecialTest != nil {
+			if section == 0 && self.parentSpecialTest!.name != "" {
+				return 1
+			} else if section == 1 && self.parentSpecialTest!.positiveSign != "" {
+				return 1
+			} else if section == 2 && self.parentSpecialTest!.indication != "" {
+				return 1
+			} else if section == 3 && self.parentSpecialTest!.notes != "" {
+				return 1
+			} else if section == 4 {
+				if let count = self.imageLinksFetchedResultsController?.fetchedObjects?.count where count != 0 {
+					return 1
+				}
+			} else if section == 5 {
+				if let count = self.videoLinksFetchedResultsController?.fetchedObjects?.count {
+					return count
+				}
 			}
 		}
-		return 1
+		return 0
 	}
 	
 	override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
