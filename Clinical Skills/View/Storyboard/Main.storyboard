@@ -612,30 +612,55 @@
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PalpationCell" id="ppu-td-y7T">
-                                <rect key="frame" x="0.0" y="136" width="600" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PalpationCell" rowHeight="132" id="ppu-td-y7T" customClass="PalpationTableViewCell" customModule="Clinical_Skills" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="136" width="600" height="132"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ppu-td-y7T" id="89k-G8-0VX">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="131"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Palpation" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eHH-eb-nXP">
-                                            <rect key="frame" x="16" y="8" width="576" height="27"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Structure" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eHH-eb-nXP">
+                                            <rect key="frame" x="16" y="8" width="576" height="64"/>
+                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Details" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jxJ-Ns-20N">
+                                            <rect key="frame" x="16" y="80" width="576" height="18"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notes" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BM5-Ag-o0t">
+                                            <rect key="frame" x="16" y="106" width="576" height="17"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="eHH-eb-nXP" firstAttribute="leading" secondItem="89k-G8-0VX" secondAttribute="leadingMargin" constant="8" id="D7W-oY-oIO"/>
-                                        <constraint firstItem="eHH-eb-nXP" firstAttribute="top" secondItem="89k-G8-0VX" secondAttribute="topMargin" id="UmC-TM-kus"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="eHH-eb-nXP" secondAttribute="trailing" id="dak-v0-RP9"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="eHH-eb-nXP" secondAttribute="bottom" id="vn5-qV-zax"/>
+                                        <constraint firstItem="BM5-Ag-o0t" firstAttribute="leading" secondItem="89k-G8-0VX" secondAttribute="leadingMargin" constant="8" id="4De-E3-Hhf"/>
+                                        <constraint firstItem="BM5-Ag-o0t" firstAttribute="top" secondItem="jxJ-Ns-20N" secondAttribute="bottom" constant="8" id="5Nj-rc-C5p"/>
+                                        <constraint firstItem="eHH-eb-nXP" firstAttribute="top" secondItem="89k-G8-0VX" secondAttribute="topMargin" id="7s4-jN-Jgn"/>
+                                        <constraint firstItem="eHH-eb-nXP" firstAttribute="leading" secondItem="89k-G8-0VX" secondAttribute="leadingMargin" constant="8" id="DXS-C0-Zav"/>
+                                        <constraint firstItem="BM5-Ag-o0t" firstAttribute="trailing" secondItem="89k-G8-0VX" secondAttribute="trailingMargin" id="NXm-Ve-5Zc"/>
+                                        <constraint firstItem="jxJ-Ns-20N" firstAttribute="top" secondItem="eHH-eb-nXP" secondAttribute="bottom" constant="8" id="NfE-Nd-fd7"/>
+                                        <constraint firstItem="jxJ-Ns-20N" firstAttribute="leading" secondItem="89k-G8-0VX" secondAttribute="leadingMargin" constant="8" id="ZSR-PP-rPw"/>
+                                        <constraint firstItem="BM5-Ag-o0t" firstAttribute="top" secondItem="jxJ-Ns-20N" secondAttribute="bottom" constant="8" id="ZfY-q5-BdG"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="BM5-Ag-o0t" secondAttribute="bottom" id="eQr-lk-ByT"/>
+                                        <constraint firstItem="jxJ-Ns-20N" firstAttribute="trailing" secondItem="89k-G8-0VX" secondAttribute="trailingMargin" id="gbv-ms-zoa"/>
+                                        <constraint firstItem="eHH-eb-nXP" firstAttribute="trailing" secondItem="89k-G8-0VX" secondAttribute="trailingMargin" id="kgx-GE-dYP"/>
+                                        <constraint firstItem="jxJ-Ns-20N" firstAttribute="top" secondItem="eHH-eb-nXP" secondAttribute="bottom" constant="8" id="okz-l5-0kA"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="detailsLabel" destination="jxJ-Ns-20N" id="ugP-hK-sex"/>
+                                    <outlet property="notesLabel" destination="BM5-Ag-o0t" id="vwh-PC-kH0"/>
+                                    <outlet property="structureLabel" destination="eHH-eb-nXP" id="UP2-35-Gze"/>
+                                </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="RangeOfMotionCell" rowHeight="88" id="7dQ-Vh-Nhb" customClass="RangeOfMotionTableViewCell" customModule="Clinical_Skills" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="180" width="600" height="88"/>
+                                <rect key="frame" x="0.0" y="268" width="600" height="88"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7dQ-Vh-Nhb" id="T3I-Rr-fmI">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="87"/>
@@ -683,7 +708,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MuscleStrength" id="OxS-n5-CCN">
-                                <rect key="frame" x="0.0" y="268" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="356" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="OxS-n5-CCN" id="4ri-8u-ilx">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -705,7 +730,7 @@
                                 </tableViewCellContentView>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SpecialTestsCell" id="iii-j4-gVD">
-                                <rect key="frame" x="0.0" y="312" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="400" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iii-j4-gVD" id="afg-KQ-veb">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>

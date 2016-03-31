@@ -16,6 +16,7 @@ class ComponentDetailsTableViewController : UITableViewController {
 	
 	var component: Component?
 	
+	var palpationsFetchedResultsController: NSFetchedResultsController?
 	var rangesOfMotionFetchedResultsController: NSFetchedResultsController?
 	var musclesFetchedResultsController: NSFetchedResultsController?
 	var specialTestsFetchedResultsController: NSFetchedResultsController?
@@ -27,6 +28,7 @@ class ComponentDetailsTableViewController : UITableViewController {
 	
 	override func viewDidLoad() {
 		if (self.component != nil) {
+			self.palpationsFetchedResultsController = PalpationsFetchedResultsControllers.palpationsFetchedResultsController(forComponent: self.component!)
 			self.rangesOfMotionFetchedResultsController = RangesOfMotionFetchedResultsControllers.rangesOfMotionFetchedResultsController(forComponent: self.component!)
 			self.musclesFetchedResultsController = MusclesFetchedResultsControllers.musclesFetchedResultsController(forComponent: self.component!)
 			self.specialTestsFetchedResultsController = SpecialTestsFetchedResultsControllers.specialTestsFetchedResultsController(self.component!)
@@ -38,6 +40,10 @@ class ComponentDetailsTableViewController : UITableViewController {
 			
 			self.datastoreManager = DatastoreManager(delegate: self)
 			self.remoteConnectionManager = RemoteConnectionManager(delegate: self)
+			
+			if let count = self.palpationsFetchedResultsController?.fetchedObjects?.count where count == 0 {
+				self.remoteConnectionManager?.fetchPalpations(forComponent: self.component!)
+			}
 			
 			if let count = self.rangesOfMotionFetchedResultsController?.fetchedObjects?.count where count == 0 {
 				self.remoteConnectionManager?.fetchRangesOfMotion(forComponent: self.component!)
@@ -60,7 +66,7 @@ class ComponentDetailsTableViewController : UITableViewController {
 	override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 		switch (section) {
 			case 0: return "Inspection"
-			case 1: return "Palpation"
+			case 1: return "Palpations"
 			case 2: return "Ranges Of Motion"
 			case 3: return "Muscle Strength"
 			case 4: return "Special Tests"
@@ -69,7 +75,13 @@ class ComponentDetailsTableViewController : UITableViewController {
 	}
 	
 	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		if section == 2 {
+		if section == 1 {
+			if let count = self.palpationsFetchedResultsController?.fetchedObjects?.count {
+				return count
+			} else {
+				return 0
+			}
+		} else if section == 2 {
 			if let count = self.rangesOfMotionFetchedResultsController?.fetchedObjects?.count {
 				return count
 			} else {
@@ -107,7 +119,15 @@ class ComponentDetailsTableViewController : UITableViewController {
 		cell.textLabel?.font = UIFont.systemFontOfSize(14)
 		switch (indexPath.section) {
 			case 0: cell.textLabel?.text = self.component?.inspection
-			case 1: cell.textLabel?.text = "Palpation"
+			case 1:
+				if let palpationCell = tableView.dequeueReusableCellWithIdentifier("PalpationCell") as? PalpationTableViewCell {
+					if let managedPalpation = self.palpationsFetchedResultsController?.objectAtIndexPath(fixedSectionIndexPath) as? PalpationManagedObject {
+						palpationCell.structureLabel.text = managedPalpation.structure
+						palpationCell.detailsLabel.text = managedPalpation.details
+						palpationCell.notesLabel.text = managedPalpation.notes
+					}
+					return palpationCell
+				}
 			case 2:
 				if let rangeOfMotionCell = tableView.dequeueReusableCellWithIdentifier("RangeOfMotionCell") as? RangeOfMotionTableViewCell {
 					if let managedRangeOfMotion = self.rangesOfMotionFetchedResultsController?.objectAtIndexPath(fixedSectionIndexPath) as? RangeOfMotionManagedObject {
@@ -142,6 +162,7 @@ class ComponentDetailsTableViewController : UITableViewController {
 	
 	func fetchResultsWithReload(shouldReload: Bool) {
 		do {
+			try self.palpationsFetchedResultsController?.performFetch()
 			try self.rangesOfMotionFetchedResultsController?.performFetch()
 			try self.musclesFetchedResultsController?.performFetch()
 			try self.specialTestsFetchedResultsController?.performFetch()
@@ -205,7 +226,10 @@ extension ComponentDetailsTableViewController : RemoteConnectionManagerDelegate 
 	func didFinishDataRequestWithData(receivedData: NSData) {
 		let parser = JSONParser(rawData: receivedData)
 		if self.component != nil {
-			if parser.dataType == JSONParser.dataTypes.rangeOfMotion {
+			if parser.dataType == JSONParser.dataTypes.palpation {
+				let palpations = parser.parsePalpations(self.component!)
+				self.datastoreManager?.storePalpations(palpations)
+			} else if parser.dataType == JSONParser.dataTypes.rangeOfMotion {
 				let rangesOfMotion = parser.parseRangesOfMotion(self.component!)
 				self.datastoreManager?.storeRangesOfMotion(rangesOfMotion)
 			} else if parser.dataType == JSONParser.dataTypes.muscle {

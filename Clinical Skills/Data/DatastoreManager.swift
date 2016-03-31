@@ -45,6 +45,15 @@ class DatastoreManager : NSObject {
 		self.delegate?.didFinishStoring?()
 	}
 	
+	func storePalpations(palpations: [Palpation]) {
+		self.delegate?.didBeginStoring?()
+		for palpation in palpations {
+			self.storePalpation(palpation)
+		}
+		self.save()
+		self.delegate?.didFinishStoring?()
+	}
+	
 	func storeRangesOfMotion(rangesOfMotion: [RangeOfMotion]) {
 		self.delegate?.didBeginStoring?()
 		for rangeOfMotion in rangesOfMotion {
@@ -112,6 +121,21 @@ class DatastoreManager : NSObject {
 				newManagedComponent.notes = component.notes
 				if let managedSystem = self.retrieveSystemWithID(component.system.id) {
 					newManagedComponent.system = managedSystem
+				}
+			}
+		}
+	}
+	
+	func storePalpation(palpation: Palpation) {
+		if !self.containsPalpationWithID(palpation.id) {
+			let entity = NSEntityDescription.entityForName(PalpationManagedObject.entityName, inManagedObjectContext: self.managedObjectContext)!
+			if let newManagedPalpation = NSManagedObject(entity: entity, insertIntoManagedObjectContext: self.managedObjectContext) as? PalpationManagedObject {
+				newManagedPalpation.id = palpation.id
+				newManagedPalpation.structure = palpation.structure
+				newManagedPalpation.details = palpation.details
+				newManagedPalpation.notes = palpation.notes
+				if let managedComponent = self.retrieveComponentWithID(palpation.component.id) {
+					newManagedPalpation.component = managedComponent
 				}
 			}
 		}
@@ -209,6 +233,15 @@ class DatastoreManager : NSObject {
 		return nil
 	}
 	
+	func retrievePalpationWithID(id: Int32) -> PalpationManagedObject? {
+		let request = NSFetchRequest(entityName: PalpationManagedObject.entityName)
+		request.predicate = NSPredicate(format: "%K = %d", PalpationManagedObject.propertyKeys.id, id)
+		if let managedPalpation = try! self.managedObjectContext.executeFetchRequest(request).first as? PalpationManagedObject {
+			return managedPalpation
+		}
+		return nil
+	}
+	
 	func retrieveRangeOfMotionWithID(id: Int32) -> RangeOfMotionManagedObject? {
 		let request = NSFetchRequest(entityName: RangeOfMotionManagedObject.entityName)
 		request.predicate = NSPredicate(format: "%K = %d", RangeOfMotionManagedObject.propertyKeys.id, id)
@@ -266,6 +299,13 @@ class DatastoreManager : NSObject {
 	func containsComponentWithID(id: Int32) -> Bool {
 		let request = NSFetchRequest(entityName: ComponentManagedObject.entityName)
 		request.predicate = NSPredicate(format: "%K = %d", ComponentManagedObject.propertyKeys.id, id)
+		let results = try! self.managedObjectContext.executeFetchRequest(request)
+		return results.count != 0
+	}
+	
+	func containsPalpationWithID(id: Int32) -> Bool {
+		let request = NSFetchRequest(entityName: PalpationManagedObject.entityName)
+		request.predicate = NSPredicate(format: "%K = %d", PalpationManagedObject.propertyKeys.id, id)
 		let results = try! self.managedObjectContext.executeFetchRequest(request)
 		return results.count != 0
 	}
