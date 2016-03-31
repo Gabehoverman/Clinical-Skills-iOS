@@ -206,7 +206,7 @@ extension SpecialTestDetailTableViewController : UICollectionViewDataSource {
 	}
 	
 	func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-		if let initialImage = self.images?.first {
+		if let initialImage = self.images?[indexPath.row] {
 			let photosViewController = NYTPhotosViewController(photos: self.images, initialPhoto: initialImage)
 			self.presentViewController(photosViewController, animated: true, completion: nil)
 		}
