@@ -12,6 +12,7 @@ struct StoryboardIdentifiers {
 	struct segue {
 		static let toComponentsView = "toComponentsView"
 		static let toComponentDetailsView = "toComponentDetailsView"
+		static let toExamsView = "toExamsView"
 		static let toSpecialTestsView = "toSpecialTestsView"
 		static let toSpecialTestsDetailView = "toSpecialTestsDetailView"
 	}

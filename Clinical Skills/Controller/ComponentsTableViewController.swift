@@ -85,7 +85,7 @@ class ComponentsTableViewController : UITableViewController {
 					if selectedTabTitle == StoryboardIdentifiers.tab.clinicalSkills {
 						self.performSegueWithIdentifier(StoryboardIdentifiers.segue.toComponentDetailsView, sender: managedComponent)
 					} else if selectedTabTitle == StoryboardIdentifiers.tab.outlinedReview {
-						self.performSegueWithIdentifier(StoryboardIdentifiers.segue.toSpecialTestsView, sender: managedComponent)
+						self.performSegueWithIdentifier(StoryboardIdentifiers.segue.toExamsView, sender: managedComponent)
 					}
 				}
 			}
@@ -137,10 +137,10 @@ class ComponentsTableViewController : UITableViewController {
 					destination.component = Component.componentFromManagedObject(managedComponent)
 				}
 			}
-		} else if segue.identifier == StoryboardIdentifiers.segue.toSpecialTestsView {
-			if let destination = segue.destinationViewController as? SpecialTestsTableViewController {
+		} else if segue.identifier == StoryboardIdentifiers.segue.toExamsView {
+			if let destination = segue.destinationViewController as? ExamsContainerViewController {
 				if let managedComponent = sender as? ComponentManagedObject {
-					destination.parentComponent = Component.componentFromManagedObject(managedComponent)
+					destination.component = Component.componentFromManagedObject(managedComponent)
 				}
 			}
 		}

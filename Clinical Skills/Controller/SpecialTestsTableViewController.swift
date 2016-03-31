@@ -16,7 +16,7 @@ class SpecialTestsTableViewController : UITableViewController {
 	
 	// MARK: - Properties
 	
-	var parentComponent: Component?
+	var component: Component?
 	
 	var fetchedResultsController: NSFetchedResultsController?
 	
@@ -32,8 +32,8 @@ class SpecialTestsTableViewController : UITableViewController {
 	// MARK: - View Controller Methods
 	
 	override func viewDidLoad() {
-		if self.parentComponent != nil {
-			self.fetchedResultsController = SpecialTestsFetchedResultsControllers.specialTestsFetchedResultsController(self.parentComponent!)
+		if self.component != nil {
+			self.fetchedResultsController = SpecialTestsFetchedResultsControllers.specialTestsFetchedResultsController(self.component!)
 			self.fetchResultsWithReload(false)
 			
 			self.refreshControl?.addTarget(self, action: Selector("handleRefresh:"), forControlEvents: .ValueChanged)
@@ -45,8 +45,10 @@ class SpecialTestsTableViewController : UITableViewController {
 			self.remoteConnectionManager = RemoteConnectionManager(delegate: self)
 			
 			if let count = self.fetchedResultsController?.fetchedObjects?.count where count == 0 {
-				self.remoteConnectionManager?.fetchSpecialTests(forComponent: self.parentComponent!)
+				self.remoteConnectionManager?.fetchSpecialTests(forComponent: self.component!)
 			}
+			
+			self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: .Top, animated: false)
 		}
 	}
 	
@@ -82,7 +84,7 @@ class SpecialTestsTableViewController : UITableViewController {
 	
 	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 		if let managedSpecialTest = self.fetchedResultsController?.objectAtIndexPath(indexPath) as? SpecialTestManagedObject {
-			self.performSegueWithIdentifier(StoryboardIdentifiers.segue.toSpecialTestsView, sender: managedSpecialTest)
+			self.performSegueWithIdentifier(StoryboardIdentifiers.segue.toSpecialTestsDetailView, sender: managedSpecialTest)
 		}
 	}
 	
@@ -102,7 +104,7 @@ class SpecialTestsTableViewController : UITableViewController {
 	// MARK: - Refresh Methods
 	
 	func handleRefresh(refreshControl: UIRefreshControl) {
-		self.remoteConnectionManager!.fetchSpecialTests(forComponent: self.parentComponent!)
+		self.remoteConnectionManager!.fetchSpecialTests(forComponent: self.component!)
 	}
 	
 	// MARK: - Activity Indicator Methods
@@ -127,9 +129,11 @@ class SpecialTestsTableViewController : UITableViewController {
 	// MARK: - Navigation Methods
 	
 	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-		if let managedSpecialTest = sender as? SpecialTestManagedObject {
-			if let destination = segue.destinationViewController as? SpecialTestDetailTableViewController {
-				destination.parentSpecialTest = SpecialTest.specialTestFromManagedObject(managedSpecialTest)
+		if segue.identifier == StoryboardIdentifiers.segue.toSpecialTestsDetailView {
+			if let managedSpecialTest = sender as? SpecialTestManagedObject {
+				if let destination = segue.destinationViewController as? SpecialTestDetailTableViewController {
+					destination.parentSpecialTest = SpecialTest.specialTestFromManagedObject(managedSpecialTest)
+				}
 			}
 		}
 	}
@@ -153,8 +157,8 @@ extension SpecialTestsTableViewController : RemoteConnectionManagerDelegate {
 	func didFinishDataRequestWithData(receivedData: NSData) {
 		let parser = JSONParser(rawData: receivedData)
 		if parser.dataType == JSONParser.dataTypes.specialTest {
-			if self.parentComponent != nil {
-				let specialTests = parser.parseSpecialTests(self.parentComponent!)
+			if self.component != nil {
+				let specialTests = parser.parseSpecialTests(self.component!)
 				self.datastoreManager!.storeSpecialTests(specialTests)
 			}
 		}

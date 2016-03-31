@@ -245,9 +245,6 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="Ulh-n3-PXy" kind="show" identifier="toSpecialTestsView" id="Tkt-r2-H4m"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -267,6 +264,9 @@
                             </fragment>
                         </attributedString>
                     </refreshControl>
+                    <connections>
+                        <segue destination="9bS-lw-WJR" kind="show" identifier="toExamsView" id="Q8f-T7-Oj8"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NM7-h0-O0F" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -275,14 +275,14 @@
         <!--Special Tests Table View Controller-->
         <scene sceneID="Roo-bW-qel">
             <objects>
-                <tableViewController title="Special Tests Table View Controller" id="Ulh-n3-PXy" userLabel="Special Tests Table View Controller" customClass="SpecialTestsTableViewController" customModule="Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="SpecialTestsTableViewController" title="Special Tests Table View Controller" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Ulh-n3-PXy" userLabel="Special Tests Table View Controller" customClass="SpecialTestsTableViewController" customModule="Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="41" sectionHeaderHeight="28" sectionFooterHeight="28" id="fCX-1w-6ux">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SpecialTestTableViewCell" id="ew1-u5-9hq">
-                                <rect key="frame" x="0.0" y="92" width="600" height="41"/>
+                                <rect key="frame" x="0.0" y="28" width="600" height="41"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ew1-u5-9hq" id="Xza-TL-QRd">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="40"/>
@@ -309,7 +309,6 @@
                             <outlet property="delegate" destination="Ulh-n3-PXy" id="jD2-n9-bXU"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Special Tests" id="gcN-r7-njm"/>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="q75-uv-QGd">
                         <autoresizingMask key="autoresizingMask"/>
                         <attributedString key="attributedTitle">
@@ -327,6 +326,60 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BJx-UY-Oq2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="8179" y="2118"/>
+        </scene>
+        <!--Exams-->
+        <scene sceneID="JW2-66-hJw">
+            <objects>
+                <viewController id="9bS-lw-WJR" customClass="ExamsContainerViewController" customModule="Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="wF5-fS-6vb"/>
+                        <viewControllerLayoutGuide type="bottom" id="4cd-Cg-2er"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="vtw-iV-suw">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="aLX-z1-vMJ">
+                                <rect key="frame" x="20" y="515" width="560" height="29"/>
+                                <segments>
+                                    <segment title="Special Tests"/>
+                                    <segment title="Basic Exams"/>
+                                </segments>
+                                <connections>
+                                    <action selector="tabChanged:" destination="9bS-lw-WJR" eventType="valueChanged" id="xZo-eh-3YA"/>
+                                </connections>
+                            </segmentedControl>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="afr-Oy-aqx">
+                                <rect key="frame" x="0.0" y="64" width="600" height="443"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="afr-Oy-aqx" firstAttribute="leading" secondItem="vtw-iV-suw" secondAttribute="leadingMargin" constant="-20" id="5U4-aJ-RWB"/>
+                            <constraint firstItem="aLX-z1-vMJ" firstAttribute="trailing" secondItem="vtw-iV-suw" secondAttribute="trailingMargin" id="9nK-EO-hUs"/>
+                            <constraint firstItem="aLX-z1-vMJ" firstAttribute="leading" secondItem="vtw-iV-suw" secondAttribute="leadingMargin" id="Ll7-Dw-Ryc"/>
+                            <constraint firstItem="4cd-Cg-2er" firstAttribute="top" secondItem="aLX-z1-vMJ" secondAttribute="bottom" constant="8" id="S3b-TY-1od"/>
+                            <constraint firstItem="aLX-z1-vMJ" firstAttribute="top" secondItem="afr-Oy-aqx" secondAttribute="bottom" constant="8" id="bCu-Lr-ebd"/>
+                            <constraint firstItem="afr-Oy-aqx" firstAttribute="top" secondItem="wF5-fS-6vb" secondAttribute="bottom" id="biO-U4-iQF"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="afr-Oy-aqx" secondAttribute="trailing" constant="-20" id="dLX-3R-RyV"/>
+                            <constraint firstItem="afr-Oy-aqx" firstAttribute="top" secondItem="wF5-fS-6vb" secondAttribute="bottom" id="sOF-xa-cmc"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="sOF-xa-cmc"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <navigationItem key="navigationItem" title="Exams" id="8ci-Ve-0HI"/>
+                    <connections>
+                        <outlet property="contentView" destination="afr-Oy-aqx" id="g26-7g-QIO"/>
+                        <outlet property="segmentControl" destination="aLX-z1-vMJ" id="H6B-sq-KQa"/>
+                        <segue destination="Ulh-n3-PXy" kind="showDetail" id="BAZ-Yv-nqk"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Hjp-5r-hyy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
             <point key="canvasLocation" x="7319" y="2118"/>
         </scene>
         <!--Special Tests Detail Table View Controller-->
@@ -339,7 +392,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NameCell" id="P77-7g-E7H">
-                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="28" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="P77-7g-E7H" id="cRD-CQ-zNA">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -361,7 +414,7 @@
                                 </tableViewCellContentView>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PositiveSignCell" id="1XY-Ft-xsU">
-                                <rect key="frame" x="0.0" y="136" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="72" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1XY-Ft-xsU" id="jIv-io-idU">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -383,7 +436,7 @@
                                 </tableViewCellContentView>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="IndicationCell" id="rYr-tz-enJ">
-                                <rect key="frame" x="0.0" y="180" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="116" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rYr-tz-enJ" id="kQJ-6L-cQ9">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -405,7 +458,7 @@
                                 </tableViewCellContentView>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="VideoLinkCell" id="cmt-M6-H3c" userLabel="NoteCell">
-                                <rect key="frame" x="0.0" y="224" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="160" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cmt-M6-H3c" id="1X0-mA-o9s">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -427,7 +480,7 @@
                                 </tableViewCellContentView>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ImagesCell" rowHeight="132" id="HY1-WG-T6z" userLabel="ImagesCell" customClass="ImagesTableViewCell" customModule="Clinical_Skills" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="268" width="600" height="132"/>
+                                <rect key="frame" x="0.0" y="204" width="600" height="132"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HY1-WG-T6z" id="Rq1-aX-6Dz">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="131"/>
@@ -485,7 +538,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NotesCell" id="NfU-Bw-syi" userLabel="VideoLinkCell">
-                                <rect key="frame" x="0.0" y="400" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="336" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NfU-Bw-syi" id="hUh-vs-xOi">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -527,7 +580,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WVW-Qg-bN8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="8179" y="2118"/>
+            <point key="canvasLocation" x="9039" y="2118"/>
         </scene>
         <!--Components Table View Controller-->
         <scene sceneID="3Qg-fz-pmt">
