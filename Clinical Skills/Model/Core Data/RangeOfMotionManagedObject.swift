@@ -20,11 +20,11 @@ class RangeOfMotionManagedObject : NSManagedObject {
 		static let notes = "notes"
 	}
 	
+	@NSManaged var component: ComponentManagedObject
 	@NSManaged var id: Int32
 	@NSManaged var motion: String
 	@NSManaged var degrees: String
 	@NSManaged var notes: String
-	@NSManaged var component: ComponentManagedObject
 	
 	override var description: String {
 		get {

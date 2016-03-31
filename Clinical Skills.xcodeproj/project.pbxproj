@@ -51,6 +51,10 @@
 		01D620F01C953A5700756A7F /* ImageLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D620EF1C953A5700756A7F /* ImageLink.swift */; };
 		01D620F21C953A6500756A7F /* ImageLinkManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D620F11C953A6500756A7F /* ImageLinkManagedObject.swift */; };
 		01D620F41C953A7700756A7F /* ImageLinksFetchedResultsControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D620F31C953A7700756A7F /* ImageLinksFetchedResultsControllers.swift */; };
+		01DB222F1CACD76A0069ECFB /* PalpationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DB222E1CACD76A0069ECFB /* PalpationTableViewCell.swift */; };
+		01DB22311CACDB110069ECFB /* Palpation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DB22301CACDB110069ECFB /* Palpation.swift */; };
+		01DB22331CACDB180069ECFB /* PalpationManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DB22321CACDB180069ECFB /* PalpationManagedObject.swift */; };
+		01DB22351CACE5F30069ECFB /* PalpationsFetchedResultsControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DB22341CACE5F30069ECFB /* PalpationsFetchedResultsControllers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -100,6 +104,10 @@
 		01D620EF1C953A5700756A7F /* ImageLink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLink.swift; sourceTree = "<group>"; };
 		01D620F11C953A6500756A7F /* ImageLinkManagedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLinkManagedObject.swift; sourceTree = "<group>"; };
 		01D620F31C953A7700756A7F /* ImageLinksFetchedResultsControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLinksFetchedResultsControllers.swift; sourceTree = "<group>"; };
+		01DB222E1CACD76A0069ECFB /* PalpationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PalpationTableViewCell.swift; path = "Table View Cells/PalpationTableViewCell.swift"; sourceTree = "<group>"; };
+		01DB22301CACDB110069ECFB /* Palpation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Palpation.swift; sourceTree = "<group>"; };
+		01DB22321CACDB180069ECFB /* PalpationManagedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PalpationManagedObject.swift; sourceTree = "<group>"; };
+		01DB22341CACE5F30069ECFB /* PalpationsFetchedResultsControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PalpationsFetchedResultsControllers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +156,7 @@
 				011E01B91C864C1A00AB8BA0 /* ClinicalSkillsCoreDataModel.xcdatamodeld */,
 				011E01AB1C864A9200AB8BA0 /* SystemManagedObject.swift */,
 				01BCAE681C8FC2720076ECE5 /* ComponentManagedObject.swift */,
+				01DB22321CACDB180069ECFB /* PalpationManagedObject.swift */,
 				01A610211CA4FB2600A63ED6 /* RangeOfMotionManagedObject.swift */,
 				0105E41F1C915FFD00AC4F09 /* SpecialTestManagedObject.swift */,
 				01D620F11C953A6500756A7F /* ImageLinkManagedObject.swift */,
@@ -163,6 +172,7 @@
 				01BF47DE1C9555B6003B10CB /* ImagesTableViewCell.swift */,
 				01D620ED1C95348B00756A7F /* ImageCollectionViewCell.swift */,
 				01195E321CAB515100CD7631 /* RangeOfMotionTableViewCell.swift */,
+				01DB222E1CACD76A0069ECFB /* PalpationTableViewCell.swift */,
 				011E01BC1C86500400AB8BA0 /* Storyboard */,
 			);
 			path = View;
@@ -219,6 +229,7 @@
 			children = (
 				011E01A51C864A8600AB8BA0 /* System.swift */,
 				01BCAE661C8FC1920076ECE5 /* Component.swift */,
+				01DB22301CACDB110069ECFB /* Palpation.swift */,
 				01D42CB91CA503A900A2AFD3 /* RangeOfMotion.swift */,
 				011807051CABA5880061A64F /* Muscle.swift */,
 				0105E4211C91600300AC4F09 /* SpecialTest.swift */,
@@ -240,6 +251,7 @@
 				011F3DAA1C928EEF002749E5 /* VideoLinksFetchedResultsControllers.swift */,
 				01A2B4EA1CA666D500E4F3B8 /* RangesOfMotionFetchedResultsControllers.swift */,
 				011807091CABA5D90061A64F /* MusclesFetchedResultsControllers.swift */,
+				01DB22341CACE5F30069ECFB /* PalpationsFetchedResultsControllers.swift */,
 			);
 			path = "Fetched Results Controlelr";
 			sourceTree = "<group>";
@@ -356,17 +368,21 @@
 				01A610201CA4F20300A63ED6 /* ComponentDetailsTableViewController.swift in Sources */,
 				0105E4221C91600300AC4F09 /* SpecialTest.swift in Sources */,
 				01694BC61C91E6B2008FBA91 /* StoryboardTabIdentifiers.swift in Sources */,
+				01DB22311CACDB110069ECFB /* Palpation.swift in Sources */,
 				01D620F41C953A7700756A7F /* ImageLinksFetchedResultsControllers.swift in Sources */,
 				011807081CABA5AC0061A64F /* MuscleManagedObject.swift in Sources */,
 				0118070A1CABA5D90061A64F /* MusclesFetchedResultsControllers.swift in Sources */,
 				01A610221CA4FB2600A63ED6 /* RangeOfMotionManagedObject.swift in Sources */,
+				01DB222F1CACD76A0069ECFB /* PalpationTableViewCell.swift in Sources */,
 				01D620F01C953A5700756A7F /* ImageLink.swift in Sources */,
 				01BCAE671C8FC1920076ECE5 /* Component.swift in Sources */,
 				0118070C1CABBFBA0061A64F /* SpecialTestsFetchedResultsControllers.swift in Sources */,
+				01DB22331CACDB180069ECFB /* PalpationManagedObject.swift in Sources */,
 				011E01A61C864A8600AB8BA0 /* System.swift in Sources */,
 				011E01BB1C864C1A00AB8BA0 /* ClinicalSkillsCoreDataModel.xcdatamodeld in Sources */,
 				011E01AE1C864A9600AB8BA0 /* SystemsTableViewController.swift in Sources */,
 				01BCAE691C8FC2720076ECE5 /* ComponentManagedObject.swift in Sources */,
+				01DB22351CACE5F30069ECFB /* PalpationsFetchedResultsControllers.swift in Sources */,
 				011E019A1C864A6A00AB8BA0 /* RemoteConnectionManager.swift in Sources */,
 				01BF47DF1C9555B6003B10CB /* ImagesTableViewCell.swift in Sources */,
 				011E01B21C864A9D00AB8BA0 /* UserDefaultsManager.swift in Sources */,

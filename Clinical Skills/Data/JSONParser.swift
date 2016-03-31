@@ -18,6 +18,7 @@ class JSONParser : NSObject {
 	struct dataTypes {
 		static let system = "system"
 		static let component = "component"
+		static let palpation = "palpation"
 		static let rangeOfMotion = "range_of_motion"
 		static let muscle = "muscle"
 		static let specialTest = "special_test"
@@ -78,6 +79,20 @@ class JSONParser : NSObject {
 			}
 		}
 		return components
+	}
+	
+	func parsePalpations(component: Component) -> [Palpation] {
+		var palpations = [Palpation]()
+		for (_, data) in self.json {
+			for (_, palpation) in data {
+				let id = Int32(palpation[MuscleManagedObject.propertyKeys.id].intValue)
+				let structure = palpation[PalpationManagedObject.propertyKeys.structure].stringValue
+				let details = palpation[PalpationManagedObject.propertyKeys.details].stringValue
+				let notes = palpation[PalpationManagedObject.propertyKeys.notes].stringValue
+				palpations.append(Palpation(component: component, id: id, structure: structure, details: details, notes: notes))
+			}
+		}
+		return palpations
 	}
 	
 	func parseRangesOfMotion(component: Component) -> [RangeOfMotion] {

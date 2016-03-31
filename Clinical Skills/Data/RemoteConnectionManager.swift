@@ -19,6 +19,7 @@ class RemoteConnectionManager : NSObject {
 	struct dataURLs {
 		static let systems = "systems.json"
 		static let components = "components.json"
+		static let palpations = "palpations.json"
 		static let ranges_of_motion = "ranges_of_motion.json"
 		static let muscles = "muscles.json"
 		static let specialTests = "special_tests.json"
@@ -97,6 +98,28 @@ class RemoteConnectionManager : NSObject {
 		urlString += dataURLs.components
 		
 		var queryString = "?system=\(system.name)"
+		queryString = queryString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
+		
+		urlString += queryString
+		
+		if let url = NSURL(string: urlString) {
+			self.fetchWithURL(url)
+		}
+	}
+	
+	func fetchPalpations(forComponent component: Component) {
+		self.isCloudinaryFetch = false
+		
+		var urlString: String
+		if self.shouldRequestFromLocal {
+			urlString = self.localBaseURL
+		} else {
+			urlString = self.remoteBaseURL
+		}
+		
+		urlString += dataURLs.palpations
+		
+		var queryString = "?component=\(component.name)"
 		queryString = queryString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
 		
 		urlString += queryString
