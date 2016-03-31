@@ -11,13 +11,15 @@ import UIKit
 import CoreData
 import BRYXBanner
 import SafariServices
+import NYTPhotoViewer
+import Async
 
 class SpecialTestDetailTableViewController : UITableViewController {
 	
 	// MARK: - Properites
 	
 	var parentSpecialTest: SpecialTest?
-	var images: [UIImage]?
+	var images: [BasicPhoto]?
 	
 	weak var imagesCollectionView: UICollectionView?
 	
@@ -27,25 +29,20 @@ class SpecialTestDetailTableViewController : UITableViewController {
 	var datastoreManager: DatastoreManager?
 	var remoteConnectionManager: RemoteConnectionManager?
 	
-	var searchController: UISearchController!
 	var activityIndicator: UIActivityIndicatorView?
-	
-	var searchPhrase: String?
-	var defaultSearchPredicate: NSPredicate?
 	
 	// MARK: - View Controller Methods
 	
 	override func viewDidLoad() {
+		
 		if self.parentSpecialTest != nil {
-			self.images = [UIImage]()
+			self.images = [BasicPhoto]()
 			
 			self.imageLinksFetchedResultsController = ImageLinksFetchedResultsControllers.imageLinksFetchedResultsController(self.parentSpecialTest!)
 			self.videoLinksFetchedResultsController = VideoLinksFetchedResultsControllers.videoLinksFetchedResultsController(self.parentSpecialTest!)
 			self.fetchResultsWithReload(false)
 			
 			self.refreshControl?.addTarget(self, action: Selector("handleRefresh:"), forControlEvents: .ValueChanged)
-			
-			self.initializeSearchController()
 			self.initializeActivityIndicator()
 			
 			self.datastoreManager = DatastoreManager(delegate: self)
@@ -53,8 +50,14 @@ class SpecialTestDetailTableViewController : UITableViewController {
 		
 			if let count = self.videoLinksFetchedResultsController?.fetchedObjects?.count where count == 0 {
 				self.remoteConnectionManager?.fetchVideoLinks(forSpecialTest: self.parentSpecialTest!)
-			} else {
+			}
+			
+			if let count = self.imageLinksFetchedResultsController?.fetchedObjects?.count where count == 0 {
 				self.remoteConnectionManager?.fetchImageLinks(forSpecialTest: self.parentSpecialTest!)
+			} else {
+				for managedImageLink in (self.imageLinksFetchedResultsController?.fetchedObjects as! [ImageLinkManagedObject]) {
+					self.remoteConnectionManager?.fetchImageData(forCloudinaryLink: managedImageLink.link)
+				}
 			}
 		}
 	}
@@ -62,7 +65,7 @@ class SpecialTestDetailTableViewController : UITableViewController {
 	// MARK: - Table View Controller Methods
 	
 	override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-		return 5
+		return 6
 	}
 	
 	override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -70,25 +73,38 @@ class SpecialTestDetailTableViewController : UITableViewController {
 			case 0: return "Name"
 			case 1: return "Positive Sign"
 			case 2: return "Indication"
-			case 3: return "Images"
-			case 4: return "Video Links"
+			case 3: return "Notes"
+			case 4: return "Images"
+			case 5: return "Video Links"
 			default: return  "Section \(section)"
 		}
 	}
 	
 	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		if section == 4 {
-			if let count = self.videoLinksFetchedResultsController?.fetchedObjects?.count {
-				return count
-			} else {
-				return 0
+		if self.parentSpecialTest != nil {
+			if section == 0 && self.parentSpecialTest!.name != "" {
+				return 1
+			} else if section == 1 && self.parentSpecialTest!.positiveSign != "" {
+				return 1
+			} else if section == 2 && self.parentSpecialTest!.indication != "" {
+				return 1
+			} else if section == 3 && self.parentSpecialTest!.notes != "" {
+				return 1
+			} else if section == 4 {
+				if let count = self.imageLinksFetchedResultsController?.fetchedObjects?.count where count != 0 {
+					return 1
+				}
+			} else if section == 5 {
+				if let count = self.videoLinksFetchedResultsController?.fetchedObjects?.count {
+					return count
+				}
 			}
 		}
-		return 1
+		return 0
 	}
 	
 	override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-		if indexPath.section == 3 {
+		if indexPath.section == 4 {
 			return 132
 		} else {
 			return UITableViewAutomaticDimension
@@ -100,12 +116,13 @@ class SpecialTestDetailTableViewController : UITableViewController {
 		let cell = UITableViewCell()
 		cell.textLabel?.numberOfLines = 0
 		cell.textLabel?.lineBreakMode = .ByWordWrapping
-		cell.textLabel?.font = UIFont.systemFontOfSize(16)
+		cell.textLabel?.font = UIFont.systemFontOfSize(14)
 		switch (indexPath.section) {
 			case 0: cell.textLabel?.text = self.parentSpecialTest?.name
 			case 1: cell.textLabel?.text = self.parentSpecialTest?.positiveSign
 			case 2: cell.textLabel?.text = self.parentSpecialTest?.indication
-			case 3:
+			case 3: cell.textLabel?.text = self.parentSpecialTest?.notes
+			case 4:
 				if let imagesCell = tableView.dequeueReusableCellWithIdentifier("ImagesCell") as? ImagesTableViewCell {
 					imagesCell.imagesCollectionView.backgroundColor = UIColor.clearColor()
 					imagesCell.imagesCollectionView.dataSource = self
@@ -113,8 +130,9 @@ class SpecialTestDetailTableViewController : UITableViewController {
 					self.imagesCollectionView = imagesCell.imagesCollectionView
 					return imagesCell
 				}
-			case 4:
+			case 5:
 				if let managedVideoLink = self.videoLinksFetchedResultsController?.objectAtIndexPath(fixedSectionIndexPath) as? VideoLinkManagedObject {
+					cell.accessoryType = .DisclosureIndicator
 					cell.textLabel?.text = managedVideoLink.title
 				}
 			default: cell.textLabel?.text = ""
@@ -123,7 +141,7 @@ class SpecialTestDetailTableViewController : UITableViewController {
 	}
 	
 	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-		if indexPath.section == 4 {
+		if indexPath.section == 5 {
 			let fixedSectionIndexPath = NSIndexPath(forRow: indexPath.row, inSection: 0) // NSIndexPath referencing section 0 to avoid "no section at index 3" error
 			if let managedVideoLink = self.videoLinksFetchedResultsController?.objectAtIndexPath(fixedSectionIndexPath) as? VideoLinkManagedObject {
 				if let url = NSURL(string: managedVideoLink.link) {
@@ -199,11 +217,18 @@ extension SpecialTestDetailTableViewController : UICollectionViewDataSource {
 		}
 	}
 	
+	func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+		if let initialImage = self.images?[indexPath.row] {
+			let photosViewController = NYTPhotosViewController(photos: self.images, initialPhoto: initialImage)
+			self.presentViewController(photosViewController, animated: true, completion: nil)
+		}
+	}
+	
 	
 	func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
 		if let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ImageCell", forIndexPath: indexPath) as? ImageCollectionViewCell {
-			if let image = self.images?[indexPath.row] {
-				cell.imageView.image = image
+			if let photo = self.images?[indexPath.row] {
+				cell.imageView.image = photo.image
 			}
 			return cell
 		}
@@ -223,9 +248,9 @@ extension SpecialTestDetailTableViewController : RemoteConnectionManagerDelegate
 	func didBeginDataRequest() {
 		if self.refreshControl != nil {
 			if !self.refreshControl!.refreshing {
-				dispatch_async(dispatch_get_main_queue(), { () -> Void in
+				Async.main {
 					self.showActivityIndicator()
-				})
+				}
 			}
 		}
 	}
@@ -253,10 +278,10 @@ extension SpecialTestDetailTableViewController : RemoteConnectionManagerDelegate
 	
 	func didFinishCloudinaryImageRequestWithData(receivedData: NSData) {
 		if let image = UIImage(data: receivedData) {
-			self.images!.append(image)
+			let photo = BasicPhoto(image: image, imageData: receivedData, captionTitle: NSAttributedString(string: ""))
+			self.images!.append(photo)
 		}
-		
-		dispatch_async(dispatch_get_main_queue()) { () -> Void in
+		Async.main {
 			self.imagesCollectionView?.reloadData()
 		}
 	}
@@ -268,7 +293,7 @@ extension SpecialTestDetailTableViewController : RemoteConnectionManagerDelegate
 			}
 		}
 		
-		dispatch_async(dispatch_get_main_queue()) { () -> Void in
+		Async.main {
 			self.hideActivityIndicator()
 			self.showNetworkStatusBanner()
 		}
@@ -293,58 +318,11 @@ extension SpecialTestDetailTableViewController : RemoteConnectionManagerDelegate
 extension SpecialTestDetailTableViewController : DatastoreManagerDelegate {
 	
 	func didFinishStoring() {
-		dispatch_async(dispatch_get_main_queue()) { () -> Void in
+		Async.main {
 			self.fetchResultsWithReload(true)
 		}
 	}
 	
-}
-
-// MARK: - Search Bar Methods
-
-extension SpecialTestDetailTableViewController : UISearchBarDelegate {
-	
-	func initializeSearchController() {
-		self.defaultSearchPredicate = self.videoLinksFetchedResultsController!.fetchRequest.predicate
-		self.searchController = UISearchController(searchResultsController: nil)
-		self.searchController.dimsBackgroundDuringPresentation = true
-		self.searchController.definesPresentationContext = true
-		self.searchController.searchBar.delegate = self
-		self.tableView.tableHeaderView = self.searchController.searchBar
-		self.tableView.contentOffset = CGPointMake(0, self.searchController.searchBar.frame.size.height)
-		self.searchController.loadViewIfNeeded()
-	}
-	
-	func clearSearch() {
-		self.searchPhrase = nil
-		self.videoLinksFetchedResultsController?.fetchRequest.predicate = self.defaultSearchPredicate
-		self.fetchResultsWithReload(true)
-	}
-	
-	func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-		if searchText != "" {
-			var predicates = [NSPredicate]()
-			self.searchPhrase = searchText
-			if let predicate = self.defaultSearchPredicate {
-				predicates.append(predicate)
-			}
-			let filterPredicate = NSPredicate(format: "%K CONTAINS[cd] %@", VideoLinkManagedObject.propertyKeys.title, searchText)
-			predicates.append(filterPredicate)
-			let fullPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
-			self.videoLinksFetchedResultsController?.fetchRequest.predicate = fullPredicate
-			self.fetchResultsWithReload(true)
-		} else {
-			self.clearSearch()
-		}
-	}
-	
-	func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-		self.clearSearch()
-	}
-	
-	func searchBarTextDidEndEditing(searchBar: UISearchBar) {
-		searchBar.text = self.searchPhrase
-	}
 }
 
 // MARK: - Safari View Controller Delegate Methods

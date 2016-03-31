@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import CoreData
 import BRYXBanner
+import Async
 
 class SpecialTestsTableViewController : UITableViewController {
 	
@@ -32,7 +33,7 @@ class SpecialTestsTableViewController : UITableViewController {
 	
 	override func viewDidLoad() {
 		if self.parentComponent != nil {
-			self.fetchedResultsController = SpecialTestsFetchedResultsController.specialTestsFetchedResultsController(self.parentComponent!)
+			self.fetchedResultsController = SpecialTestsFetchedResultsControllers.specialTestsFetchedResultsController(self.parentComponent!)
 			self.fetchResultsWithReload(false)
 			
 			self.refreshControl?.addTarget(self, action: Selector("handleRefresh:"), forControlEvents: .ValueChanged)
@@ -142,9 +143,9 @@ extension SpecialTestsTableViewController : RemoteConnectionManagerDelegate {
 	func didBeginDataRequest() {
 		if self.refreshControl != nil {
 			if !self.refreshControl!.refreshing {
-				dispatch_async(dispatch_get_main_queue(), { () -> Void in
+				Async.main {
 					self.showActivityIndicator()
-				})
+				}
 			}
 		}
 	}
@@ -165,8 +166,7 @@ extension SpecialTestsTableViewController : RemoteConnectionManagerDelegate {
 				self.refreshControl!.endRefreshing()
 			}
 		}
-		
-		dispatch_async(dispatch_get_main_queue()) { () -> Void in
+		Async.main {
 			self.hideActivityIndicator()
 			self.showNetworkStatusBanner()
 		}
@@ -192,7 +192,7 @@ extension SpecialTestsTableViewController : RemoteConnectionManagerDelegate {
 extension SpecialTestsTableViewController : DatastoreManagerDelegate {
 
 	func didFinishStoring() {
-		dispatch_async(dispatch_get_main_queue()) { () -> Void in
+		Async.main {
 			self.fetchResultsWithReload(true)
 		}
 	}

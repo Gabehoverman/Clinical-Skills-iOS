@@ -23,7 +23,7 @@ class ComponentsFetchedResultsControllers {
 	
 	class func componentsFetchedResultsController(forSystem: System) -> NSFetchedResultsController {
 		let request = NSFetchRequest(entityName: ComponentManagedObject.entityName)
-		request.predicate = NSPredicate(format: "%K = %d", "parent.id", forSystem.id)
+		request.predicate = NSPredicate(format: "%K = %d", "system.id", forSystem.id)
 		request.sortDescriptors = [NSSortDescriptor(key: ComponentManagedObject.propertyKeys.id, ascending: true)]
 		let controller = NSFetchedResultsController(fetchRequest: request, managedObjectContext: managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
 		return controller

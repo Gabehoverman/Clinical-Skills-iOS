@@ -1,2 +1,5 @@
+github "duemunk/Async" "1.7.2"
 github "bryx-inc/BRYXBanner" "0.5.2"
+github "Flipboard/FLAnimatedImage" "1.0.12"
 github "SwiftyJSON/SwiftyJSON" "2.3.3"
+github "NYTimes/NYTPhotoViewer" "2caa75a11702a1fe3627de6c7fdb43b4fa6cb761"
