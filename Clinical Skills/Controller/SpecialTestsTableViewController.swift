@@ -171,21 +171,22 @@ extension SpecialTestsTableViewController : RemoteConnectionManagerDelegate {
 		}
 		Async.main {
 			self.hideActivityIndicator()
-			self.showNetworkStatusBanner()
 		}
 	}
 	
-	func showNetworkStatusBanner() {
-		var color = UIColor.whiteColor()
-		if self.remoteConnectionManager!.statusSuccess {
-			color = UIColor(red: 90.0/255.0, green: 212.0/255.0, blue: 39.0/255.0, alpha: 0.95)
-		} else {
-			color = UIColor(red: 255.0/255.0, green: 80.0/255.0, blue: 44.0/255.0, alpha: 0.95)
+	func showRequestStatusBanner() {
+		Async.main {
+			var color = UIColor.whiteColor()
+			if self.remoteConnectionManager!.statusSuccess {
+				color = UIColor(red: 90.0/255.0, green: 212.0/255.0, blue: 39.0/255.0, alpha: 0.95)
+			} else {
+				color = UIColor(red: 255.0/255.0, green: 80.0/255.0, blue: 44.0/255.0, alpha: 0.95)
+			}
+			let banner = Banner(title: "HTTP Response", subtitle: self.remoteConnectionManager!.statusMessage, image: nil, backgroundColor: color, didTapBlock: nil)
+			banner.dismissesOnSwipe = true
+			banner.dismissesOnTap = true
+			banner.show(self.navigationController!.view, duration: 1.5)
 		}
-		let banner = Banner(title: "HTTP Response", subtitle: self.remoteConnectionManager!.statusMessage, image: nil, backgroundColor: color, didTapBlock: nil)
-		banner.dismissesOnSwipe = true
-		banner.dismissesOnTap = true
-		banner.show(self.navigationController!.view, duration: 1.5)
 	}
 	
 }

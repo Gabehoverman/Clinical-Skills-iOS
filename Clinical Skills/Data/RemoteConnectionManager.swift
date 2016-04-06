@@ -31,6 +31,7 @@ class RemoteConnectionManager : NSObject {
 	// MARK: - Properties
 	
 	var shouldRequestFromLocal: Bool
+	var shouldShowNetworkBanners: Bool
 	var isCloudinaryFetch: Bool
 	var statusCode: Int
 	var statusMessage: String {
@@ -53,11 +54,12 @@ class RemoteConnectionManager : NSObject {
 	
 	init(delegate: RemoteConnectionManagerDelegate?) {
 		self.shouldRequestFromLocal = UserDefaultsManager.userDefaults.boolForKey(UserDefaultsManager.userDefaultsKeys.requestFromLocalHost).boolValue
+		self.shouldShowNetworkBanners = UserDefaultsManager.userDefaults.boolForKey(UserDefaultsManager.userDefaultsKeys.showNetworkBanners).boolValue
 		self.isCloudinaryFetch = false
 		self.statusCode = 0
 		self.delegate = delegate
 		super.init()
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("setShouldRequestFromLocal"), name: NSUserDefaultsDidChangeNotification, object: nil)
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(RemoteConnectionManager.setShouldRequestFromLocal), name: NSUserDefaultsDidChangeNotification, object: nil)
 	}
 	
 	// MARK: - Deinitializers
@@ -281,6 +283,10 @@ class RemoteConnectionManager : NSObject {
 			}
 		}
 		self.delegate?.didFinishDataRequest?()
+		
+		if self.shouldShowNetworkBanners {
+			self.delegate?.showRequestStatusBanner?()
+		}
 	}
 	
 	// MARK: - Error Handling Methods
@@ -305,4 +311,5 @@ class RemoteConnectionManager : NSObject {
 	optional func didFinishDataRequestWithData(receivedData: NSData)
 	optional func didFinishCloudinaryImageRequestWithData(receivedData: NSData)
 	optional func didFinishDataRequestWithError(error: NSError)
+	optional func showRequestStatusBanner()
 }

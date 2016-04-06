@@ -14,10 +14,12 @@ class UserDefaultsManager {
 	
 	struct userDefaultsKeys {
 		static let requestFromLocalHost = "requestFromLocalHost"
+		static let showNetworkBanners = "showNetworkBanners"
 	}
 	
 	static let userDefaultsKeysList = [
 		userDefaultsKeys.requestFromLocalHost,
+		userDefaultsKeys.showNetworkBanners
 	]
 	
 	static func titleFromKey(key: String) -> String {
