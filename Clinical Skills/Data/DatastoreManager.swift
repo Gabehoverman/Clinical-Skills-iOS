@@ -128,6 +128,9 @@ class DatastoreManager : NSObject {
 				newManagedExamTechnique.id = examTechnique.id
 				newManagedExamTechnique.name = examTechnique.name
 				newManagedExamTechnique.details = examTechnique.details
+				if let managedSystem = self.retrieveSystemWithID(examTechnique.system.id) {
+					newManagedExamTechnique.system = managedSystem
+				}
 			}
 		}
 	}
@@ -227,8 +230,15 @@ class DatastoreManager : NSObject {
 				newManagedVideoLink.id = videoLink.id
 				newManagedVideoLink.title = videoLink.title
 				newManagedVideoLink.link = videoLink.link
-				if let managedSpecialTest = self.retrieveSpecialTestWithID(videoLink.specialTest.id) {
-					newManagedVideoLink.specialTest = managedSpecialTest
+				if videoLink.specialTest != nil {
+					if let managedSpecialTest = self.retrieveSpecialTestWithID(videoLink.specialTest!.id) {
+						newManagedVideoLink.specialTest = managedSpecialTest
+					}
+				}
+				if videoLink.examTechnique != nil {
+					if let managedExamTechnique = self.retrieveExamTechniqueWithID(videoLink.examTechnique!.id) {
+						newManagedVideoLink.examTechnique = managedExamTechnique
+					}
 				}
 			}
 		}

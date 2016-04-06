@@ -34,6 +34,7 @@ class SystemBreakdownViewController : UIViewController {
 		} else {
 			if self.examTechniquesTableViewController == nil {
 				self.examTechniquesTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier(StoryboardIdentifiers.controller.examTechniquesTableViewController) as? ExamTechniquesTableViewController
+				self.examTechniquesTableViewController?.system = system
 			}
 			return self.examTechniquesTableViewController
 		}

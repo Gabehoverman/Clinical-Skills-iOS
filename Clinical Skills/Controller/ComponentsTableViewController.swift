@@ -37,7 +37,7 @@ class ComponentsTableViewController : UITableViewController {
 			self.fetchedResultsController = ComponentsFetchedResultsControllers.componentsFetchedResultsController(self.system!)
 			self.fetchResultsWithReload(false)
 		
-			self.refreshControl?.addTarget(self, action: #selector(ComponentsTableViewController.handleRefresh(_:)), forControlEvents: .ValueChanged)
+			self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), forControlEvents: .ValueChanged)
 			
 			self.initializeSearchController()
 			self.initializeActivityIndicator()

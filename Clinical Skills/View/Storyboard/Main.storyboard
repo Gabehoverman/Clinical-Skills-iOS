@@ -359,8 +359,19 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Exam Techniques" id="oJR-6B-7v7"/>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="VmD-gc-NfH">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <attributedString key="attributedTitle">
+                            <fragment content="Updating Exam Techniques">
+                                <attributes>
+                                    <font key="NSFont" metaFont="smallSystem"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
+                    </refreshControl>
                     <connections>
-                        <segue destination="YkU-89-rxj" kind="show" identifier="ToExamDetailsView" id="3Cv-zG-XP0"/>
+                        <segue destination="YkU-89-rxj" kind="show" identifier="ToExamTechniquesDetailsView" id="3Cv-zG-XP0"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XMy-Nu-Jgz" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -505,6 +516,17 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Exam Technique Details" id="J8b-7n-3xw"/>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="ihh-qm-PVh">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <attributedString key="attributedTitle">
+                            <fragment content="Updating Details">
+                                <attributes>
+                                    <font key="NSFont" metaFont="smallSystem"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
+                    </refreshControl>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Pn-Ez-s5R" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

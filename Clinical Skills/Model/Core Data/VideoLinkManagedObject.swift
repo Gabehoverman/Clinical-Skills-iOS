@@ -23,7 +23,8 @@ class VideoLinkManagedObject : NSManagedObject {
 	@NSManaged var id: Int32
 	@NSManaged var title: String
 	@NSManaged var link: String
-	@NSManaged var specialTest: SpecialTestManagedObject
+	@NSManaged var specialTest: SpecialTestManagedObject?
+	@NSManaged var examTechnique: ExamTechniqueManagedObject?
 
 	override var description: String {
 		get {

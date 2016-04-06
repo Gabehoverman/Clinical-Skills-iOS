@@ -176,6 +176,19 @@ class JSONParser : NSObject {
 		return videoLinks
 	}
 	
+	func parseVideoLinks(examTechnqiue: ExamTechnique) -> [VideoLink] {
+		var videoLinks = [VideoLink]()
+		for (_, data) in self.json {
+			for (_, videoLink) in data {
+				let id = Int32(videoLink[VideoLinkManagedObject.propertyKeys.id].intValue)
+				let title = videoLink[VideoLinkManagedObject.propertyKeys.title].stringValue
+				let link = videoLink[VideoLinkManagedObject.propertyKeys.link].stringValue
+				videoLinks.append(VideoLink(examTechnique: examTechnqiue, id: id, title: title, link: link))
+			}
+		}
+		return videoLinks
+	}
+	
 	// MARK: - Print Methods
 	
 	func printJSON() {

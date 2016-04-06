@@ -18,7 +18,7 @@ class RemoteConnectionManager : NSObject {
 	
 	struct dataURLs {
 		static let systems = "systems.json"
-		static let examTechnique = "exam_technique.json"
+		static let examTechnique = "exam_techniques.json"
 		static let components = "components.json"
 		static let palpations = "palpations.json"
 		static let rangesOfMotion = "ranges_of_motion.json"
@@ -60,7 +60,7 @@ class RemoteConnectionManager : NSObject {
 		self.statusCode = 0
 		self.delegate = delegate
 		super.init()
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(RemoteConnectionManager.setShouldRequestFromLocal), name: NSUserDefaultsDidChangeNotification, object: nil)
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.setShouldRequestFromLocal), name: NSUserDefaultsDidChangeNotification, object: nil)
 	}
 	
 	// MARK: - Deinitializers
@@ -255,6 +255,28 @@ class RemoteConnectionManager : NSObject {
 		urlString += dataURLs.videoLinks
 		
 		var queryString = "?special_test=\(specialTest.name)"
+		queryString = queryString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
+		
+		urlString += queryString
+		
+		if let url = NSURL(string: urlString) {
+			self.fetchWithURL(url)
+		}
+	}
+	
+	func fetchVideoLinks(forExamTechnique examTechnique: ExamTechnique) {
+		self.isCloudinaryFetch = false
+		
+		var urlString: String
+		if self.shouldRequestFromLocal {
+			urlString = self.localBaseURL
+		} else {
+			urlString = self.remoteBaseURL
+		}
+		
+		urlString += dataURLs.videoLinks
+		
+		var queryString = "?exam_technique=\(examTechnique.name)"
 		queryString = queryString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
 		
 		urlString += queryString
