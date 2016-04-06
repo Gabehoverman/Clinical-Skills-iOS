@@ -35,6 +35,16 @@ class DatastoreManager : NSObject {
 		self.delegate?.didFinishStoring?()
 		
 	}
+
+	func storeExamTechniques(examTechniques: [ExamTechnique]) {
+		self.delegate?.didBeginStoring?()
+		for examTechnique in examTechniques {
+			self.storeExamTechnique(examTechnique)
+		}
+		self.save()
+		self.delegate?.didFinishStoring?()
+		
+	}
 	
 	func storeComponents(components: [Component]) {
 		self.delegate?.didBeginStoring?()
@@ -107,6 +117,17 @@ class DatastoreManager : NSObject {
 				newManagedSystem.id = system.id
 				newManagedSystem.name = system.name
 				newManagedSystem.details = system.details
+			}
+		}
+	}
+	
+	func storeExamTechnique(examTechnique: ExamTechnique) {
+		if !self.containsExamTechniqueWithID(examTechnique.id) {
+			let entity = NSEntityDescription.entityForName(ExamTechniqueManagedObject.entityName, inManagedObjectContext: self.managedObjectContext)!
+			if let newManagedExamTechnique = NSManagedObject(entity: entity, insertIntoManagedObjectContext: self.managedObjectContext) as? ExamTechniqueManagedObject {
+				newManagedExamTechnique.id = examTechnique.id
+				newManagedExamTechnique.name = examTechnique.name
+				newManagedExamTechnique.details = examTechnique.details
 			}
 		}
 	}
@@ -224,6 +245,15 @@ class DatastoreManager : NSObject {
 		return nil
 	}
 	
+	func retrieveExamTechniqueWithID(id: Int32) -> ExamTechniqueManagedObject? {
+		let request = NSFetchRequest(entityName: ExamTechniqueManagedObject.entityName)
+		request.predicate = NSPredicate(format: "%K = %d", ExamTechniqueManagedObject.propertyKeys.id, id)
+		if let managedExamTechnique = try! self.managedObjectContext.executeFetchRequest(request).first as? ExamTechniqueManagedObject {
+			return managedExamTechnique
+		}
+		return nil
+	}
+	
 	func retrieveComponentWithID(id: Int32) -> ComponentManagedObject? {
 		let request = NSFetchRequest(entityName: ComponentManagedObject.entityName)
 		request.predicate = NSPredicate(format: "%K = %d", ComponentManagedObject.propertyKeys.id, id)
@@ -292,6 +322,13 @@ class DatastoreManager : NSObject {
 	func containsSystemWithID(id: Int32) -> Bool {
 		let request = NSFetchRequest(entityName: SystemManagedObject.entityName)
 		request.predicate = NSPredicate(format: "%K = %d", SystemManagedObject.propertyKeys.id, id)
+		let results = try! self.managedObjectContext.executeFetchRequest(request)
+		return results.count != 0
+	}
+	
+	func containsExamTechniqueWithID(id: Int32) -> Bool {
+		let request = NSFetchRequest(entityName: ExamTechniqueManagedObject.entityName)
+		request.predicate = NSPredicate(format: "%K = %d", ExamTechniqueManagedObject.propertyKeys.id, id)
 		let results = try! self.managedObjectContext.executeFetchRequest(request)
 		return results.count != 0
 	}
@@ -377,6 +414,10 @@ class DatastoreManager : NSObject {
 	
 	func clearSystems() {
 		self.clear(SystemManagedObject.entityName)
+	}
+	
+	func clearExamTechniques() {
+		self.clear(ExamTechniqueManagedObject.entityName)
 	}
 	
 	func clearComponents() {

@@ -17,6 +17,7 @@ class JSONParser : NSObject {
 	
 	struct dataTypes {
 		static let system = "system"
+		static let examTechnique = "exam_technique"
 		static let component = "component"
 		static let palpation = "palpation"
 		static let rangeOfMotion = "range_of_motion"
@@ -65,6 +66,19 @@ class JSONParser : NSObject {
 			}
 		}
 		return systems
+	}
+	
+	func parseExamTechniques(system: System) -> [ExamTechnique] {
+		var examTechniques = [ExamTechnique]()
+		for (_, data) in self.json {
+			for (_, examTechnique) in data {
+				let id = Int32(examTechnique[ExamTechniqueManagedObject.propertyKeys.id].intValue)
+				let name = examTechnique[ExamTechniqueManagedObject.propertyKeys.name].stringValue
+				let details = examTechnique[ExamTechniqueManagedObject.propertyKeys.details].stringValue
+				examTechniques.append(ExamTechnique(system: system, id: id, name: name, details: details))
+			}
+		}
+		return examTechniques
 	}
 	
 	func parseComponents(system: System) -> [Component] {

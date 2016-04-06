@@ -13,6 +13,9 @@
 		010EC6F61CB4DA54004AA8A1 /* SystemBreakdownViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010EC6F51CB4DA54004AA8A1 /* SystemBreakdownViewController.swift */; };
 		010EC6F81CB4E974004AA8A1 /* ExamTechniquesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010EC6F71CB4E974004AA8A1 /* ExamTechniquesTableViewController.swift */; };
 		010EC6FA1CB4F0FB004AA8A1 /* ExamTechniqueDetailsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010EC6F91CB4F0FB004AA8A1 /* ExamTechniqueDetailsTableViewController.swift */; };
+		010EC6FC1CB4FD60004AA8A1 /* ExamTechnique.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010EC6FB1CB4FD60004AA8A1 /* ExamTechnique.swift */; };
+		010EC6FE1CB4FD69004AA8A1 /* ExamTechniqueManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010EC6FD1CB4FD69004AA8A1 /* ExamTechniqueManagedObject.swift */; };
+		010EC7001CB4FF61004AA8A1 /* ExamTechniquesFetchedResultsControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010EC6FF1CB4FF61004AA8A1 /* ExamTechniquesFetchedResultsControllers.swift */; };
 		011807061CABA5880061A64F /* Muscle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011807051CABA5880061A64F /* Muscle.swift */; };
 		011807081CABA5AC0061A64F /* MuscleManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011807071CABA5AC0061A64F /* MuscleManagedObject.swift */; };
 		0118070A1CABA5D90061A64F /* MusclesFetchedResultsControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011807091CABA5D90061A64F /* MusclesFetchedResultsControllers.swift */; };
@@ -66,6 +69,9 @@
 		010EC6F51CB4DA54004AA8A1 /* SystemBreakdownViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemBreakdownViewController.swift; sourceTree = "<group>"; };
 		010EC6F71CB4E974004AA8A1 /* ExamTechniquesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExamTechniquesTableViewController.swift; sourceTree = "<group>"; };
 		010EC6F91CB4F0FB004AA8A1 /* ExamTechniqueDetailsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExamTechniqueDetailsTableViewController.swift; sourceTree = "<group>"; };
+		010EC6FB1CB4FD60004AA8A1 /* ExamTechnique.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExamTechnique.swift; sourceTree = "<group>"; };
+		010EC6FD1CB4FD69004AA8A1 /* ExamTechniqueManagedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExamTechniqueManagedObject.swift; path = ../ExamTechniqueManagedObject.swift; sourceTree = "<group>"; };
+		010EC6FF1CB4FF61004AA8A1 /* ExamTechniquesFetchedResultsControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExamTechniquesFetchedResultsControllers.swift; sourceTree = "<group>"; };
 		011807051CABA5880061A64F /* Muscle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Muscle.swift; sourceTree = "<group>"; };
 		011807071CABA5AC0061A64F /* MuscleManagedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MuscleManagedObject.swift; sourceTree = "<group>"; };
 		011807091CABA5D90061A64F /* MusclesFetchedResultsControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusclesFetchedResultsControllers.swift; sourceTree = "<group>"; };
@@ -160,6 +166,7 @@
 				011E01B91C864C1A00AB8BA0 /* ClinicalSkillsCoreDataModel.xcdatamodeld */,
 				011E01AB1C864A9200AB8BA0 /* SystemManagedObject.swift */,
 				01BCAE681C8FC2720076ECE5 /* ComponentManagedObject.swift */,
+				010EC6FD1CB4FD69004AA8A1 /* ExamTechniqueManagedObject.swift */,
 				01DB22321CACDB180069ECFB /* PalpationManagedObject.swift */,
 				01A610211CA4FB2600A63ED6 /* RangeOfMotionManagedObject.swift */,
 				0105E41F1C915FFD00AC4F09 /* SpecialTestManagedObject.swift */,
@@ -232,6 +239,7 @@
 			children = (
 				011E01A51C864A8600AB8BA0 /* System.swift */,
 				01BCAE661C8FC1920076ECE5 /* Component.swift */,
+				010EC6FB1CB4FD60004AA8A1 /* ExamTechnique.swift */,
 				01DB22301CACDB110069ECFB /* Palpation.swift */,
 				01D42CB91CA503A900A2AFD3 /* RangeOfMotion.swift */,
 				011807051CABA5880061A64F /* Muscle.swift */,
@@ -255,6 +263,7 @@
 				01A2B4EA1CA666D500E4F3B8 /* RangesOfMotionFetchedResultsControllers.swift */,
 				011807091CABA5D90061A64F /* MusclesFetchedResultsControllers.swift */,
 				01DB22341CACE5F30069ECFB /* PalpationsFetchedResultsControllers.swift */,
+				010EC6FF1CB4FF61004AA8A1 /* ExamTechniquesFetchedResultsControllers.swift */,
 			);
 			path = "Fetched Results Controlelr";
 			sourceTree = "<group>";
@@ -377,12 +386,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				011807061CABA5880061A64F /* Muscle.swift in Sources */,
+				010EC6FC1CB4FD60004AA8A1 /* ExamTechnique.swift in Sources */,
 				01D42CBA1CA503A900A2AFD3 /* RangeOfMotion.swift in Sources */,
 				01A610201CA4F20300A63ED6 /* ComponentDetailsTableViewController.swift in Sources */,
 				0105E4221C91600300AC4F09 /* SpecialTest.swift in Sources */,
 				01DB22311CACDB110069ECFB /* Palpation.swift in Sources */,
 				010EC6FA1CB4F0FB004AA8A1 /* ExamTechniqueDetailsTableViewController.swift in Sources */,
 				01D620F41C953A7700756A7F /* ImageLinksFetchedResultsControllers.swift in Sources */,
+				010EC7001CB4FF61004AA8A1 /* ExamTechniquesFetchedResultsControllers.swift in Sources */,
 				011807081CABA5AC0061A64F /* MuscleManagedObject.swift in Sources */,
 				01DB22401CAD01350069ECFB /* StoryboardIdentifiers.swift in Sources */,
 				0118070A1CABA5D90061A64F /* MusclesFetchedResultsControllers.swift in Sources */,
@@ -410,6 +421,7 @@
 				011E01AC1C864A9200AB8BA0 /* SystemManagedObject.swift in Sources */,
 				011F3DA51C927522002749E5 /* VideoLinkManagedObject.swift in Sources */,
 				011F3DA31C927519002749E5 /* VideoLink.swift in Sources */,
+				010EC6FE1CB4FD69004AA8A1 /* ExamTechniqueManagedObject.swift in Sources */,
 				011F3DA11C920A5F002749E5 /* SpecialTestDetailTableViewController.swift in Sources */,
 				018FF8991C9013160087FB81 /* ComponentsFetchedResultsControllers.swift in Sources */,
 				0118070E1CABD4B50061A64F /* BasicPhoto.swift in Sources */,
