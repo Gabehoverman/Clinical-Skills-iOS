@@ -120,7 +120,7 @@ class ComponentDetailsTableViewController : UITableViewController {
 		switch (indexPath.section) {
 			case 0: cell.textLabel?.text = self.component?.inspection
 			case 1:
-				if let palpationCell = tableView.dequeueReusableCellWithIdentifier("PalpationCell") as? PalpationTableViewCell {
+				if let palpationCell = tableView.dequeueReusableCellWithIdentifier(StoryboardIdentifiers.cell.componentPalpationCell) as? PalpationTableViewCell {
 					if let managedPalpation = self.palpationsFetchedResultsController?.objectAtIndexPath(fixedSectionIndexPath) as? PalpationManagedObject {
 						palpationCell.structureLabel.text = managedPalpation.structure
 						palpationCell.detailsLabel.text = managedPalpation.details
@@ -129,7 +129,7 @@ class ComponentDetailsTableViewController : UITableViewController {
 					return palpationCell
 				}
 			case 2:
-				if let rangeOfMotionCell = tableView.dequeueReusableCellWithIdentifier("RangeOfMotionCell") as? RangeOfMotionTableViewCell {
+				if let rangeOfMotionCell = tableView.dequeueReusableCellWithIdentifier(StoryboardIdentifiers.cell.componentRangeOfMotionCell) as? RangeOfMotionTableViewCell {
 					if let managedRangeOfMotion = self.rangesOfMotionFetchedResultsController?.objectAtIndexPath(fixedSectionIndexPath) as? RangeOfMotionManagedObject {
 						rangeOfMotionCell.motionLabel.text = managedRangeOfMotion.motion
 						rangeOfMotionCell.degreesLabel.text = managedRangeOfMotion.degrees + "°"

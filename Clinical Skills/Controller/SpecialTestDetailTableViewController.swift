@@ -123,7 +123,7 @@ class SpecialTestDetailTableViewController : UITableViewController {
 			case 2: cell.textLabel?.text = self.parentSpecialTest?.indication
 			case 3: cell.textLabel?.text = self.parentSpecialTest?.notes
 			case 4:
-				if let imagesCell = tableView.dequeueReusableCellWithIdentifier("ImagesCell") as? ImagesTableViewCell {
+				if let imagesCell = tableView.dequeueReusableCellWithIdentifier(StoryboardIdentifiers.cell.specialTestImagesCell) as? ImagesTableViewCell {
 					imagesCell.imagesCollectionView.backgroundColor = UIColor.clearColor()
 					imagesCell.imagesCollectionView.dataSource = self
 					imagesCell.imagesCollectionView.delegate = self
@@ -226,7 +226,7 @@ extension SpecialTestDetailTableViewController : UICollectionViewDataSource {
 	
 	
 	func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-		if let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ImageCell", forIndexPath: indexPath) as? ImageCollectionViewCell {
+		if let cell = collectionView.dequeueReusableCellWithReuseIdentifier(StoryboardIdentifiers.cell.collectionImageCell, forIndexPath: indexPath) as? ImageCollectionViewCell {
 			if let photo = self.images?[indexPath.row] {
 				cell.imageView.image = photo.image
 			}

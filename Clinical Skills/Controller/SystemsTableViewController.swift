@@ -73,7 +73,11 @@ class SystemsTableViewController: UITableViewController {
 	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 		if let controller = self.fetchedResultsController {
 			if let managedSystem = controller.objectAtIndexPath(indexPath) as? SystemManagedObject {
-				self.performSegueWithIdentifier(StoryboardIdentifiers.segue.toComponentsView, sender: System.systemFromManagedObject(managedSystem))
+				if self.tabBarController?.selectedIndex == StoryboardIdentifiers.tab.clinicalSkills {
+					self.performSegueWithIdentifier(StoryboardIdentifiers.segue.toComponentsView, sender: System.systemFromManagedObject(managedSystem))
+				} else {
+					self.performSegueWithIdentifier(StoryboardIdentifiers.segue.toSystemBreakdownView, sender: System.systemFromManagedObject(managedSystem))
+				}
 			} else {
 				print("Error getting System")
 			}
@@ -126,7 +130,13 @@ class SystemsTableViewController: UITableViewController {
 		if segue.identifier == StoryboardIdentifiers.segue.toComponentsView {
 			if let destination = segue.destinationViewController as? ComponentsTableViewController {
 				if let system = sender as? System {
-					destination.parentSystem = system
+					destination.system = system
+				}
+			}
+		} else if segue.identifier == StoryboardIdentifiers.segue.toSystemBreakdownView {
+			if let destination = segue.destinationViewController as? SystemBreakdownViewController {
+				if let system = sender as? System {
+					destination.system = system
 				}
 			}
 		}

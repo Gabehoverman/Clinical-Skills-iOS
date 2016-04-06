@@ -16,7 +16,7 @@ class ComponentsTableViewController : UITableViewController {
 	
 	// MARK: - Properties
 	
-	var parentSystem: System?
+	var system: System?
 	
 	var fetchedResultsController: NSFetchedResultsController?
 	
@@ -32,9 +32,9 @@ class ComponentsTableViewController : UITableViewController {
 	// MARK: - View Controller Methods
 	
 	override func viewDidLoad() {
-		if self.parentSystem != nil {
+		if self.system != nil {
 			
-			self.fetchedResultsController = ComponentsFetchedResultsControllers.componentsFetchedResultsController(self.parentSystem!)
+			self.fetchedResultsController = ComponentsFetchedResultsControllers.componentsFetchedResultsController(self.system!)
 			self.fetchResultsWithReload(false)
 		
 			self.refreshControl?.addTarget(self, action: #selector(ComponentsTableViewController.handleRefresh(_:)), forControlEvents: .ValueChanged)
@@ -46,7 +46,7 @@ class ComponentsTableViewController : UITableViewController {
 			self.remoteConnectionManager = RemoteConnectionManager(delegate: self)
 			
 			if let count = self.fetchedResultsController?.fetchedObjects?.count where count == 0 {
-				self.remoteConnectionManager?.fetchComponents(forSystem: self.parentSystem!)
+				self.remoteConnectionManager?.fetchComponents(forSystem: self.system!)
 			}
 		}
 	}
@@ -81,12 +81,10 @@ class ComponentsTableViewController : UITableViewController {
 	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 		if self.fetchedResultsController != nil {
 			if let managedComponent = self.fetchedResultsController!.objectAtIndexPath(indexPath) as? ComponentManagedObject {
-				if let selectedTabTitle = self.tabBarController?.selectedViewController?.tabBarItem.title {
-					if selectedTabTitle == StoryboardIdentifiers.tab.clinicalSkills {
-						self.performSegueWithIdentifier(StoryboardIdentifiers.segue.toComponentDetailsView, sender: managedComponent)
-					} else if selectedTabTitle == StoryboardIdentifiers.tab.outlinedReview {
-						self.performSegueWithIdentifier(StoryboardIdentifiers.segue.toExamsView, sender: managedComponent)
-					}
+				if self.tabBarController?.selectedIndex == StoryboardIdentifiers.tab.clinicalSkills {
+					self.performSegueWithIdentifier(StoryboardIdentifiers.segue.toComponentDetailsView, sender: managedComponent)
+				} else {
+					self.performSegueWithIdentifier(StoryboardIdentifiers.segue.toSpecialTestsView, sender: managedComponent)
 				}
 			}
 		}
@@ -108,7 +106,7 @@ class ComponentsTableViewController : UITableViewController {
 	// MARK: - Refresh Methods
 	
 	func handleRefresh(refreshControl: UIRefreshControl) {
-		self.remoteConnectionManager!.fetchComponents(forSystem: self.parentSystem!)
+		self.remoteConnectionManager!.fetchComponents(forSystem: self.system!)
 	}
 	
 	// MARK: - Activity Indicator Methods
@@ -137,8 +135,8 @@ class ComponentsTableViewController : UITableViewController {
 					destination.component = Component.componentFromManagedObject(managedComponent)
 				}
 			}
-		} else if segue.identifier == StoryboardIdentifiers.segue.toExamsView {
-			if let destination = segue.destinationViewController as? ExamsContainerViewController {
+		} else if segue.identifier == StoryboardIdentifiers.segue.toSpecialTestsView {
+			if let destination = segue.destinationViewController as? SpecialTestsTableViewController {
 				if let managedComponent = sender as? ComponentManagedObject {
 					destination.component = Component.componentFromManagedObject(managedComponent)
 				}
@@ -165,8 +163,8 @@ extension ComponentsTableViewController : RemoteConnectionManagerDelegate {
 	func didFinishDataRequestWithData(receivedData: NSData) {
 		let parser = JSONParser(rawData: receivedData)
 		if parser.dataType == JSONParser.dataTypes.component {
-			if self.parentSystem != nil {
-				let components = parser.parseComponents(self.parentSystem!)
+			if self.system != nil {
+				let components = parser.parseComponents(self.system!)
 				self.datastoreManager!.storeComponents(components)
 			}
 		}
