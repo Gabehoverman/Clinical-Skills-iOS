@@ -208,7 +208,6 @@ extension ExamTechniquesTableViewController : UISearchBarDelegate {
 		self.searchController.searchBar.delegate = self
 		self.tableView.tableHeaderView = self.searchController.searchBar
 		self.tableView.contentOffset = CGPointMake(0, self.searchController.searchBar.frame.size.height)
-		self.searchController.loadViewIfNeeded()
 	}
 	
 	func clearSearch() {

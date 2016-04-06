@@ -17,6 +17,7 @@ struct StoryboardIdentifiers {
 		static let toComponentDetailsView = "ToComponentDetailsView"
 		static let toSpecialTestsView = "ToSpecialTestsView"
 		static let toSpecialTestsDetailView = "ToSpecialTestsDetailView"
+		static let toVideoView = "ToVideoView"
 	}
 	
 	struct tab {

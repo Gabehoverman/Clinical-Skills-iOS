@@ -527,6 +527,9 @@
                             </fragment>
                         </attributedString>
                     </refreshControl>
+                    <connections>
+                        <segue destination="CEV-EA-Pca" kind="show" identifier="ToVideoView" id="8Nl-ju-gv5"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Pn-Ez-s5R" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -645,7 +648,7 @@
                                                 <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                             </collectionViewFlowLayout>
                                             <cells>
-                                                <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ImageCell" id="jFt-Ru-LDV" customClass="ImageCollectionViewCell" customModule="Clinical_Skills" customModuleProvider="target">
+                                                <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CollectionImageCell" id="jFt-Ru-LDV" customClass="ImageCollectionViewCell" customModule="Clinical_Skills" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="8" width="100" height="100"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -727,10 +730,47 @@
                             </fragment>
                         </attributedString>
                     </refreshControl>
+                    <connections>
+                        <segue destination="7MC-Eq-AJP" kind="show" identifier="ToVideoView" id="lJG-9c-dk0"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WVW-Qg-bN8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="9039" y="1748"/>
+        </scene>
+        <!--Video View Controller-->
+        <scene sceneID="CgQ-7E-Q10">
+            <objects>
+                <viewController title="Video View Controller" id="CEV-EA-Pca" customClass="VideoViewController" customModule="Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="WQe-5g-iOi"/>
+                        <viewControllerLayoutGuide type="bottom" id="iTY-MN-gjM"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="yK8-1k-2cx">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eTC-jQ-J9V">
+                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="eTC-jQ-J9V" firstAttribute="leading" secondItem="yK8-1k-2cx" secondAttribute="leadingMargin" constant="-20" id="62x-bt-EJt"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="eTC-jQ-J9V" secondAttribute="trailing" constant="-20" id="CYP-QV-y0j"/>
+                            <constraint firstItem="eTC-jQ-J9V" firstAttribute="top" secondItem="yK8-1k-2cx" secondAttribute="topMargin" constant="20" id="JJx-xA-oqf"/>
+                            <constraint firstItem="eTC-jQ-J9V" firstAttribute="bottom" secondItem="yK8-1k-2cx" secondAttribute="bottomMargin" id="NdE-gc-nFJ"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Video" id="QZs-sD-xQ1"/>
+                    <connections>
+                        <outlet property="webView" destination="eTC-jQ-J9V" id="Tlb-6d-g96"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Jx2-IC-7qr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="9039" y="2482"/>
         </scene>
         <!--Components Table View Controller-->
         <scene sceneID="3Qg-fz-pmt">
@@ -1175,10 +1215,81 @@
                             </fragment>
                         </attributedString>
                     </refreshControl>
+                    <connections>
+                        <segue destination="hoa-K5-TDX" kind="show" identifier="ToVideoView" id="t7M-ik-jtf"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RDZ-Ik-Vz9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="8179" y="531"/>
+        </scene>
+        <!--Video View Controller-->
+        <scene sceneID="Nj7-83-IMi">
+            <objects>
+                <viewController title="Video View Controller" id="7MC-Eq-AJP" customClass="VideoViewController" customModule="Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="gsb-Nm-ska"/>
+                        <viewControllerLayoutGuide type="bottom" id="yFa-Ey-8r3"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="nd6-mN-xCx">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LtA-vF-NpJ">
+                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="LtA-vF-NpJ" firstAttribute="leading" secondItem="nd6-mN-xCx" secondAttribute="leadingMargin" constant="-20" id="PAg-yi-wmS"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="LtA-vF-NpJ" secondAttribute="trailing" constant="-20" id="fBT-du-oJm"/>
+                            <constraint firstItem="LtA-vF-NpJ" firstAttribute="top" secondItem="nd6-mN-xCx" secondAttribute="topMargin" constant="20" id="sLs-V2-mJg"/>
+                            <constraint firstItem="LtA-vF-NpJ" firstAttribute="bottom" secondItem="nd6-mN-xCx" secondAttribute="bottomMargin" id="tfr-4t-gce"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Video" id="tTd-kk-WjO"/>
+                    <connections>
+                        <outlet property="webView" destination="LtA-vF-NpJ" id="CdE-8u-w3F"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="awc-4o-Pao" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="9875" y="1748"/>
+        </scene>
+        <!--Video View Controller-->
+        <scene sceneID="cqH-Ir-Di4">
+            <objects>
+                <viewController title="Video View Controller" id="hoa-K5-TDX" customClass="VideoViewController" customModule="Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="IQQ-di-HnL"/>
+                        <viewControllerLayoutGuide type="bottom" id="Fkb-Iw-smO"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="aPP-B9-VzY">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aXC-yK-N1S">
+                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="aXC-yK-N1S" firstAttribute="bottom" secondItem="aPP-B9-VzY" secondAttribute="bottomMargin" id="Mxx-t7-OJq"/>
+                            <constraint firstItem="aXC-yK-N1S" firstAttribute="leading" secondItem="aPP-B9-VzY" secondAttribute="leadingMargin" constant="-20" id="RsM-fv-QRR"/>
+                            <constraint firstItem="aXC-yK-N1S" firstAttribute="top" secondItem="aPP-B9-VzY" secondAttribute="topMargin" constant="20" id="SdC-nX-EcC"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="aXC-yK-N1S" secondAttribute="trailing" constant="-20" id="uvG-y0-qeS"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Video" id="s1Y-cF-BpZ"/>
+                    <connections>
+                        <outlet property="webView" destination="aXC-yK-N1S" id="jg0-6G-Dg9"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZYf-VC-xgA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="9039" y="531"/>
         </scene>
     </scenes>
     <resources>

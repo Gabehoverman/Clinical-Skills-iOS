@@ -10,7 +10,6 @@ import Foundation
 import UIKit
 import CoreData
 import BRYXBanner
-import SafariServices
 import Async
 
 class ExamTechniqueDetailsTableViewController : UITableViewController {
@@ -42,7 +41,6 @@ class ExamTechniqueDetailsTableViewController : UITableViewController {
 			if let count = self.videoLinksFetchedResultsController?.fetchedObjects?.count where count == 0 {
 				self.remoteConnectionManager?.fetchVideoLinks(forExamTechnique: self.examTechnique!)
 			}
-			
 		}
 	}
 	
@@ -107,11 +105,12 @@ class ExamTechniqueDetailsTableViewController : UITableViewController {
 		if indexPath.section == 2 {
 			let fixedSectionIndexPath = NSIndexPath(forRow: indexPath.row, inSection: 0)
 			if let managedVideoLink = self.videoLinksFetchedResultsController?.objectAtIndexPath(fixedSectionIndexPath) as? VideoLinkManagedObject {
-				if let url = NSURL(string: managedVideoLink.link) {
-					let safariViewController = SFSafariViewController(URL: url)
-					safariViewController.delegate = self
-					self.presentViewController(safariViewController, animated: true, completion: nil)
-				}
+//				if let url = NSURL(string: managedVideoLink.link) {
+//					let safariViewController = SFSafariViewController(URL: url)
+//					safariViewController.delegate = self
+//					self.presentViewController(safariViewController, animated: true, completion: nil)
+//				}
+				self.performSegueWithIdentifier(StoryboardIdentifiers.segue.toVideoView, sender: managedVideoLink)
 			}
 		}
 	}
@@ -152,6 +151,18 @@ class ExamTechniqueDetailsTableViewController : UITableViewController {
 	
 	func hideActivityIndicator() {
 		self.activityIndicator!.stopAnimating()
+	}
+	
+	// MARK: - Navigation Methods
+	
+	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+		if segue.identifier == StoryboardIdentifiers.segue.toVideoView {
+			if let destination = segue.destinationViewController as? VideoViewController {
+				if let managedVideoLink = sender as? VideoLinkManagedObject {
+					destination.videoLink = VideoLink.videoLinkFromManagedObject(managedVideoLink)
+				}
+			}
+		}
 	}
 	
 }
@@ -217,12 +228,4 @@ extension ExamTechniqueDetailsTableViewController : DatastoreManagerDelegate {
 		}
 	}
 	
-}
-
-// MARK: - Safari View Controller Delegate Methods
-
-extension ExamTechniqueDetailsTableViewController : SFSafariViewControllerDelegate {
-	func safariViewControllerDidFinish(controller: SFSafariViewController) {
-		controller.dismissViewControllerAnimated(true, completion: nil)
-	}
 }
