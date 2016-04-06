@@ -36,7 +36,7 @@ class SpecialTestsTableViewController : UITableViewController {
 			self.fetchedResultsController = SpecialTestsFetchedResultsControllers.specialTestsFetchedResultsController(self.component!)
 			self.fetchResultsWithReload(false)
 			
-			self.refreshControl?.addTarget(self, action: Selector("handleRefresh:"), forControlEvents: .ValueChanged)
+			self.refreshControl?.addTarget(self, action:#selector(SpecialTestsTableViewController.handleRefresh(_:)), forControlEvents: .ValueChanged)
 			
 			self.initializeSearchController()
 			self.initializeActivityIndicator()
@@ -71,6 +71,7 @@ class SpecialTestsTableViewController : UITableViewController {
 		let cell = UITableViewCell()
 		cell.textLabel?.numberOfLines = 0
 		cell.textLabel?.lineBreakMode = .ByWordWrapping
+		cell.accessoryType = .DisclosureIndicator
 		cell.textLabel?.font = UIFont.systemFontOfSize(18, weight: UIFontWeightSemibold)
 		if let managedSpecialTest = self.fetchedResultsController?.objectAtIndexPath(indexPath) as? SpecialTestManagedObject {
 			cell.textLabel?.text = managedSpecialTest.name

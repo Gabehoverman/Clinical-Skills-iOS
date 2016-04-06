@@ -42,7 +42,7 @@ class SpecialTestDetailTableViewController : UITableViewController {
 			self.videoLinksFetchedResultsController = VideoLinksFetchedResultsControllers.videoLinksFetchedResultsController(self.parentSpecialTest!)
 			self.fetchResultsWithReload(false)
 			
-			self.refreshControl?.addTarget(self, action: Selector("handleRefresh:"), forControlEvents: .ValueChanged)
+			self.refreshControl?.addTarget(self, action: #selector(SpecialTestDetailTableViewController.handleRefresh(_:)), forControlEvents: .ValueChanged)
 			self.initializeActivityIndicator()
 			
 			self.datastoreManager = DatastoreManager(delegate: self)
