@@ -369,7 +369,6 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/SwiftyJSON.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/BRYXBanner.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/NYTPhotoViewer.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/NYTPhotoViewerCore.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/FLAnimatedImage.framework",

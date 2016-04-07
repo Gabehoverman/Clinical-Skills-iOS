@@ -9,7 +9,6 @@
 import Foundation
 import UIKit
 import CoreData
-import BRYXBanner
 import Async
 
 class ExamTechniqueDetailsTableViewController : UITableViewController {
@@ -24,6 +23,7 @@ class ExamTechniqueDetailsTableViewController : UITableViewController {
 	var remoteConnectionManager: RemoteConnectionManager?
 	
 	var activityIndicator: UIActivityIndicatorView?
+	var presentingAlert: Bool = false
 	
 	// MARK: - View Controller Methods
 	
@@ -105,11 +105,6 @@ class ExamTechniqueDetailsTableViewController : UITableViewController {
 		if indexPath.section == 2 {
 			let fixedSectionIndexPath = NSIndexPath(forRow: indexPath.row, inSection: 0)
 			if let managedVideoLink = self.videoLinksFetchedResultsController?.objectAtIndexPath(fixedSectionIndexPath) as? VideoLinkManagedObject {
-//				if let url = NSURL(string: managedVideoLink.link) {
-//					let safariViewController = SFSafariViewController(URL: url)
-//					safariViewController.delegate = self
-//					self.presentViewController(safariViewController, animated: true, completion: nil)
-//				}
 				self.performSegueWithIdentifier(StoryboardIdentifiers.segue.toVideoView, sender: managedVideoLink)
 			}
 		}
@@ -124,7 +119,14 @@ class ExamTechniqueDetailsTableViewController : UITableViewController {
 				self.tableView.reloadData()
 			}
 		} catch {
-			print("Error occurred during fetch")
+			print("Error Fetching Exam Technique Details")
+			print("\(error)\n")
+			if !self.presentingAlert && self.presentedViewController == nil {
+				let alertController = UIAlertController(title: "Error Storing Data", message: "An error occurred while storing data. Please try agian.", preferredStyle: .Alert)
+				alertController.addAction(UIAlertAction(title: "Dismiss", style: .Default, handler: nil))
+				self.presentingAlert = true
+				self.presentViewController(alertController, animated: true, completion: { self.presentingAlert = false })
+			}
 		}
 	}
 	
@@ -202,18 +204,16 @@ extension ExamTechniqueDetailsTableViewController : RemoteConnectionManagerDeleg
 		}
 	}
 	
-	func showRequestStatusBanner() {
+	func didFinishDataRequestWithError(error: NSError) {
 		Async.main {
-			var color = UIColor.whiteColor()
-			if self.remoteConnectionManager!.statusSuccess {
-				color = UIColor(red: 90.0/255.0, green: 212.0/255.0, blue: 39.0/255.0, alpha: 0.95)
-			} else {
-				color = UIColor(red: 255.0/255.0, green: 80.0/255.0, blue: 44.0/255.0, alpha: 0.95)
+			print(self.remoteConnectionManager!.messageForError(error))
+			print("\(error)\n")
+			if !self.presentingAlert && self.presentedViewController == nil {
+				let alertController = UIAlertController(title: "Error Fetching Remote Data", message: "An error occured while fetching data from the server. Please try agian.", preferredStyle: .Alert)
+				alertController.addAction(UIAlertAction(title: "Dismiss", style: .Default, handler: nil))
+				self.presentingAlert = true
+				self.presentViewController(alertController, animated: true, completion: { self.presentingAlert = false })
 			}
-			let banner = Banner(title: "HTTP Response", subtitle: self.remoteConnectionManager!.statusMessage, image: nil, backgroundColor: color, didTapBlock: nil)
-			banner.dismissesOnSwipe = true
-			banner.dismissesOnTap = true
-			banner.show(self.navigationController!.view, duration: 1.5)
 		}
 	}
 }
@@ -225,6 +225,19 @@ extension ExamTechniqueDetailsTableViewController : DatastoreManagerDelegate {
 	func didFinishStoring() {
 		Async.main {
 			self.fetchResultsWithReload(true)
+		}
+	}
+	
+	func didFinishStoringWithError(error: NSError) {
+		Async.main {
+			print("Error Storing Exam Technique Details")
+			print("\(error)\n")
+			if !self.presentingAlert && self.presentedViewController == nil {
+				let alertController = UIAlertController(title: "Error Storing Data", message: "An error occurred while storing data. Please try agian.", preferredStyle: .Alert)
+				alertController.addAction(UIAlertAction(title: "Dismiss", style: .Default, handler: nil))
+				self.presentingAlert = true
+				self.presentViewController(alertController, animated: true, completion: { self.presentingAlert = false })
+			}
 		}
 	}
 	

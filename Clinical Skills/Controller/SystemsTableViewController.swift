@@ -9,7 +9,6 @@
 import Foundation
 import UIKit
 import CoreData
-import BRYXBanner
 import Async
 
 class SystemsTableViewController: UITableViewController {
@@ -20,6 +19,7 @@ class SystemsTableViewController: UITableViewController {
 	
 	var searchController: UISearchController?
 	var activityIndicator: UIActivityIndicatorView?
+	var presentingAlert: Bool = false
 	
 	var datastoreManager: DatastoreManager?
 	var remoteConnectionManager: RemoteConnectionManager?
@@ -95,7 +95,14 @@ class SystemsTableViewController: UITableViewController {
 				self.tableView.reloadData()
 			}
 		} catch {
-			print("Error occurred during System fetch")
+			print("Error Fetching Systems")
+			print("\(error)\n")
+			if !self.presentingAlert && self.presentedViewController == nil {
+				let alertController = UIAlertController(title: "Error Storing Data", message: "An error occurred while storing data. Please try agian.", preferredStyle: .Alert)
+				alertController.addAction(UIAlertAction(title: "Dismiss", style: .Default, handler: nil))
+				self.presentingAlert = true
+				self.presentViewController(alertController, animated: true, completion: { self.presentingAlert = false })
+			}
 		}
 	}
 	
@@ -176,18 +183,16 @@ extension SystemsTableViewController: RemoteConnectionManagerDelegate {
 		}
 	}
 	
-	func showRequestStatusBanner() {
+	func didFinishDataRequestWithError(error: NSError) {
 		Async.main {
-			var color = UIColor.whiteColor()
-			if self.remoteConnectionManager!.statusSuccess {
-				color = UIColor(red: 90.0/255.0, green: 212.0/255.0, blue: 39.0/255.0, alpha: 0.95)
-			} else {
-				color = UIColor(red: 255.0/255.0, green: 80.0/255.0, blue: 44.0/255.0, alpha: 0.95)
+			print(self.remoteConnectionManager!.messageForError(error))
+			print("\(error)\n")
+			if !self.presentingAlert && self.presentedViewController == nil {
+				let alertController = UIAlertController(title: "Error Fetching Remote Data", message: "An error occured while fetching data from the server. Please try agian.", preferredStyle: .Alert)
+				alertController.addAction(UIAlertAction(title: "Dismiss", style: .Default, handler: nil))
+				self.presentingAlert = true
+				self.presentViewController(alertController, animated: true, completion: { self.presentingAlert = false })
 			}
-			let banner = Banner(title: "HTTP Response", subtitle: self.remoteConnectionManager!.statusMessage, image: nil, backgroundColor: color, didTapBlock: nil)
-			banner.dismissesOnSwipe = true
-			banner.dismissesOnTap = true
-			banner.show(self.navigationController!.view, duration: 1.5)
 		}
 	}
 }
@@ -198,6 +203,19 @@ extension SystemsTableViewController: DatastoreManagerDelegate {
 	func didFinishStoring() {
 		Async.main {
 			self.fetchResultsWithReload(true)
+		}
+	}
+	
+	func didFinishStoringWithError(error: NSError) {
+		Async.main {
+			print("Error Storing Systems")
+			print("\(error)\n")
+			if !self.presentingAlert && self.presentedViewController == nil {
+				let alertController = UIAlertController(title: "Error Storing Data", message: "An error occurred while storing data. Please try agian.", preferredStyle: .Alert)
+				alertController.addAction(UIAlertAction(title: "Dismiss", style: .Default, handler: nil))
+				self.presentingAlert = true
+				self.presentViewController(alertController, animated: true, completion: { self.presentingAlert = false })
+			}
 		}
 	}
 }

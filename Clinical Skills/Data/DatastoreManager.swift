@@ -32,7 +32,6 @@ class DatastoreManager : NSObject {
 			self.storeSystem(system)
 		}
 		self.save()
-		self.delegate?.didFinishStoring?()
 		
 	}
 
@@ -42,7 +41,6 @@ class DatastoreManager : NSObject {
 			self.storeExamTechnique(examTechnique)
 		}
 		self.save()
-		self.delegate?.didFinishStoring?()
 		
 	}
 	
@@ -52,7 +50,6 @@ class DatastoreManager : NSObject {
 			self.storeComponent(component)
 		}
 		self.save()
-		self.delegate?.didFinishStoring?()
 	}
 	
 	func storePalpations(palpations: [Palpation]) {
@@ -61,7 +58,6 @@ class DatastoreManager : NSObject {
 			self.storePalpation(palpation)
 		}
 		self.save()
-		self.delegate?.didFinishStoring?()
 	}
 	
 	func storeRangesOfMotion(rangesOfMotion: [RangeOfMotion]) {
@@ -70,7 +66,6 @@ class DatastoreManager : NSObject {
 			self.storeRangeOfMotion(rangeOfMotion)
 		}
 		self.save()
-		self.delegate?.didFinishStoring?()
 	}
 	
 	func storeMuscles(muscles: [Muscle]) {
@@ -79,7 +74,6 @@ class DatastoreManager : NSObject {
 			self.storeMuscle(muscle)
 		}
 		self.save()
-		self.delegate?.didFinishStoring?()
 	}
 	
 	func storeSpecialTests(specialTests: [SpecialTest]) {
@@ -88,7 +82,6 @@ class DatastoreManager : NSObject {
 			self.storeSpecialTest(specialTest)
 		}
 		self.save()
-		self.delegate?.didFinishStoring?()
 	}
 	
 	func storeImageLinks(imageLinks: [ImageLink]) {
@@ -96,7 +89,6 @@ class DatastoreManager : NSObject {
 		for imageLink in imageLinks {
 			self.storeImageLink(imageLink)
 		}
-		self.delegate?.didFinishStoring?()
 	}
 	
 	func storeVideoLinks(videoLinks: [VideoLink]) {
@@ -105,7 +97,6 @@ class DatastoreManager : NSObject {
 			self.storeVideoLink(videoLink)
 		}
 		self.save()
-		self.delegate?.didFinishStoring?()
 	}
 	
 	// MARK: - Store Instance Methods
@@ -398,130 +389,15 @@ class DatastoreManager : NSObject {
 		do {
 			print("\(self.managedObjectContext.insertedObjects.count) Objects to be Inserted")
 			try self.managedObjectContext.save()
+			self.delegate?.didFinishStoring?()
 			print("Saved Managed Object Context\n")
-		} catch {
-			print("DatastoreManager: Error while saving Core Data Managed Object Context")
-			print("\(error)")
+//			throw NSError(domain: "Fetch", code: -1, userInfo: nil)
+		} catch let error as NSError {
+			self.delegate?.didFinishStoringWithError?(error)
+			print("Error Saving Managed Object Context")
+			print("\(error)\n")
 		}
 	}
-	
-	// MARK: - Clear Methods
-	
-	func clear(entityName: String) {
-		do {
-			let request = NSFetchRequest(entityName: entityName)
-			var allObjects = try self.managedObjectContext.executeFetchRequest(request)
-			print("\(allObjects.count) Objects to be Deleted")
-			for object in allObjects {
-				self.managedObjectContext.deleteObject(object as! NSManagedObject)
-			}
-			allObjects.removeAll(keepCapacity: false)
-			try self.managedObjectContext.save()
-		} catch {
-			print("Error clearing Entity: \(entityName)")
-		}
-	}
-	
-	func clearSystems() {
-		self.clear(SystemManagedObject.entityName)
-	}
-	
-	func clearExamTechniques() {
-		self.clear(ExamTechniqueManagedObject.entityName)
-	}
-	
-	func clearComponents() {
-		self.clear(ComponentManagedObject.entityName)
-	}
-	
-	func clearSpecialTests() {
-		self.clear(SpecialTestManagedObject.entityName)
-	}
-	
-	func clearImageLinks() {
-		self.clear(ImageLinkManagedObject.entityName)
-	}
-	
-	func clearVideoLinks() {
-		self.clear(VideoLinkManagedObject.entityName)
-	}
-	
-	func clearAll() {
-		let allEntityNames = [SystemManagedObject.entityName, ComponentManagedObject.entityName, SpecialTestManagedObject.entityName, ImageLinkManagedObject.entityName, VideoLinkManagedObject.entityName]
-		for entityName in allEntityNames {
-			self.clear(entityName)
-		}
-	}
-	
-	// MARK: - Print Methods
-	
-	func printSystems() {
-		let request = NSFetchRequest(entityName: SystemManagedObject.entityName)
-		request.sortDescriptors = [NSSortDescriptor(key: SystemManagedObject.propertyKeys.id, ascending: true)]
-		if let allManagedSystems = try! self.managedObjectContext.executeFetchRequest(request) as? [SystemManagedObject] {
-			print("MANAGED SYSTEMS:")
-			for managedSystem in allManagedSystems {
-				print("\t\(managedSystem)")
-			}
-		}
-		print("")
-	}
-	
-	func printComponents() {
-		let request = NSFetchRequest(entityName: ComponentManagedObject.entityName)
-		request.sortDescriptors = [NSSortDescriptor(key: ComponentManagedObject.propertyKeys.id, ascending: true)]
-		if let allManagedComponents = try! self.managedObjectContext.executeFetchRequest(request) as? [ComponentManagedObject] {
-			print("MANAGED COMPONENTS:")
-			for managedComponent in allManagedComponents {
-				print("\t\(managedComponent)")
-			}
-		}
-		print("")
-	}
-	
-	func printSpecialTests() {
-		let request = NSFetchRequest(entityName: SpecialTestManagedObject.entityName)
-		request.sortDescriptors = [NSSortDescriptor(key: SpecialTestManagedObject.propertyKeys.id, ascending: true)]
-		if let allManagedSpecialLinks = try! self.managedObjectContext.executeFetchRequest(request) as? [SpecialTestManagedObject] {
-			print("MANAGED SPECIAL TESTS:")
-			for managedSpecialLink in allManagedSpecialLinks {
-				print("\t\(managedSpecialLink)")
-			}
-		}
-		print("")
-	}
-	
-	func printImageLinks() {
-		let request = NSFetchRequest(entityName: ImageLinkManagedObject.entityName)
-		request.sortDescriptors = [NSSortDescriptor(key: ImageLinkManagedObject.propertyKeys.id, ascending: true)]
-		if let allManagedImageLinks = try! self.managedObjectContext.executeFetchRequest(request) as? [ImageLinkManagedObject] {
-			print("MANAGED IMAGE LINKS:")
-			for managedImageLink in allManagedImageLinks {
-				print("\t\(managedImageLink)")
-			}
-		}
-		print("")
-	}
-	
-	func printVideoLinks() {
-		let request = NSFetchRequest(entityName: VideoLinkManagedObject.entityName)
-		request.sortDescriptors = [NSSortDescriptor(key: VideoLinkManagedObject.propertyKeys.id, ascending: true)]
-		if let allManagedVideoLinks = try! self.managedObjectContext.executeFetchRequest(request) as? [VideoLinkManagedObject] {
-			print("MANAGED VIDEO LINKS:")
-			for managedVideoLink in allManagedVideoLinks {
-				print("\t\(managedVideoLink)")
-			}
-		}
-		print("")
-	}
-	
-	func printAll() {
-		self.printSystems()
-		self.printComponents()
-		self.printSpecialTests()
-		self.printVideoLinks()
-	}
-	
 }
 
 // MARK: - Datastore Manager Protocol
@@ -529,4 +405,5 @@ class DatastoreManager : NSObject {
 @objc protocol DatastoreManagerDelegate {
 	optional func didBeginStoring()
 	optional func didFinishStoring()
+	optional func didFinishStoringWithError(error: NSError)
 }
