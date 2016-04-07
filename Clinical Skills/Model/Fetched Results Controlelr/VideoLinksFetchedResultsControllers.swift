@@ -21,6 +21,14 @@ class VideoLinksFetchedResultsControllers {
 		return controller
 	}
 	
+	class func videoLinksFetchedResultsController(forExamTechnique: ExamTechnique) -> NSFetchedResultsController {
+		let request = NSFetchRequest(entityName: VideoLinkManagedObject.entityName)
+		request.predicate = NSPredicate(format: "%K = %d", "examTechnique.id", forExamTechnique.id)
+		request.sortDescriptors = [NSSortDescriptor(key: VideoLinkManagedObject.propertyKeys.id, ascending: true)]
+		let controller = NSFetchedResultsController(fetchRequest: request, managedObjectContext: managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
+		return controller
+	}
+	
 	class func videoLinksFetchedResultsController(forSpecialTest: SpecialTest) -> NSFetchedResultsController {
 		let request = NSFetchRequest(entityName: VideoLinkManagedObject.entityName)
 		request.predicate = NSPredicate(format: "%K = %d", "specialTest.id", forSpecialTest.id)

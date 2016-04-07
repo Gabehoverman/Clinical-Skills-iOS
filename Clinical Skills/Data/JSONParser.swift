@@ -17,6 +17,7 @@ class JSONParser : NSObject {
 	
 	struct dataTypes {
 		static let system = "system"
+		static let examTechnique = "exam_technique"
 		static let component = "component"
 		static let palpation = "palpation"
 		static let rangeOfMotion = "range_of_motion"
@@ -65,6 +66,19 @@ class JSONParser : NSObject {
 			}
 		}
 		return systems
+	}
+	
+	func parseExamTechniques(system: System) -> [ExamTechnique] {
+		var examTechniques = [ExamTechnique]()
+		for (_, data) in self.json {
+			for (_, examTechnique) in data {
+				let id = Int32(examTechnique[ExamTechniqueManagedObject.propertyKeys.id].intValue)
+				let name = examTechnique[ExamTechniqueManagedObject.propertyKeys.name].stringValue
+				let details = examTechnique[ExamTechniqueManagedObject.propertyKeys.details].stringValue
+				examTechniques.append(ExamTechnique(system: system, id: id, name: name, details: details))
+			}
+		}
+		return examTechniques
 	}
 	
 	func parseComponents(system: System) -> [Component] {
@@ -157,6 +171,19 @@ class JSONParser : NSObject {
 				let title = videoLink[VideoLinkManagedObject.propertyKeys.title].stringValue
 				let link = videoLink[VideoLinkManagedObject.propertyKeys.link].stringValue
 				videoLinks.append(VideoLink(specialTest: specialTest, id: id, title: title, link: link))
+			}
+		}
+		return videoLinks
+	}
+	
+	func parseVideoLinks(examTechnqiue: ExamTechnique) -> [VideoLink] {
+		var videoLinks = [VideoLink]()
+		for (_, data) in self.json {
+			for (_, videoLink) in data {
+				let id = Int32(videoLink[VideoLinkManagedObject.propertyKeys.id].intValue)
+				let title = videoLink[VideoLinkManagedObject.propertyKeys.title].stringValue
+				let link = videoLink[VideoLinkManagedObject.propertyKeys.link].stringValue
+				videoLinks.append(VideoLink(examTechnique: examTechnqiue, id: id, title: title, link: link))
 			}
 		}
 		return videoLinks

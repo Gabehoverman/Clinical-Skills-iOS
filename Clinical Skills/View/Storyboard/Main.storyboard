@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Du2-Kh-XVf">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Du2-Kh-XVf">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -51,7 +51,7 @@
                         </attributedString>
                     </refreshControl>
                     <connections>
-                        <segue destination="yzK-o4-xGa" kind="show" identifier="toComponentsView" id="8YB-yd-AEx"/>
+                        <segue destination="yzK-o4-xGa" kind="show" identifier="ToComponentsView" id="8YB-yd-AEx"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Myo-E9-iSL" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -213,23 +213,72 @@
                         </attributedString>
                     </refreshControl>
                     <connections>
-                        <segue destination="O6Y-Bg-GKe" kind="show" identifier="toComponentsView" id="5BZ-wB-CwF"/>
+                        <segue destination="wVe-wo-iyd" kind="show" identifier="ToSystemBreakdownView" id="xpx-uT-BXh"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h7H-XA-GeL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5661" y="2118"/>
         </scene>
+        <!--System Breakdown-->
+        <scene sceneID="ZVN-XV-bbx">
+            <objects>
+                <viewController storyboardIdentifier="SystemBreakdownView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="wVe-wo-iyd" customClass="SystemBreakdownViewController" customModule="Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="XfV-6k-l8K"/>
+                        <viewControllerLayoutGuide type="bottom" id="ids-dF-6CT"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="zGl-uE-vy3">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="RRZ-Uv-b4P">
+                                <rect key="frame" x="20" y="515" width="560" height="29"/>
+                                <segments>
+                                    <segment title="Components"/>
+                                    <segment title="Exam Techniques"/>
+                                </segments>
+                                <connections>
+                                    <action selector="segmentChanged:" destination="wVe-wo-iyd" eventType="valueChanged" id="Hg8-gq-1pd"/>
+                                </connections>
+                            </segmentedControl>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e0g-Be-RNA">
+                                <rect key="frame" x="0.0" y="64" width="600" height="443"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="e0g-Be-RNA" firstAttribute="leading" secondItem="zGl-uE-vy3" secondAttribute="leadingMargin" constant="-20" id="ATf-wC-pcZ"/>
+                            <constraint firstItem="RRZ-Uv-b4P" firstAttribute="top" secondItem="e0g-Be-RNA" secondAttribute="bottom" constant="8" id="HIM-xl-ZWC"/>
+                            <constraint firstItem="RRZ-Uv-b4P" firstAttribute="trailing" secondItem="zGl-uE-vy3" secondAttribute="trailingMargin" id="NbP-9E-HcA"/>
+                            <constraint firstItem="RRZ-Uv-b4P" firstAttribute="leading" secondItem="zGl-uE-vy3" secondAttribute="leadingMargin" id="PpJ-9R-Zvq"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="e0g-Be-RNA" secondAttribute="trailing" constant="-20" id="W0O-vb-icu"/>
+                            <constraint firstItem="ids-dF-6CT" firstAttribute="top" secondItem="RRZ-Uv-b4P" secondAttribute="bottom" constant="8" id="eIc-cA-rtx"/>
+                            <constraint firstItem="e0g-Be-RNA" firstAttribute="top" secondItem="XfV-6k-l8K" secondAttribute="bottom" id="uf3-e8-BnB"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="System Breakdown" id="qrB-zS-v0z"/>
+                    <connections>
+                        <outlet property="contentView" destination="e0g-Be-RNA" id="YAg-kc-47B"/>
+                        <outlet property="segmentedControl" destination="RRZ-Uv-b4P" id="cHl-MK-TEk"/>
+                        <segue destination="O6Y-Bg-GKe" kind="show" identifier="ToComponentsView" id="kwM-Rt-Bdk"/>
+                        <segue destination="slT-cx-dZE" kind="show" identifier="ToExamTechniquesView" id="hxh-p0-oW2"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yiR-yF-rct" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6487" y="2118"/>
+        </scene>
         <!--Components Table View Controller-->
         <scene sceneID="8pv-SO-2n9">
             <objects>
-                <tableViewController title="Components Table View Controller" id="O6Y-Bg-GKe" customClass="ComponentsTableViewController" customModule="Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="ComponentsTableViewController" title="Components Table View Controller" useStoryboardIdentifierAsRestorationIdentifier="YES" id="O6Y-Bg-GKe" customClass="ComponentsTableViewController" customModule="Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="WgV-AU-UvC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="ComponentTableViewCell" textLabel="Yl2-yh-mgo" style="IBUITableViewCellStyleDefault" id="9oV-Wq-w9s">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="ComponentCell" textLabel="Yl2-yh-mgo" style="IBUITableViewCellStyleDefault" id="9oV-Wq-w9s">
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9oV-Wq-w9s" id="Lhs-f6-cgh">
@@ -265,12 +314,69 @@
                         </attributedString>
                     </refreshControl>
                     <connections>
-                        <segue destination="9bS-lw-WJR" kind="show" identifier="toExamsView" id="Q8f-T7-Oj8"/>
+                        <segue destination="Ulh-n3-PXy" kind="show" identifier="ToSpecialTestsView" id="gzX-a7-Ejf"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NM7-h0-O0F" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6487" y="2118"/>
+            <point key="canvasLocation" x="7319" y="1748"/>
+        </scene>
+        <!--Exam Techniques Table View Controller-->
+        <scene sceneID="Rkf-va-V4H">
+            <objects>
+                <tableViewController storyboardIdentifier="ExamTechniquesTableViewController" title="Exam Techniques Table View Controller" useStoryboardIdentifierAsRestorationIdentifier="YES" id="slT-cx-dZE" customClass="ExamTechniquesTableViewController" customModule="Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="wdU-6S-uFp">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ExamTechniqueCell" id="jtE-l0-dRN">
+                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jtE-l0-dRN" id="E9H-Oy-Auq">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Exam Technique" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cup-XI-nn4">
+                                            <rect key="frame" x="16" y="8" width="576" height="27"/>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="cup-XI-nn4" firstAttribute="bottom" secondItem="E9H-Oy-Auq" secondAttribute="bottomMargin" id="MG1-0Q-SS3"/>
+                                        <constraint firstItem="cup-XI-nn4" firstAttribute="trailing" secondItem="E9H-Oy-Auq" secondAttribute="trailingMargin" id="MLy-2G-FLE"/>
+                                        <constraint firstItem="cup-XI-nn4" firstAttribute="leading" secondItem="E9H-Oy-Auq" secondAttribute="leadingMargin" constant="8" id="p0f-AA-549"/>
+                                        <constraint firstItem="cup-XI-nn4" firstAttribute="top" secondItem="E9H-Oy-Auq" secondAttribute="topMargin" id="tlu-oc-xss"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="slT-cx-dZE" id="k0p-Dr-vUx"/>
+                            <outlet property="delegate" destination="slT-cx-dZE" id="2gN-VZ-5PD"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Exam Techniques" id="oJR-6B-7v7"/>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="VmD-gc-NfH">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <attributedString key="attributedTitle">
+                            <fragment content="Updating Exam Techniques">
+                                <attributes>
+                                    <font key="NSFont" metaFont="smallSystem"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
+                    </refreshControl>
+                    <connections>
+                        <segue destination="YkU-89-rxj" kind="show" identifier="ToExamTechniquesDetailsView" id="3Cv-zG-XP0"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XMy-Nu-Jgz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="7319" y="2482"/>
         </scene>
         <!--Special Tests Table View Controller-->
         <scene sceneID="Roo-bW-qel">
@@ -281,8 +387,8 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SpecialTestTableViewCell" id="ew1-u5-9hq">
-                                <rect key="frame" x="0.0" y="28" width="600" height="41"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SpecialTestCell" id="ew1-u5-9hq">
+                                <rect key="frame" x="0.0" y="92" width="600" height="41"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ew1-u5-9hq" id="Xza-TL-QRd">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="40"/>
@@ -321,66 +427,113 @@
                         </attributedString>
                     </refreshControl>
                     <connections>
-                        <segue destination="cUl-w5-RUd" kind="show" identifier="toSpecialTestsDetailView" id="0tW-Ka-ZbK"/>
+                        <segue destination="cUl-w5-RUd" kind="show" identifier="ToSpecialTestsDetailView" id="0tW-Ka-ZbK"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BJx-UY-Oq2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="8179" y="2118"/>
+            <point key="canvasLocation" x="8179" y="1748"/>
         </scene>
-        <!--Exams-->
-        <scene sceneID="JW2-66-hJw">
+        <!--Exam Technique Details Table View Controller-->
+        <scene sceneID="FWs-b4-6ww">
             <objects>
-                <viewController id="9bS-lw-WJR" customClass="ExamsContainerViewController" customModule="Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="wF5-fS-6vb"/>
-                        <viewControllerLayoutGuide type="bottom" id="4cd-Cg-2er"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="vtw-iV-suw">
+                <tableViewController storyboardIdentifier="ExamTechniqueDetailsTableViewController" title="Exam Technique Details Table View Controller" useStoryboardIdentifierAsRestorationIdentifier="YES" id="YkU-89-rxj" customClass="ExamTechniqueDetailsTableViewController" customModule="Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="JTv-kh-Ayd">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="aLX-z1-vMJ">
-                                <rect key="frame" x="20" y="515" width="560" height="29"/>
-                                <segments>
-                                    <segment title="Special Tests"/>
-                                    <segment title="Basic Exams"/>
-                                </segments>
-                                <connections>
-                                    <action selector="tabChanged:" destination="9bS-lw-WJR" eventType="valueChanged" id="xZo-eh-3YA"/>
-                                </connections>
-                            </segmentedControl>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="afr-Oy-aqx">
-                                <rect key="frame" x="0.0" y="64" width="600" height="443"/>
-                            </view>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="afr-Oy-aqx" firstAttribute="leading" secondItem="vtw-iV-suw" secondAttribute="leadingMargin" constant="-20" id="5U4-aJ-RWB"/>
-                            <constraint firstItem="aLX-z1-vMJ" firstAttribute="trailing" secondItem="vtw-iV-suw" secondAttribute="trailingMargin" id="9nK-EO-hUs"/>
-                            <constraint firstItem="aLX-z1-vMJ" firstAttribute="leading" secondItem="vtw-iV-suw" secondAttribute="leadingMargin" id="Ll7-Dw-Ryc"/>
-                            <constraint firstItem="4cd-Cg-2er" firstAttribute="top" secondItem="aLX-z1-vMJ" secondAttribute="bottom" constant="8" id="S3b-TY-1od"/>
-                            <constraint firstItem="aLX-z1-vMJ" firstAttribute="top" secondItem="afr-Oy-aqx" secondAttribute="bottom" constant="8" id="bCu-Lr-ebd"/>
-                            <constraint firstItem="afr-Oy-aqx" firstAttribute="top" secondItem="wF5-fS-6vb" secondAttribute="bottom" id="biO-U4-iQF"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="afr-Oy-aqx" secondAttribute="trailing" constant="-20" id="dLX-3R-RyV"/>
-                            <constraint firstItem="afr-Oy-aqx" firstAttribute="top" secondItem="wF5-fS-6vb" secondAttribute="bottom" id="sOF-xa-cmc"/>
-                        </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="sOF-xa-cmc"/>
-                            </mask>
-                        </variation>
-                    </view>
-                    <navigationItem key="navigationItem" title="Exams" id="8ci-Ve-0HI"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ExamTechniqueNameCell" id="CmP-b9-IYE">
+                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CmP-b9-IYE" id="dRV-Di-Xy3">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Exam Technique Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x0N-Lj-XZc">
+                                            <rect key="frame" x="16" y="8" width="576" height="27"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="x0N-Lj-XZc" firstAttribute="top" secondItem="dRV-Di-Xy3" secondAttribute="topMargin" id="Opb-Uk-h7f"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="x0N-Lj-XZc" secondAttribute="bottom" id="eAQ-R6-602"/>
+                                        <constraint firstItem="x0N-Lj-XZc" firstAttribute="leading" secondItem="dRV-Di-Xy3" secondAttribute="leadingMargin" constant="8" id="ehZ-JS-UkN"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="x0N-Lj-XZc" secondAttribute="trailing" id="slt-Ng-xEA"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ExamTechniqueDetailsCell" id="YAo-DI-Yf5">
+                                <rect key="frame" x="0.0" y="136" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YAo-DI-Yf5" id="s76-f2-pVR">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Details" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R2d-fJ-tKa">
+                                            <rect key="frame" x="16" y="8" width="576" height="27"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="R2d-fJ-tKa" firstAttribute="leading" secondItem="s76-f2-pVR" secondAttribute="leadingMargin" constant="8" id="YaR-gH-9s6"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="R2d-fJ-tKa" secondAttribute="bottom" id="mKG-vW-JCD"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="R2d-fJ-tKa" secondAttribute="trailing" id="pdT-Fr-qTb"/>
+                                        <constraint firstItem="R2d-fJ-tKa" firstAttribute="top" secondItem="s76-f2-pVR" secondAttribute="topMargin" id="uIn-X9-DKb"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ExamTechniqueVideoLinkCell" id="m4J-f4-U49">
+                                <rect key="frame" x="0.0" y="180" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="m4J-f4-U49" id="EQM-Zu-Bns">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Video Link" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bks-bj-0uy">
+                                            <rect key="frame" x="16" y="8" width="576" height="27"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Bks-bj-0uy" firstAttribute="leading" secondItem="EQM-Zu-Bns" secondAttribute="leadingMargin" constant="8" id="VhB-uT-oB3"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="Bks-bj-0uy" secondAttribute="bottom" id="jyf-5R-UwK"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="Bks-bj-0uy" secondAttribute="trailing" id="kgE-eA-9z6"/>
+                                        <constraint firstItem="Bks-bj-0uy" firstAttribute="top" secondItem="EQM-Zu-Bns" secondAttribute="topMargin" id="qrJ-bA-tXV"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="YkU-89-rxj" id="hiF-Er-pqX"/>
+                            <outlet property="delegate" destination="YkU-89-rxj" id="SoD-i6-WTX"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Exam Technique Details" id="J8b-7n-3xw"/>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="ihh-qm-PVh">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <attributedString key="attributedTitle">
+                            <fragment content="Updating Details">
+                                <attributes>
+                                    <font key="NSFont" metaFont="smallSystem"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
+                    </refreshControl>
                     <connections>
-                        <outlet property="contentView" destination="afr-Oy-aqx" id="g26-7g-QIO"/>
-                        <outlet property="segmentControl" destination="aLX-z1-vMJ" id="H6B-sq-KQa"/>
-                        <segue destination="Ulh-n3-PXy" kind="showDetail" id="BAZ-Yv-nqk"/>
+                        <segue destination="CEV-EA-Pca" kind="show" identifier="ToVideoView" id="8Nl-ju-gv5"/>
                     </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Hjp-5r-hyy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1Pn-Ez-s5R" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7319" y="2118"/>
+            <point key="canvasLocation" x="8179" y="2482"/>
         </scene>
         <!--Special Tests Detail Table View Controller-->
         <scene sceneID="0i6-Vw-UDx">
@@ -391,8 +544,8 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NameCell" id="P77-7g-E7H">
-                                <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SpecialTestNameCell" id="P77-7g-E7H">
+                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="P77-7g-E7H" id="cRD-CQ-zNA">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -413,8 +566,8 @@
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PositiveSignCell" id="1XY-Ft-xsU">
-                                <rect key="frame" x="0.0" y="72" width="600" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SpecialTestPositiveSignCell" id="1XY-Ft-xsU">
+                                <rect key="frame" x="0.0" y="136" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1XY-Ft-xsU" id="jIv-io-idU">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -435,8 +588,8 @@
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="IndicationCell" id="rYr-tz-enJ">
-                                <rect key="frame" x="0.0" y="116" width="600" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SpecialTestIndicationCell" id="rYr-tz-enJ">
+                                <rect key="frame" x="0.0" y="180" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rYr-tz-enJ" id="kQJ-6L-cQ9">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -457,8 +610,8 @@
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="VideoLinkCell" id="cmt-M6-H3c" userLabel="NoteCell">
-                                <rect key="frame" x="0.0" y="160" width="600" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SpecialTestNoteCell" id="cmt-M6-H3c" userLabel="NoteCell">
+                                <rect key="frame" x="0.0" y="224" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cmt-M6-H3c" id="1X0-mA-o9s">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -479,8 +632,8 @@
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ImagesCell" rowHeight="132" id="HY1-WG-T6z" userLabel="ImagesCell" customClass="ImagesTableViewCell" customModule="Clinical_Skills" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="204" width="600" height="132"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SpecialTestImagesCell" rowHeight="132" id="HY1-WG-T6z" userLabel="ImagesCell" customClass="ImagesTableViewCell" customModule="Clinical_Skills" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="268" width="600" height="132"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HY1-WG-T6z" id="Rq1-aX-6Dz">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="131"/>
@@ -495,7 +648,7 @@
                                                 <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                             </collectionViewFlowLayout>
                                             <cells>
-                                                <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ImageCell" id="jFt-Ru-LDV" customClass="ImageCollectionViewCell" customModule="Clinical_Skills" customModuleProvider="target">
+                                                <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CollectionImageCell" id="jFt-Ru-LDV" customClass="ImageCollectionViewCell" customModule="Clinical_Skills" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="8" width="100" height="100"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -537,8 +690,8 @@
                                     <outlet property="imagesCollectionView" destination="3AW-ll-yGt" id="0YF-pg-saQ"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NotesCell" id="NfU-Bw-syi" userLabel="VideoLinkCell">
-                                <rect key="frame" x="0.0" y="336" width="600" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SpecialTestVideoLinkCell" id="NfU-Bw-syi" userLabel="VideoLinkCell">
+                                <rect key="frame" x="0.0" y="400" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NfU-Bw-syi" id="hUh-vs-xOi">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -577,10 +730,47 @@
                             </fragment>
                         </attributedString>
                     </refreshControl>
+                    <connections>
+                        <segue destination="7MC-Eq-AJP" kind="show" identifier="ToVideoView" id="lJG-9c-dk0"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WVW-Qg-bN8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="9039" y="2118"/>
+            <point key="canvasLocation" x="9039" y="1748"/>
+        </scene>
+        <!--Video View Controller-->
+        <scene sceneID="CgQ-7E-Q10">
+            <objects>
+                <viewController title="Video View Controller" id="CEV-EA-Pca" customClass="VideoViewController" customModule="Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="WQe-5g-iOi"/>
+                        <viewControllerLayoutGuide type="bottom" id="iTY-MN-gjM"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="yK8-1k-2cx">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eTC-jQ-J9V">
+                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="eTC-jQ-J9V" firstAttribute="leading" secondItem="yK8-1k-2cx" secondAttribute="leadingMargin" constant="-20" id="62x-bt-EJt"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="eTC-jQ-J9V" secondAttribute="trailing" constant="-20" id="CYP-QV-y0j"/>
+                            <constraint firstItem="eTC-jQ-J9V" firstAttribute="top" secondItem="yK8-1k-2cx" secondAttribute="topMargin" constant="20" id="JJx-xA-oqf"/>
+                            <constraint firstItem="eTC-jQ-J9V" firstAttribute="bottom" secondItem="yK8-1k-2cx" secondAttribute="bottomMargin" id="NdE-gc-nFJ"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Video" id="QZs-sD-xQ1"/>
+                    <connections>
+                        <outlet property="webView" destination="eTC-jQ-J9V" id="Tlb-6d-g96"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Jx2-IC-7qr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="9039" y="2482"/>
         </scene>
         <!--Components Table View Controller-->
         <scene sceneID="3Qg-fz-pmt">
@@ -591,7 +781,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="ComponentTableViewCell" textLabel="fLl-Bj-Gdz" style="IBUITableViewCellStyleDefault" id="Uo6-af-IhL">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="ComponentCell" textLabel="fLl-Bj-Gdz" style="IBUITableViewCellStyleDefault" id="Uo6-af-IhL">
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Uo6-af-IhL" id="Ize-sp-fkC">
@@ -627,7 +817,7 @@
                         </attributedString>
                     </refreshControl>
                     <connections>
-                        <segue destination="jl6-Uy-zHF" kind="show" identifier="toComponentDetailsView" id="mqq-LC-ibS"/>
+                        <segue destination="jl6-Uy-zHF" kind="show" identifier="ToComponentDetailsView" id="mqq-LC-ibS"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="u46-bO-75k" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -643,7 +833,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="InspectionCell" id="aOU-gC-yMa">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ComponentInspectionCell" id="aOU-gC-yMa">
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aOU-gC-yMa" id="Gw5-tc-Kd3">
@@ -665,7 +855,7 @@
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PalpationCell" rowHeight="132" id="ppu-td-y7T" customClass="PalpationTableViewCell" customModule="Clinical_Skills" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ComponentPalpationCell" rowHeight="132" id="ppu-td-y7T" customClass="PalpationTableViewCell" customModule="Clinical_Skills" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="136" width="600" height="132"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ppu-td-y7T" id="89k-G8-0VX">
@@ -712,7 +902,7 @@
                                     <outlet property="structureLabel" destination="eHH-eb-nXP" id="UP2-35-Gze"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="RangeOfMotionCell" rowHeight="88" id="7dQ-Vh-Nhb" customClass="RangeOfMotionTableViewCell" customModule="Clinical_Skills" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ComponentRangeOfMotionCell" rowHeight="88" id="7dQ-Vh-Nhb" customClass="RangeOfMotionTableViewCell" customModule="Clinical_Skills" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="268" width="600" height="88"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7dQ-Vh-Nhb" id="T3I-Rr-fmI">
@@ -782,7 +972,7 @@
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SpecialTestsCell" id="iii-j4-gVD">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ComponentSpecialTestsCell" id="iii-j4-gVD">
                                 <rect key="frame" x="0.0" y="400" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iii-j4-gVD" id="afg-KQ-veb">
@@ -823,7 +1013,7 @@
                         </attributedString>
                     </refreshControl>
                     <connections>
-                        <segue destination="446-b4-ooc" kind="show" identifier="toSpecialTestsDetailView" id="5xJ-L0-A4T"/>
+                        <segue destination="446-b4-ooc" kind="show" identifier="ToSpecialTestsDetailView" id="5xJ-L0-A4T"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gRR-ME-CPO" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -839,7 +1029,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NameCell" id="eH7-O5-h3M">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SpecialTestNameCell" id="eH7-O5-h3M">
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eH7-O5-h3M" id="54C-qA-bT6">
@@ -861,7 +1051,7 @@
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PositiveSignCell" id="I4e-Mt-H8Y">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SpecialTestPositiveSignCell" id="I4e-Mt-H8Y">
                                 <rect key="frame" x="0.0" y="136" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="I4e-Mt-H8Y" id="LVi-J8-xF3">
@@ -883,7 +1073,7 @@
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="IndicationCell" id="xFR-vg-4m9">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SpecialTestIndicationCell" id="xFR-vg-4m9">
                                 <rect key="frame" x="0.0" y="180" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xFR-vg-4m9" id="55N-KR-6lL">
@@ -905,7 +1095,7 @@
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="VideoLinkCell" id="Urb-Ax-gZl" userLabel="NoteCell">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SpecialTestNoteCell" id="Urb-Ax-gZl" userLabel="NoteCell">
                                 <rect key="frame" x="0.0" y="224" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Urb-Ax-gZl" id="EdG-OX-dBM">
@@ -927,7 +1117,7 @@
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ImagesCell" rowHeight="132" id="e2w-lY-eY4" userLabel="ImagesCell" customClass="ImagesTableViewCell" customModule="Clinical_Skills" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SpecialTestImagesCell" rowHeight="132" id="e2w-lY-eY4" userLabel="ImagesCell" customClass="ImagesTableViewCell" customModule="Clinical_Skills" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="268" width="600" height="132"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="e2w-lY-eY4" id="izK-Ah-HNk">
@@ -943,7 +1133,7 @@
                                                 <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                             </collectionViewFlowLayout>
                                             <cells>
-                                                <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ImageCell" id="8TV-PK-3ga" customClass="ImageCollectionViewCell" customModule="Clinical_Skills" customModuleProvider="target">
+                                                <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CollectionImageCell" id="8TV-PK-3ga" customClass="ImageCollectionViewCell" customModule="Clinical_Skills" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="8" width="100" height="100"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -985,7 +1175,7 @@
                                     <outlet property="imagesCollectionView" destination="vkF-Tx-Bt0" id="XEH-RG-ZGX"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NotesCell" id="feE-cF-f4c" userLabel="VideoLinkCell">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SpecialTestVideoLinkCell" id="feE-cF-f4c" userLabel="VideoLinkCell">
                                 <rect key="frame" x="0.0" y="400" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="feE-cF-f4c" id="SF5-Rn-m9J">
@@ -1025,10 +1215,81 @@
                             </fragment>
                         </attributedString>
                     </refreshControl>
+                    <connections>
+                        <segue destination="hoa-K5-TDX" kind="show" identifier="ToVideoView" id="t7M-ik-jtf"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RDZ-Ik-Vz9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="8179" y="531"/>
+        </scene>
+        <!--Video View Controller-->
+        <scene sceneID="Nj7-83-IMi">
+            <objects>
+                <viewController title="Video View Controller" id="7MC-Eq-AJP" customClass="VideoViewController" customModule="Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="gsb-Nm-ska"/>
+                        <viewControllerLayoutGuide type="bottom" id="yFa-Ey-8r3"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="nd6-mN-xCx">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LtA-vF-NpJ">
+                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="LtA-vF-NpJ" firstAttribute="leading" secondItem="nd6-mN-xCx" secondAttribute="leadingMargin" constant="-20" id="PAg-yi-wmS"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="LtA-vF-NpJ" secondAttribute="trailing" constant="-20" id="fBT-du-oJm"/>
+                            <constraint firstItem="LtA-vF-NpJ" firstAttribute="top" secondItem="nd6-mN-xCx" secondAttribute="topMargin" constant="20" id="sLs-V2-mJg"/>
+                            <constraint firstItem="LtA-vF-NpJ" firstAttribute="bottom" secondItem="nd6-mN-xCx" secondAttribute="bottomMargin" id="tfr-4t-gce"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Video" id="tTd-kk-WjO"/>
+                    <connections>
+                        <outlet property="webView" destination="LtA-vF-NpJ" id="CdE-8u-w3F"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="awc-4o-Pao" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="9875" y="1748"/>
+        </scene>
+        <!--Video View Controller-->
+        <scene sceneID="cqH-Ir-Di4">
+            <objects>
+                <viewController title="Video View Controller" id="hoa-K5-TDX" customClass="VideoViewController" customModule="Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="IQQ-di-HnL"/>
+                        <viewControllerLayoutGuide type="bottom" id="Fkb-Iw-smO"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="aPP-B9-VzY">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aXC-yK-N1S">
+                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="aXC-yK-N1S" firstAttribute="bottom" secondItem="aPP-B9-VzY" secondAttribute="bottomMargin" id="Mxx-t7-OJq"/>
+                            <constraint firstItem="aXC-yK-N1S" firstAttribute="leading" secondItem="aPP-B9-VzY" secondAttribute="leadingMargin" constant="-20" id="RsM-fv-QRR"/>
+                            <constraint firstItem="aXC-yK-N1S" firstAttribute="top" secondItem="aPP-B9-VzY" secondAttribute="topMargin" constant="20" id="SdC-nX-EcC"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="aXC-yK-N1S" secondAttribute="trailing" constant="-20" id="uvG-y0-qeS"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Video" id="s1Y-cF-BpZ"/>
+                    <connections>
+                        <outlet property="webView" destination="aXC-yK-N1S" id="jg0-6G-Dg9"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZYf-VC-xgA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="9039" y="531"/>
         </scene>
     </scenes>
     <resources>

@@ -9,19 +9,19 @@
 import Foundation
 import UIKit
 import CoreData
-import BRYXBanner
 import Async
 
 class ComponentsTableViewController : UITableViewController {
 	
 	// MARK: - Properties
 	
-	var parentSystem: System?
+	var system: System?
 	
 	var fetchedResultsController: NSFetchedResultsController?
 	
 	var searchController: UISearchController!
 	var activityIndicator: UIActivityIndicatorView?
+	var presentingAlert: Bool = false
 	
 	var datastoreManager: DatastoreManager?
 	var remoteConnectionManager: RemoteConnectionManager?
@@ -32,12 +32,12 @@ class ComponentsTableViewController : UITableViewController {
 	// MARK: - View Controller Methods
 	
 	override func viewDidLoad() {
-		if self.parentSystem != nil {
+		if self.system != nil {
 			
-			self.fetchedResultsController = ComponentsFetchedResultsControllers.componentsFetchedResultsController(self.parentSystem!)
+			self.fetchedResultsController = ComponentsFetchedResultsControllers.componentsFetchedResultsController(self.system!)
 			self.fetchResultsWithReload(false)
 		
-			self.refreshControl?.addTarget(self, action: Selector("handleRefresh:"), forControlEvents: .ValueChanged)
+			self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), forControlEvents: .ValueChanged)
 			
 			self.initializeSearchController()
 			self.initializeActivityIndicator()
@@ -46,7 +46,7 @@ class ComponentsTableViewController : UITableViewController {
 			self.remoteConnectionManager = RemoteConnectionManager(delegate: self)
 			
 			if let count = self.fetchedResultsController?.fetchedObjects?.count where count == 0 {
-				self.remoteConnectionManager?.fetchComponents(forSystem: self.parentSystem!)
+				self.remoteConnectionManager?.fetchComponents(forSystem: self.system!)
 			}
 		}
 	}
@@ -81,12 +81,10 @@ class ComponentsTableViewController : UITableViewController {
 	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 		if self.fetchedResultsController != nil {
 			if let managedComponent = self.fetchedResultsController!.objectAtIndexPath(indexPath) as? ComponentManagedObject {
-				if let selectedTabTitle = self.tabBarController?.selectedViewController?.tabBarItem.title {
-					if selectedTabTitle == StoryboardIdentifiers.tab.clinicalSkills {
-						self.performSegueWithIdentifier(StoryboardIdentifiers.segue.toComponentDetailsView, sender: managedComponent)
-					} else if selectedTabTitle == StoryboardIdentifiers.tab.outlinedReview {
-						self.performSegueWithIdentifier(StoryboardIdentifiers.segue.toExamsView, sender: managedComponent)
-					}
+				if self.tabBarController?.selectedIndex == StoryboardIdentifiers.tab.clinicalSkills {
+					self.performSegueWithIdentifier(StoryboardIdentifiers.segue.toComponentDetailsView, sender: managedComponent)
+				} else {
+					self.performSegueWithIdentifier(StoryboardIdentifiers.segue.toSpecialTestsView, sender: managedComponent)
 				}
 			}
 		}
@@ -101,14 +99,21 @@ class ComponentsTableViewController : UITableViewController {
 				self.tableView.reloadData()
 			}
 		} catch {
-			print("Error occurred during Component fetch")
+			print("Error Fetching Components")
+			print("\(error)\n")
+			if !self.presentingAlert && self.presentedViewController == nil {
+				let alertController = UIAlertController(title: "Error Storing Data", message: "An error occurred while storing data. Please try agian.", preferredStyle: .Alert)
+				alertController.addAction(UIAlertAction(title: "Dismiss", style: .Default, handler: nil))
+				self.presentingAlert = true
+				self.presentViewController(alertController, animated: true, completion: { self.presentingAlert = false })
+			}
 		}
 	}
 	
 	// MARK: - Refresh Methods
 	
 	func handleRefresh(refreshControl: UIRefreshControl) {
-		self.remoteConnectionManager!.fetchComponents(forSystem: self.parentSystem!)
+		self.remoteConnectionManager!.fetchComponents(forSystem: self.system!)
 	}
 	
 	// MARK: - Activity Indicator Methods
@@ -137,8 +142,8 @@ class ComponentsTableViewController : UITableViewController {
 					destination.component = Component.componentFromManagedObject(managedComponent)
 				}
 			}
-		} else if segue.identifier == StoryboardIdentifiers.segue.toExamsView {
-			if let destination = segue.destinationViewController as? ExamsContainerViewController {
+		} else if segue.identifier == StoryboardIdentifiers.segue.toSpecialTestsView {
+			if let destination = segue.destinationViewController as? SpecialTestsTableViewController {
 				if let managedComponent = sender as? ComponentManagedObject {
 					destination.component = Component.componentFromManagedObject(managedComponent)
 				}
@@ -165,8 +170,8 @@ extension ComponentsTableViewController : RemoteConnectionManagerDelegate {
 	func didFinishDataRequestWithData(receivedData: NSData) {
 		let parser = JSONParser(rawData: receivedData)
 		if parser.dataType == JSONParser.dataTypes.component {
-			if self.parentSystem != nil {
-				let components = parser.parseComponents(self.parentSystem!)
+			if self.system != nil {
+				let components = parser.parseComponents(self.system!)
 				self.datastoreManager!.storeComponents(components)
 			}
 		}
@@ -181,21 +186,20 @@ extension ComponentsTableViewController : RemoteConnectionManagerDelegate {
 		
 		Async.main {
 			self.hideActivityIndicator()
-			self.showNetworkStatusBanner()
 		}
 	}
 	
-	func showNetworkStatusBanner() {
-		var color = UIColor.whiteColor()
-		if self.remoteConnectionManager!.statusSuccess {
-			color = UIColor(red: 90.0/255.0, green: 212.0/255.0, blue: 39.0/255.0, alpha: 0.95)
-		} else {
-			color = UIColor(red: 255.0/255.0, green: 80.0/255.0, blue: 44.0/255.0, alpha: 0.95)
+	func didFinishDataRequestWithError(error: NSError) {
+		Async.main {
+			print(self.remoteConnectionManager!.messageForError(error))
+			print("\(error)\n")
+			if !self.presentingAlert && self.presentedViewController == nil {
+				let alertController = UIAlertController(title: "Error Fetching Remote Data", message: "An error occured while fetching data from the server. Please try agian.", preferredStyle: .Alert)
+				alertController.addAction(UIAlertAction(title: "Dismiss", style: .Default, handler: nil))
+				self.presentingAlert = true
+				self.presentViewController(alertController, animated: true, completion: { self.presentingAlert = false })
+			}
 		}
-		let banner = Banner(title: "HTTP Response", subtitle: self.remoteConnectionManager!.statusMessage, image: nil, backgroundColor: color, didTapBlock: nil)
-		banner.dismissesOnSwipe = true
-		banner.dismissesOnTap = true
-		banner.show(self.navigationController!.view, duration: 1.5)
 	}
 }
 
@@ -205,6 +209,19 @@ extension ComponentsTableViewController : DatastoreManagerDelegate {
 	func didFinishStoring() {
 		Async.main {
 			self.fetchResultsWithReload(true)
+		}
+	}
+	
+	func didFinishStoringWithError(error: NSError) {
+		Async.main {
+			print("Error Storing Components")
+			print("\(error)\n")
+			if !self.presentingAlert && self.presentedViewController == nil {
+				let alertController = UIAlertController(title: "Error Storing Data", message: "An error occurred while storing data. Please try agian.", preferredStyle: .Alert)
+				alertController.addAction(UIAlertAction(title: "Dismiss", style: .Default, handler: nil))
+				self.presentingAlert = true
+				self.presentViewController(alertController, animated: true, completion: { self.presentingAlert = false })
+			}
 		}
 	}
 }
@@ -221,7 +238,6 @@ extension ComponentsTableViewController : UISearchBarDelegate {
 		self.searchController.searchBar.delegate = self
 		self.tableView.tableHeaderView = self.searchController.searchBar
 		self.tableView.contentOffset = CGPointMake(0, self.searchController.searchBar.frame.size.height)
-		self.searchController.loadViewIfNeeded()
 	}
 	
 	func clearSearch() {

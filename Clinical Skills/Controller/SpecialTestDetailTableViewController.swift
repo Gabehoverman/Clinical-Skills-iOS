@@ -9,8 +9,6 @@
 import Foundation
 import UIKit
 import CoreData
-import BRYXBanner
-import SafariServices
 import NYTPhotoViewer
 import Async
 
@@ -30,6 +28,7 @@ class SpecialTestDetailTableViewController : UITableViewController {
 	var remoteConnectionManager: RemoteConnectionManager?
 	
 	var activityIndicator: UIActivityIndicatorView?
+	var presentingAlert: Bool = false
 	
 	// MARK: - View Controller Methods
 	
@@ -42,7 +41,7 @@ class SpecialTestDetailTableViewController : UITableViewController {
 			self.videoLinksFetchedResultsController = VideoLinksFetchedResultsControllers.videoLinksFetchedResultsController(self.parentSpecialTest!)
 			self.fetchResultsWithReload(false)
 			
-			self.refreshControl?.addTarget(self, action: Selector("handleRefresh:"), forControlEvents: .ValueChanged)
+			self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), forControlEvents: .ValueChanged)
 			self.initializeActivityIndicator()
 			
 			self.datastoreManager = DatastoreManager(delegate: self)
@@ -123,7 +122,7 @@ class SpecialTestDetailTableViewController : UITableViewController {
 			case 2: cell.textLabel?.text = self.parentSpecialTest?.indication
 			case 3: cell.textLabel?.text = self.parentSpecialTest?.notes
 			case 4:
-				if let imagesCell = tableView.dequeueReusableCellWithIdentifier("ImagesCell") as? ImagesTableViewCell {
+				if let imagesCell = tableView.dequeueReusableCellWithIdentifier(StoryboardIdentifiers.cell.specialTestImagesCell) as? ImagesTableViewCell {
 					imagesCell.imagesCollectionView.backgroundColor = UIColor.clearColor()
 					imagesCell.imagesCollectionView.dataSource = self
 					imagesCell.imagesCollectionView.delegate = self
@@ -144,11 +143,7 @@ class SpecialTestDetailTableViewController : UITableViewController {
 		if indexPath.section == 5 {
 			let fixedSectionIndexPath = NSIndexPath(forRow: indexPath.row, inSection: 0) // NSIndexPath referencing section 0 to avoid "no section at index 3" error
 			if let managedVideoLink = self.videoLinksFetchedResultsController?.objectAtIndexPath(fixedSectionIndexPath) as? VideoLinkManagedObject {
-				if let url = NSURL(string: managedVideoLink.link) {
-					let safariViewController = SFSafariViewController(URL: url)
-					safariViewController.delegate = self
-					self.presentViewController(safariViewController, animated: true, completion: nil)
-				}
+				self.performSegueWithIdentifier(StoryboardIdentifiers.segue.toVideoView, sender: managedVideoLink)
 			}
 		}
 	}
@@ -163,7 +158,14 @@ class SpecialTestDetailTableViewController : UITableViewController {
 				self.tableView.reloadData()
 			}
 		} catch {
-			print("Error occurred during fetch")
+			print("Error Fetching Special Test Details")
+			print("\(error)\n")
+			if !self.presentingAlert && self.presentedViewController == nil {
+				let alertController = UIAlertController(title: "Error Storing Data", message: "An error occurred while storing data. Please try agian.", preferredStyle: .Alert)
+				alertController.addAction(UIAlertAction(title: "Dismiss", style: .Default, handler: nil))
+				self.presentingAlert = true
+				self.presentViewController(alertController, animated: true, completion: { self.presentingAlert = false })
+			}
 		}
 	}
 	
@@ -190,6 +192,18 @@ class SpecialTestDetailTableViewController : UITableViewController {
 	
 	func hideActivityIndicator() {
 		self.activityIndicator!.stopAnimating()
+	}
+	
+	// MARK: - Navigation Methods
+	
+	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+		if segue.identifier == StoryboardIdentifiers.segue.toVideoView {
+			if let destination = segue.destinationViewController as? VideoViewController {
+				if let managedVideoLink = sender as? VideoLinkManagedObject {
+					destination.videoLink = VideoLink.videoLinkFromManagedObject(managedVideoLink)
+				}
+			}
+		}
 	}
 	
 }
@@ -226,7 +240,7 @@ extension SpecialTestDetailTableViewController : UICollectionViewDataSource {
 	
 	
 	func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-		if let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ImageCell", forIndexPath: indexPath) as? ImageCollectionViewCell {
+		if let cell = collectionView.dequeueReusableCellWithReuseIdentifier(StoryboardIdentifiers.cell.collectionImageCell, forIndexPath: indexPath) as? ImageCollectionViewCell {
 			if let photo = self.images?[indexPath.row] {
 				cell.imageView.image = photo.image
 			}
@@ -295,21 +309,20 @@ extension SpecialTestDetailTableViewController : RemoteConnectionManagerDelegate
 		
 		Async.main {
 			self.hideActivityIndicator()
-			self.showNetworkStatusBanner()
 		}
 	}
 	
-	func showNetworkStatusBanner() {
-		var color = UIColor.whiteColor()
-		if self.remoteConnectionManager!.statusSuccess {
-			color = UIColor(red: 90.0/255.0, green: 212.0/255.0, blue: 39.0/255.0, alpha: 0.95)
-		} else {
-			color = UIColor(red: 255.0/255.0, green: 80.0/255.0, blue: 44.0/255.0, alpha: 0.95)
+	func didFinishDataRequestWithError(error: NSError) {
+		Async.main {
+			print(self.remoteConnectionManager!.messageForError(error))
+			print("\(error)\n")
+			if !self.presentingAlert && self.presentedViewController == nil {
+				let alertController = UIAlertController(title: "Error Fetching Remote Data", message: "An error occured while fetching data from the server. Please try agian.", preferredStyle: .Alert)
+				alertController.addAction(UIAlertAction(title: "Dismiss", style: .Default, handler: nil))
+				self.presentingAlert = true
+				self.presentViewController(alertController, animated: true, completion: { self.presentingAlert = false })
+			}
 		}
-		let banner = Banner(title: "HTTP Response", subtitle: self.remoteConnectionManager!.statusMessage, image: nil, backgroundColor: color, didTapBlock: nil)
-		banner.dismissesOnSwipe = true
-		banner.dismissesOnTap = true
-		banner.show(self.navigationController!.view, duration: 1.5)
 	}
 }
 
@@ -323,12 +336,17 @@ extension SpecialTestDetailTableViewController : DatastoreManagerDelegate {
 		}
 	}
 	
-}
-
-// MARK: - Safari View Controller Delegate Methods
-
-extension SpecialTestDetailTableViewController : SFSafariViewControllerDelegate {
-	func safariViewControllerDidFinish(controller: SFSafariViewController) {
-		controller.dismissViewControllerAnimated(true, completion: nil)
+	func didFinishStoringWithError(error: NSError) {
+		Async.main {
+			print("Error Storing Special Test Details")
+			print("\(error)\n")
+			if !self.presentingAlert && self.presentedViewController == nil {
+				let alertController = UIAlertController(title: "Error Storing Data", message: "An error occurred while storing data. Please try agian.", preferredStyle: .Alert)
+				alertController.addAction(UIAlertAction(title: "Dismiss", style: .Default, handler: nil))
+				self.presentingAlert = true
+				self.presentViewController(alertController, animated: true, completion: { self.presentingAlert = false })
+			}
+		}
 	}
+	
 }

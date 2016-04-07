@@ -1,8 +1,8 @@
 //
-//  SpecialTestsTableViewController.swift
+//  ExamTechniqueDetailsTableViewController.swift
 //  Clinical Skills
 //
-//  Created by Nick on 3/10/16.
+//  Created by Nick on 4/6/16.
 //  Copyright © 2016 Nick. All rights reserved.
 //
 
@@ -11,41 +11,35 @@ import UIKit
 import CoreData
 import Async
 
-class SpecialTestsTableViewController : UITableViewController {
+class ExamTechniqueDetailsTableViewController : UITableViewController {
 	
-	// MARK: - Properties
+	// MARK: - Properites
 	
-	var component: Component?
+	var examTechnique: ExamTechnique?
 	
-	var fetchedResultsController: NSFetchedResultsController?
+	var videoLinksFetchedResultsController: NSFetchedResultsController?
 	
 	var datastoreManager: DatastoreManager?
 	var remoteConnectionManager: RemoteConnectionManager?
 	
-	var searchController: UISearchController!
 	var activityIndicator: UIActivityIndicatorView?
 	var presentingAlert: Bool = false
-	
-	var searchPhrase: String?
-	var defaultSearchPredicate: NSPredicate?
 	
 	// MARK: - View Controller Methods
 	
 	override func viewDidLoad() {
-		if self.component != nil {
-			self.fetchedResultsController = SpecialTestsFetchedResultsControllers.specialTestsFetchedResultsController(self.component!)
+		if self.examTechnique != nil {
+			self.videoLinksFetchedResultsController = VideoLinksFetchedResultsControllers.videoLinksFetchedResultsController(self.examTechnique!)
 			self.fetchResultsWithReload(false)
 			
-			self.refreshControl?.addTarget(self, action:#selector(self.handleRefresh(_:)), forControlEvents: .ValueChanged)
-			
-			self.initializeSearchController()
+			self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), forControlEvents: .ValueChanged)
 			self.initializeActivityIndicator()
 			
 			self.datastoreManager = DatastoreManager(delegate: self)
 			self.remoteConnectionManager = RemoteConnectionManager(delegate: self)
 			
-			if let count = self.fetchedResultsController?.fetchedObjects?.count where count == 0 {
-				self.remoteConnectionManager?.fetchSpecialTests(forComponent: self.component!)
+			if let count = self.videoLinksFetchedResultsController?.fetchedObjects?.count where count == 0 {
+				self.remoteConnectionManager?.fetchVideoLinks(forExamTechnique: self.examTechnique!)
 			}
 		}
 	}
@@ -53,14 +47,35 @@ class SpecialTestsTableViewController : UITableViewController {
 	// MARK: - Table View Controller Methods
 	
 	override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-		return 1
+		return 3
+	}
+	
+	override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+		switch section {
+			case 0: return "Name"
+			case 1: return "Details"
+			case 2: return "Video Links"
+			default: return "Section \(section)"
+		}
 	}
 	
 	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		if let count = self.fetchedResultsController?.fetchedObjects?.count {
-			return count
+		if self.examTechnique != nil {
+			if section == 0 && self.examTechnique!.name != "" {
+				return 1
+			} else if section == 1 && self.examTechnique!.details != "" {
+				return 1
+			} else if section == 2 {
+				if let count = self.videoLinksFetchedResultsController?.fetchedObjects?.count where count != 0 {
+					return count
+				}
+			}
 		}
 		return 0
+	}
+	
+	override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+		return UITableViewAutomaticDimension
 	}
 	
 	override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -68,22 +83,30 @@ class SpecialTestsTableViewController : UITableViewController {
 	}
 	
 	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+		let fixedSectionIndexPath = NSIndexPath(forRow: indexPath.row, inSection: 0)
 		let cell = UITableViewCell()
 		cell.textLabel?.numberOfLines = 0
 		cell.textLabel?.lineBreakMode = .ByWordWrapping
-		cell.accessoryType = .DisclosureIndicator
-		cell.textLabel?.font = UIFont.systemFontOfSize(18, weight: UIFontWeightSemibold)
-		if let managedSpecialTest = self.fetchedResultsController?.objectAtIndexPath(indexPath) as? SpecialTestManagedObject {
-			cell.textLabel?.text = managedSpecialTest.name
-		} else {
-			cell.textLabel?.text = "Error Fetching Special Test"
+		cell.textLabel?.font = UIFont.systemFontOfSize(14)
+		switch indexPath.section {
+			case 0: cell.textLabel?.text = self.examTechnique!.name
+			case 1: cell.textLabel?.text = self.examTechnique!.details
+			case 2:
+				if let managedVideoLink = self.videoLinksFetchedResultsController?.objectAtIndexPath(fixedSectionIndexPath) as? VideoLinkManagedObject {
+					cell.accessoryType = .DisclosureIndicator
+					cell.textLabel?.text = managedVideoLink.title
+			}
+			default: cell.textLabel?.text = ""
 		}
 		return cell
 	}
 	
 	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-		if let managedSpecialTest = self.fetchedResultsController?.objectAtIndexPath(indexPath) as? SpecialTestManagedObject {
-			self.performSegueWithIdentifier(StoryboardIdentifiers.segue.toSpecialTestsDetailView, sender: managedSpecialTest)
+		if indexPath.section == 2 {
+			let fixedSectionIndexPath = NSIndexPath(forRow: indexPath.row, inSection: 0)
+			if let managedVideoLink = self.videoLinksFetchedResultsController?.objectAtIndexPath(fixedSectionIndexPath) as? VideoLinkManagedObject {
+				self.performSegueWithIdentifier(StoryboardIdentifiers.segue.toVideoView, sender: managedVideoLink)
+			}
 		}
 	}
 	
@@ -91,12 +114,12 @@ class SpecialTestsTableViewController : UITableViewController {
 	
 	func fetchResultsWithReload(shouldReload: Bool) {
 		do {
-			try self.fetchedResultsController!.performFetch()
+			try self.videoLinksFetchedResultsController?.performFetch()
 			if shouldReload {
 				self.tableView.reloadData()
 			}
 		} catch {
-			print("Error Fetching Special Tests")
+			print("Error Fetching Exam Technique Details")
 			print("\(error)\n")
 			if !self.presentingAlert && self.presentedViewController == nil {
 				let alertController = UIAlertController(title: "Error Storing Data", message: "An error occurred while storing data. Please try agian.", preferredStyle: .Alert)
@@ -110,7 +133,7 @@ class SpecialTestsTableViewController : UITableViewController {
 	// MARK: - Refresh Methods
 	
 	func handleRefresh(refreshControl: UIRefreshControl) {
-		self.remoteConnectionManager!.fetchSpecialTests(forComponent: self.component!)
+		self.remoteConnectionManager!.fetchVideoLinks(forExamTechnique: self.examTechnique!)
 	}
 	
 	// MARK: - Activity Indicator Methods
@@ -118,7 +141,7 @@ class SpecialTestsTableViewController : UITableViewController {
 	func initializeActivityIndicator() {
 		self.activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
 		self.activityIndicator!.frame = CGRect(x: 0, y: 0, width: 10, height: 10)
-		self.activityIndicator!.center = self.tableView.center
+		self.activityIndicator!.center = CGPoint(x: self.tableView.center.x, y: self.tableView.center.y * 1.5)
 		self.activityIndicator!.hidesWhenStopped = true
 		self.view.addSubview(self.activityIndicator!)
 		self.activityIndicator!.bringSubviewToFront(self.view)
@@ -135,10 +158,10 @@ class SpecialTestsTableViewController : UITableViewController {
 	// MARK: - Navigation Methods
 	
 	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-		if segue.identifier == StoryboardIdentifiers.segue.toSpecialTestsDetailView {
-			if let managedSpecialTest = sender as? SpecialTestManagedObject {
-				if let destination = segue.destinationViewController as? SpecialTestDetailTableViewController {
-					destination.parentSpecialTest = SpecialTest.specialTestFromManagedObject(managedSpecialTest)
+		if segue.identifier == StoryboardIdentifiers.segue.toVideoView {
+			if let destination = segue.destinationViewController as? VideoViewController {
+				if let managedVideoLink = sender as? VideoLinkManagedObject {
+					destination.videoLink = VideoLink.videoLinkFromManagedObject(managedVideoLink)
 				}
 			}
 		}
@@ -148,8 +171,7 @@ class SpecialTestsTableViewController : UITableViewController {
 
 // MARK: - Remote Connection Manager Delegate Methods
 
-extension SpecialTestsTableViewController : RemoteConnectionManagerDelegate {
-	
+extension ExamTechniqueDetailsTableViewController : RemoteConnectionManagerDelegate {
 	func didBeginDataRequest() {
 		if self.refreshControl != nil {
 			if !self.refreshControl!.refreshing {
@@ -162,10 +184,10 @@ extension SpecialTestsTableViewController : RemoteConnectionManagerDelegate {
 	
 	func didFinishDataRequestWithData(receivedData: NSData) {
 		let parser = JSONParser(rawData: receivedData)
-		if parser.dataType == JSONParser.dataTypes.specialTest {
-			if self.component != nil {
-				let specialTests = parser.parseSpecialTests(self.component!)
-				self.datastoreManager!.storeSpecialTests(specialTests)
+		if parser.dataType == JSONParser.dataTypes.videoLink {
+			if self.examTechnique != nil {
+				let videoLinks = parser.parseVideoLinks(self.examTechnique!)
+				self.datastoreManager?.storeVideoLinks(videoLinks)
 			}
 		}
 	}
@@ -176,6 +198,7 @@ extension SpecialTestsTableViewController : RemoteConnectionManagerDelegate {
 				self.refreshControl!.endRefreshing()
 			}
 		}
+		
 		Async.main {
 			self.hideActivityIndicator()
 		}
@@ -197,8 +220,8 @@ extension SpecialTestsTableViewController : RemoteConnectionManagerDelegate {
 
 // MARK: - Datastore Manager Delegate Methods
 
-extension SpecialTestsTableViewController : DatastoreManagerDelegate {
-
+extension ExamTechniqueDetailsTableViewController : DatastoreManagerDelegate {
+	
 	func didFinishStoring() {
 		Async.main {
 			self.fetchResultsWithReload(true)
@@ -207,7 +230,7 @@ extension SpecialTestsTableViewController : DatastoreManagerDelegate {
 	
 	func didFinishStoringWithError(error: NSError) {
 		Async.main {
-			print("Error Storing Special Tests")
+			print("Error Storing Exam Technique Details")
 			print("\(error)\n")
 			if !self.presentingAlert && self.presentedViewController == nil {
 				let alertController = UIAlertController(title: "Error Storing Data", message: "An error occurred while storing data. Please try agian.", preferredStyle: .Alert)
@@ -218,50 +241,4 @@ extension SpecialTestsTableViewController : DatastoreManagerDelegate {
 		}
 	}
 	
-}
-
-// MARK: - Search Bar Methods
-
-extension SpecialTestsTableViewController : UISearchBarDelegate {
-	
-	func initializeSearchController() {
-		self.defaultSearchPredicate = self.fetchedResultsController!.fetchRequest.predicate
-		self.searchController = UISearchController(searchResultsController: nil)
-		self.searchController.dimsBackgroundDuringPresentation = true
-		self.searchController.definesPresentationContext = true
-		self.searchController.searchBar.delegate = self
-		self.tableView.tableHeaderView = self.searchController.searchBar
-		self.tableView.contentOffset = CGPointMake(0, self.searchController.searchBar.frame.size.height)
-	}
-	
-	func clearSearch() {
-		self.searchPhrase = nil
-		self.fetchedResultsController?.fetchRequest.predicate = self.defaultSearchPredicate
-		self.fetchResultsWithReload(true)
-	}
-	
-	func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-		if searchText != "" {
-			var predicates = [NSPredicate]()
-			self.searchPhrase = searchText
-			if let predicate = self.defaultSearchPredicate {
-				predicates.append(predicate)
-			}
-			let filterPredicate = NSPredicate(format: "%K CONTAINS[cd] %@", SpecialTestManagedObject.propertyKeys.name, searchText)
-			predicates.append(filterPredicate)
-			let fullPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
-			self.fetchedResultsController?.fetchRequest.predicate = fullPredicate
-			self.fetchResultsWithReload(true)
-		} else {
-			self.clearSearch()
-		}
-	}
-	
-	func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-		self.clearSearch()
-	}
-	
-	func searchBarTextDidEndEditing(searchBar: UISearchBar) {
-		searchBar.text = self.searchPhrase
-	}
 }

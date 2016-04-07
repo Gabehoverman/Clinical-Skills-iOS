@@ -9,7 +9,6 @@
 import Foundation
 import UIKit
 import CoreData
-import BRYXBanner
 import Async
 
 class ComponentDetailsTableViewController : UITableViewController {
@@ -25,6 +24,7 @@ class ComponentDetailsTableViewController : UITableViewController {
 	var datastoreManager: DatastoreManager?
 	
 	var activityIndicator: UIActivityIndicatorView?
+	var presentingAlert: Bool = false
 	
 	override func viewDidLoad() {
 		if (self.component != nil) {
@@ -34,7 +34,7 @@ class ComponentDetailsTableViewController : UITableViewController {
 			self.specialTestsFetchedResultsController = SpecialTestsFetchedResultsControllers.specialTestsFetchedResultsController(self.component!)
 			self.fetchResultsWithReload(false)
 			
-			self.refreshControl?.addTarget(self, action: Selector("handleRefresh:"), forControlEvents: .ValueChanged)
+			self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), forControlEvents: .ValueChanged)
 			
 			self.initializeActivityIndicator()
 			
@@ -120,7 +120,7 @@ class ComponentDetailsTableViewController : UITableViewController {
 		switch (indexPath.section) {
 			case 0: cell.textLabel?.text = self.component?.inspection
 			case 1:
-				if let palpationCell = tableView.dequeueReusableCellWithIdentifier("PalpationCell") as? PalpationTableViewCell {
+				if let palpationCell = tableView.dequeueReusableCellWithIdentifier(StoryboardIdentifiers.cell.componentPalpationCell) as? PalpationTableViewCell {
 					if let managedPalpation = self.palpationsFetchedResultsController?.objectAtIndexPath(fixedSectionIndexPath) as? PalpationManagedObject {
 						palpationCell.structureLabel.text = managedPalpation.structure
 						palpationCell.detailsLabel.text = managedPalpation.details
@@ -129,7 +129,7 @@ class ComponentDetailsTableViewController : UITableViewController {
 					return palpationCell
 				}
 			case 2:
-				if let rangeOfMotionCell = tableView.dequeueReusableCellWithIdentifier("RangeOfMotionCell") as? RangeOfMotionTableViewCell {
+				if let rangeOfMotionCell = tableView.dequeueReusableCellWithIdentifier(StoryboardIdentifiers.cell.componentRangeOfMotionCell) as? RangeOfMotionTableViewCell {
 					if let managedRangeOfMotion = self.rangesOfMotionFetchedResultsController?.objectAtIndexPath(fixedSectionIndexPath) as? RangeOfMotionManagedObject {
 						rangeOfMotionCell.motionLabel.text = managedRangeOfMotion.motion
 						rangeOfMotionCell.degreesLabel.text = managedRangeOfMotion.degrees + "°"
@@ -170,7 +170,16 @@ class ComponentDetailsTableViewController : UITableViewController {
 				self.tableView.reloadData()
 			}
 		} catch {
-			print("Error occured during fetch")
+			print("Error Fetching Component Details")
+			print("\(error)\n")
+			let alertController = UIAlertController(title: "Error Reading Data", message: "An error occurred while loading data. Please try again.", preferredStyle: .Alert)
+			alertController.addAction(UIAlertAction(title: "Dismiss", style: .Default, handler: nil))
+			if !self.presentingAlert && self.presentedViewController == nil {
+				let alertController = UIAlertController(title: "Error Storing Data", message: "An error occurred while storing data. Please try agian.", preferredStyle: .Alert)
+				alertController.addAction(UIAlertAction(title: "Dismiss", style: .Default, handler: nil))
+				self.presentingAlert = true
+				self.presentViewController(alertController, animated: true, completion: { self.presentingAlert = false })
+			}
 		}
 	}
 	
@@ -250,21 +259,20 @@ extension ComponentDetailsTableViewController : RemoteConnectionManagerDelegate 
 		}
 		Async.main {
 			self.hideActivityIndicator()
-			self.showNetworkStatusBanner()
 		}
 	}
 	
-	func showNetworkStatusBanner() {
-		var color = UIColor.whiteColor()
-		if self.remoteConnectionManager!.statusSuccess {
-			color = UIColor(red: 90.0/255.0, green: 212.0/255.0, blue: 39.0/255.0, alpha: 0.95)
-		} else {
-			color = UIColor(red: 255.0/255.0, green: 80.0/255.0, blue: 44.0/255.0, alpha: 0.95)
+	func didFinishDataRequestWithError(error: NSError) {
+		Async.main {
+			print(self.remoteConnectionManager!.messageForError(error))
+			print("\(error)\n")
+			if !self.presentingAlert && self.presentedViewController == nil {
+				let alertController = UIAlertController(title: "Error Fetching Remote Data", message: "An error occured while fetching data from the server. Please try agian.", preferredStyle: .Alert)
+				alertController.addAction(UIAlertAction(title: "Dismiss", style: .Default, handler: nil))
+				self.presentingAlert = true
+				self.presentViewController(alertController, animated: true, completion: { self.presentingAlert = false })
+			}
 		}
-		let banner = Banner(title: "HTTP Response", subtitle: self.remoteConnectionManager!.statusMessage, image: nil, backgroundColor: color, didTapBlock: nil)
-		banner.dismissesOnSwipe = true
-		banner.dismissesOnTap = true
-		banner.show(self.navigationController!.view, duration: 1.5)
 	}
 	
 }
@@ -274,6 +282,19 @@ extension ComponentDetailsTableViewController : DatastoreManagerDelegate {
 	func didFinishStoring() {
 		Async.main {
 			self.fetchResultsWithReload(true)
+		}
+	}
+	
+	func didFinishStoringWithError(error: NSError) {
+		Async.main {
+			print("Error Storing Component Details")
+			print("\(error)\n")
+			if !self.presentingAlert && self.presentedViewController == nil {
+				let alertController = UIAlertController(title: "Error Storing Data", message: "An error occurred while storing data. Please try agian.", preferredStyle: .Alert)
+				alertController.addAction(UIAlertAction(title: "Dismiss", style: .Default, handler: nil))
+				self.presentingAlert = true
+				self.presentViewController(alertController, animated: true, completion: { self.presentingAlert = false })
+			}
 		}
 	}
 	

@@ -1,8 +1,8 @@
 //
-//  SpecialTestsTableViewController.swift
+//  ExamTechniquesTableViewController.swift
 //  Clinical Skills
 //
-//  Created by Nick on 3/10/16.
+//  Created by Nick on 4/6/16.
 //  Copyright © 2016 Nick. All rights reserved.
 //
 
@@ -11,20 +11,20 @@ import UIKit
 import CoreData
 import Async
 
-class SpecialTestsTableViewController : UITableViewController {
+class ExamTechniquesTableViewController : UITableViewController {
 	
 	// MARK: - Properties
 	
-	var component: Component?
+	var system: System?
 	
 	var fetchedResultsController: NSFetchedResultsController?
-	
-	var datastoreManager: DatastoreManager?
-	var remoteConnectionManager: RemoteConnectionManager?
 	
 	var searchController: UISearchController!
 	var activityIndicator: UIActivityIndicatorView?
 	var presentingAlert: Bool = false
+	
+	var datastoreManager: DatastoreManager?
+	var remoteConnectionManager: RemoteConnectionManager?
 	
 	var searchPhrase: String?
 	var defaultSearchPredicate: NSPredicate?
@@ -32,11 +32,11 @@ class SpecialTestsTableViewController : UITableViewController {
 	// MARK: - View Controller Methods
 	
 	override func viewDidLoad() {
-		if self.component != nil {
-			self.fetchedResultsController = SpecialTestsFetchedResultsControllers.specialTestsFetchedResultsController(self.component!)
+		if self.system != nil {
+			self.fetchedResultsController = ExamTechniquesFetchedResultsControllers.examTechniquesFetchedResultsController(self.system!)
 			self.fetchResultsWithReload(false)
 			
-			self.refreshControl?.addTarget(self, action:#selector(self.handleRefresh(_:)), forControlEvents: .ValueChanged)
+			self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), forControlEvents: .ValueChanged)
 			
 			self.initializeSearchController()
 			self.initializeActivityIndicator()
@@ -45,7 +45,7 @@ class SpecialTestsTableViewController : UITableViewController {
 			self.remoteConnectionManager = RemoteConnectionManager(delegate: self)
 			
 			if let count = self.fetchedResultsController?.fetchedObjects?.count where count == 0 {
-				self.remoteConnectionManager?.fetchSpecialTests(forComponent: self.component!)
+				self.remoteConnectionManager?.fetchExamTechniques(forSystem: self.system!)
 			}
 		}
 	}
@@ -59,31 +59,28 @@ class SpecialTestsTableViewController : UITableViewController {
 	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		if let count = self.fetchedResultsController?.fetchedObjects?.count {
 			return count
+		} else {
+			return 0
 		}
-		return 0
-	}
-	
-	override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-		return UITableViewAutomaticDimension
 	}
 	
 	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		let cell = UITableViewCell()
+		cell.accessoryType = .DisclosureIndicator
 		cell.textLabel?.numberOfLines = 0
 		cell.textLabel?.lineBreakMode = .ByWordWrapping
-		cell.accessoryType = .DisclosureIndicator
 		cell.textLabel?.font = UIFont.systemFontOfSize(18, weight: UIFontWeightSemibold)
-		if let managedSpecialTest = self.fetchedResultsController?.objectAtIndexPath(indexPath) as? SpecialTestManagedObject {
-			cell.textLabel?.text = managedSpecialTest.name
-		} else {
-			cell.textLabel?.text = "Error Fetching Special Test"
+		if let managedExamTechnique = self.fetchedResultsController?.objectAtIndexPath(indexPath) as? ExamTechniqueManagedObject {
+			cell.textLabel?.text = managedExamTechnique.name
 		}
 		return cell
 	}
 	
 	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-		if let managedSpecialTest = self.fetchedResultsController?.objectAtIndexPath(indexPath) as? SpecialTestManagedObject {
-			self.performSegueWithIdentifier(StoryboardIdentifiers.segue.toSpecialTestsDetailView, sender: managedSpecialTest)
+		if self.fetchedResultsController != nil {
+			if let managedExamTechnique = self.fetchedResultsController?.objectAtIndexPath(indexPath) as? ExamTechniqueManagedObject {
+				self.performSegueWithIdentifier(StoryboardIdentifiers.segue.toExamTechniquesDetailsView, sender: managedExamTechnique)
+			}
 		}
 	}
 	
@@ -96,7 +93,7 @@ class SpecialTestsTableViewController : UITableViewController {
 				self.tableView.reloadData()
 			}
 		} catch {
-			print("Error Fetching Special Tests")
+			print("Error Fetching Exan Techniques")
 			print("\(error)\n")
 			if !self.presentingAlert && self.presentedViewController == nil {
 				let alertController = UIAlertController(title: "Error Storing Data", message: "An error occurred while storing data. Please try agian.", preferredStyle: .Alert)
@@ -110,7 +107,7 @@ class SpecialTestsTableViewController : UITableViewController {
 	// MARK: - Refresh Methods
 	
 	func handleRefresh(refreshControl: UIRefreshControl) {
-		self.remoteConnectionManager!.fetchSpecialTests(forComponent: self.component!)
+		self.remoteConnectionManager!.fetchExamTechniques(forSystem: self.system!)
 	}
 	
 	// MARK: - Activity Indicator Methods
@@ -132,13 +129,11 @@ class SpecialTestsTableViewController : UITableViewController {
 		self.activityIndicator!.stopAnimating()
 	}
 	
-	// MARK: - Navigation Methods
-	
 	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-		if segue.identifier == StoryboardIdentifiers.segue.toSpecialTestsDetailView {
-			if let managedSpecialTest = sender as? SpecialTestManagedObject {
-				if let destination = segue.destinationViewController as? SpecialTestDetailTableViewController {
-					destination.parentSpecialTest = SpecialTest.specialTestFromManagedObject(managedSpecialTest)
+		if segue.identifier == StoryboardIdentifiers.segue.toExamTechniquesDetailsView {
+			if let destination = segue.destinationViewController as? ExamTechniqueDetailsTableViewController {
+				if let managedExamTechnique = sender as? ExamTechniqueManagedObject {
+					destination.examTechnique = ExamTechnique.examTechniqueFromManagedObject(managedExamTechnique)
 				}
 			}
 		}
@@ -148,7 +143,7 @@ class SpecialTestsTableViewController : UITableViewController {
 
 // MARK: - Remote Connection Manager Delegate Methods
 
-extension SpecialTestsTableViewController : RemoteConnectionManagerDelegate {
+extension ExamTechniquesTableViewController : RemoteConnectionManagerDelegate {
 	
 	func didBeginDataRequest() {
 		if self.refreshControl != nil {
@@ -162,10 +157,10 @@ extension SpecialTestsTableViewController : RemoteConnectionManagerDelegate {
 	
 	func didFinishDataRequestWithData(receivedData: NSData) {
 		let parser = JSONParser(rawData: receivedData)
-		if parser.dataType == JSONParser.dataTypes.specialTest {
-			if self.component != nil {
-				let specialTests = parser.parseSpecialTests(self.component!)
-				self.datastoreManager!.storeSpecialTests(specialTests)
+		if parser.dataType == JSONParser.dataTypes.examTechnique {
+			if self.system != nil {
+				let examTechniques = parser.parseExamTechniques(self.system!)
+				self.datastoreManager!.storeExamTechniques(examTechniques)
 			}
 		}
 	}
@@ -176,6 +171,7 @@ extension SpecialTestsTableViewController : RemoteConnectionManagerDelegate {
 				self.refreshControl!.endRefreshing()
 			}
 		}
+		
 		Async.main {
 			self.hideActivityIndicator()
 		}
@@ -197,8 +193,7 @@ extension SpecialTestsTableViewController : RemoteConnectionManagerDelegate {
 
 // MARK: - Datastore Manager Delegate Methods
 
-extension SpecialTestsTableViewController : DatastoreManagerDelegate {
-
+extension ExamTechniquesTableViewController : DatastoreManagerDelegate {
 	func didFinishStoring() {
 		Async.main {
 			self.fetchResultsWithReload(true)
@@ -207,7 +202,7 @@ extension SpecialTestsTableViewController : DatastoreManagerDelegate {
 	
 	func didFinishStoringWithError(error: NSError) {
 		Async.main {
-			print("Error Storing Special Tests")
+			print("Error Storing Exam Techniques")
 			print("\(error)\n")
 			if !self.presentingAlert && self.presentedViewController == nil {
 				let alertController = UIAlertController(title: "Error Storing Data", message: "An error occurred while storing data. Please try agian.", preferredStyle: .Alert)
@@ -217,12 +212,11 @@ extension SpecialTestsTableViewController : DatastoreManagerDelegate {
 			}
 		}
 	}
-	
 }
 
 // MARK: - Search Bar Methods
 
-extension SpecialTestsTableViewController : UISearchBarDelegate {
+extension ExamTechniquesTableViewController : UISearchBarDelegate {
 	
 	func initializeSearchController() {
 		self.defaultSearchPredicate = self.fetchedResultsController!.fetchRequest.predicate
@@ -247,7 +241,7 @@ extension SpecialTestsTableViewController : UISearchBarDelegate {
 			if let predicate = self.defaultSearchPredicate {
 				predicates.append(predicate)
 			}
-			let filterPredicate = NSPredicate(format: "%K CONTAINS[cd] %@", SpecialTestManagedObject.propertyKeys.name, searchText)
+			let filterPredicate = NSPredicate(format: "%K CONTAINS[cd] %@", ExamTechniqueManagedObject.propertyKeys.name, searchText)
 			predicates.append(filterPredicate)
 			let fullPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
 			self.fetchedResultsController?.fetchRequest.predicate = fullPredicate

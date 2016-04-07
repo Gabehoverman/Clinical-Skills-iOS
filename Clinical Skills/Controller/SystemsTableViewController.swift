@@ -9,7 +9,6 @@
 import Foundation
 import UIKit
 import CoreData
-import BRYXBanner
 import Async
 
 class SystemsTableViewController: UITableViewController {
@@ -20,6 +19,7 @@ class SystemsTableViewController: UITableViewController {
 	
 	var searchController: UISearchController?
 	var activityIndicator: UIActivityIndicatorView?
+	var presentingAlert: Bool = false
 	
 	var datastoreManager: DatastoreManager?
 	var remoteConnectionManager: RemoteConnectionManager?
@@ -33,7 +33,7 @@ class SystemsTableViewController: UITableViewController {
 		self.fetchedResultsController = SystemFetchedResultsControllers.allSystemsResultController()
 		self.fetchResultsWithReload(false)
 		
-		self.refreshControl?.addTarget(self, action: Selector("handleRefresh:"), forControlEvents: .ValueChanged)
+		self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), forControlEvents: .ValueChanged)
 		
 		self.initializeSearchController()
 		self.initializeActivityIndicator()
@@ -73,7 +73,11 @@ class SystemsTableViewController: UITableViewController {
 	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 		if let controller = self.fetchedResultsController {
 			if let managedSystem = controller.objectAtIndexPath(indexPath) as? SystemManagedObject {
-				self.performSegueWithIdentifier(StoryboardIdentifiers.segue.toComponentsView, sender: System.systemFromManagedObject(managedSystem))
+				if self.tabBarController?.selectedIndex == StoryboardIdentifiers.tab.clinicalSkills {
+					self.performSegueWithIdentifier(StoryboardIdentifiers.segue.toComponentsView, sender: System.systemFromManagedObject(managedSystem))
+				} else {
+					self.performSegueWithIdentifier(StoryboardIdentifiers.segue.toSystemBreakdownView, sender: System.systemFromManagedObject(managedSystem))
+				}
 			} else {
 				print("Error getting System")
 			}
@@ -91,7 +95,14 @@ class SystemsTableViewController: UITableViewController {
 				self.tableView.reloadData()
 			}
 		} catch {
-			print("Error occurred during System fetch")
+			print("Error Fetching Systems")
+			print("\(error)\n")
+			if !self.presentingAlert && self.presentedViewController == nil {
+				let alertController = UIAlertController(title: "Error Storing Data", message: "An error occurred while storing data. Please try agian.", preferredStyle: .Alert)
+				alertController.addAction(UIAlertAction(title: "Dismiss", style: .Default, handler: nil))
+				self.presentingAlert = true
+				self.presentViewController(alertController, animated: true, completion: { self.presentingAlert = false })
+			}
 		}
 	}
 	
@@ -126,7 +137,13 @@ class SystemsTableViewController: UITableViewController {
 		if segue.identifier == StoryboardIdentifiers.segue.toComponentsView {
 			if let destination = segue.destinationViewController as? ComponentsTableViewController {
 				if let system = sender as? System {
-					destination.parentSystem = system
+					destination.system = system
+				}
+			}
+		} else if segue.identifier == StoryboardIdentifiers.segue.toSystemBreakdownView {
+			if let destination = segue.destinationViewController as? SystemBreakdownViewController {
+				if let system = sender as? System {
+					destination.system = system
 				}
 			}
 		}
@@ -163,21 +180,20 @@ extension SystemsTableViewController: RemoteConnectionManagerDelegate {
 		
 		Async.main {
 			self.hideActivityIndicator()
-			self.showNetworkStatusBanner()
 		}
 	}
 	
-	func showNetworkStatusBanner() {
-		var color = UIColor.whiteColor()
-		if self.remoteConnectionManager!.statusSuccess {
-			color = UIColor(red: 90.0/255.0, green: 212.0/255.0, blue: 39.0/255.0, alpha: 0.95)
-		} else {
-			color = UIColor(red: 255.0/255.0, green: 80.0/255.0, blue: 44.0/255.0, alpha: 0.95)
+	func didFinishDataRequestWithError(error: NSError) {
+		Async.main {
+			print(self.remoteConnectionManager!.messageForError(error))
+			print("\(error)\n")
+			if !self.presentingAlert && self.presentedViewController == nil {
+				let alertController = UIAlertController(title: "Error Fetching Remote Data", message: "An error occured while fetching data from the server. Please try agian.", preferredStyle: .Alert)
+				alertController.addAction(UIAlertAction(title: "Dismiss", style: .Default, handler: nil))
+				self.presentingAlert = true
+				self.presentViewController(alertController, animated: true, completion: { self.presentingAlert = false })
+			}
 		}
-		let banner = Banner(title: "HTTP Response", subtitle: self.remoteConnectionManager!.statusMessage, image: nil, backgroundColor: color, didTapBlock: nil)
-		banner.dismissesOnSwipe = true
-		banner.dismissesOnTap = true
-		banner.show(self.navigationController!.view, duration: 1.5)
 	}
 }
 
@@ -187,6 +203,19 @@ extension SystemsTableViewController: DatastoreManagerDelegate {
 	func didFinishStoring() {
 		Async.main {
 			self.fetchResultsWithReload(true)
+		}
+	}
+	
+	func didFinishStoringWithError(error: NSError) {
+		Async.main {
+			print("Error Storing Systems")
+			print("\(error)\n")
+			if !self.presentingAlert && self.presentedViewController == nil {
+				let alertController = UIAlertController(title: "Error Storing Data", message: "An error occurred while storing data. Please try agian.", preferredStyle: .Alert)
+				alertController.addAction(UIAlertAction(title: "Dismiss", style: .Default, handler: nil))
+				self.presentingAlert = true
+				self.presentViewController(alertController, animated: true, completion: { self.presentingAlert = false })
+			}
 		}
 	}
 }
@@ -202,7 +231,6 @@ extension SystemsTableViewController: UISearchBarDelegate {
 		self.searchController?.searchBar.delegate = self
 		self.tableView.tableHeaderView = self.searchController?.searchBar
 		self.tableView.contentOffset = CGPointMake(0, self.searchController!.searchBar.frame.size.height)
-		self.searchController?.loadViewIfNeeded()
 	}
 	
 	func clearSearch() {

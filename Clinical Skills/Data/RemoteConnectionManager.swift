@@ -18,9 +18,10 @@ class RemoteConnectionManager : NSObject {
 	
 	struct dataURLs {
 		static let systems = "systems.json"
+		static let examTechnique = "exam_techniques.json"
 		static let components = "components.json"
 		static let palpations = "palpations.json"
-		static let ranges_of_motion = "ranges_of_motion.json"
+		static let rangesOfMotion = "ranges_of_motion.json"
 		static let muscles = "muscles.json"
 		static let specialTests = "special_tests.json"
 		static let imageLinks = "image_links.json"
@@ -57,7 +58,7 @@ class RemoteConnectionManager : NSObject {
 		self.statusCode = 0
 		self.delegate = delegate
 		super.init()
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("setShouldRequestFromLocal"), name: NSUserDefaultsDidChangeNotification, object: nil)
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.setShouldRequestFromLocal), name: NSUserDefaultsDidChangeNotification, object: nil)
 	}
 	
 	// MARK: - Deinitializers
@@ -80,6 +81,28 @@ class RemoteConnectionManager : NSObject {
 		}
 		
 		urlString += dataURLs.systems
+		if let url = NSURL(string: urlString) {
+			self.fetchWithURL(url)
+		}
+	}
+	
+	func fetchExamTechniques(forSystem system: System) {
+		self.isCloudinaryFetch = false
+		
+		var urlString: String
+		if self.shouldRequestFromLocal {
+			urlString = self.localBaseURL
+		} else {
+			urlString = self.remoteBaseURL
+		}
+		
+		urlString += dataURLs.examTechnique
+		
+		var queryString = "?system=\(system.name)"
+		queryString = queryString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
+		
+		urlString += queryString
+		
 		if let url = NSURL(string: urlString) {
 			self.fetchWithURL(url)
 		}
@@ -139,7 +162,7 @@ class RemoteConnectionManager : NSObject {
 			urlString = self.remoteBaseURL
 		}
 		
-		urlString += dataURLs.ranges_of_motion
+		urlString += dataURLs.rangesOfMotion
 		
 		var queryString = "?component=\(component.name)"
 		queryString = queryString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
@@ -239,6 +262,28 @@ class RemoteConnectionManager : NSObject {
 		}
 	}
 	
+	func fetchVideoLinks(forExamTechnique examTechnique: ExamTechnique) {
+		self.isCloudinaryFetch = false
+		
+		var urlString: String
+		if self.shouldRequestFromLocal {
+			urlString = self.localBaseURL
+		} else {
+			urlString = self.remoteBaseURL
+		}
+		
+		urlString += dataURLs.videoLinks
+		
+		var queryString = "?exam_technique=\(examTechnique.name)"
+		queryString = queryString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
+		
+		urlString += queryString
+		
+		if let url = NSURL(string: urlString) {
+			self.fetchWithURL(url)
+		}
+	}
+	
 	func fetchImageData(forCloudinaryLink cloudinaryLink: String) {
 		self.isCloudinaryFetch = true
 		
@@ -269,7 +314,7 @@ class RemoteConnectionManager : NSObject {
 		}
 		
 		if error != nil {
-			print(self.messageForError(error!))
+			print("Error Fetching Remote Data\n")
 			self.delegate?.didFinishDataRequestWithError?(error!)
 		}
 		
@@ -286,7 +331,7 @@ class RemoteConnectionManager : NSObject {
 	// MARK: - Error Handling Methods
 	
 	func messageForError(error: NSError) -> String {
-		return "RemoteConnectionManager - Error fetching remote data" + "\n" + "\(error.localizedDescription)"
+		return "Error Fetching Remote Data" + "\n" + "\(error.localizedDescription)"
 	}
 	
 	// MARK: - Notification Center Observer Methods
