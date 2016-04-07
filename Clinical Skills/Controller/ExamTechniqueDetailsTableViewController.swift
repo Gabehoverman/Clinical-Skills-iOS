@@ -87,7 +87,7 @@ class ExamTechniqueDetailsTableViewController : UITableViewController {
 		let cell = UITableViewCell()
 		cell.textLabel?.numberOfLines = 0
 		cell.textLabel?.lineBreakMode = .ByWordWrapping
-		cell.textLabel?.font = UIFont.systemFontOfSize(14)
+		cell.textLabel?.font = UIFont.systemFontOfSize(15)
 		switch indexPath.section {
 			case 0: cell.textLabel?.text = self.examTechnique!.name
 			case 1: cell.textLabel?.text = self.examTechnique!.details

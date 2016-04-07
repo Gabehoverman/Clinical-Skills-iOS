@@ -116,15 +116,15 @@ class ComponentDetailsTableViewController : UITableViewController {
 		let cell = UITableViewCell()
 		cell.textLabel?.numberOfLines = 0
 		cell.textLabel?.lineBreakMode = .ByWordWrapping
-		cell.textLabel?.font = UIFont.systemFontOfSize(14)
+		cell.textLabel?.font = UIFont.systemFontOfSize(15)
 		switch (indexPath.section) {
 			case 0: cell.textLabel?.text = self.component?.inspection
 			case 1:
 				if let palpationCell = tableView.dequeueReusableCellWithIdentifier(StoryboardIdentifiers.cell.componentPalpationCell) as? PalpationTableViewCell {
 					if let managedPalpation = self.palpationsFetchedResultsController?.objectAtIndexPath(fixedSectionIndexPath) as? PalpationManagedObject {
 						palpationCell.structureLabel.text = managedPalpation.structure
-						palpationCell.detailsLabel.text = managedPalpation.details
-						palpationCell.notesLabel.text = managedPalpation.notes
+						palpationCell.detailsLabel.text = (managedPalpation.details == "") ? "No Details" : managedPalpation.details
+						palpationCell.notesLabel.text = (managedPalpation.notes == "") ? "No Notes" : managedPalpation.notes
 					}
 					return palpationCell
 				}
@@ -133,7 +133,7 @@ class ComponentDetailsTableViewController : UITableViewController {
 					if let managedRangeOfMotion = self.rangesOfMotionFetchedResultsController?.objectAtIndexPath(fixedSectionIndexPath) as? RangeOfMotionManagedObject {
 						rangeOfMotionCell.motionLabel.text = managedRangeOfMotion.motion
 						rangeOfMotionCell.degreesLabel.text = managedRangeOfMotion.degrees + "°"
-						rangeOfMotionCell.notesLabel.text = managedRangeOfMotion.notes
+						rangeOfMotionCell.notesLabel.text = (managedRangeOfMotion.notes == "") ? "No Notes" : managedRangeOfMotion.notes
 					}
 					return rangeOfMotionCell
 				}
