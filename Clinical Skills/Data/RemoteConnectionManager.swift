@@ -13,8 +13,8 @@ class RemoteConnectionManager : NSObject {
 	// MARK: - URL Constants
 	
 	let localBaseURL = "http://localhost:3000/"
-	let remoteImageURL = "http://res.cloudinary.com/"
-	let remoteBaseURL = "https://clinical-skills-data-server.herokuapp.com/"
+	let remoteImageURL = "https://res.cloudinary.com/"
+	let remoteBaseURL = "https://wvsom-clinical-skills.herokuapp.com/"
 	
 	struct dataURLs {
 		static let systems = "systems.json"

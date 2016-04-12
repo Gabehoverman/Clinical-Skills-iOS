@@ -324,7 +324,7 @@
 				TargetAttributes = {
 					011E015D1C86463400AB8BA0 = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = 86M7CMCE7J;
+						DevelopmentTeam = 7GZ48WN6Q5;
 					};
 				};
 			};
@@ -530,6 +530,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -537,7 +538,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Clinical Skills/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.marshall.alexander.Clinical-Skills-iOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.marshall.alexander.wvsom-clinical-skills";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -548,6 +549,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -555,7 +557,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Clinical Skills/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.marshall.alexander.Clinical-Skills-iOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.marshall.alexander.wvsom-clinical-skills";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
