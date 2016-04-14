@@ -23,7 +23,6 @@ class ComponentsTableViewController : UITableViewController {
 	var activityIndicator: UIActivityIndicatorView?
 	var presentingAlert: Bool = false
 	
-	var datastoreManager: DatastoreManager?
 	var remoteConnectionManager: RemoteConnectionManager?
 	
 	var searchPhrase: String?
@@ -42,7 +41,6 @@ class ComponentsTableViewController : UITableViewController {
 			self.initializeSearchController()
 			self.initializeActivityIndicator()
 			
-			self.datastoreManager = DatastoreManager(delegate: self)
 			self.remoteConnectionManager = RemoteConnectionManager(delegate: self)
 			
 			if let count = self.fetchedResultsController?.fetchedObjects?.count where count == 0 {
@@ -168,11 +166,12 @@ extension ComponentsTableViewController : RemoteConnectionManagerDelegate {
 	}
 	
 	func didFinishDataRequestWithData(receivedData: NSData) {
+		let datastoreManager = DatastoreManager(delegate: self)
 		let parser = JSONParser(rawData: receivedData)
 		if parser.dataType == JSONParser.dataTypes.component {
 			if self.system != nil {
 				let components = parser.parseComponents(self.system!)
-				self.datastoreManager!.storeComponents(components)
+				datastoreManager.storeComponents(components)
 			}
 		}
 	}

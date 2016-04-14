@@ -24,7 +24,6 @@ class SpecialTestDetailTableViewController : UITableViewController {
 	var imageLinksFetchedResultsController: NSFetchedResultsController?
 	var videoLinksFetchedResultsController: NSFetchedResultsController?
 	
-	var datastoreManager: DatastoreManager?
 	var remoteConnectionManager: RemoteConnectionManager?
 	
 	var activityIndicator: UIActivityIndicatorView?
@@ -44,7 +43,6 @@ class SpecialTestDetailTableViewController : UITableViewController {
 			self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), forControlEvents: .ValueChanged)
 			self.initializeActivityIndicator()
 			
-			self.datastoreManager = DatastoreManager(delegate: self)
 			self.remoteConnectionManager = RemoteConnectionManager(delegate: self)
 		
 			if let count = self.videoLinksFetchedResultsController?.fetchedObjects?.count where count == 0 {
@@ -156,6 +154,7 @@ class SpecialTestDetailTableViewController : UITableViewController {
 			try self.videoLinksFetchedResultsController?.performFetch()
 			if shouldReload {
 				self.tableView.reloadData()
+				self.imagesCollectionView?.reloadData()
 			}
 		} catch {
 			print("Error Fetching Special Test Details")
@@ -270,11 +269,12 @@ extension SpecialTestDetailTableViewController : RemoteConnectionManagerDelegate
 	}
 	
 	func didFinishDataRequestWithData(receivedData: NSData) {
+		let datastoreManager = DatastoreManager(delegate: self)
 		let parser = JSONParser(rawData: receivedData)
 		if parser.dataType == JSONParser.dataTypes.imageLink {
 			if self.parentSpecialTest != nil {
 				let imageLinks = parser.parseImageLinks(self.parentSpecialTest!)
-				self.datastoreManager?.storeImageLinks(imageLinks)
+				datastoreManager.storeImageLinks(imageLinks)
 				for imageLink in imageLinks {
 					self.remoteConnectionManager?.fetchImageData(forCloudinaryLink: imageLink.link)
 				}
@@ -282,7 +282,7 @@ extension SpecialTestDetailTableViewController : RemoteConnectionManagerDelegate
 		} else if parser.dataType == JSONParser.dataTypes.videoLink {
 			if self.parentSpecialTest != nil {
 				let videoLinks = parser.parseVideoLinks(self.parentSpecialTest!)
-				self.datastoreManager?.storeVideoLinks(videoLinks)
+				datastoreManager.storeVideoLinks(videoLinks)
 				if let count = self.imageLinksFetchedResultsController?.fetchedObjects?.count where count == 0 {
 					self.remoteConnectionManager?.fetchImageLinks(forSpecialTest: self.parentSpecialTest!)
 				}
@@ -296,7 +296,7 @@ extension SpecialTestDetailTableViewController : RemoteConnectionManagerDelegate
 			self.images!.append(photo)
 		}
 		Async.main {
-			self.imagesCollectionView?.reloadData()
+			self.fetchResultsWithReload(true)
 		}
 	}
 	

@@ -14,12 +14,14 @@ class DatastoreManager : NSObject {
 	
 	// MARK: - Properties
 	
-	let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+	let managedObjectContext: NSManagedObjectContext
 	let delegate: DatastoreManagerDelegate?
 	
 	// MARK: - Initializers
 	
 	init(delegate: DatastoreManagerDelegate?) {
+		self.managedObjectContext = NSManagedObjectContext()
+		self.managedObjectContext.persistentStoreCoordinator = (UIApplication.sharedApplication().delegate as! AppDelegate).persistentStoreCoordinator
 		self.delegate = delegate
 		super.init()
 	}
@@ -391,7 +393,6 @@ class DatastoreManager : NSObject {
 			try self.managedObjectContext.save()
 			self.delegate?.didFinishStoring?()
 			print("Saved Managed Object Context\n")
-//			throw NSError(domain: "Fetch", code: -1, userInfo: nil)
 		} catch let error as NSError {
 			self.delegate?.didFinishStoringWithError?(error)
 			print("Error Saving Managed Object Context")

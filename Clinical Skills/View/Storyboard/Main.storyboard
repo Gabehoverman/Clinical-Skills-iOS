@@ -416,6 +416,7 @@
                             <outlet property="delegate" destination="Ulh-n3-PXy" id="jD2-n9-bXU"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Special Tests" id="ar2-Hy-XCo"/>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="q75-uv-QGd">
                         <autoresizingMask key="autoresizingMask"/>
                         <attributedString key="attributedTitle">
@@ -864,30 +865,28 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Structure" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eHH-eb-nXP">
-                                            <rect key="frame" x="16" y="8" width="576" height="30"/>
+                                            <rect key="frame" x="16" y="8" width="576" height="55"/>
                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Details" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jxJ-Ns-20N">
-                                            <rect key="frame" x="16" y="46" width="576" height="31"/>
+                                            <rect key="frame" x="16" y="71" width="576" height="18"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notes" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BM5-Ag-o0t">
-                                            <rect key="frame" x="16" y="85" width="576" height="30"/>
+                                            <rect key="frame" x="16" y="97" width="576" height="18"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="eHH-eb-nXP" firstAttribute="height" secondItem="jxJ-Ns-20N" secondAttribute="height" id="A3b-h8-Wys"/>
                                         <constraint firstItem="BM5-Ag-o0t" firstAttribute="leading" secondItem="89k-G8-0VX" secondAttribute="leadingMargin" constant="8" id="ABD-jo-N6W"/>
                                         <constraint firstItem="BM5-Ag-o0t" firstAttribute="top" secondItem="jxJ-Ns-20N" secondAttribute="bottom" constant="8" id="E7e-ck-fmi"/>
                                         <constraint firstItem="jxJ-Ns-20N" firstAttribute="top" secondItem="eHH-eb-nXP" secondAttribute="bottom" constant="8" id="FGn-ci-MFM"/>
-                                        <constraint firstItem="jxJ-Ns-20N" firstAttribute="height" secondItem="BM5-Ag-o0t" secondAttribute="height" id="FeP-0p-qPV"/>
                                         <constraint firstItem="eHH-eb-nXP" firstAttribute="trailing" secondItem="89k-G8-0VX" secondAttribute="trailingMargin" id="GcD-Aa-ed5"/>
                                         <constraint firstItem="BM5-Ag-o0t" firstAttribute="top" secondItem="jxJ-Ns-20N" secondAttribute="bottom" constant="8" id="Uje-ny-Y0D"/>
                                         <constraint firstItem="eHH-eb-nXP" firstAttribute="top" secondItem="89k-G8-0VX" secondAttribute="topMargin" id="WVH-xN-Hgn"/>
