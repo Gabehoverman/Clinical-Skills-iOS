@@ -21,7 +21,6 @@ class ComponentDetailsTableViewController : UITableViewController {
 	var specialTestsFetchedResultsController: NSFetchedResultsController?
 	
 	var remoteConnectionManager: RemoteConnectionManager?
-	var datastoreManager: DatastoreManager?
 	
 	var activityIndicator: UIActivityIndicatorView?
 	var presentingAlert: Bool = false
@@ -38,7 +37,6 @@ class ComponentDetailsTableViewController : UITableViewController {
 			
 			self.initializeActivityIndicator()
 			
-			self.datastoreManager = DatastoreManager(delegate: self)
 			self.remoteConnectionManager = RemoteConnectionManager(delegate: self)
 			
 			if let count = self.palpationsFetchedResultsController?.fetchedObjects?.count where count == 0 {
@@ -75,6 +73,11 @@ class ComponentDetailsTableViewController : UITableViewController {
 	}
 	
 	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		if section == 0 {
+			if self.component?.inspection == "" {
+				return 0
+			}
+		}
 		if section == 1 {
 			if let count = self.palpationsFetchedResultsController?.fetchedObjects?.count {
 				return count
@@ -132,7 +135,11 @@ class ComponentDetailsTableViewController : UITableViewController {
 				if let rangeOfMotionCell = tableView.dequeueReusableCellWithIdentifier(StoryboardIdentifiers.cell.componentRangeOfMotionCell) as? RangeOfMotionTableViewCell {
 					if let managedRangeOfMotion = self.rangesOfMotionFetchedResultsController?.objectAtIndexPath(fixedSectionIndexPath) as? RangeOfMotionManagedObject {
 						rangeOfMotionCell.motionLabel.text = managedRangeOfMotion.motion
-						rangeOfMotionCell.degreesLabel.text = managedRangeOfMotion.degrees + "°"
+						if (managedRangeOfMotion.degrees == "") {
+							rangeOfMotionCell.degreesLabel.text = managedRangeOfMotion.degrees
+						} else {
+							rangeOfMotionCell.degreesLabel.text = managedRangeOfMotion.degrees + "°"
+						}
 						rangeOfMotionCell.notesLabel.text = (managedRangeOfMotion.notes == "") ? "No Notes" : managedRangeOfMotion.notes
 					}
 					return rangeOfMotionCell
@@ -233,20 +240,21 @@ extension ComponentDetailsTableViewController : RemoteConnectionManagerDelegate 
 	}
 	
 	func didFinishDataRequestWithData(receivedData: NSData) {
+		let datastoreManager = DatastoreManager(delegate: self)
 		let parser = JSONParser(rawData: receivedData)
 		if self.component != nil {
 			if parser.dataType == JSONParser.dataTypes.palpation {
 				let palpations = parser.parsePalpations(self.component!)
-				self.datastoreManager?.storePalpations(palpations)
+				datastoreManager.storePalpations(palpations)
 			} else if parser.dataType == JSONParser.dataTypes.rangeOfMotion {
 				let rangesOfMotion = parser.parseRangesOfMotion(self.component!)
-				self.datastoreManager?.storeRangesOfMotion(rangesOfMotion)
+				datastoreManager.storeRangesOfMotion(rangesOfMotion)
 			} else if parser.dataType == JSONParser.dataTypes.muscle {
 				let muscles = parser.parseMuscles(self.component!)
-				self.datastoreManager?.storeMuscles(muscles)
+				datastoreManager.storeMuscles(muscles)
 			} else if parser.dataType == JSONParser.dataTypes.specialTest {
 				let specialTests = parser.parseSpecialTests(self.component!)
-				self.datastoreManager?.storeSpecialTests(specialTests)
+				datastoreManager.storeSpecialTests(specialTests)
 			}
 		}
 	}

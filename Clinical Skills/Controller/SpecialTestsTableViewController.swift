@@ -19,7 +19,6 @@ class SpecialTestsTableViewController : UITableViewController {
 	
 	var fetchedResultsController: NSFetchedResultsController?
 	
-	var datastoreManager: DatastoreManager?
 	var remoteConnectionManager: RemoteConnectionManager?
 	
 	var searchController: UISearchController!
@@ -41,7 +40,6 @@ class SpecialTestsTableViewController : UITableViewController {
 			self.initializeSearchController()
 			self.initializeActivityIndicator()
 			
-			self.datastoreManager = DatastoreManager(delegate: self)
 			self.remoteConnectionManager = RemoteConnectionManager(delegate: self)
 			
 			if let count = self.fetchedResultsController?.fetchedObjects?.count where count == 0 {
@@ -161,11 +159,12 @@ extension SpecialTestsTableViewController : RemoteConnectionManagerDelegate {
 	}
 	
 	func didFinishDataRequestWithData(receivedData: NSData) {
+		let datastoreManager = DatastoreManager(delegate: self)
 		let parser = JSONParser(rawData: receivedData)
 		if parser.dataType == JSONParser.dataTypes.specialTest {
 			if self.component != nil {
 				let specialTests = parser.parseSpecialTests(self.component!)
-				self.datastoreManager!.storeSpecialTests(specialTests)
+				datastoreManager.storeSpecialTests(specialTests)
 			}
 		}
 	}

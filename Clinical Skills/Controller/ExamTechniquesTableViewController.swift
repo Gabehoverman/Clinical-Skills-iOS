@@ -23,7 +23,6 @@ class ExamTechniquesTableViewController : UITableViewController {
 	var activityIndicator: UIActivityIndicatorView?
 	var presentingAlert: Bool = false
 	
-	var datastoreManager: DatastoreManager?
 	var remoteConnectionManager: RemoteConnectionManager?
 	
 	var searchPhrase: String?
@@ -41,7 +40,6 @@ class ExamTechniquesTableViewController : UITableViewController {
 			self.initializeSearchController()
 			self.initializeActivityIndicator()
 			
-			self.datastoreManager = DatastoreManager(delegate: self)
 			self.remoteConnectionManager = RemoteConnectionManager(delegate: self)
 			
 			if let count = self.fetchedResultsController?.fetchedObjects?.count where count == 0 {
@@ -156,11 +154,12 @@ extension ExamTechniquesTableViewController : RemoteConnectionManagerDelegate {
 	}
 	
 	func didFinishDataRequestWithData(receivedData: NSData) {
+		let datastoreManager = DatastoreManager(delegate: self)
 		let parser = JSONParser(rawData: receivedData)
 		if parser.dataType == JSONParser.dataTypes.examTechnique {
 			if self.system != nil {
 				let examTechniques = parser.parseExamTechniques(self.system!)
-				self.datastoreManager!.storeExamTechniques(examTechniques)
+				datastoreManager.storeExamTechniques(examTechniques)
 			}
 		}
 	}

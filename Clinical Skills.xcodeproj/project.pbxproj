@@ -42,6 +42,7 @@
 		01A2B4EB1CA666D500E4F3B8 /* RangesOfMotionFetchedResultsControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A2B4EA1CA666D500E4F3B8 /* RangesOfMotionFetchedResultsControllers.swift */; };
 		01A610201CA4F20300A63ED6 /* ComponentDetailsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A6101F1CA4F20300A63ED6 /* ComponentDetailsTableViewController.swift */; };
 		01A610221CA4FB2600A63ED6 /* RangeOfMotionManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A610211CA4FB2600A63ED6 /* RangeOfMotionManagedObject.swift */; };
+		01AB774E1CC059640059813F /* Clinical_SkillsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AB774D1CC059640059813F /* Clinical_SkillsUITests.swift */; };
 		01BCAE671C8FC1920076ECE5 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BCAE661C8FC1920076ECE5 /* Component.swift */; };
 		01BCAE691C8FC2720076ECE5 /* ComponentManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BCAE681C8FC2720076ECE5 /* ComponentManagedObject.swift */; };
 		01BF47DF1C9555B6003B10CB /* ImagesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BF47DE1C9555B6003B10CB /* ImagesTableViewCell.swift */; };
@@ -62,6 +63,16 @@
 		01DB22401CAD01350069ECFB /* StoryboardIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DB223F1CAD01350069ECFB /* StoryboardIdentifiers.swift */; };
 		01E9FFDF1CB5C018005276AC /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E9FFDE1CB5C018005276AC /* VideoViewController.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		01AB77501CC059640059813F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 011E01561C86463400AB8BA0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 011E015D1C86463400AB8BA0;
+			remoteInfo = "Clinical Skills";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		0105E41D1C9154A200AC4F09 /* SpecialTestsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpecialTestsTableViewController.swift; sourceTree = "<group>"; };
@@ -100,6 +111,9 @@
 		01A2B4EA1CA666D500E4F3B8 /* RangesOfMotionFetchedResultsControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RangesOfMotionFetchedResultsControllers.swift; sourceTree = "<group>"; };
 		01A6101F1CA4F20300A63ED6 /* ComponentDetailsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentDetailsTableViewController.swift; sourceTree = "<group>"; };
 		01A610211CA4FB2600A63ED6 /* RangeOfMotionManagedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RangeOfMotionManagedObject.swift; sourceTree = "<group>"; };
+		01AB774B1CC059640059813F /* Clinical SkillsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Clinical SkillsUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		01AB774D1CC059640059813F /* Clinical_SkillsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clinical_SkillsUITests.swift; sourceTree = "<group>"; };
+		01AB774F1CC059640059813F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		01BCAE661C8FC1920076ECE5 /* Component.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
 		01BCAE681C8FC2720076ECE5 /* ComponentManagedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentManagedObject.swift; sourceTree = "<group>"; };
 		01BF47DE1C9555B6003B10CB /* ImagesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImagesTableViewCell.swift; path = Storyboard/ImagesTableViewCell.swift; sourceTree = "<group>"; };
@@ -130,6 +144,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		01AB77481CC059640059813F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -137,6 +158,7 @@
 			isa = PBXGroup;
 			children = (
 				011E01601C86463400AB8BA0 /* Clinical Skills */,
+				01AB774C1CC059640059813F /* Clinical SkillsUITests */,
 				011E015F1C86463400AB8BA0 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -145,6 +167,7 @@
 			isa = PBXGroup;
 			children = (
 				011E015E1C86463400AB8BA0 /* Clinical Skills.app */,
+				01AB774B1CC059640059813F /* Clinical SkillsUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -280,6 +303,15 @@
 			path = Storyboard;
 			sourceTree = "<group>";
 		};
+		01AB774C1CC059640059813F /* Clinical SkillsUITests */ = {
+			isa = PBXGroup;
+			children = (
+				01AB774D1CC059640059813F /* Clinical_SkillsUITests.swift */,
+				01AB774F1CC059640059813F /* Info.plist */,
+			);
+			path = "Clinical SkillsUITests";
+			sourceTree = "<group>";
+		};
 		01DB223E1CAD01150069ECFB /* Table View Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -312,19 +344,41 @@
 			productReference = 011E015E1C86463400AB8BA0 /* Clinical Skills.app */;
 			productType = "com.apple.product-type.application";
 		};
+		01AB774A1CC059640059813F /* Clinical SkillsUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 01AB77541CC059640059813F /* Build configuration list for PBXNativeTarget "Clinical SkillsUITests" */;
+			buildPhases = (
+				01AB77471CC059640059813F /* Sources */,
+				01AB77481CC059640059813F /* Frameworks */,
+				01AB77491CC059640059813F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				01AB77511CC059640059813F /* PBXTargetDependency */,
+			);
+			name = "Clinical SkillsUITests";
+			productName = "Clinical SkillsUITests";
+			productReference = 01AB774B1CC059640059813F /* Clinical SkillsUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		011E01561C86463400AB8BA0 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0720;
+				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = Nick;
 				TargetAttributes = {
 					011E015D1C86463400AB8BA0 = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = 7GZ48WN6Q5;
+					};
+					01AB774A1CC059640059813F = {
+						CreatedOnToolsVersion = 7.3;
+						TestTargetID = 011E015D1C86463400AB8BA0;
 					};
 				};
 			};
@@ -342,6 +396,7 @@
 			projectRoot = "";
 			targets = (
 				011E015D1C86463400AB8BA0 /* Clinical Skills */,
+				01AB774A1CC059640059813F /* Clinical SkillsUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -356,6 +411,13 @@
 				011E016C1C86463400AB8BA0 /* Assets.xcassets in Resources */,
 				01BF6F761C8D48D40067D804 /* Pocket History Guide.pdf in Resources */,
 				01CD863B1C865F2E00E4437D /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		01AB77491CC059640059813F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -439,7 +501,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		01AB77471CC059640059813F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				01AB774E1CC059640059813F /* Clinical_SkillsUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		01AB77511CC059640059813F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 011E015D1C86463400AB8BA0 /* Clinical Skills */;
+			targetProxy = 01AB77501CC059640059813F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		011E01711C86463400AB8BA0 /* Debug */ = {
@@ -550,6 +628,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -559,6 +638,32 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.marshall.alexander.wvsom-clinical-skills";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		01AB77521CC059640059813F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				INFOPLIST_FILE = "Clinical SkillsUITests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.marshall.alexander.Clinical-SkillsUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = "Clinical Skills";
+			};
+			name = Debug;
+		};
+		01AB77531CC059640059813F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				INFOPLIST_FILE = "Clinical SkillsUITests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.marshall.alexander.Clinical-SkillsUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = "Clinical Skills";
 			};
 			name = Release;
 		};
@@ -582,6 +687,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		01AB77541CC059640059813F /* Build configuration list for PBXNativeTarget "Clinical SkillsUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01AB77521CC059640059813F /* Debug */,
+				01AB77531CC059640059813F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 

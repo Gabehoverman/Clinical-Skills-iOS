@@ -19,7 +19,6 @@ class ExamTechniqueDetailsTableViewController : UITableViewController {
 	
 	var videoLinksFetchedResultsController: NSFetchedResultsController?
 	
-	var datastoreManager: DatastoreManager?
 	var remoteConnectionManager: RemoteConnectionManager?
 	
 	var activityIndicator: UIActivityIndicatorView?
@@ -35,7 +34,6 @@ class ExamTechniqueDetailsTableViewController : UITableViewController {
 			self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), forControlEvents: .ValueChanged)
 			self.initializeActivityIndicator()
 			
-			self.datastoreManager = DatastoreManager(delegate: self)
 			self.remoteConnectionManager = RemoteConnectionManager(delegate: self)
 			
 			if let count = self.videoLinksFetchedResultsController?.fetchedObjects?.count where count == 0 {
@@ -183,11 +181,12 @@ extension ExamTechniqueDetailsTableViewController : RemoteConnectionManagerDeleg
 	}
 	
 	func didFinishDataRequestWithData(receivedData: NSData) {
+		let datastoreManager = DatastoreManager(delegate: self)
 		let parser = JSONParser(rawData: receivedData)
 		if parser.dataType == JSONParser.dataTypes.videoLink {
 			if self.examTechnique != nil {
 				let videoLinks = parser.parseVideoLinks(self.examTechnique!)
-				self.datastoreManager?.storeVideoLinks(videoLinks)
+				datastoreManager.storeVideoLinks(videoLinks)
 			}
 		}
 	}
