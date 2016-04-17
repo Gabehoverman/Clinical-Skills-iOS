@@ -10,20 +10,20 @@ import Foundation
 
 class SpecialTest {
 	
+	var component: Component
 	var id: Int32
 	var name: String
 	var positiveSign: String
 	var indication: String
 	var notes: String
-	var component: Component
 	
 	init(component: Component, id: Int32, name: String, positiveSign: String, indication: String, notes: String) {
+		self.component = component
 		self.id = id
 		self.name = name
 		self.positiveSign = positiveSign
 		self.indication = indication
 		self.notes = notes
-		self.component = component
 	}
 	
 	init(managedObject: SpecialTestManagedObject) {

@@ -18,6 +18,7 @@ class VideoLinkManagedObject : NSManagedObject {
 		static let title = "title"
 		static let link = "link"
 		static let specialTest = "special_test"
+		static let examTechnique = "exam_technique"
 	}
 	
 	@NSManaged var id: Int32

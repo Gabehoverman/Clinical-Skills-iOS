@@ -104,7 +104,7 @@
 		01BF47DE1C9555B6003B10CB /* ImagesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImagesTableViewCell.swift; path = Storyboard/ImagesTableViewCell.swift; sourceTree = "<group>"; };
 		01BF6F751C8D48D40067D804 /* Pocket History Guide.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Pocket History Guide.pdf"; sourceTree = "<group>"; };
 		01BF6F771C8D4A410067D804 /* PocketHistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PocketHistoryViewController.swift; sourceTree = "<group>"; };
-		01C157411CC36D83008B8240 /* FetchedResultsControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchedResultsControllers.swift; sourceTree = "<group>"; };
+		01C157411CC36D83008B8240 /* FetchedResultsControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FetchedResultsControllers.swift; path = "../Model/Core Data/FetchedResultsControllers.swift"; sourceTree = "<group>"; };
 		01CD86381C865F2E00E4437D /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		01CD86391C865F2E00E4437D /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		01CD86401C865FB900E4437D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -182,7 +182,6 @@
 				0105E41F1C915FFD00AC4F09 /* SpecialTestManagedObject.swift */,
 				01D620F11C953A6500756A7F /* ImageLinkManagedObject.swift */,
 				011F3DA41C927522002749E5 /* VideoLinkManagedObject.swift */,
-				01C157411CC36D83008B8240 /* FetchedResultsControllers.swift */,
 			);
 			path = "Core Data";
 			sourceTree = "<group>";
@@ -228,6 +227,7 @@
 			children = (
 				01DB223F1CAD01350069ECFB /* StoryboardIdentifiers.swift */,
 				011E01B11C864A9D00AB8BA0 /* UserDefaultsManager.swift */,
+				01C157411CC36D83008B8240 /* FetchedResultsControllers.swift */,
 				0118070D1CABD4B50061A64F /* BasicPhoto.swift */,
 			);
 			path = Utilities;

@@ -10,16 +10,16 @@ import Foundation
 
 class ImageLink {
 	
+	var specialTest: SpecialTest
 	var id: Int32
 	var title: String
 	var link: String
-	var specialTest: SpecialTest
 	
 	init(specialTest: SpecialTest, id: Int32, title: String, link: String) {
+		self.specialTest = specialTest
 		self.id = Int32(id)
 		self.title = title
 		self.link = link
-		self.specialTest = specialTest
 	}
 	
 	init(managedObject: ImageLinkManagedObject) {

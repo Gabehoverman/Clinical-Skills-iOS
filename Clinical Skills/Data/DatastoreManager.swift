@@ -149,7 +149,9 @@ class DatastoreManager : NSObject {
 	}
 	
 	func storePalpation(palpation: Palpation) {
-		if !self.containsPalpationWithID(palpation.id) {
+		if self.containsPalpationWithID(palpation.id) {
+			self.updatePalpationWithID(palpation.id, toPalpation: palpation)
+		} else {
 			let entity = NSEntityDescription.entityForName(PalpationManagedObject.entityName, inManagedObjectContext: self.managedObjectContext)!
 			if let newManagedPalpation = NSManagedObject(entity: entity, insertIntoManagedObjectContext: self.managedObjectContext) as? PalpationManagedObject {
 				newManagedPalpation.id = palpation.id
@@ -164,7 +166,9 @@ class DatastoreManager : NSObject {
 	}
 	
 	func storeRangeOfMotion(rangeOfMotion: RangeOfMotion) {
-		if !self.containsRangeOfMotionWithID(rangeOfMotion.id) {
+		if self.containsRangeOfMotionWithID(rangeOfMotion.id) {
+			self.updateRangeOfMotionWithID(rangeOfMotion.id, toRangeOfMotion: rangeOfMotion)
+		} else {
 			let entity = NSEntityDescription.entityForName(RangeOfMotionManagedObject.entityName, inManagedObjectContext: self.managedObjectContext)!
 			if let newManagedRangeOfMotion = NSManagedObject(entity: entity, insertIntoManagedObjectContext: self.managedObjectContext) as? RangeOfMotionManagedObject {
 				newManagedRangeOfMotion.id = rangeOfMotion.id
@@ -179,7 +183,9 @@ class DatastoreManager : NSObject {
 	}
 	
 	func storeMuscle(muscle: Muscle) {
-		if !self.containsMuscleWithID(muscle.id) {
+		if self.containsMuscleWithID(muscle.id) {
+			self.updateMuscleWithID(muscle.id, toMuscle: muscle)
+		} else {
 			let entity = NSEntityDescription.entityForName(MuscleManagedObject.entityName, inManagedObjectContext: self.managedObjectContext)!
 			if let newManagedMuscle = NSManagedObject(entity: entity, insertIntoManagedObjectContext: self.managedObjectContext) as? MuscleManagedObject {
 				newManagedMuscle.id = muscle.id
@@ -192,7 +198,9 @@ class DatastoreManager : NSObject {
 	}
 	
 	func storeSpecialTest(specialTest: SpecialTest) {
-		if !self.containsSpecialTestWithID(specialTest.id) {
+		if self.containsSpecialTestWithID(specialTest.id) {
+			self.updateSpecialTestWithID(specialTest.id, toSpecialTest: specialTest)
+		} else {
 			let entity = NSEntityDescription.entityForName(SpecialTestManagedObject.entityName, inManagedObjectContext: self.managedObjectContext)!
 			if let newManagedSpecialTest = NSManagedObject(entity: entity, insertIntoManagedObjectContext: self.managedObjectContext) as? SpecialTestManagedObject {
 				newManagedSpecialTest.id = specialTest.id
@@ -208,7 +216,9 @@ class DatastoreManager : NSObject {
 	}
 	
 	func storeImageLink(imageLink: ImageLink) {
-		if !self.containsImageLinkWithID(imageLink.id) {
+		if self.containsImageLinkWithID(imageLink.id) {
+			self.updateImageLinkWithID(imageLink.id, toImageLink: imageLink)
+		} else {
 			let entity = NSEntityDescription.entityForName(ImageLinkManagedObject.entityName, inManagedObjectContext: self.managedObjectContext)!
 			if let newManagedImageLink = NSManagedObject(entity: entity, insertIntoManagedObjectContext: self.managedObjectContext) as? ImageLinkManagedObject {
 				newManagedImageLink.id = imageLink.id
@@ -222,7 +232,9 @@ class DatastoreManager : NSObject {
 	}
 	
 	func storeVideoLink(videoLink: VideoLink) {
-		if !self.containsVideoLinkWithID(videoLink.id) {
+		if self.containsVideoLinkWithID(videoLink.id) {
+			self.updateVideoLinkWithID(videoLink.id, toVideoLink: videoLink)
+		} else {
 			let entity = NSEntityDescription.entityForName(VideoLinkManagedObject.entityName, inManagedObjectContext: self.managedObjectContext)!
 			if let newManagedVideoLink = NSManagedObject(entity: entity, insertIntoManagedObjectContext: self.managedObjectContext) as? VideoLinkManagedObject {
 				newManagedVideoLink.id = videoLink.id
@@ -270,6 +282,76 @@ class DatastoreManager : NSObject {
 			managedExamTechnique.details = toExamTechnique.details
 			if let managedSystem = self.retrieveSystemWithID(toExamTechnique.system.id) {
 				managedExamTechnique.system = managedSystem
+			}
+		}
+	}
+	
+	func updatePalpationWithID(id: Int32, toPalpation: Palpation) {
+		if let managedPalpation = self.retrievePalpationWithID(id) {
+			managedPalpation.structure = toPalpation.structure
+			managedPalpation.details = toPalpation.details
+			managedPalpation.notes = toPalpation.notes
+			if let managedComponent = self.retrieveComponentWithID(toPalpation.component.id) {
+				managedPalpation.component = managedComponent
+			}
+		}
+	}
+	
+	func updateRangeOfMotionWithID(id: Int32, toRangeOfMotion: RangeOfMotion) {
+		if let managedRangeOfMotion = self.retrieveRangeOfMotionWithID(id) {
+			managedRangeOfMotion.motion = toRangeOfMotion.motion
+			managedRangeOfMotion.degrees = toRangeOfMotion.degrees
+			managedRangeOfMotion.notes = toRangeOfMotion.notes
+			if let managedComponent = self.retrieveComponentWithID(toRangeOfMotion.component.id) {
+				managedRangeOfMotion.component = managedComponent
+			}
+		}
+	}
+	
+	func updateMuscleWithID(id: Int32, toMuscle: Muscle) {
+		if let managedMuscle = self.retrieveMuscleWithID(id) {
+			managedMuscle.name = toMuscle.name
+			if let managedComponent = self.retrieveComponentWithID(toMuscle.component.id) {
+				managedMuscle.component = managedComponent
+			}
+		}
+	}
+	
+	func updateSpecialTestWithID(id: Int32, toSpecialTest: SpecialTest) {
+		if let managedSpecialTest = self.retrieveSpecialTestWithID(id) {
+			managedSpecialTest.name = toSpecialTest.name
+			managedSpecialTest.positiveSign = toSpecialTest.positiveSign
+			managedSpecialTest.indication = toSpecialTest.indication
+			managedSpecialTest.notes = toSpecialTest.notes
+			if let managedComponent = self.retrieveComponentWithID(toSpecialTest.component.id) {
+				managedSpecialTest.component = managedComponent
+			}
+		}
+	}
+	
+	func updateImageLinkWithID(id: Int32, toImageLink: ImageLink) {
+		if let managedImageLink = self.retrieveImageLinkWithID(id) {
+			managedImageLink.title = toImageLink.title
+			managedImageLink.link = toImageLink.link
+			if let managedSpecialTest = self.retrieveSpecialTestWithID(toImageLink.specialTest.id) {
+				managedImageLink.specialTest = managedSpecialTest
+			}
+		}
+	}
+	
+	func updateVideoLinkWithID(id: Int32, toVideoLink: VideoLink) {
+		if let managedVideoLink = self.retrieveVideoLinkWithID(id) {
+			managedVideoLink.title = toVideoLink.title
+			managedVideoLink.link = toVideoLink.link
+			if toVideoLink.examTechnique != nil {
+				if let managedExamTechnique = self.retrieveExamTechniqueWithID(toVideoLink.examTechnique!.id) {
+					managedVideoLink.examTechnique = managedExamTechnique
+				}
+			}
+			if toVideoLink.specialTest != nil {
+				if let managedSpecialTest = self.retrieveSpecialTestWithID(toVideoLink.specialTest!.id) {
+					managedVideoLink.specialTest = managedSpecialTest
+				}
 			}
 		}
 	}
