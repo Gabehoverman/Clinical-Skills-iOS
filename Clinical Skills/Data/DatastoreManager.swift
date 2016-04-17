@@ -51,7 +51,7 @@ class DatastoreManager : NSObject {
 				case is VideoLink:
 					self.storeVideoLink(object as! VideoLink)
 				default:
-					print("ERROR!!!!")
+					return
 			}
 		}
 		self.save()
