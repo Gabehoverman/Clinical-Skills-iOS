@@ -289,7 +289,7 @@ extension SpecialTestDetailTableViewController : RemoteConnectionManagerDelegate
 		if parser.dataType == JSONParser.dataTypes.imageLink {
 			if self.parentSpecialTest != nil {
 				let imageLinks = parser.parseImageLinks(self.parentSpecialTest!)
-				datastoreManager.storeImageLinks(imageLinks)
+				datastoreManager.store(imageLinks)
 				for imageLink in imageLinks {
 					self.remoteConnectionManager?.fetchImageData(forCloudinaryLink: imageLink.link)
 				}
@@ -297,7 +297,7 @@ extension SpecialTestDetailTableViewController : RemoteConnectionManagerDelegate
 		} else if parser.dataType == JSONParser.dataTypes.videoLink {
 			if self.parentSpecialTest != nil {
 				let videoLinks = parser.parseVideoLinks(self.parentSpecialTest!)
-				datastoreManager.storeVideoLinks(videoLinks)
+				datastoreManager.store(videoLinks)
 				if let count = self.imageLinksFetchedResultsController?.fetchedObjects?.count where count == 0 {
 					self.remoteConnectionManager?.fetchImageLinks(forSpecialTest: self.parentSpecialTest!)
 				}

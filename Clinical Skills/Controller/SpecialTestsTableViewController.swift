@@ -176,7 +176,7 @@ extension SpecialTestsTableViewController : RemoteConnectionManagerDelegate {
 		if parser.dataType == JSONParser.dataTypes.specialTest {
 			if self.component != nil {
 				let specialTests = parser.parseSpecialTests(self.component!)
-				datastoreManager.storeSpecialTests(specialTests)
+				datastoreManager.store(specialTests)
 			}
 		}
 	}

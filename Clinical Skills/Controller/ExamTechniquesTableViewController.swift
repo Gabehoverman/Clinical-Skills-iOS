@@ -171,7 +171,7 @@ extension ExamTechniquesTableViewController : RemoteConnectionManagerDelegate {
 		if parser.dataType == JSONParser.dataTypes.examTechnique {
 			if self.system != nil {
 				let examTechniques = parser.parseExamTechniques(self.system!)
-				datastoreManager.storeExamTechniques(examTechniques)
+				datastoreManager.store(examTechniques)
 			}
 		}
 	}

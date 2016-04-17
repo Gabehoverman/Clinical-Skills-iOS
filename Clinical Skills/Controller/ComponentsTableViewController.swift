@@ -183,7 +183,7 @@ extension ComponentsTableViewController : RemoteConnectionManagerDelegate {
 		if parser.dataType == JSONParser.dataTypes.component {
 			if self.system != nil {
 				let components = parser.parseComponents(self.system!)
-				datastoreManager.storeComponents(components)
+				datastoreManager.store(components)
 			}
 		}
 	}

@@ -198,7 +198,7 @@ extension ExamTechniqueDetailsTableViewController : RemoteConnectionManagerDeleg
 		if parser.dataType == JSONParser.dataTypes.videoLink {
 			if self.examTechnique != nil {
 				let videoLinks = parser.parseVideoLinks(self.examTechnique!)
-				datastoreManager.storeVideoLinks(videoLinks)
+				datastoreManager.store(videoLinks)
 			}
 		}
 	}

@@ -280,16 +280,16 @@ extension ComponentDetailsTableViewController : RemoteConnectionManagerDelegate 
 		if self.component != nil {
 			if parser.dataType == JSONParser.dataTypes.palpation {
 				let palpations = parser.parsePalpations(self.component!)
-				datastoreManager.storePalpations(palpations)
+				datastoreManager.store(palpations)
 			} else if parser.dataType == JSONParser.dataTypes.rangeOfMotion {
 				let rangesOfMotion = parser.parseRangesOfMotion(self.component!)
-				datastoreManager.storeRangesOfMotion(rangesOfMotion)
+				datastoreManager.store(rangesOfMotion)
 			} else if parser.dataType == JSONParser.dataTypes.muscle {
 				let muscles = parser.parseMuscles(self.component!)
-				datastoreManager.storeMuscles(muscles)
+				datastoreManager.store(muscles)
 			} else if parser.dataType == JSONParser.dataTypes.specialTest {
 				let specialTests = parser.parseSpecialTests(self.component!)
-				datastoreManager.storeSpecialTests(specialTests)
+				datastoreManager.store(specialTests)
 			}
 		}
 	}

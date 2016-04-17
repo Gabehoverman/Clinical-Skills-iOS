@@ -178,7 +178,7 @@ extension SystemsTableViewController: RemoteConnectionManagerDelegate {
 		let parser = JSONParser(rawData: receivedData)
 		if parser.dataType == JSONParser.dataTypes.system {
 			let systems = parser.parseSystems()
-			datastoreManager.storeSystems(systems)
+			datastoreManager.store(systems)
 		}
 	}
 	

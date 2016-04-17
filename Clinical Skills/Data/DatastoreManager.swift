@@ -28,82 +28,39 @@ class DatastoreManager : NSObject {
 	
 	// MARK: - Store Collection Methods
 	
-	func storeSystems(systems: [System]) {
+	func store(objects: [AnyObject]) {
 		self.delegate?.didBeginStoring?()
-		for system in systems {
-			self.storeSystem(system)
-		}
-		self.save()
-	}
-
-	func storeExamTechniques(examTechniques: [ExamTechnique]) {
-		self.delegate?.didBeginStoring?()
-		for examTechnique in examTechniques {
-			self.storeExamTechnique(examTechnique)
-		}
-		self.save()
-		
-	}
-	
-	func storeComponents(components: [Component]) {
-		self.delegate?.didBeginStoring?()
-		for component in components {
-			self.storeComponent(component)
-		}
-		self.save()
-	}
-	
-	func storePalpations(palpations: [Palpation]) {
-		self.delegate?.didBeginStoring?()
-		for palpation in palpations {
-			self.storePalpation(palpation)
-		}
-		self.save()
-	}
-	
-	func storeRangesOfMotion(rangesOfMotion: [RangeOfMotion]) {
-		self.delegate?.didBeginStoring?()
-		for rangeOfMotion in rangesOfMotion {
-			self.storeRangeOfMotion(rangeOfMotion)
-		}
-		self.save()
-	}
-	
-	func storeMuscles(muscles: [Muscle]) {
-		self.delegate?.didBeginStoring?()
-		for muscle in muscles {
-			self.storeMuscle(muscle)
-		}
-		self.save()
-	}
-	
-	func storeSpecialTests(specialTests: [SpecialTest]) {
-		self.delegate?.didBeginStoring?()
-		for specialTest in specialTests {
-			self.storeSpecialTest(specialTest)
-		}
-		self.save()
-	}
-	
-	func storeImageLinks(imageLinks: [ImageLink]) {
-		self.delegate?.didBeginStoring?()
-		for imageLink in imageLinks {
-			self.storeImageLink(imageLink)
-		}
-	}
-	
-	func storeVideoLinks(videoLinks: [VideoLink]) {
-		self.delegate?.didBeginStoring?()
-		for videoLink in videoLinks {
-			self.storeVideoLink(videoLink)
+		for object in objects {
+			switch object {
+				case is System:
+					self.storeSystem(object as! System)
+				case is ExamTechnique:
+					self.storeExamTechnique(object as! ExamTechnique)
+				case is Component:
+					self.storeComponent(object as! Component)
+				case is Palpation:
+					self.storePalpation(object as! Palpation)
+				case is RangeOfMotion:
+					self.storeRangeOfMotion(object as! RangeOfMotion)
+				case is Muscle:
+					self.storeMuscle(object as! Muscle)
+				case is SpecialTest:
+					self.storeSpecialTest(object as! SpecialTest)
+				case is ImageLink:
+					self.storeImageLink(object as! ImageLink)
+				case is VideoLink:
+					self.storeVideoLink(object as! VideoLink)
+				default:
+					print("ERROR!!!!")
+			}
 		}
 		self.save()
 	}
 	
 	// MARK: - Store Instance Methods
 	
-	func storeSystem(system: System) {
-		if self.containsSystemWithID(system.id) {
+	private func storeSystem(system: System) {
+		if self.containsObjectWithID(system.id, entityName: SystemManagedObject.entityName, idPropertyKey: SystemManagedObject.propertyKeys.id) {
 			self.updateSystemWithID(system.id, toSystem: system)
 		} else {
 			let entity = NSEntityDescription.entityForName(SystemManagedObject.entityName, inManagedObjectContext: self.managedObjectContext)!
@@ -115,8 +72,8 @@ class DatastoreManager : NSObject {
 		}
 	}
 	
-	func storeExamTechnique(examTechnique: ExamTechnique) {
-		if self.containsExamTechniqueWithID(examTechnique.id) {
+	private func storeExamTechnique(examTechnique: ExamTechnique) {
+		if self.containsObjectWithID(examTechnique.id, entityName: ExamTechniqueManagedObject.entityName, idPropertyKey: ExamTechniqueManagedObject.propertyKeys.id) {
 			self.updateExamTechniqueWithID(examTechnique.id, toExamTechnique: examTechnique)
 		} else {
 			let entity = NSEntityDescription.entityForName(ExamTechniqueManagedObject.entityName, inManagedObjectContext: self.managedObjectContext)!
@@ -124,15 +81,15 @@ class DatastoreManager : NSObject {
 				newManagedExamTechnique.id = examTechnique.id
 				newManagedExamTechnique.name = examTechnique.name
 				newManagedExamTechnique.details = examTechnique.details
-				if let managedSystem = self.retrieveSystemWithID(examTechnique.system.id) {
+				if let managedSystem = self.retrieveObjectWithID(examTechnique.system.id, entityName: SystemManagedObject.entityName, idPropertyKey: SystemManagedObject.propertyKeys.id) as? SystemManagedObject {
 					newManagedExamTechnique.system = managedSystem
 				}
 			}
 		}
 	}
 	
-	func storeComponent(component: Component) {
-		if self.containsComponentWithID(component.id) {
+	private func storeComponent(component: Component) {
+		if self.containsObjectWithID(component.id, entityName: ComponentManagedObject.entityName, idPropertyKey: ComponentManagedObject.propertyKeys.id) {
 			self.updateComponentWithID(component.id, toComponent: component)
 		} else {
 			let entity = NSEntityDescription.entityForName(ComponentManagedObject.entityName, inManagedObjectContext: self.managedObjectContext)!
@@ -141,15 +98,15 @@ class DatastoreManager : NSObject {
 				newManagedComponent.name = component.name
 				newManagedComponent.inspection = component.inspection
 				newManagedComponent.notes = component.notes
-				if let managedSystem = self.retrieveSystemWithID(component.system.id) {
+				if let managedSystem = self.retrieveObjectWithID(component.system.id, entityName: SystemManagedObject.entityName, idPropertyKey: SystemManagedObject.propertyKeys.id) as? SystemManagedObject {
 					newManagedComponent.system = managedSystem
 				}
 			}
 		}
 	}
 	
-	func storePalpation(palpation: Palpation) {
-		if self.containsPalpationWithID(palpation.id) {
+	private func storePalpation(palpation: Palpation) {
+		if self.containsObjectWithID(palpation.id, entityName: PalpationManagedObject.entityName, idPropertyKey: PalpationManagedObject.propertyKeys.id) {
 			self.updatePalpationWithID(palpation.id, toPalpation: palpation)
 		} else {
 			let entity = NSEntityDescription.entityForName(PalpationManagedObject.entityName, inManagedObjectContext: self.managedObjectContext)!
@@ -158,15 +115,15 @@ class DatastoreManager : NSObject {
 				newManagedPalpation.structure = palpation.structure
 				newManagedPalpation.details = palpation.details
 				newManagedPalpation.notes = palpation.notes
-				if let managedComponent = self.retrieveComponentWithID(palpation.component.id) {
+				if let managedComponent = self.retrieveObjectWithID(palpation.component.id, entityName: ComponentManagedObject.entityName, idPropertyKey: ComponentManagedObject.propertyKeys.id) as? ComponentManagedObject {
 					newManagedPalpation.component = managedComponent
 				}
 			}
 		}
 	}
 	
-	func storeRangeOfMotion(rangeOfMotion: RangeOfMotion) {
-		if self.containsRangeOfMotionWithID(rangeOfMotion.id) {
+	private func storeRangeOfMotion(rangeOfMotion: RangeOfMotion) {
+		if self.containsObjectWithID(rangeOfMotion.id, entityName: RangeOfMotionManagedObject.entityName, idPropertyKey: RangeOfMotionManagedObject.propertyKeys.id) {
 			self.updateRangeOfMotionWithID(rangeOfMotion.id, toRangeOfMotion: rangeOfMotion)
 		} else {
 			let entity = NSEntityDescription.entityForName(RangeOfMotionManagedObject.entityName, inManagedObjectContext: self.managedObjectContext)!
@@ -175,30 +132,30 @@ class DatastoreManager : NSObject {
 				newManagedRangeOfMotion.motion = rangeOfMotion.motion
 				newManagedRangeOfMotion.degrees = rangeOfMotion.degrees
 				newManagedRangeOfMotion.notes = rangeOfMotion.notes
-				if let managedComponent = self.retrieveComponentWithID(rangeOfMotion.component.id) {
+				if let managedComponent = self.retrieveObjectWithID(rangeOfMotion.component.id, entityName: ComponentManagedObject.entityName, idPropertyKey: ComponentManagedObject.propertyKeys.id) as? ComponentManagedObject {
 					newManagedRangeOfMotion.component = managedComponent
 				}
 			}
 		}
 	}
 	
-	func storeMuscle(muscle: Muscle) {
-		if self.containsMuscleWithID(muscle.id) {
+	private func storeMuscle(muscle: Muscle) {
+		if self.containsObjectWithID(muscle.id, entityName: MuscleManagedObject.entityName, idPropertyKey: MuscleManagedObject.propertyKeys.id) {
 			self.updateMuscleWithID(muscle.id, toMuscle: muscle)
 		} else {
 			let entity = NSEntityDescription.entityForName(MuscleManagedObject.entityName, inManagedObjectContext: self.managedObjectContext)!
 			if let newManagedMuscle = NSManagedObject(entity: entity, insertIntoManagedObjectContext: self.managedObjectContext) as? MuscleManagedObject {
 				newManagedMuscle.id = muscle.id
 				newManagedMuscle.name = muscle.name
-				if let managedComponent = self.retrieveComponentWithID(muscle.component.id) {
+				if let managedComponent = self.retrieveObjectWithID(muscle.component.id, entityName: ComponentManagedObject.entityName, idPropertyKey: ComponentManagedObject.propertyKeys.id) as? ComponentManagedObject {
 					newManagedMuscle.component = managedComponent
 				}
 			}
 		}
 	}
 	
-	func storeSpecialTest(specialTest: SpecialTest) {
-		if self.containsSpecialTestWithID(specialTest.id) {
+	private func storeSpecialTest(specialTest: SpecialTest) {
+		if self.containsObjectWithID(specialTest.id, entityName: SpecialTestManagedObject.entityName, idPropertyKey: SpecialTestManagedObject.propertyKeys.id) {
 			self.updateSpecialTestWithID(specialTest.id, toSpecialTest: specialTest)
 		} else {
 			let entity = NSEntityDescription.entityForName(SpecialTestManagedObject.entityName, inManagedObjectContext: self.managedObjectContext)!
@@ -208,15 +165,15 @@ class DatastoreManager : NSObject {
 				newManagedSpecialTest.positiveSign = specialTest.positiveSign
 				newManagedSpecialTest.indication = specialTest.indication
 				newManagedSpecialTest.notes = specialTest.notes
-				if let managedComponent = self.retrieveComponentWithID(specialTest.component.id) {
+				if let managedComponent = self.retrieveObjectWithID(specialTest.component.id, entityName: ComponentManagedObject.entityName, idPropertyKey: ComponentManagedObject.propertyKeys.id) as? ComponentManagedObject {
 					newManagedSpecialTest.component = managedComponent
 				}
 			}
 		}
 	}
 	
-	func storeImageLink(imageLink: ImageLink) {
-		if self.containsImageLinkWithID(imageLink.id) {
+	private func storeImageLink(imageLink: ImageLink) {
+		if self.containsObjectWithID(imageLink.id, entityName: ImageLinkManagedObject.entityName, idPropertyKey: ImageLinkManagedObject.propertyKeys.id) {
 			self.updateImageLinkWithID(imageLink.id, toImageLink: imageLink)
 		} else {
 			let entity = NSEntityDescription.entityForName(ImageLinkManagedObject.entityName, inManagedObjectContext: self.managedObjectContext)!
@@ -224,15 +181,15 @@ class DatastoreManager : NSObject {
 				newManagedImageLink.id = imageLink.id
 				newManagedImageLink.title = imageLink.title
 				newManagedImageLink.link = imageLink.link
-				if let managedSpecialTest = self.retrieveSpecialTestWithID(imageLink.specialTest.id) {
+				if let managedSpecialTest = self.retrieveObjectWithID(imageLink.specialTest.id, entityName: SpecialTestManagedObject.entityName, idPropertyKey: SpecialTestManagedObject.propertyKeys.id) as? SpecialTestManagedObject {
 					newManagedImageLink.specialTest = managedSpecialTest
 				}
 			}
 		}
 	}
 	
-	func storeVideoLink(videoLink: VideoLink) {
-		if self.containsVideoLinkWithID(videoLink.id) {
+	private func storeVideoLink(videoLink: VideoLink) {
+		if self.containsObjectWithID(videoLink.id, entityName: VideoLinkManagedObject.entityName, idPropertyKey: VideoLinkManagedObject.propertyKeys.id) {
 			self.updateVideoLinkWithID(videoLink.id, toVideoLink: videoLink)
 		} else {
 			let entity = NSEntityDescription.entityForName(VideoLinkManagedObject.entityName, inManagedObjectContext: self.managedObjectContext)!
@@ -241,12 +198,12 @@ class DatastoreManager : NSObject {
 				newManagedVideoLink.title = videoLink.title
 				newManagedVideoLink.link = videoLink.link
 				if videoLink.specialTest != nil {
-					if let managedSpecialTest = self.retrieveSpecialTestWithID(videoLink.specialTest!.id) {
+				if let managedSpecialTest = self.retrieveObjectWithID(videoLink.specialTest!.id, entityName: SpecialTestManagedObject.entityName, idPropertyKey: SpecialTestManagedObject.propertyKeys.id) as? SpecialTestManagedObject {
 						newManagedVideoLink.specialTest = managedSpecialTest
 					}
 				}
 				if videoLink.examTechnique != nil {
-					if let managedExamTechnique = self.retrieveExamTechniqueWithID(videoLink.examTechnique!.id) {
+					if let managedExamTechnique = self.retrieveObjectWithID(videoLink.examTechnique!.id, entityName: ExamTechniqueManagedObject.entityName, idPropertyKey: ExamTechniqueManagedObject.propertyKeys.id) as? ExamTechniqueManagedObject {
 						newManagedVideoLink.examTechnique = managedExamTechnique
 					}
 				}
@@ -256,8 +213,8 @@ class DatastoreManager : NSObject {
 	
 	// MARK: - Update Methods
 	
-	func updateSystemWithID(id: Int32, toSystem: System) {
-		if let managedSystem = self.retrieveSystemWithID(id) {
+	private func updateSystemWithID(id: Int32, toSystem: System) {
+		if let managedSystem = self.retrieveObjectWithID(id, entityName: SystemManagedObject.entityName, idPropertyKey: SystemManagedObject.propertyKeys.id) as? SystemManagedObject {
 			if (managedSystem != toSystem) {
 				managedSystem.name = toSystem.name
 				managedSystem.details = toSystem.details
@@ -265,248 +222,130 @@ class DatastoreManager : NSObject {
 		}
 	}
 	
-	func updateComponentWithID(id: Int32, toComponent: Component) {
-		if let managedComponent = self.retrieveComponentWithID(id) {
+	private func updateComponentWithID(id: Int32, toComponent: Component) {
+		if let managedComponent = self.retrieveObjectWithID(id, entityName: ComponentManagedObject.entityName, idPropertyKey: ComponentManagedObject.propertyKeys.id) as? ComponentManagedObject {
 			managedComponent.name = toComponent.name
 			managedComponent.inspection = toComponent.inspection
 			managedComponent.notes = toComponent.notes
-			if let managedSystem = self.retrieveSystemWithID(toComponent.system.id) {
+			if let managedSystem = self.retrieveObjectWithID(toComponent.system.id, entityName: SystemManagedObject.entityName, idPropertyKey: SystemManagedObject.propertyKeys.id) as? SystemManagedObject {
 				managedComponent.system = managedSystem
 			}
 		}
 	}
 	
-	func updateExamTechniqueWithID(id: Int32, toExamTechnique: ExamTechnique) {
-		if let managedExamTechnique = self.retrieveExamTechniqueWithID(id) {
+	private func updateExamTechniqueWithID(id: Int32, toExamTechnique: ExamTechnique) {
+		print("Updating Exam Techniques")
+		if let managedExamTechnique = self.retrieveObjectWithID(id, entityName: ComponentManagedObject.entityName, idPropertyKey: ComponentManagedObject.propertyKeys.id) as? ExamTechniqueManagedObject {
 			managedExamTechnique.name = toExamTechnique.name
 			managedExamTechnique.details = toExamTechnique.details
-			if let managedSystem = self.retrieveSystemWithID(toExamTechnique.system.id) {
+			if let managedSystem = self.retrieveObjectWithID(toExamTechnique.system.id, entityName: SystemManagedObject.entityName, idPropertyKey: SystemManagedObject.propertyKeys.id) as? SystemManagedObject {
 				managedExamTechnique.system = managedSystem
 			}
 		}
 	}
 	
-	func updatePalpationWithID(id: Int32, toPalpation: Palpation) {
-		if let managedPalpation = self.retrievePalpationWithID(id) {
+	private func updatePalpationWithID(id: Int32, toPalpation: Palpation) {
+		if let managedPalpation = self.retrieveObjectWithID(id, entityName: PalpationManagedObject.entityName, idPropertyKey: PalpationManagedObject.propertyKeys.id) as? PalpationManagedObject {
 			managedPalpation.structure = toPalpation.structure
 			managedPalpation.details = toPalpation.details
 			managedPalpation.notes = toPalpation.notes
-			if let managedComponent = self.retrieveComponentWithID(toPalpation.component.id) {
+			if let managedComponent = self.retrieveObjectWithID(toPalpation.component.id, entityName: ComponentManagedObject.entityName, idPropertyKey: ComponentManagedObject.propertyKeys.id) as? ComponentManagedObject {
 				managedPalpation.component = managedComponent
 			}
 		}
 	}
 	
-	func updateRangeOfMotionWithID(id: Int32, toRangeOfMotion: RangeOfMotion) {
-		if let managedRangeOfMotion = self.retrieveRangeOfMotionWithID(id) {
+	private func updateRangeOfMotionWithID(id: Int32, toRangeOfMotion: RangeOfMotion) {
+		if let managedRangeOfMotion = self.retrieveObjectWithID(id, entityName: RangeOfMotionManagedObject.entityName, idPropertyKey: RangeOfMotionManagedObject.propertyKeys.id) as? RangeOfMotionManagedObject {
 			managedRangeOfMotion.motion = toRangeOfMotion.motion
 			managedRangeOfMotion.degrees = toRangeOfMotion.degrees
 			managedRangeOfMotion.notes = toRangeOfMotion.notes
-			if let managedComponent = self.retrieveComponentWithID(toRangeOfMotion.component.id) {
+			if let managedComponent = self.retrieveObjectWithID(toRangeOfMotion.component.id, entityName: ComponentManagedObject.entityName, idPropertyKey: ComponentManagedObject.propertyKeys.id) as? ComponentManagedObject {
 				managedRangeOfMotion.component = managedComponent
 			}
 		}
 	}
 	
-	func updateMuscleWithID(id: Int32, toMuscle: Muscle) {
-		if let managedMuscle = self.retrieveMuscleWithID(id) {
+	private func updateMuscleWithID(id: Int32, toMuscle: Muscle) {
+		if let managedMuscle = self.retrieveObjectWithID(id, entityName: MuscleManagedObject.entityName, idPropertyKey: MuscleManagedObject.propertyKeys.id) as? MuscleManagedObject {
 			managedMuscle.name = toMuscle.name
-			if let managedComponent = self.retrieveComponentWithID(toMuscle.component.id) {
+			if let managedComponent = self.retrieveObjectWithID(toMuscle.component.id, entityName: ComponentManagedObject.entityName, idPropertyKey: ComponentManagedObject.propertyKeys.id) as? ComponentManagedObject {
 				managedMuscle.component = managedComponent
 			}
 		}
 	}
 	
-	func updateSpecialTestWithID(id: Int32, toSpecialTest: SpecialTest) {
-		if let managedSpecialTest = self.retrieveSpecialTestWithID(id) {
+	private func updateSpecialTestWithID(id: Int32, toSpecialTest: SpecialTest) {
+		if let managedSpecialTest = self.retrieveObjectWithID(id, entityName: SpecialTestManagedObject.entityName, idPropertyKey: SpecialTestManagedObject.propertyKeys.id) as? SpecialTestManagedObject {
 			managedSpecialTest.name = toSpecialTest.name
 			managedSpecialTest.positiveSign = toSpecialTest.positiveSign
 			managedSpecialTest.indication = toSpecialTest.indication
 			managedSpecialTest.notes = toSpecialTest.notes
-			if let managedComponent = self.retrieveComponentWithID(toSpecialTest.component.id) {
+			if let managedComponent = self.retrieveObjectWithID(toSpecialTest.component.id, entityName: ComponentManagedObject.entityName, idPropertyKey: ComponentManagedObject.propertyKeys.id) as? ComponentManagedObject {
 				managedSpecialTest.component = managedComponent
 			}
 		}
 	}
 	
-	func updateImageLinkWithID(id: Int32, toImageLink: ImageLink) {
-		if let managedImageLink = self.retrieveImageLinkWithID(id) {
+	private func updateImageLinkWithID(id: Int32, toImageLink: ImageLink) {
+		if let managedImageLink = self.retrieveObjectWithID(id, entityName: ImageLinkManagedObject.entityName, idPropertyKey: ImageLinkManagedObject.propertyKeys.id) as? ImageLinkManagedObject {
 			managedImageLink.title = toImageLink.title
 			managedImageLink.link = toImageLink.link
-			if let managedSpecialTest = self.retrieveSpecialTestWithID(toImageLink.specialTest.id) {
+			if let managedSpecialTest = self.retrieveObjectWithID(toImageLink.specialTest.id, entityName: SpecialTestManagedObject.entityName, idPropertyKey: SpecialTestManagedObject.propertyKeys.id) as? SpecialTestManagedObject {
 				managedImageLink.specialTest = managedSpecialTest
 			}
 		}
 	}
 	
-	func updateVideoLinkWithID(id: Int32, toVideoLink: VideoLink) {
-		if let managedVideoLink = self.retrieveVideoLinkWithID(id) {
+	private func updateVideoLinkWithID(id: Int32, toVideoLink: VideoLink) {
+		if let managedVideoLink = self.retrieveObjectWithID(id, entityName: VideoLinkManagedObject.entityName, idPropertyKey: VideoLinkManagedObject.propertyKeys.id) as? VideoLinkManagedObject {
 			managedVideoLink.title = toVideoLink.title
 			managedVideoLink.link = toVideoLink.link
 			if toVideoLink.examTechnique != nil {
-				if let managedExamTechnique = self.retrieveExamTechniqueWithID(toVideoLink.examTechnique!.id) {
+				if let managedExamTechnique = self.retrieveObjectWithID(toVideoLink.specialTest!.id, entityName: ExamTechniqueManagedObject.entityName, idPropertyKey: ExamTechniqueManagedObject.propertyKeys.id) as? ExamTechniqueManagedObject {
 					managedVideoLink.examTechnique = managedExamTechnique
 				}
 			}
 			if toVideoLink.specialTest != nil {
-				if let managedSpecialTest = self.retrieveSpecialTestWithID(toVideoLink.specialTest!.id) {
+				if let managedSpecialTest = self.retrieveObjectWithID(toVideoLink.specialTest!.id, entityName: SpecialTestManagedObject.entityName, idPropertyKey: SpecialTestManagedObject.propertyKeys.id) as? SpecialTestManagedObject {
 					managedVideoLink.specialTest = managedSpecialTest
 				}
 			}
 		}
 	}
 	
+	// MARK: - Delete Methods
+	
+	private func deleteObjectsForEntity(entityName: String, withPredicate: NSPredicate) {
+		let request = NSFetchRequest(entityName: entityName)
+		request.predicate = withPredicate
+		if let managedObjects = try! self.managedObjectContext.executeFetchRequest(request) as? [NSManagedObject] {
+			for managedObject in managedObjects {
+				self.managedObjectContext.deleteObject(managedObject)
+			}
+		}
+	}
+	
 	// MARK: - Retrieve Methods
 	
-	func retrieveSystemWithID(id: Int32) -> SystemManagedObject? {
-		let request = NSFetchRequest(entityName: SystemManagedObject.entityName)
-		request.predicate = NSPredicate(format: "%K = %d", SystemManagedObject.propertyKeys.id, id)
-		if let managedSystem = try! self.managedObjectContext.executeFetchRequest(request).first as? SystemManagedObject {
-			return managedSystem
-		}
-		return nil
-	}
-	
-	func retrieveExamTechniqueWithID(id: Int32) -> ExamTechniqueManagedObject? {
-		let request = NSFetchRequest(entityName: ExamTechniqueManagedObject.entityName)
-		request.predicate = NSPredicate(format: "%K = %d", ExamTechniqueManagedObject.propertyKeys.id, id)
-		if let managedExamTechnique = try! self.managedObjectContext.executeFetchRequest(request).first as? ExamTechniqueManagedObject {
-			return managedExamTechnique
-		}
-		return nil
-	}
-	
-	func retrieveComponentWithID(id: Int32) -> ComponentManagedObject? {
-		let request = NSFetchRequest(entityName: ComponentManagedObject.entityName)
-		request.predicate = NSPredicate(format: "%K = %d", ComponentManagedObject.propertyKeys.id, id)
-		if let managedComponent = try! self.managedObjectContext.executeFetchRequest(request).first as? ComponentManagedObject {
-			return managedComponent
-		}
-		return nil
-	}
-	
-	func retrievePalpationWithID(id: Int32) -> PalpationManagedObject? {
-		let request = NSFetchRequest(entityName: PalpationManagedObject.entityName)
-		request.predicate = NSPredicate(format: "%K = %d", PalpationManagedObject.propertyKeys.id, id)
-		if let managedPalpation = try! self.managedObjectContext.executeFetchRequest(request).first as? PalpationManagedObject {
-			return managedPalpation
-		}
-		return nil
-	}
-	
-	func retrieveRangeOfMotionWithID(id: Int32) -> RangeOfMotionManagedObject? {
-		let request = NSFetchRequest(entityName: RangeOfMotionManagedObject.entityName)
-		request.predicate = NSPredicate(format: "%K = %d", RangeOfMotionManagedObject.propertyKeys.id, id)
-		if let managedRangeOfMotion = try! self.managedObjectContext.executeFetchRequest(request).first as? RangeOfMotionManagedObject {
-			return managedRangeOfMotion
-		}
-		return nil
-	}
-	
-	func retrieveMuscleWithID(id: Int32) -> MuscleManagedObject? {
-		let request = NSFetchRequest(entityName: MuscleManagedObject.entityName)
-		request.predicate = NSPredicate(format: "%K = %d", MuscleManagedObject.propertyKeys.id, id)
-		if let managedMuscle = try! self.managedObjectContext.executeFetchRequest(request).first as? MuscleManagedObject {
-			return managedMuscle
-		}
-		return nil
-	}
-	
-	func retrieveSpecialTestWithID(id: Int32) -> SpecialTestManagedObject? {
-		let request = NSFetchRequest(entityName: SpecialTestManagedObject.entityName)
-		request.predicate = NSPredicate(format: "%K = %d", SpecialTestManagedObject.propertyKeys.id, id)
-		if let managedSpecialTest = try! self.managedObjectContext.executeFetchRequest(request).first as? SpecialTestManagedObject {
-			return managedSpecialTest
-		}
-		return nil
-	}
-	
-	func retrieveImageLinkWithID(id: Int32) -> ImageLinkManagedObject? {
-		let request = NSFetchRequest(entityName: ImageLinkManagedObject.entityName)
-		request.predicate = NSPredicate(format: "%K = %d", ImageLinkManagedObject.propertyKeys.id, id)
-		if let managedImageLink = try! self.managedObjectContext.executeFetchRequest(request).first as? ImageLinkManagedObject {
-			return managedImageLink
-		}
-		return nil
-	}
-	
-	func retrieveVideoLinkWithID(id: Int32) -> VideoLinkManagedObject? {
-		let request = NSFetchRequest(entityName: VideoLinkManagedObject.entityName)
-		request.predicate = NSPredicate(format: "%K = %d", VideoLinkManagedObject.propertyKeys.id, id)
-		if let managedVideoLink = try! self.managedObjectContext.executeFetchRequest(request).first as? VideoLinkManagedObject {
-			return managedVideoLink
-		}
-		return nil
+	private func retrieveObjectWithID(id: Int32, entityName: String, idPropertyKey: String) -> NSManagedObject? {
+		let request = NSFetchRequest(entityName: entityName)
+		request.predicate = NSPredicate(format: "%K = %d", idPropertyKey, id)
+		return try! self.managedObjectContext.executeFetchRequest(request).first as? NSManagedObject
 	}
 	
 	// MARK: - Contains Methods
 	
-	func containsSystemWithID(id: Int32) -> Bool {
-		let request = NSFetchRequest(entityName: SystemManagedObject.entityName)
-		request.predicate = NSPredicate(format: "%K = %d", SystemManagedObject.propertyKeys.id, id)
-		let results = try! self.managedObjectContext.executeFetchRequest(request)
-		return results.count != 0
-	}
-	
-	func containsExamTechniqueWithID(id: Int32) -> Bool {
-		let request = NSFetchRequest(entityName: ExamTechniqueManagedObject.entityName)
-		request.predicate = NSPredicate(format: "%K = %d", ExamTechniqueManagedObject.propertyKeys.id, id)
-		let results = try! self.managedObjectContext.executeFetchRequest(request)
-		return results.count != 0
-	}
-	
-	func containsComponentWithID(id: Int32) -> Bool {
-		let request = NSFetchRequest(entityName: ComponentManagedObject.entityName)
-		request.predicate = NSPredicate(format: "%K = %d", ComponentManagedObject.propertyKeys.id, id)
-		let results = try! self.managedObjectContext.executeFetchRequest(request)
-		return results.count != 0
-	}
-	
-	func containsPalpationWithID(id: Int32) -> Bool {
-		let request = NSFetchRequest(entityName: PalpationManagedObject.entityName)
-		request.predicate = NSPredicate(format: "%K = %d", PalpationManagedObject.propertyKeys.id, id)
-		let results = try! self.managedObjectContext.executeFetchRequest(request)
-		return results.count != 0
-	}
-	
-	func containsRangeOfMotionWithID(id: Int32) -> Bool {
-		let request = NSFetchRequest(entityName: RangeOfMotionManagedObject.entityName)
-		request.predicate = NSPredicate(format: "%K = %d", RangeOfMotionManagedObject.propertyKeys.id, id)
-		let results = try! self.managedObjectContext.executeFetchRequest(request)
-		return results.count != 0
-	}
-	
-	func containsMuscleWithID(id: Int32) -> Bool {
-		let request = NSFetchRequest(entityName: MuscleManagedObject.entityName)
-		request.predicate = NSPredicate(format: "%K = %d", MuscleManagedObject.propertyKeys.id, id)
-		let results = try! self.managedObjectContext.executeFetchRequest(request)
-		return results.count != 0
-	}
-	
-	func containsSpecialTestWithID(id: Int32) -> Bool {
-		let request = NSFetchRequest(entityName: SpecialTestManagedObject.entityName)
-		request.predicate = NSPredicate(format: "%K = %d", ComponentManagedObject.propertyKeys.id, id)
-		let results = try! self.managedObjectContext.executeFetchRequest(request)
-		return results.count != 0
-	}
-	
-	func containsImageLinkWithID(id: Int32) -> Bool {
-		let request = NSFetchRequest(entityName: ImageLinkManagedObject.entityName)
-		request.predicate = NSPredicate(format: "%K = %d", ImageLinkManagedObject.propertyKeys.id, id)
-		let results = try! self.managedObjectContext.executeFetchRequest(request)
-		return results.count != 0
-	}
-	
-	func containsVideoLinkWithID(id: Int32) -> Bool {
-		let request = NSFetchRequest(entityName: VideoLinkManagedObject.entityName)
-		request.predicate = NSPredicate(format: "%K = %d", VideoLinkManagedObject.propertyKeys.id , id)
+	private func containsObjectWithID(id: Int32, entityName: String, idPropertyKey: String) -> Bool {
+		let request = NSFetchRequest(entityName: entityName)
+		request.predicate = NSPredicate(format: "%K = %d", idPropertyKey, id)
 		let results = try! self.managedObjectContext.executeFetchRequest(request)
 		return results.count != 0
 	}
 	
 	// MARK: - Save Methods
 	
-	func save() {
+	private func save() {
 		do {
 			print("\(self.managedObjectContext.insertedObjects.count) Objects to be Inserted")
 			print("\(self.managedObjectContext.updatedObjects.count) Objects to be Updated")
