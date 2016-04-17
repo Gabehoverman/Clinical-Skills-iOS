@@ -23,12 +23,20 @@ class Palpation {
 		self.notes = notes
 	}
 	
-	class func palpationFromManagedObject(managedObject: PalpationManagedObject) -> Palpation {
-		let component = Component.componentFromManagedObject(managedObject.component)
-		let id = managedObject.id
-		let structure = managedObject.structure
-		let details = managedObject.details
-		let notes = managedObject.notes
-		return Palpation(component: component, id: id, structure: structure, details: details, notes: notes)
+	init(managedObject: PalpationManagedObject) {
+		self.component = Component(managedObject: managedObject.component)
+		self.id = managedObject.id
+		self.structure = managedObject.structure
+		self.details = managedObject.details
+		self.notes = managedObject.notes
 	}
+	
+}
+
+func ==(lhs: Palpation, rhs: Palpation) -> Bool {
+	return (lhs.id == rhs.id) && (lhs.structure == rhs.structure)
+}
+
+func !=(lhs: Palpation, rhs: Palpation) -> Bool {
+	return !(lhs == rhs)
 }

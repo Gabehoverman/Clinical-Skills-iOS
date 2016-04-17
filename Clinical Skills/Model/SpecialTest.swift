@@ -16,7 +16,6 @@ class SpecialTest {
 	var indication: String
 	var notes: String
 	var component: Component
-	var videoLinks: [VideoLink]
 	
 	init(component: Component, id: Int32, name: String, positiveSign: String, indication: String, notes: String) {
 		self.id = id
@@ -25,17 +24,23 @@ class SpecialTest {
 		self.indication = indication
 		self.notes = notes
 		self.component = component
-		self.videoLinks = [VideoLink]()
 	}
 	
-	class func specialTestFromManagedObject(managedSpecialTest: SpecialTestManagedObject) -> SpecialTest {
-		let id = Int32(managedSpecialTest.id)
-		let name = managedSpecialTest.name
-		let positiveSign = managedSpecialTest.positiveSign
-		let indication = managedSpecialTest.indication
-		let notes = managedSpecialTest.notes
-		let component = Component.componentFromManagedObject(managedSpecialTest.component)
-		return SpecialTest(component: component, id: id, name: name, positiveSign: positiveSign, indication: indication, notes: notes)
+	init(managedObject: SpecialTestManagedObject) {
+		self.component = Component(managedObject: managedObject.component)
+		self.id = Int32(managedObject.id)
+		self.name = managedObject.name
+		self.positiveSign = managedObject.positiveSign
+		self.indication = managedObject.indication
+		self.notes = managedObject.notes
 	}
 	
+}
+
+func ==(lhs: SpecialTest, rhs: SpecialTest) -> Bool {
+	return (lhs.id == rhs.id) && (lhs.name == rhs.name)
+}
+
+func !=(lhs: SpecialTest, rhs: SpecialTest) -> Bool {
+	return !(lhs == rhs)
 }

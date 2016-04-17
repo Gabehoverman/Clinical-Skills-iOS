@@ -20,7 +20,7 @@ class DatastoreManager : NSObject {
 	// MARK: - Initializers
 	
 	init(delegate: DatastoreManagerDelegate?) {
-		self.managedObjectContext = NSManagedObjectContext()
+		self.managedObjectContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
 		self.managedObjectContext.persistentStoreCoordinator = (UIApplication.sharedApplication().delegate as! AppDelegate).persistentStoreCoordinator
 		self.delegate = delegate
 		super.init()
@@ -34,7 +34,6 @@ class DatastoreManager : NSObject {
 			self.storeSystem(system)
 		}
 		self.save()
-		
 	}
 
 	func storeExamTechniques(examTechniques: [ExamTechnique]) {
@@ -104,7 +103,9 @@ class DatastoreManager : NSObject {
 	// MARK: - Store Instance Methods
 	
 	func storeSystem(system: System) {
-		if !self.containsSystemWithID(system.id) {
+		if self.containsSystemWithID(system.id) {
+			self.updateSystemWithID(system.id, toSystem: system)
+		} else {
 			let entity = NSEntityDescription.entityForName(SystemManagedObject.entityName, inManagedObjectContext: self.managedObjectContext)!
 			if let newManagedSystem = NSManagedObject(entity: entity, insertIntoManagedObjectContext: self.managedObjectContext) as? SystemManagedObject {
 				newManagedSystem.id = system.id
@@ -115,7 +116,9 @@ class DatastoreManager : NSObject {
 	}
 	
 	func storeExamTechnique(examTechnique: ExamTechnique) {
-		if !self.containsExamTechniqueWithID(examTechnique.id) {
+		if self.containsExamTechniqueWithID(examTechnique.id) {
+			self.updateExamTechniqueWithID(examTechnique.id, toExamTechnique: examTechnique)
+		} else {
 			let entity = NSEntityDescription.entityForName(ExamTechniqueManagedObject.entityName, inManagedObjectContext: self.managedObjectContext)!
 			if let newManagedExamTechnique = NSManagedObject(entity: entity, insertIntoManagedObjectContext: self.managedObjectContext) as? ExamTechniqueManagedObject {
 				newManagedExamTechnique.id = examTechnique.id
@@ -129,7 +132,9 @@ class DatastoreManager : NSObject {
 	}
 	
 	func storeComponent(component: Component) {
-		if !self.containsComponentWithID(component.id) {
+		if self.containsComponentWithID(component.id) {
+			self.updateComponentWithID(component.id, toComponent: component)
+		} else {
 			let entity = NSEntityDescription.entityForName(ComponentManagedObject.entityName, inManagedObjectContext: self.managedObjectContext)!
 			if let newManagedComponent = NSManagedObject(entity: entity, insertIntoManagedObjectContext: self.managedObjectContext) as? ComponentManagedObject {
 				newManagedComponent.id = component.id
@@ -233,6 +238,38 @@ class DatastoreManager : NSObject {
 						newManagedVideoLink.examTechnique = managedExamTechnique
 					}
 				}
+			}
+		}
+	}
+	
+	// MARK: - Update Methods
+	
+	func updateSystemWithID(id: Int32, toSystem: System) {
+		if let managedSystem = self.retrieveSystemWithID(id) {
+			if (managedSystem != toSystem) {
+				managedSystem.name = toSystem.name
+				managedSystem.details = toSystem.details
+			}
+		}
+	}
+	
+	func updateComponentWithID(id: Int32, toComponent: Component) {
+		if let managedComponent = self.retrieveComponentWithID(id) {
+			managedComponent.name = toComponent.name
+			managedComponent.inspection = toComponent.inspection
+			managedComponent.notes = toComponent.notes
+			if let managedSystem = self.retrieveSystemWithID(toComponent.system.id) {
+				managedComponent.system = managedSystem
+			}
+		}
+	}
+	
+	func updateExamTechniqueWithID(id: Int32, toExamTechnique: ExamTechnique) {
+		if let managedExamTechnique = self.retrieveExamTechniqueWithID(id) {
+			managedExamTechnique.name = toExamTechnique.name
+			managedExamTechnique.details = toExamTechnique.details
+			if let managedSystem = self.retrieveSystemWithID(toExamTechnique.system.id) {
+				managedExamTechnique.system = managedSystem
 			}
 		}
 	}
@@ -390,6 +427,7 @@ class DatastoreManager : NSObject {
 	func save() {
 		do {
 			print("\(self.managedObjectContext.insertedObjects.count) Objects to be Inserted")
+			print("\(self.managedObjectContext.updatedObjects.count) Objects to be Updated")
 			try self.managedObjectContext.save()
 			self.delegate?.didFinishStoring?()
 			print("Saved Managed Object Context\n")

@@ -32,3 +32,19 @@ class ImageLinkManagedObject : NSManagedObject {
 	}
 	
 }
+
+func ==(lhs: ImageLinkManagedObject, rhs: ImageLinkManagedObject) -> Bool {
+	return (lhs.id == rhs.id) && (lhs.title == rhs.title)
+}
+
+func !=(lhs: ImageLinkManagedObject, rhs: ImageLinkManagedObject) -> Bool {
+	return !(lhs == rhs)
+}
+
+func ==(lhs: ImageLinkManagedObject, rhs: ImageLink) -> Bool {
+	return (lhs.id == rhs.id) && (lhs.title == rhs.title)
+}
+
+func !=(lhs: ImageLinkManagedObject, rhs: ImageLink) -> Bool {
+	return !(lhs == rhs)
+}

@@ -28,7 +28,7 @@ class ExamTechniqueDetailsTableViewController : UITableViewController {
 	
 	override func viewDidLoad() {
 		if self.examTechnique != nil {
-			self.videoLinksFetchedResultsController = VideoLinksFetchedResultsControllers.videoLinksFetchedResultsController(self.examTechnique!)
+			self.videoLinksFetchedResultsController = FetchedResultsControllers.videoLinksFetchedResultsController(self.examTechnique!)
 			self.fetchResultsWithReload(false)
 			
 			self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), forControlEvents: .ValueChanged)
@@ -39,6 +39,8 @@ class ExamTechniqueDetailsTableViewController : UITableViewController {
 			if let count = self.videoLinksFetchedResultsController?.fetchedObjects?.count where count == 0 {
 				self.remoteConnectionManager?.fetchVideoLinks(forExamTechnique: self.examTechnique!)
 			}
+			
+			NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.backgroundManagedObjectContextDidSave(_:)), name: NSManagedObjectContextDidSaveNotification, object: nil)
 		}
 	}
 	
@@ -128,6 +130,16 @@ class ExamTechniqueDetailsTableViewController : UITableViewController {
 		}
 	}
 	
+	// MARK: - Core Data Notification Methods
+	
+	func backgroundManagedObjectContextDidSave(saveNotification: NSNotification) {
+		Async.main {
+			if let workingContext = self.videoLinksFetchedResultsController?.managedObjectContext {
+				workingContext.mergeChangesFromContextDidSaveNotification(saveNotification)
+			}
+		}
+	}
+	
 	// MARK: - Refresh Methods
 	
 	func handleRefresh(refreshControl: UIRefreshControl) {
@@ -159,7 +171,7 @@ class ExamTechniqueDetailsTableViewController : UITableViewController {
 		if segue.identifier == StoryboardIdentifiers.segue.toVideoView {
 			if let destination = segue.destinationViewController as? VideoViewController {
 				if let managedVideoLink = sender as? VideoLinkManagedObject {
-					destination.videoLink = VideoLink.videoLinkFromManagedObject(managedVideoLink)
+					destination.videoLink = VideoLink(managedObject: managedVideoLink)
 				}
 			}
 		}

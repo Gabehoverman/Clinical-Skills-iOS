@@ -32,7 +32,7 @@ class ExamTechniquesTableViewController : UITableViewController {
 	
 	override func viewDidLoad() {
 		if self.system != nil {
-			self.fetchedResultsController = ExamTechniquesFetchedResultsControllers.examTechniquesFetchedResultsController(self.system!)
+			self.fetchedResultsController = FetchedResultsControllers.examTechniquesFetchedResultsController(self.system!)
 			self.fetchResultsWithReload(false)
 			
 			self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), forControlEvents: .ValueChanged)
@@ -45,6 +45,8 @@ class ExamTechniquesTableViewController : UITableViewController {
 			if let count = self.fetchedResultsController?.fetchedObjects?.count where count == 0 {
 				self.remoteConnectionManager?.fetchExamTechniques(forSystem: self.system!)
 			}
+			
+			NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.backgroundManagedObjectContextDidSave(_:)), name: NSManagedObjectContextDidSaveNotification, object: nil)
 		}
 	}
 	
@@ -102,6 +104,16 @@ class ExamTechniquesTableViewController : UITableViewController {
 		}
 	}
 	
+	// MARK: - Core Data Notification Methods
+	
+	func backgroundManagedObjectContextDidSave(saveNotification: NSNotification) {
+		Async.main {
+			if let workingContext = self.fetchedResultsController?.managedObjectContext {
+				workingContext.mergeChangesFromContextDidSaveNotification(saveNotification)
+			}
+		}
+	}
+	
 	// MARK: - Refresh Methods
 	
 	func handleRefresh(refreshControl: UIRefreshControl) {
@@ -131,7 +143,7 @@ class ExamTechniquesTableViewController : UITableViewController {
 		if segue.identifier == StoryboardIdentifiers.segue.toExamTechniquesDetailsView {
 			if let destination = segue.destinationViewController as? ExamTechniqueDetailsTableViewController {
 				if let managedExamTechnique = sender as? ExamTechniqueManagedObject {
-					destination.examTechnique = ExamTechnique.examTechniqueFromManagedObject(managedExamTechnique)
+					destination.examTechnique = ExamTechnique(managedObject: managedExamTechnique)
 				}
 			}
 		}

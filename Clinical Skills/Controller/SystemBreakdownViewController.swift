@@ -11,6 +11,8 @@ import UIKit
 
 class SystemBreakdownViewController : UIViewController {
 	
+	// MARK: - Properties
+	
 	@IBOutlet weak var segmentedControl: UISegmentedControl!
 	@IBOutlet weak var contentView: UIView!
 	
@@ -20,9 +22,13 @@ class SystemBreakdownViewController : UIViewController {
 	
 	var system: System?
 	
+	// MARK: - View Controller Methods
+	
 	override func viewDidLoad() {
 		self.displayViewControllerForSegmentIndex(0)
 	}
+	
+	// MARK: - Segmented Control Logic Methods
 	
 	func viewControllerForSelectedSegmentIndex(index: Int) -> UIViewController? {
 		if index == 0 {
@@ -51,6 +57,8 @@ class SystemBreakdownViewController : UIViewController {
 			self.currentViewController = viewController
 		}
 	}
+	
+	// MARK: - Interface Builder Connections
 	
 	@IBAction func segmentChanged(sender: UISegmentedControl) {
 		self.currentViewController?.view.removeFromSuperview()

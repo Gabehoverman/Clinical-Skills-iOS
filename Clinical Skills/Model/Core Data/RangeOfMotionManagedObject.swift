@@ -33,3 +33,19 @@ class RangeOfMotionManagedObject : NSManagedObject {
 	}
 	
 }
+
+func ==(lhs: RangeOfMotionManagedObject, rhs: RangeOfMotionManagedObject) -> Bool {
+	return (lhs.id == rhs.id) && (lhs.motion == rhs.motion)
+}
+
+func !=(lhs: RangeOfMotionManagedObject, rhs: RangeOfMotionManagedObject) -> Bool {
+	return !(lhs == rhs)
+}
+
+func ==(lhs: RangeOfMotionManagedObject, rhs: RangeOfMotion) -> Bool {
+	return (lhs.id == rhs.id) && (lhs.motion == rhs.motion)
+}
+
+func !=(lhs: RangeOfMotionManagedObject, rhs: RangeOfMotion) -> Bool {
+	return !(lhs == rhs)
+}

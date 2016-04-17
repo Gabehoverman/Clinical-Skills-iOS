@@ -36,3 +36,19 @@ class SystemManagedObject: NSManagedObject {
 	}
 	
 }
+
+func ==(lhs: SystemManagedObject, rhs: SystemManagedObject) -> Bool {
+	return (lhs.id == rhs.id) && (lhs.name == rhs.name)
+}
+
+func !=(lhs: SystemManagedObject, rhs: SystemManagedObject) -> Bool {
+	return !(lhs == rhs)
+}
+
+func ==(lhs: SystemManagedObject, rhs: System) -> Bool {
+	return (lhs.id == rhs.id) && (lhs.name == rhs.name)
+}
+
+func !=(lhs: SystemManagedObject, rhs: System) -> Bool {
+	return !(lhs == rhs)
+}

@@ -33,3 +33,19 @@ class VideoLinkManagedObject : NSManagedObject {
 	}
 	
 }
+
+func ==(lhs: VideoLinkManagedObject, rhs: VideoLinkManagedObject) -> Bool {
+	return (lhs.id == rhs.id) && (lhs.title == rhs.title)
+}
+
+func !=(lhs: VideoLinkManagedObject, rhs: VideoLinkManagedObject) -> Bool {
+	return !(lhs == rhs)
+}
+
+func ==(lhs: VideoLinkManagedObject, rhs: VideoLink) -> Bool {
+	return (lhs.id == rhs.id) && (lhs.title == rhs.title)
+}
+
+func !=(lhs: VideoLinkManagedObject, rhs: VideoLink) -> Bool {
+	return !(lhs == rhs)
+}

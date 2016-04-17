@@ -33,3 +33,19 @@ class PalpationManagedObject : NSManagedObject {
 	}
 	
 }
+
+func ==(lhs: PalpationManagedObject, rhs: PalpationManagedObject) -> Bool {
+	return (lhs.id == rhs.id) && (lhs.structure == rhs.structure)
+}
+
+func !=(lhs: PalpationManagedObject, rhs: PalpationManagedObject) -> Bool {
+	return !(lhs == rhs)
+}
+
+func ==(lhs: PalpationManagedObject, rhs: Palpation) -> Bool {
+	return (lhs.id == rhs.id) && (lhs.structure == rhs.structure)
+}
+
+func !=(lhs: PalpationManagedObject, rhs: Palpation) -> Bool {
+	return !(lhs == rhs)
+}

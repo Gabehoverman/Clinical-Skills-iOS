@@ -17,7 +17,7 @@ class RemoteConnectionManager : NSObject {
 	let remoteBaseURL = "https://wvsom-clinical-skills.herokuapp.com/"
 	
 	struct dataURLs {
-		static let systems = "systems.json"
+		static let systems = "systems/all.json"
 		static let examTechnique = "exam_techniques.json"
 		static let components = "components.json"
 		static let palpations = "palpations.json"

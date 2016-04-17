@@ -30,13 +30,20 @@ class Component {
 		self.notes = notes
 	}
 	
-	class func componentFromManagedObject(componentManagedObject: ComponentManagedObject) -> Component {
-		let id = componentManagedObject.id
-		let name = componentManagedObject.name
-		let inspection = componentManagedObject.inspection
-		let notes = componentManagedObject.notes
-		let system = System.systemFromManagedObject(componentManagedObject.system)
-		return Component(system: system, id: id, name: name, inspection: inspection, notes: notes)
+	init(managedObject: ComponentManagedObject) {
+		self.system = System(managedObject: managedObject.system)
+		self.id = managedObject.id
+		self.name = managedObject.name
+		self.inspection = managedObject.inspection
+		self.notes = managedObject.notes
 	}
 	
+}
+
+func ==(lhs: Component, rhs: Component) -> Bool {
+	return (lhs.id == rhs.id) && (lhs.name == rhs.name)
+}
+
+func !=(lhs: Component, rhs: Component) -> Bool {
+	return !(lhs == rhs)
 }

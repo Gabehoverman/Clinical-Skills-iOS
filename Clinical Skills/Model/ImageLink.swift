@@ -22,11 +22,18 @@ class ImageLink {
 		self.specialTest = specialTest
 	}
 	
-	class func imageLinkFromManagedObject(videoLinkManagedObject: ImageLinkManagedObject) -> ImageLink {
-		let id = Int32(videoLinkManagedObject.id)
-		let title = videoLinkManagedObject.title
-		let link = videoLinkManagedObject.link
-		let specialTest = SpecialTest.specialTestFromManagedObject(videoLinkManagedObject.specialTest)
-		return ImageLink(specialTest: specialTest, id: id, title: title, link: link)
+	init(managedObject: ImageLinkManagedObject) {
+		self.specialTest = SpecialTest(managedObject: managedObject.specialTest)
+		self.id = Int32(managedObject.id)
+		self.title = managedObject.title
+		self.link = managedObject.link
 	}
+}
+
+func ==(lhs: ImageLink, rhs: ImageLink) -> Bool {
+	return (lhs.id == rhs.id) && (lhs.title == rhs.title)
+}
+
+func !=(lhs: ImageLink, rhs: ImageLink) -> Bool {
+	return !(lhs == rhs)
 }
