@@ -43,21 +43,13 @@ class ComponentDetailsTableViewController : UITableViewController {
 			
 			self.remoteConnectionManager = RemoteConnectionManager(delegate: self)
 			
-			if let count = self.palpationsFetchedResultsController?.fetchedObjects?.count where count == 0 {
-				self.remoteConnectionManager?.fetchPalpations(forComponent: self.component!)
-			}
-			
-			if let count = self.rangesOfMotionFetchedResultsController?.fetchedObjects?.count where count == 0 {
-				self.remoteConnectionManager?.fetchRangesOfMotion(forComponent: self.component!)
-			}
-			
-			if let count = self.musclesFetchedResultsController?.fetchedObjects?.count where count == 0 {
-				self.remoteConnectionManager?.fetchMuscles(forComponent: self.component!)
-			}
-			
-			if let count = self.specialTestsFetchedResultsController?.fetchedObjects?.count where count == 0 {
-				self.remoteConnectionManager?.fetchSpecialTests(forComponent: self.component!)
-			}
+			self.remoteConnectionManager?.fetchPalpations(forComponent: self.component!)
+		
+			self.remoteConnectionManager?.fetchRangesOfMotion(forComponent: self.component!)
+		
+			self.remoteConnectionManager?.fetchMuscles(forComponent: self.component!)
+		
+			self.remoteConnectionManager?.fetchSpecialTests(forComponent: self.component!)
 			
 			NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.backgroundManagedObjectContextDidSave(_:)), name: NSManagedObjectContextDidSaveNotification, object: nil)
 		}
@@ -290,6 +282,11 @@ extension ComponentDetailsTableViewController : RemoteConnectionManagerDelegate 
 			} else if parser.dataType == JSONParser.dataTypes.specialTest {
 				let specialTests = parser.parseSpecialTests(self.component!)
 				datastoreManager.store(specialTests)
+			} else if parser.dataType == JSONParser.dataTypes.empty {
+				datastoreManager.deleteObjectsForEntity(PalpationManagedObject.entityName)
+				datastoreManager.deleteObjectsForEntity(RangeOfMotionManagedObject.entityName)
+				datastoreManager.deleteObjectsForEntity(MuscleManagedObject.entityName)
+				datastoreManager.deleteObjectsForEntity(SpecialTestManagedObject.entityName)
 			}
 		}
 	}

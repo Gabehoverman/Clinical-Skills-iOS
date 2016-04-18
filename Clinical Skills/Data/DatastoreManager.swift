@@ -30,28 +30,50 @@ class DatastoreManager : NSObject {
 	
 	func store(objects: [AnyObject]) {
 		self.delegate?.didBeginStoring?()
-		for object in objects {
-			switch object {
-				case is System:
-					self.storeSystem(object as! System)
-				case is ExamTechnique:
-					self.storeExamTechnique(object as! ExamTechnique)
-				case is Component:
-					self.storeComponent(object as! Component)
-				case is Palpation:
-					self.storePalpation(object as! Palpation)
-				case is RangeOfMotion:
-					self.storeRangeOfMotion(object as! RangeOfMotion)
-				case is Muscle:
-					self.storeMuscle(object as! Muscle)
-				case is SpecialTest:
-					self.storeSpecialTest(object as! SpecialTest)
-				case is ImageLink:
-					self.storeImageLink(object as! ImageLink)
-				case is VideoLink:
-					self.storeVideoLink(object as! VideoLink)
-				default:
-					return
+		if objects is [System] {
+			self.deleteObjectsForEntity(SystemManagedObject.entityName)
+			for object in objects {
+				self.storeSystem(object as! System)
+			}
+		} else if objects is [ExamTechnique] {
+			self.deleteObjectsForEntity(ExamTechniqueManagedObject.entityName)
+			for object in objects {
+				self.storeExamTechnique(object as! ExamTechnique)
+			}
+		} else if objects is [Component] {
+			self.deleteObjectsForEntity(ComponentManagedObject.entityName)
+			for object in objects {
+				self.storeComponent(object as! Component)
+			}
+		} else if objects is [Palpation] {
+			self.deleteObjectsForEntity(PalpationManagedObject.entityName)
+			for object in objects {
+				self.storePalpation(object as! Palpation)
+			}
+		} else if objects is [RangeOfMotion] {
+			self.deleteObjectsForEntity(RangeOfMotionManagedObject.entityName)
+			for object in objects {
+				self.storeRangeOfMotion(object as! RangeOfMotion)
+			}
+		} else if objects is [Muscle] {
+			self.deleteObjectsForEntity(MuscleManagedObject.entityName)
+			for object in objects {
+				self.storeMuscle(object as! Muscle)
+			}
+		} else if objects is [SpecialTest] {
+			self.deleteObjectsForEntity(SpecialTestManagedObject.entityName)
+			for object in objects {
+				self.storeSpecialTest(object as! SpecialTest)
+			}
+		} else if objects is [ImageLink] {
+			self.deleteObjectsForEntity(ImageLinkManagedObject.entityName)
+			for object in objects {
+				self.storeImageLink(object as! ImageLink)
+			}
+		} else if objects is [VideoLink] {
+			self.deleteObjectsForEntity(VideoLinkManagedObject.entityName)
+			for object in objects {
+				self.storeVideoLink(object as! VideoLink)
 			}
 		}
 		self.save()
@@ -316,14 +338,14 @@ class DatastoreManager : NSObject {
 	
 	// MARK: - Delete Methods
 	
-	private func deleteObjectsForEntity(entityName: String, withPredicate: NSPredicate) {
+	func deleteObjectsForEntity(entityName: String) {
 		let request = NSFetchRequest(entityName: entityName)
-		request.predicate = withPredicate
 		if let managedObjects = try! self.managedObjectContext.executeFetchRequest(request) as? [NSManagedObject] {
 			for managedObject in managedObjects {
 				self.managedObjectContext.deleteObject(managedObject)
 			}
 		}
+		self.save()
 	}
 	
 	// MARK: - Retrieve Methods
@@ -347,8 +369,9 @@ class DatastoreManager : NSObject {
 	
 	private func save() {
 		do {
-			print("\(self.managedObjectContext.insertedObjects.count) Objects to be Inserted")
+			print("\(self.managedObjectContext.deletedObjects.count) Objects to be Deleted")
 			print("\(self.managedObjectContext.updatedObjects.count) Objects to be Updated")
+			print("\(self.managedObjectContext.insertedObjects.count) Objects to be Inserted")
 			try self.managedObjectContext.save()
 			self.delegate?.didFinishStoring?()
 			print("Saved Managed Object Context\n")

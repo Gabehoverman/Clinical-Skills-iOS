@@ -174,8 +174,8 @@
 			children = (
 				011E01B91C864C1A00AB8BA0 /* ClinicalSkillsCoreDataModel.xcdatamodeld */,
 				011E01AB1C864A9200AB8BA0 /* SystemManagedObject.swift */,
-				01BCAE681C8FC2720076ECE5 /* ComponentManagedObject.swift */,
 				010EC6FD1CB4FD69004AA8A1 /* ExamTechniqueManagedObject.swift */,
+				01BCAE681C8FC2720076ECE5 /* ComponentManagedObject.swift */,
 				01DB22321CACDB180069ECFB /* PalpationManagedObject.swift */,
 				011807071CABA5AC0061A64F /* MuscleManagedObject.swift */,
 				01A610211CA4FB2600A63ED6 /* RangeOfMotionManagedObject.swift */,
@@ -249,8 +249,8 @@
 			isa = PBXGroup;
 			children = (
 				011E01A51C864A8600AB8BA0 /* System.swift */,
-				01BCAE661C8FC1920076ECE5 /* Component.swift */,
 				010EC6FB1CB4FD60004AA8A1 /* ExamTechnique.swift */,
+				01BCAE661C8FC1920076ECE5 /* Component.swift */,
 				01DB22301CACDB110069ECFB /* Palpation.swift */,
 				01D42CB91CA503A900A2AFD3 /* RangeOfMotion.swift */,
 				011807051CABA5880061A64F /* Muscle.swift */,

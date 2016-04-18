@@ -43,10 +43,8 @@ class ComponentsTableViewController : UITableViewController {
 			
 			self.remoteConnectionManager = RemoteConnectionManager(delegate: self)
 			
-			if let count = self.fetchedResultsController?.fetchedObjects?.count where count == 0 {
-				self.remoteConnectionManager?.fetchComponents(forSystem: self.system!)
-			}
-			
+			self.remoteConnectionManager?.fetchComponents(forSystem: self.system!)
+		
 			NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.backgroundManagedObjectContextDidSave(_:)), name: NSManagedObjectContextDidSaveNotification, object: nil)
 		}
 	}
@@ -184,6 +182,10 @@ extension ComponentsTableViewController : RemoteConnectionManagerDelegate {
 			if self.system != nil {
 				let components = parser.parseComponents(self.system!)
 				datastoreManager.store(components)
+			}
+		} else if parser.dataType == JSONParser.dataTypes.empty {
+			if self.system != nil {
+				datastoreManager.deleteObjectsForEntity(ComponentManagedObject.entityName)
 			}
 		}
 	}

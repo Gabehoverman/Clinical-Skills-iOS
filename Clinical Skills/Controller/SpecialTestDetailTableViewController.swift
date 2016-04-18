@@ -44,18 +44,9 @@ class SpecialTestDetailTableViewController : UITableViewController {
 			self.initializeActivityIndicator()
 			
 			self.remoteConnectionManager = RemoteConnectionManager(delegate: self)
-		
-			if let count = self.videoLinksFetchedResultsController?.fetchedObjects?.count where count == 0 {
-				self.remoteConnectionManager?.fetchVideoLinks(forSpecialTest: self.parentSpecialTest!)
-			}
+			self.remoteConnectionManager?.fetchVideoLinks(forSpecialTest: self.parentSpecialTest!)
+			self.remoteConnectionManager?.fetchImageLinks(forSpecialTest: self.parentSpecialTest!)
 			
-			if let count = self.imageLinksFetchedResultsController?.fetchedObjects?.count where count == 0 {
-				self.remoteConnectionManager?.fetchImageLinks(forSpecialTest: self.parentSpecialTest!)
-			} else {
-				for managedImageLink in (self.imageLinksFetchedResultsController?.fetchedObjects as! [ImageLinkManagedObject]) {
-					self.remoteConnectionManager?.fetchImageData(forCloudinaryLink: managedImageLink.link)
-				}
-			}
 			NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.backgroundManagedObjectContextDidSave(_:)), name: NSManagedObjectContextDidSaveNotification, object: nil)
 		}
 	}

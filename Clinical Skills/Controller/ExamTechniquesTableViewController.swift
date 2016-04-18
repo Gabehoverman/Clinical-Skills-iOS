@@ -42,9 +42,7 @@ class ExamTechniquesTableViewController : UITableViewController {
 			
 			self.remoteConnectionManager = RemoteConnectionManager(delegate: self)
 			
-			if let count = self.fetchedResultsController?.fetchedObjects?.count where count == 0 {
-				self.remoteConnectionManager?.fetchExamTechniques(forSystem: self.system!)
-			}
+			self.remoteConnectionManager?.fetchExamTechniques(forSystem: self.system!)
 			
 			NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.backgroundManagedObjectContextDidSave(_:)), name: NSManagedObjectContextDidSaveNotification, object: nil)
 		}
