@@ -22,12 +22,19 @@ class ExamTechnique {
 		self.details = details
 	}
 	
-	class func examTechniqueFromManagedObject(managedObject: ExamTechniqueManagedObject) -> ExamTechnique {
-		let system = System.systemFromManagedObject(managedObject.system)
-		let id = managedObject.id
-		let name = managedObject.name
-		let details = managedObject.details
-		return ExamTechnique(system: system, id: id, name: name, details: details)
+	init(managedObject: ExamTechniqueManagedObject) {
+		self.system = System(managedObject: managedObject.system)
+		self.id = managedObject.id
+		self.name = managedObject.name
+		self.details = managedObject.details
 	}
 	
+}
+
+func ==(lhs: ExamTechnique, rhs: ExamTechnique) -> Bool {
+	return (lhs.id == rhs.id) && (lhs.name == rhs.name)
+}
+
+func !=(lhs: ExamTechnique, rhs: ExamTechnique) -> Bool {
+	return !(lhs == rhs)
 }

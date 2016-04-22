@@ -36,26 +36,18 @@ class SpecialTestDetailTableViewController : UITableViewController {
 		if self.parentSpecialTest != nil {
 			self.images = [BasicPhoto]()
 			
-			self.imageLinksFetchedResultsController = ImageLinksFetchedResultsControllers.imageLinksFetchedResultsController(self.parentSpecialTest!)
-			self.videoLinksFetchedResultsController = VideoLinksFetchedResultsControllers.videoLinksFetchedResultsController(self.parentSpecialTest!)
+			self.imageLinksFetchedResultsController = FetchedResultsControllers.imageLinksFetchedResultsController(self.parentSpecialTest!)
+			self.videoLinksFetchedResultsController = FetchedResultsControllers.videoLinksFetchedResultsController(self.parentSpecialTest!)
 			self.fetchResultsWithReload(false)
 			
 			self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), forControlEvents: .ValueChanged)
 			self.initializeActivityIndicator()
 			
 			self.remoteConnectionManager = RemoteConnectionManager(delegate: self)
-		
-			if let count = self.videoLinksFetchedResultsController?.fetchedObjects?.count where count == 0 {
-				self.remoteConnectionManager?.fetchVideoLinks(forSpecialTest: self.parentSpecialTest!)
-			}
+			self.remoteConnectionManager?.fetchVideoLinks(forSpecialTest: self.parentSpecialTest!)
+			self.remoteConnectionManager?.fetchImageLinks(forSpecialTest: self.parentSpecialTest!)
 			
-			if let count = self.imageLinksFetchedResultsController?.fetchedObjects?.count where count == 0 {
-				self.remoteConnectionManager?.fetchImageLinks(forSpecialTest: self.parentSpecialTest!)
-			} else {
-				for managedImageLink in (self.imageLinksFetchedResultsController?.fetchedObjects as! [ImageLinkManagedObject]) {
-					self.remoteConnectionManager?.fetchImageData(forCloudinaryLink: managedImageLink.link)
-				}
-			}
+			NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.backgroundManagedObjectContextDidSave(_:)), name: NSManagedObjectContextDidSaveNotification, object: nil)
 		}
 	}
 	
@@ -168,6 +160,20 @@ class SpecialTestDetailTableViewController : UITableViewController {
 		}
 	}
 	
+	// MARK: - Core Data Notification Methods
+	
+	func backgroundManagedObjectContextDidSave(saveNotification: NSNotification) {
+		Async.main {
+			if let workingContext = self.videoLinksFetchedResultsController?.managedObjectContext {
+				workingContext.mergeChangesFromContextDidSaveNotification(saveNotification)
+			}
+			
+			if let workingContext = self.imageLinksFetchedResultsController?.managedObjectContext {
+				workingContext.mergeChangesFromContextDidSaveNotification(saveNotification)
+			}
+		}
+	}
+	
 	// MARK: - Refresh Methods
 	
 	func handleRefresh(refreshControl: UIRefreshControl) {
@@ -199,7 +205,7 @@ class SpecialTestDetailTableViewController : UITableViewController {
 		if segue.identifier == StoryboardIdentifiers.segue.toVideoView {
 			if let destination = segue.destinationViewController as? VideoViewController {
 				if let managedVideoLink = sender as? VideoLinkManagedObject {
-					destination.videoLink = VideoLink.videoLinkFromManagedObject(managedVideoLink)
+					destination.videoLink = VideoLink(managedObject: managedVideoLink)
 				}
 			}
 		}
@@ -274,7 +280,7 @@ extension SpecialTestDetailTableViewController : RemoteConnectionManagerDelegate
 		if parser.dataType == JSONParser.dataTypes.imageLink {
 			if self.parentSpecialTest != nil {
 				let imageLinks = parser.parseImageLinks(self.parentSpecialTest!)
-				datastoreManager.storeImageLinks(imageLinks)
+				datastoreManager.store(imageLinks)
 				for imageLink in imageLinks {
 					self.remoteConnectionManager?.fetchImageData(forCloudinaryLink: imageLink.link)
 				}
@@ -282,7 +288,7 @@ extension SpecialTestDetailTableViewController : RemoteConnectionManagerDelegate
 		} else if parser.dataType == JSONParser.dataTypes.videoLink {
 			if self.parentSpecialTest != nil {
 				let videoLinks = parser.parseVideoLinks(self.parentSpecialTest!)
-				datastoreManager.storeVideoLinks(videoLinks)
+				datastoreManager.store(videoLinks)
 				if let count = self.imageLinksFetchedResultsController?.fetchedObjects?.count where count == 0 {
 					self.remoteConnectionManager?.fetchImageLinks(forSpecialTest: self.parentSpecialTest!)
 				}

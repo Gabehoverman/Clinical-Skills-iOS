@@ -33,3 +33,19 @@ class ComponentManagedObject : NSManagedObject {
 	}
 	
 }
+
+func ==(lhs: ComponentManagedObject, rhs: ComponentManagedObject) -> Bool {
+	return (lhs.id == rhs.id) && (lhs.name == rhs.name)
+}
+
+func !=(lhs: ComponentManagedObject, rhs: ComponentManagedObject) -> Bool {
+	return !(lhs == rhs)
+}
+
+func ==(lhs: ComponentManagedObject, rhs: Component) -> Bool {
+	return (lhs.id == rhs.id) && (lhs.name == rhs.name)
+}
+
+func !=(lhs: ComponentManagedObject, rhs: Component) -> Bool {
+	return !(lhs == rhs)
+}

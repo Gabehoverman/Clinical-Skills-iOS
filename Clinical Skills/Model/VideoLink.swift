@@ -32,15 +32,24 @@ class VideoLink {
 		self.examTechnique = examTechnique
 	}
 	
-	class func videoLinkFromManagedObject(videoLinkManagedObject: VideoLinkManagedObject) -> VideoLink {
-		let id = Int32(videoLinkManagedObject.id)
-		let title = videoLinkManagedObject.title
-		let link = videoLinkManagedObject.link
-		if videoLinkManagedObject.specialTest != nil {
-			return VideoLink(specialTest: SpecialTest.specialTestFromManagedObject(videoLinkManagedObject.specialTest!), id: id, title: title, link: link)
-		} else {
-			return VideoLink(examTechnique: ExamTechnique.examTechniqueFromManagedObject(videoLinkManagedObject.examTechnique!), id: id, title: title, link: link)
+	init(managedObject: VideoLinkManagedObject) {
+		if let specialTestManagedObject = managedObject.specialTest {
+			self.specialTest = SpecialTest(managedObject: specialTestManagedObject)
 		}
+		if let examTechniqueManagedObject = managedObject.examTechnique {
+			self.examTechnique = ExamTechnique(managedObject: examTechniqueManagedObject)
+		}
+		self.id = Int32(managedObject.id)
+		self.title = managedObject.title
+		self.link = managedObject.link
 	}
 	
+}
+
+func ==(lhs: VideoLink, rhs: VideoLink) -> Bool {
+	return (lhs.id == rhs.id) && (lhs.title == rhs.title)
+}
+
+func !=(lhs: VideoLink, rhs: VideoLink) -> Bool {
+	return !(lhs == rhs)
 }

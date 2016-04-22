@@ -20,11 +20,18 @@ class Muscle {
 		self.name = name
 	}
 	
-	class func muscleFromManagedObject(managedObject: MuscleManagedObject) -> Muscle {
-		let component = Component.componentFromManagedObject(managedObject.component)
-		let id = managedObject.id
-		let name = managedObject.name
-		return Muscle(component: component, id: id, name: name)
+	init(managedObject: MuscleManagedObject) {
+		self.component = Component(managedObject: managedObject.component)
+		self.id = managedObject.id
+		self.name = managedObject.name
 	}
 	
+}
+
+func ==(lhs: Muscle, rhs: Muscle) -> Bool {
+	return (lhs.id == rhs.id) && (lhs.name == rhs.name)
+}
+
+func !=(lhs: Muscle, rhs: Muscle) -> Bool {
+	return !(lhs == rhs)
 }

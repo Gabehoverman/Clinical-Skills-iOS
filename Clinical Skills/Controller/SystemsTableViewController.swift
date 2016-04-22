@@ -29,7 +29,7 @@ class SystemsTableViewController: UITableViewController {
 	// MARK: - View Controller Methodsq
 	
 	override func viewDidLoad() {
-		self.fetchedResultsController = SystemFetchedResultsControllers.allSystemsResultController()
+		self.fetchedResultsController = FetchedResultsControllers.allSystemsResultController
 		self.fetchResultsWithReload(false)
 		
 		self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), forControlEvents: .ValueChanged)
@@ -39,8 +39,18 @@ class SystemsTableViewController: UITableViewController {
 		
 		self.remoteConnectionManager = RemoteConnectionManager(delegate: self)
 		
-		if let count = self.fetchedResultsController?.fetchedObjects?.count where count == 0 {
-			self.remoteConnectionManager?.fetchSystems()
+		self.remoteConnectionManager?.fetchSystems()
+		
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.backgroundManagedObjectContextDidSave(_:)), name: NSManagedObjectContextDidSaveNotification, object: nil)
+	}
+	
+	// MARK: - Core Data Notification Methods
+	
+	func backgroundManagedObjectContextDidSave(saveNotification: NSNotification) {
+		Async.main {
+			if let workingContext = self.fetchedResultsController?.managedObjectContext {
+				workingContext.mergeChangesFromContextDidSaveNotification(saveNotification)
+			}
 		}
 	}
 	
@@ -72,9 +82,9 @@ class SystemsTableViewController: UITableViewController {
 		if let controller = self.fetchedResultsController {
 			if let managedSystem = controller.objectAtIndexPath(indexPath) as? SystemManagedObject {
 				if self.tabBarController?.selectedIndex == StoryboardIdentifiers.tab.clinicalSkills {
-					self.performSegueWithIdentifier(StoryboardIdentifiers.segue.toComponentsView, sender: System.systemFromManagedObject(managedSystem))
+					self.performSegueWithIdentifier(StoryboardIdentifiers.segue.toComponentsView, sender: System(managedObject: managedSystem))
 				} else {
-					self.performSegueWithIdentifier(StoryboardIdentifiers.segue.toSystemBreakdownView, sender: System.systemFromManagedObject(managedSystem))
+					self.performSegueWithIdentifier(StoryboardIdentifiers.segue.toSystemBreakdownView, sender: System(managedObject: managedSystem))
 				}
 			} else {
 				print("Error getting System")
@@ -166,7 +176,9 @@ extension SystemsTableViewController: RemoteConnectionManagerDelegate {
 		let parser = JSONParser(rawData: receivedData)
 		if parser.dataType == JSONParser.dataTypes.system {
 			let systems = parser.parseSystems()
-			datastoreManager.storeSystems(systems)
+			datastoreManager.store(systems)
+		} else if parser.dataType == JSONParser.dataTypes.empty {
+			datastoreManager.deleteObjectsForEntity(SystemManagedObject.entityName)
 		}
 	}
 	

@@ -13,20 +13,25 @@ class System: NSObject {
 	var id: Int32
 	var name: String
 	var details: String
-	var components: [Component]
 	
 	init(id: Int32, name: String, details: String) {
 		self.id = id
 		self.name = name
 		self.details = details
-		self.components = []
 	}
 	
-	class func systemFromManagedObject(systemManagedObject: SystemManagedObject) -> System {
-		let id = systemManagedObject.id
-		let name = systemManagedObject.name
-		let details = systemManagedObject.details
-		return System(id: id, name: name, details: details)
+	init(managedObject: SystemManagedObject) {
+		self.id = managedObject.id
+		self.name = managedObject.name
+		self.details = managedObject.details
 	}
-	
+
+}
+
+func ==(lhs: System, rhs: System) -> Bool {
+	return (lhs.id == rhs.id) && (lhs.name == rhs.name)
+}
+
+func !=(lhs: System, rhs: System) -> Bool {
+	return !(lhs == rhs)
 }

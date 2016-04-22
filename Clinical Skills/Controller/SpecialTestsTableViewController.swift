@@ -32,7 +32,7 @@ class SpecialTestsTableViewController : UITableViewController {
 	
 	override func viewDidLoad() {
 		if self.component != nil {
-			self.fetchedResultsController = SpecialTestsFetchedResultsControllers.specialTestsFetchedResultsController(self.component!)
+			self.fetchedResultsController = FetchedResultsControllers.specialTestsFetchedResultsController(self.component!)
 			self.fetchResultsWithReload(false)
 			
 			self.refreshControl?.addTarget(self, action:#selector(self.handleRefresh(_:)), forControlEvents: .ValueChanged)
@@ -42,9 +42,9 @@ class SpecialTestsTableViewController : UITableViewController {
 			
 			self.remoteConnectionManager = RemoteConnectionManager(delegate: self)
 			
-			if let count = self.fetchedResultsController?.fetchedObjects?.count where count == 0 {
-				self.remoteConnectionManager?.fetchSpecialTests(forComponent: self.component!)
-			}
+			self.remoteConnectionManager?.fetchSpecialTests(forComponent: self.component!)
+			
+			NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.backgroundManagedObjectContextDidSave(_:)), name: NSManagedObjectContextDidSaveNotification, object: nil)
 		}
 	}
 	
@@ -105,6 +105,16 @@ class SpecialTestsTableViewController : UITableViewController {
 		}
 	}
 	
+	// MARK: - Core Data Notification Methods
+	
+	func backgroundManagedObjectContextDidSave(saveNotification: NSNotification) {
+		Async.main {
+			if let workingContext = self.fetchedResultsController?.managedObjectContext {
+				workingContext.mergeChangesFromContextDidSaveNotification(saveNotification)
+			}
+		}
+	}
+	
 	// MARK: - Refresh Methods
 	
 	func handleRefresh(refreshControl: UIRefreshControl) {
@@ -136,7 +146,7 @@ class SpecialTestsTableViewController : UITableViewController {
 		if segue.identifier == StoryboardIdentifiers.segue.toSpecialTestsDetailView {
 			if let managedSpecialTest = sender as? SpecialTestManagedObject {
 				if let destination = segue.destinationViewController as? SpecialTestDetailTableViewController {
-					destination.parentSpecialTest = SpecialTest.specialTestFromManagedObject(managedSpecialTest)
+					destination.parentSpecialTest = SpecialTest(managedObject: managedSpecialTest)
 				}
 			}
 		}
@@ -164,7 +174,7 @@ extension SpecialTestsTableViewController : RemoteConnectionManagerDelegate {
 		if parser.dataType == JSONParser.dataTypes.specialTest {
 			if self.component != nil {
 				let specialTests = parser.parseSpecialTests(self.component!)
-				datastoreManager.storeSpecialTests(specialTests)
+				datastoreManager.store(specialTests)
 			}
 		}
 	}

@@ -12,12 +12,20 @@ class RemoteConnectionManager : NSObject {
 	
 	// MARK: - URL Constants
 	
-	let localBaseURL = "http://localhost:3000/"
-	let remoteImageURL = "https://res.cloudinary.com/"
-	let remoteBaseURL = "https://wvsom-clinical-skills.herokuapp.com/"
+	var baseURL: String {
+		get {
+			if self.shouldRequestFromLocal {
+				return "http://localhost:3000/"
+			} else if self.isCloudinaryFetch {
+				return "https://res.cloudinary.com/"
+			} else {
+				return "https://wvsom-clinical-skills.herokuapp.com/"
+			}
+		}
+	}
 	
 	struct dataURLs {
-		static let systems = "systems.json"
+		static let systems = "systems/all.json"
 		static let examTechnique = "exam_techniques.json"
 		static let components = "components.json"
 		static let palpations = "palpations.json"
@@ -30,9 +38,10 @@ class RemoteConnectionManager : NSObject {
 	}
 	
 	// MARK: - Properties
-	
+
 	var shouldRequestFromLocal: Bool
 	var isCloudinaryFetch: Bool
+	
 	var statusCode: Int
 	var statusMessage: String {
 		get {
@@ -71,237 +80,72 @@ class RemoteConnectionManager : NSObject {
 	
 	func fetchSystems() {
 		self.isCloudinaryFetch = false
-		
-		var urlString: String
-		
-		if self.shouldRequestFromLocal {
-			urlString = self.localBaseURL
-		} else {
-			urlString = self.remoteBaseURL
-		}
-		
-		urlString += dataURLs.systems
-		if let url = NSURL(string: urlString) {
-			self.fetchWithURL(url)
-		}
+		self.fetchWithQueryString(dataURLs.systems)
 	}
 	
 	func fetchExamTechniques(forSystem system: System) {
 		self.isCloudinaryFetch = false
-		
-		var urlString: String
-		if self.shouldRequestFromLocal {
-			urlString = self.localBaseURL
-		} else {
-			urlString = self.remoteBaseURL
-		}
-		
-		urlString += dataURLs.examTechnique
-		
-		var queryString = "?system=\(system.name)"
-		queryString = queryString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
-		
-		urlString += queryString
-		
-		if let url = NSURL(string: urlString) {
-			self.fetchWithURL(url)
-		}
+		self.fetchWithQueryString(dataURLs.examTechnique + "?system=\(system.name)")
 	}
 	
 	func fetchComponents(forSystem system: System) {
 		self.isCloudinaryFetch = false
-		
-		var urlString: String
-		if self.shouldRequestFromLocal {
-			urlString = self.localBaseURL
-		} else {
-			urlString = self.remoteBaseURL
-		}
-		
-		urlString += dataURLs.components
-		
-		var queryString = "?system=\(system.name)"
-		queryString = queryString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
-		
-		urlString += queryString
-		
-		if let url = NSURL(string: urlString) {
-			self.fetchWithURL(url)
-		}
+		self.fetchWithQueryString(dataURLs.components + "?system=\(system.name)")
 	}
 	
 	func fetchPalpations(forComponent component: Component) {
 		self.isCloudinaryFetch = false
-		
-		var urlString: String
-		if self.shouldRequestFromLocal {
-			urlString = self.localBaseURL
-		} else {
-			urlString = self.remoteBaseURL
-		}
-		
-		urlString += dataURLs.palpations
-		
-		var queryString = "?component=\(component.name)"
-		queryString = queryString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
-		
-		urlString += queryString
-		
-		if let url = NSURL(string: urlString) {
-			self.fetchWithURL(url)
-		}
+		self.fetchWithQueryString(dataURLs.palpations + "?component=\(component.name)")
 	}
 	
 	func fetchRangesOfMotion(forComponent component: Component) {
 		self.isCloudinaryFetch = false
-		
-		var urlString: String
-		if self.shouldRequestFromLocal {
-			urlString = self.localBaseURL
-		} else {
-			urlString = self.remoteBaseURL
-		}
-		
-		urlString += dataURLs.rangesOfMotion
-		
-		var queryString = "?component=\(component.name)"
-		queryString = queryString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
-		
-		urlString += queryString
-		
-		if let url = NSURL(string: urlString) {
-			self.fetchWithURL(url)
-		}
+		self.fetchWithQueryString(dataURLs.rangesOfMotion + "?component=\(component.name)")
 	}
 	
 	func fetchMuscles(forComponent component: Component) {
 		self.isCloudinaryFetch = false
-		
-		var urlString: String
-		if self.shouldRequestFromLocal {
-			urlString = self.localBaseURL
-		} else {
-			urlString = self.remoteBaseURL
-		}
-		
-		urlString += dataURLs.muscles
-		
-		var queryString = "?component=\(component.name)"
-		queryString = queryString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
-		
-		urlString += queryString
-		
-		if let url = NSURL(string: urlString) {
-			self.fetchWithURL(url)
-		}
+		self.fetchWithQueryString(dataURLs.muscles + "?component=\(component.name)")
 	}
 	
 	func fetchSpecialTests(forComponent component: Component) {
 		self.isCloudinaryFetch = false
-		
-		var urlString: String
-		if self.shouldRequestFromLocal {
-			urlString = self.localBaseURL
-		} else {
-			urlString = self.remoteBaseURL
-		}
-		
-		urlString += dataURLs.specialTests
-		
-		var queryString = "?component=\(component.name)"
-		queryString = queryString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
-		
-		urlString += queryString
-		
-		if let url = NSURL(string: urlString) {
-			self.fetchWithURL(url)
-		}
+		self.fetchWithQueryString(dataURLs.specialTests + "?component=\(component.name)")
 	}
 	
 	func fetchImageLinks(forSpecialTest specialTest: SpecialTest) {
 		self.isCloudinaryFetch = false
-		
-		var urlString: String
-		if self.shouldRequestFromLocal {
-			urlString = self.localBaseURL
-		} else {
-			urlString = self.remoteBaseURL
-		}
-		
-		urlString += dataURLs.imageLinks
-		
-		var queryString = "?special_test=\(specialTest.name)"
-		queryString = queryString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
-		
-		urlString += queryString
-		
-		if let url = NSURL(string: urlString) {
-			self.fetchWithURL(url)
-		}
+		self.fetchWithQueryString(dataURLs.imageLinks + "?special_test=\(specialTest.name)")
 	}
 	
 	func fetchVideoLinks(forSpecialTest specialTest: SpecialTest) {
 		self.isCloudinaryFetch = false
-		
-		var urlString: String
-		if self.shouldRequestFromLocal {
-			urlString = self.localBaseURL
-		} else {
-			urlString = self.remoteBaseURL
-		}
-		
-		urlString += dataURLs.videoLinks
-		
-		var queryString = "?special_test=\(specialTest.name)"
-		queryString = queryString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
-		
-		urlString += queryString
-		
-		if let url = NSURL(string: urlString) {
-			self.fetchWithURL(url)
-		}
+		self.fetchWithQueryString(dataURLs.videoLinks + "?special_test=\(specialTest.name)")
 	}
 	
 	func fetchVideoLinks(forExamTechnique examTechnique: ExamTechnique) {
 		self.isCloudinaryFetch = false
-		
-		var urlString: String
-		if self.shouldRequestFromLocal {
-			urlString = self.localBaseURL
-		} else {
-			urlString = self.remoteBaseURL
-		}
-		
-		urlString += dataURLs.videoLinks
-		
-		var queryString = "?exam_technique=\(examTechnique.name)"
-		queryString = queryString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
-		
-		urlString += queryString
-		
-		if let url = NSURL(string: urlString) {
-			self.fetchWithURL(url)
-		}
+		self.fetchWithQueryString(dataURLs.videoLinks + "?exam_technique=\(examTechnique.name)")
 	}
 	
 	func fetchImageData(forCloudinaryLink cloudinaryLink: String) {
 		self.isCloudinaryFetch = true
-		
-		let urlString = cloudinaryLink
-		
-		if let url = NSURL(string: urlString) {
-			self.fetchWithURL(url)
-		}
+		self.fetchWithQueryString(cloudinaryLink)
 	}
 	
-	private func fetchWithURL(url: NSURL) {
-		print("Fetching with URL \(url.absoluteString)")
-		let session = NSURLSession.sharedSession()
-		session.dataTaskWithURL(url, completionHandler: {
-			(receivedData: NSData?, httpResponse: NSURLResponse?, error: NSError?) -> Void in
+	private func fetchWithQueryString(queryString: String) {
+		var urlString = self.baseURL
+		urlString += queryString
+		urlString = urlString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
+		if let url = NSURL(string: urlString) {
+			print("Fetching with URL \(url.absoluteString)")
+			let session = NSURLSession.sharedSession()
+			session.dataTaskWithURL(url, completionHandler: {
+				(receivedData: NSData?, httpResponse: NSURLResponse?, error: NSError?) -> Void in
 				self.completedDataTaskReceivingData(receivedData, response: httpResponse, error: error)
-		}).resume()
-		self.delegate?.didBeginDataRequest?()
+			}).resume()
+			self.delegate?.didBeginDataRequest?()
+		}
 	}
 	
 	// MARK: - Completion Methods

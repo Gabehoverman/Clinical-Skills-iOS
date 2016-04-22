@@ -40,3 +40,19 @@ class SpecialTestManagedObject : NSManagedObject {
 	}
 	
 }
+
+func ==(lhs: SpecialTestManagedObject, rhs: SpecialTestManagedObject) -> Bool {
+	return (lhs.id == rhs.id) && (lhs.name == rhs.name)
+}
+
+func !=(lhs: SpecialTestManagedObject, rhs: SpecialTestManagedObject) -> Bool {
+	return !(lhs == rhs)
+}
+
+func ==(lhs: SpecialTestManagedObject, rhs: SpecialTest) -> Bool {
+	return (lhs.id == rhs.id) && (lhs.name == rhs.name)
+}
+
+func !=(lhs: SpecialTestManagedObject, rhs: SpecialTest) -> Bool {
+	return !(lhs == rhs)
+}

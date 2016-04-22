@@ -34,14 +34,14 @@ class PocketHistoryViewController : UIViewController {
 		self.dismissing = false
 	}
 	
-	// MARK: - IB Actions
+	// MARK: - Interface Builder Connections
 	
 	@IBAction func show(sender: UIButton) {
 		self.dismissing = false
 		self.presentPreview()
 	}
 	
-	// MARK: - Utility Methods
+	// MARK: - Navigation Methods
 	
 	func presentPreview() {
 		if let dismissing = self.dismissing where dismissing == false {

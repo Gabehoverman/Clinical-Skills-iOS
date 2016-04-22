@@ -31,3 +31,19 @@ class ExamTechniqueManagedObject : NSManagedObject {
 	}
 	
 }
+
+func ==(lhs: ExamTechniqueManagedObject, rhs: ExamTechniqueManagedObject) -> Bool {
+	return (lhs.id == rhs.id) && (lhs.name == rhs.name)
+}
+
+func !=(lhs: ExamTechniqueManagedObject, rhs: ExamTechniqueManagedObject) -> Bool {
+	return !(lhs == rhs)
+}
+
+func ==(lhs: ExamTechniqueManagedObject, rhs: ExamTechnique) -> Bool {
+	return (lhs.id == rhs.id) && (lhs.name == rhs.name)
+}
+
+func !=(lhs: ExamTechniqueManagedObject, rhs: ExamTechnique) -> Bool {
+	return !(lhs == rhs)
+}

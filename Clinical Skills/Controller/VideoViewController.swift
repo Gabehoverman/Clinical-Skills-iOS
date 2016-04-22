@@ -11,9 +11,13 @@ import UIKit
 
 class VideoViewController : UIViewController {
 	
+	// MARK: - Properties
+	
 	@IBOutlet weak var webView: UIWebView!
 	
 	var videoLink: VideoLink?
+	
+	// MARK: - View Controller Methods
 	
 	override func viewDidLoad() {
 		if self.videoLink != nil {

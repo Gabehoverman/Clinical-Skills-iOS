@@ -13,6 +13,8 @@ import Async
 
 class ComponentDetailsTableViewController : UITableViewController {
 	
+	// MARK: - Properties
+	
 	var component: Component?
 	
 	var palpationsFetchedResultsController: NSFetchedResultsController?
@@ -25,12 +27,14 @@ class ComponentDetailsTableViewController : UITableViewController {
 	var activityIndicator: UIActivityIndicatorView?
 	var presentingAlert: Bool = false
 	
+	// MARK: - View Controller Methods
+	
 	override func viewDidLoad() {
 		if (self.component != nil) {
-			self.palpationsFetchedResultsController = PalpationsFetchedResultsControllers.palpationsFetchedResultsController(forComponent: self.component!)
-			self.rangesOfMotionFetchedResultsController = RangesOfMotionFetchedResultsControllers.rangesOfMotionFetchedResultsController(forComponent: self.component!)
-			self.musclesFetchedResultsController = MusclesFetchedResultsControllers.musclesFetchedResultsController(forComponent: self.component!)
-			self.specialTestsFetchedResultsController = SpecialTestsFetchedResultsControllers.specialTestsFetchedResultsController(self.component!)
+			self.palpationsFetchedResultsController = FetchedResultsControllers.palpationsFetchedResultsController(forComponent: self.component!)
+			self.rangesOfMotionFetchedResultsController = FetchedResultsControllers.rangesOfMotionFetchedResultsController(forComponent: self.component!)
+			self.musclesFetchedResultsController = FetchedResultsControllers.musclesFetchedResultsController(forComponent: self.component!)
+			self.specialTestsFetchedResultsController = FetchedResultsControllers.specialTestsFetchedResultsController(self.component!)
 			self.fetchResultsWithReload(false)
 			
 			self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), forControlEvents: .ValueChanged)
@@ -39,23 +43,19 @@ class ComponentDetailsTableViewController : UITableViewController {
 			
 			self.remoteConnectionManager = RemoteConnectionManager(delegate: self)
 			
-			if let count = self.palpationsFetchedResultsController?.fetchedObjects?.count where count == 0 {
-				self.remoteConnectionManager?.fetchPalpations(forComponent: self.component!)
-			}
+			self.remoteConnectionManager?.fetchPalpations(forComponent: self.component!)
+		
+			self.remoteConnectionManager?.fetchRangesOfMotion(forComponent: self.component!)
+		
+			self.remoteConnectionManager?.fetchMuscles(forComponent: self.component!)
+		
+			self.remoteConnectionManager?.fetchSpecialTests(forComponent: self.component!)
 			
-			if let count = self.rangesOfMotionFetchedResultsController?.fetchedObjects?.count where count == 0 {
-				self.remoteConnectionManager?.fetchRangesOfMotion(forComponent: self.component!)
-			}
-			
-			if let count = self.musclesFetchedResultsController?.fetchedObjects?.count where count == 0 {
-				self.remoteConnectionManager?.fetchMuscles(forComponent: self.component!)
-			}
-			
-			if let count = self.specialTestsFetchedResultsController?.fetchedObjects?.count where count == 0 {
-				self.remoteConnectionManager?.fetchSpecialTests(forComponent: self.component!)
-			}
+			NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.backgroundManagedObjectContextDidSave(_:)), name: NSManagedObjectContextDidSaveNotification, object: nil)
 		}
 	}
+	
+	// MARK: - Table View Controller Methods
 	
 	override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
 		return 5
@@ -167,6 +167,8 @@ class ComponentDetailsTableViewController : UITableViewController {
 		}
 	}
 	
+	// MARK: - Fetch Methods
+	
 	func fetchResultsWithReload(shouldReload: Bool) {
 		do {
 			try self.palpationsFetchedResultsController?.performFetch()
@@ -190,6 +192,25 @@ class ComponentDetailsTableViewController : UITableViewController {
 		}
 	}
 	
+	// MARK: - Core Data Notification Methods
+	
+	func backgroundManagedObjectContextDidSave(saveNotification: NSNotification) {
+		Async.main {
+			if let workingContext = self.palpationsFetchedResultsController?.managedObjectContext {
+				workingContext.mergeChangesFromContextDidSaveNotification(saveNotification)
+			}
+			if let workingContext = self.rangesOfMotionFetchedResultsController?.managedObjectContext {
+				workingContext.mergeChangesFromContextDidSaveNotification(saveNotification)
+			}
+			if let workingContext = self.musclesFetchedResultsController?.managedObjectContext {
+				workingContext.mergeChangesFromContextDidSaveNotification(saveNotification)
+			}
+			if let workingContext = self.specialTestsFetchedResultsController?.managedObjectContext {
+				workingContext.mergeChangesFromContextDidSaveNotification(saveNotification)
+			}
+		}
+	}
+	
 	// MARK: - Refresh Methods
 	
 	func handleRefresh(refreshControl: UIRefreshControl) {
@@ -199,6 +220,8 @@ class ComponentDetailsTableViewController : UITableViewController {
 			self.remoteConnectionManager?.fetchSpecialTests(forComponent: self.component!)
 		}
 	}
+	
+	// MARK: - Activity Indicator Methods
 	
 	func initializeActivityIndicator() {
 		self.activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
@@ -217,15 +240,19 @@ class ComponentDetailsTableViewController : UITableViewController {
 		self.activityIndicator!.stopAnimating()
 	}
 	
+	// MARK: - Navigation Methods
+	
 	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
 		if let managedSpecialTest = sender as? SpecialTestManagedObject {
 			if let destination = segue.destinationViewController as? SpecialTestDetailTableViewController {
-				destination.parentSpecialTest = SpecialTest.specialTestFromManagedObject(managedSpecialTest)
+				destination.parentSpecialTest = SpecialTest(managedObject: managedSpecialTest)
 			}
 		}
 	}
 	
 }
+
+// MARK: - Remote Connection Manager Delegate Methods
 
 extension ComponentDetailsTableViewController : RemoteConnectionManagerDelegate {
 	
@@ -245,16 +272,21 @@ extension ComponentDetailsTableViewController : RemoteConnectionManagerDelegate 
 		if self.component != nil {
 			if parser.dataType == JSONParser.dataTypes.palpation {
 				let palpations = parser.parsePalpations(self.component!)
-				datastoreManager.storePalpations(palpations)
+				datastoreManager.store(palpations)
 			} else if parser.dataType == JSONParser.dataTypes.rangeOfMotion {
 				let rangesOfMotion = parser.parseRangesOfMotion(self.component!)
-				datastoreManager.storeRangesOfMotion(rangesOfMotion)
+				datastoreManager.store(rangesOfMotion)
 			} else if parser.dataType == JSONParser.dataTypes.muscle {
 				let muscles = parser.parseMuscles(self.component!)
-				datastoreManager.storeMuscles(muscles)
+				datastoreManager.store(muscles)
 			} else if parser.dataType == JSONParser.dataTypes.specialTest {
 				let specialTests = parser.parseSpecialTests(self.component!)
-				datastoreManager.storeSpecialTests(specialTests)
+				datastoreManager.store(specialTests)
+			} else if parser.dataType == JSONParser.dataTypes.empty {
+				datastoreManager.deleteObjectsForEntity(PalpationManagedObject.entityName)
+				datastoreManager.deleteObjectsForEntity(RangeOfMotionManagedObject.entityName)
+				datastoreManager.deleteObjectsForEntity(MuscleManagedObject.entityName)
+				datastoreManager.deleteObjectsForEntity(SpecialTestManagedObject.entityName)
 			}
 		}
 	}
@@ -284,6 +316,8 @@ extension ComponentDetailsTableViewController : RemoteConnectionManagerDelegate 
 	}
 	
 }
+
+// MARK: - Datastore Manager Delegate Methods
 
 extension ComponentDetailsTableViewController : DatastoreManagerDelegate {
 	

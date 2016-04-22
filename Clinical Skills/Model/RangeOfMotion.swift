@@ -24,13 +24,20 @@ class RangeOfMotion {
 		self.notes = notes
 	}
 	
-	class func rangeOfMotionFromManagedObject(managedObject: RangeOfMotionManagedObject) -> RangeOfMotion {
-		let component = Component.componentFromManagedObject(managedObject.component)
-		let id = managedObject.id
-		let motion = managedObject.motion
-		let degrees = managedObject.degrees
-		let notes = managedObject.notes
-		return RangeOfMotion(component: component, id: id, motion: motion, degrees: degrees, notes: notes)
+	init(managedObject: RangeOfMotionManagedObject) {
+		self.component = Component(managedObject: managedObject.component)
+		self.id = managedObject.id
+		self.motion = managedObject.motion
+		self.degrees = managedObject.degrees
+		self.notes = managedObject.notes
 	}
 	
+}
+
+func ==(lhs: RangeOfMotion, rhs: RangeOfMotion) -> Bool {
+	return (lhs.id == rhs.id) && (lhs.motion == rhs.motion)
+}
+
+func !=(lhs: RangeOfMotion, rhs: RangeOfMotion) -> Bool {
+	return !(lhs == rhs)
 }

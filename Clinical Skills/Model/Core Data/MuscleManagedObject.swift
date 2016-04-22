@@ -29,3 +29,19 @@ class MuscleManagedObject : NSManagedObject {
 	}
 	
 }
+
+func ==(lhs: MuscleManagedObject, rhs: MuscleManagedObject) -> Bool {
+	return (lhs.id == rhs.id) && (lhs.name == rhs.name)
+}
+
+func !=(lhs: MuscleManagedObject, rhs: MuscleManagedObject) -> Bool {
+	return !(lhs == rhs)
+}
+
+func ==(lhs: MuscleManagedObject, rhs: Muscle) -> Bool {
+	return (lhs.id == rhs.id) && (lhs.name == rhs.name)
+}
+
+func !=(lhs: MuscleManagedObject, rhs: Muscle) -> Bool {
+	return !(lhs == rhs)
+}

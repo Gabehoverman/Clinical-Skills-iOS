@@ -33,7 +33,7 @@ class ComponentsTableViewController : UITableViewController {
 	override func viewDidLoad() {
 		if self.system != nil {
 			
-			self.fetchedResultsController = ComponentsFetchedResultsControllers.componentsFetchedResultsController(self.system!)
+			self.fetchedResultsController = FetchedResultsControllers.componentsFetchedResultsController(self.system!)
 			self.fetchResultsWithReload(false)
 		
 			self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), forControlEvents: .ValueChanged)
@@ -43,9 +43,9 @@ class ComponentsTableViewController : UITableViewController {
 			
 			self.remoteConnectionManager = RemoteConnectionManager(delegate: self)
 			
-			if let count = self.fetchedResultsController?.fetchedObjects?.count where count == 0 {
-				self.remoteConnectionManager?.fetchComponents(forSystem: self.system!)
-			}
+			self.remoteConnectionManager?.fetchComponents(forSystem: self.system!)
+		
+			NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.backgroundManagedObjectContextDidSave(_:)), name: NSManagedObjectContextDidSaveNotification, object: nil)
 		}
 	}
 	
@@ -108,6 +108,16 @@ class ComponentsTableViewController : UITableViewController {
 		}
 	}
 	
+	// MARK: - Core Data Notification Methods
+	
+	func backgroundManagedObjectContextDidSave(saveNotification: NSNotification) {
+		Async.main {
+			if let workingContext = self.fetchedResultsController?.managedObjectContext {
+				workingContext.mergeChangesFromContextDidSaveNotification(saveNotification)
+			}
+		}
+	}
+	
 	// MARK: - Refresh Methods
 	
 	func handleRefresh(refreshControl: UIRefreshControl) {
@@ -137,13 +147,13 @@ class ComponentsTableViewController : UITableViewController {
 		if segue.identifier == StoryboardIdentifiers.segue.toComponentDetailsView {
 			if let destination = segue.destinationViewController as? ComponentDetailsTableViewController {
 				if let managedComponent = sender as? ComponentManagedObject {
-					destination.component = Component.componentFromManagedObject(managedComponent)
+					destination.component = Component(managedObject: managedComponent)
 				}
 			}
 		} else if segue.identifier == StoryboardIdentifiers.segue.toSpecialTestsView {
 			if let destination = segue.destinationViewController as? SpecialTestsTableViewController {
 				if let managedComponent = sender as? ComponentManagedObject {
-					destination.component = Component.componentFromManagedObject(managedComponent)
+					destination.component = Component(managedObject: managedComponent)
 				}
 			}
 		}
@@ -171,7 +181,11 @@ extension ComponentsTableViewController : RemoteConnectionManagerDelegate {
 		if parser.dataType == JSONParser.dataTypes.component {
 			if self.system != nil {
 				let components = parser.parseComponents(self.system!)
-				datastoreManager.storeComponents(components)
+				datastoreManager.store(components)
+			}
+		} else if parser.dataType == JSONParser.dataTypes.empty {
+			if self.system != nil {
+				datastoreManager.deleteObjectsForEntity(ComponentManagedObject.entityName)
 			}
 		}
 	}

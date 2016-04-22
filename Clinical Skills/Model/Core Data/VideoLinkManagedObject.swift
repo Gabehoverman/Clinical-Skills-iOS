@@ -18,6 +18,7 @@ class VideoLinkManagedObject : NSManagedObject {
 		static let title = "title"
 		static let link = "link"
 		static let specialTest = "special_test"
+		static let examTechnique = "exam_technique"
 	}
 	
 	@NSManaged var id: Int32
@@ -32,4 +33,20 @@ class VideoLinkManagedObject : NSManagedObject {
 		}
 	}
 	
+}
+
+func ==(lhs: VideoLinkManagedObject, rhs: VideoLinkManagedObject) -> Bool {
+	return (lhs.id == rhs.id) && (lhs.title == rhs.title)
+}
+
+func !=(lhs: VideoLinkManagedObject, rhs: VideoLinkManagedObject) -> Bool {
+	return !(lhs == rhs)
+}
+
+func ==(lhs: VideoLinkManagedObject, rhs: VideoLink) -> Bool {
+	return (lhs.id == rhs.id) && (lhs.title == rhs.title)
+}
+
+func !=(lhs: VideoLinkManagedObject, rhs: VideoLink) -> Bool {
+	return !(lhs == rhs)
 }

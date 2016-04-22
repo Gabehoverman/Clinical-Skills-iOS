@@ -25,6 +25,7 @@ class JSONParser : NSObject {
 		static let specialTest = "special_test"
 		static let imageLink = "image_link"
 		static let videoLink = "video_link"
+		static let empty = "empty"
 		static let unknown = "unknown"
 	}
 	
@@ -37,6 +38,9 @@ class JSONParser : NSObject {
 	var dataType: String {
 		get {
 			var type = "unknown"
+			if self.json.isEmpty {
+				type = "empty"
+			}
 			for (_, subJSON) in self.json {
 				if let key = subJSON.dictionary?.keys.first?.lowercaseString {
 					type = key
