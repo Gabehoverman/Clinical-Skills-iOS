@@ -29,6 +29,7 @@ class SystemsTableViewController: UITableViewController {
 	// MARK: - View Controller Methodsq
 	
 	override func viewDidLoad() {
+		
 		self.fetchedResultsController = FetchedResultsControllers.allSystemsResultController
 		self.fetchResultsWithReload(false)
 		
