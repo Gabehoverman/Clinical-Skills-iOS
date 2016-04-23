@@ -11,47 +11,22 @@ import SwiftyJSON
 
 class PersonnelAcknowledgement: NSObject {
 	
-	struct propertyKeys {
-		static let type = "personnel"
-		static let name = "name"
-		static let role = "role"
-		static let notes = "notes"
-	}
-	
+	var id: Int32
 	var name: String
 	var role: String
 	var notes: String
-	override var description: String {
-		get {
-			return "Personnel: \(self.name), \(self.role), \(self.notes)"
-		}
-	}
 	
-	override init() {
-		self.name = "Name"
-		self.role = "Role"
-		self.notes = "Notes"
-	}
-	
-	convenience init(name: String, role: String, notes: String) {
-		self.init()
+	init(id: Int32, name: String, role: String, notes: String) {
+		self.id = id
 		self.name = name
 		self.role = role
 		self.notes = notes
 	}
 	
-	convenience init(json: JSON) {
-		self.init()
-		for (key, value) in json {
-			if (key == PersonnelAcknowledgement.propertyKeys.name) {
-				self.name = value.stringValue
-			}
-			if (key == PersonnelAcknowledgement.propertyKeys.role) {
-				self.role = value.stringValue
-			}
-			if (key == PersonnelAcknowledgement.propertyKeys.notes) {
-				self.notes = value.stringValue
-			}
-		}
+	init(managedObject: PersonnelAcknowledgementManagedObject) {
+		self.id = managedObject.id
+		self.name = managedObject.name
+		self.role = managedObject.role
+		self.notes = managedObject.notes
 	}
 }

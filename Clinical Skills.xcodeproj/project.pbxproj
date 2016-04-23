@@ -64,6 +64,8 @@
 		01DFC6AD1CCAF7BA0020BD55 /* AcknowledgementsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DFC6AC1CCAF7BA0020BD55 /* AcknowledgementsManager.swift */; };
 		01DFC6AF1CCAFCED0020BD55 /* AcknowledgementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DFC6AE1CCAFCED0020BD55 /* AcknowledgementsViewController.swift */; };
 		01E9FFDF1CB5C018005276AC /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E9FFDE1CB5C018005276AC /* VideoViewController.swift */; };
+		01EFD90A1CCC245000730D3C /* PersonnelAcknowledgementManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01EFD9091CCC245000730D3C /* PersonnelAcknowledgementManagedObject.swift */; };
+		01EFD90C1CCC245A00730D3C /* SoftwareAcknowledgementManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01EFD90B1CCC245A00730D3C /* SoftwareAcknowledgementManagedObject.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -138,6 +140,8 @@
 		01DFC6AC1CCAF7BA0020BD55 /* AcknowledgementsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AcknowledgementsManager.swift; sourceTree = "<group>"; };
 		01DFC6AE1CCAFCED0020BD55 /* AcknowledgementsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AcknowledgementsViewController.swift; sourceTree = "<group>"; };
 		01E9FFDE1CB5C018005276AC /* VideoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
+		01EFD9091CCC245000730D3C /* PersonnelAcknowledgementManagedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonnelAcknowledgementManagedObject.swift; sourceTree = "<group>"; };
+		01EFD90B1CCC245A00730D3C /* SoftwareAcknowledgementManagedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoftwareAcknowledgementManagedObject.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,6 +206,8 @@
 				0105E41F1C915FFD00AC4F09 /* SpecialTestManagedObject.swift */,
 				01D620F11C953A6500756A7F /* ImageLinkManagedObject.swift */,
 				011F3DA41C927522002749E5 /* VideoLinkManagedObject.swift */,
+				01EFD9091CCC245000730D3C /* PersonnelAcknowledgementManagedObject.swift */,
+				01EFD90B1CCC245A00730D3C /* SoftwareAcknowledgementManagedObject.swift */,
 			);
 			path = "Core Data";
 			sourceTree = "<group>";
@@ -262,11 +268,11 @@
 			isa = PBXGroup;
 			children = (
 				011E01611C86463400AB8BA0 /* AppDelegate.swift */,
+				01DFC6A31CCAE3EC0020BD55 /* Acknowledgements.json */,
 				01BF6F751C8D48D40067D804 /* Pocket History Guide.pdf */,
 				011E016B1C86463400AB8BA0 /* Assets.xcassets */,
 				01CD86401C865FB900E4437D /* Info.plist */,
 				01CD86441C86A5F000E4437D /* Settings.bundle */,
-				01DFC6A31CCAE3EC0020BD55 /* Acknowledgements.json */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -274,7 +280,6 @@
 		011E018F1C864A3400AB8BA0 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				01DFC6A91CCAF7380020BD55 /* Acknowledgement */,
 				011E01A51C864A8600AB8BA0 /* System.swift */,
 				010EC6FB1CB4FD60004AA8A1 /* ExamTechnique.swift */,
 				01BCAE661C8FC1920076ECE5 /* Component.swift */,
@@ -284,6 +289,8 @@
 				0105E4211C91600300AC4F09 /* SpecialTest.swift */,
 				01D620EF1C953A5700756A7F /* ImageLink.swift */,
 				011F3DA21C927519002749E5 /* VideoLink.swift */,
+				01DFC6A71CCAF7330020BD55 /* PersonnelAcknowledgement.swift */,
+				01DFC6AA1CCAF75E0020BD55 /* SoftwareAcknowledgement.swift */,
 				011E01761C86469B00AB8BA0 /* Core Data */,
 			);
 			path = Model;
@@ -318,15 +325,6 @@
 				01D6DF2E1CCB74C600DFE3EC /* SoftwareAcknowledgementTableViewCell.swift */,
 			);
 			name = "Table View Cells";
-			sourceTree = "<group>";
-		};
-		01DFC6A91CCAF7380020BD55 /* Acknowledgement */ = {
-			isa = PBXGroup;
-			children = (
-				01DFC6A71CCAF7330020BD55 /* PersonnelAcknowledgement.swift */,
-				01DFC6AA1CCAF75E0020BD55 /* SoftwareAcknowledgement.swift */,
-			);
-			name = Acknowledgement;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -460,6 +458,7 @@
 				01D6DF311CCB7A1A00DFE3EC /* SoftwareWebsiteViewController.swift in Sources */,
 				010EC6FC1CB4FD60004AA8A1 /* ExamTechnique.swift in Sources */,
 				01D42CBA1CA503A900A2AFD3 /* RangeOfMotion.swift in Sources */,
+				01EFD90A1CCC245000730D3C /* PersonnelAcknowledgementManagedObject.swift in Sources */,
 				01A610201CA4F20300A63ED6 /* ComponentDetailsTableViewController.swift in Sources */,
 				0105E4221C91600300AC4F09 /* SpecialTest.swift in Sources */,
 				01DFC6AF1CCAFCED0020BD55 /* AcknowledgementsViewController.swift in Sources */,
@@ -495,6 +494,7 @@
 				010EC6FE1CB4FD69004AA8A1 /* ExamTechniqueManagedObject.swift in Sources */,
 				011F3DA11C920A5F002749E5 /* SpecialTestDetailTableViewController.swift in Sources */,
 				0118070E1CABD4B50061A64F /* BasicPhoto.swift in Sources */,
+				01EFD90C1CCC245A00730D3C /* SoftwareAcknowledgementManagedObject.swift in Sources */,
 				01D6DF2B1CCB630C00DFE3EC /* SoftwareAcknowledgementTableViewController.swift in Sources */,
 				01BF6F781C8D4A410067D804 /* PocketHistoryViewController.swift in Sources */,
 				011E018E1C864A2900AB8BA0 /* JSONParser.swift in Sources */,

@@ -18,11 +18,7 @@ class AcknowledgementsViewController : UIViewController {
 	var personnelTableViewController: PersonnelAcknowledgementTableViewController?
 	var softwareTableViewController: SoftwareAcknowledgementTableViewController?
 	
-	var acknowledgementsManager: AcknowledgementsManager?
-	
 	override func viewDidLoad() {
-		self.acknowledgementsManager = AcknowledgementsManager()
-		self.acknowledgementsManager!.process()
 		self.displayViewControllerForSegmentIndex(0)
 	}
 	
@@ -30,13 +26,11 @@ class AcknowledgementsViewController : UIViewController {
 		if index == 0 {
 			if self.personnelTableViewController == nil {
 				self.personnelTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier(StoryboardIdentifiers.controller.personnelAcknowledgementTableViewController) as? PersonnelAcknowledgementTableViewController
-				self.personnelTableViewController!.personnelAcknowledgements = self.acknowledgementsManager!.personnel
 			}
 			return self.personnelTableViewController
 		} else {
 			if self.softwareTableViewController == nil {
 				self.softwareTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier(StoryboardIdentifiers.controller.softwareAcknowledgementTableViewController) as? SoftwareAcknowledgementTableViewController
-				self.softwareTableViewController!.softwareAcknowledgements = self.acknowledgementsManager!.software
 			}
 			return self.softwareTableViewController
 		}

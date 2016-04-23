@@ -30,7 +30,7 @@ class SystemsTableViewController: UITableViewController {
 	
 	override func viewDidLoad() {
 		
-		self.fetchedResultsController = FetchedResultsControllers.allSystemsResultController
+		self.fetchedResultsController = FetchedResultsControllers.allSystemsFetchedResultController()
 		self.fetchResultsWithReload(false)
 		
 		self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), forControlEvents: .ValueChanged)
