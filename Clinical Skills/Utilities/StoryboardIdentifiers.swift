@@ -18,6 +18,9 @@ struct StoryboardIdentifiers {
 		static let toSpecialTestsView = "ToSpecialTestsView"
 		static let toSpecialTestsDetailView = "ToSpecialTestsDetailView"
 		static let toVideoView = "ToVideoView"
+		static let toPersonnelAcknowledgementsView = "ToPersonnelAcknowledgementsView"
+		static let toSoftwareAcknowledgementsView = "ToSoftwareAcknowledgementsView"
+		static let toSoftwareWebsiteView = "ToSoftwareWebsiteView"
 	}
 	
 	struct tab {
@@ -29,6 +32,8 @@ struct StoryboardIdentifiers {
 	struct controller {
 		static let componentsTableViewController = "ComponentsTableViewController"
 		static let examTechniquesTableViewController = "ExamTechniquesTableViewController"
+		static let personnelAcknowledgementTableViewController = "PersonnelAcknowledgementTableViewController"
+		static let softwareAcknowledgementTableViewController = "SoftwareAcknowledgementTableViewController"
 	}
 	
 	struct cell {
@@ -53,5 +58,8 @@ struct StoryboardIdentifiers {
 		static let specialTestImagesCell = "SpecialTestImagesCell"
 		static let specialTestVideoLinkCell = "SpecialTestVideoLinkCell"
 		static let collectionImageCell = "CollectionImageCell"
+		
+		static let personnelAcknowledgementCell = "PersonnelAcknowledgementCell"
+		static let softwareAcknowledgementCell = "SoftwareAcknowledgementCell"
 	}
 }
