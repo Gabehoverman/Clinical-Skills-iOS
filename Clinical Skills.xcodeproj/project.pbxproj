@@ -58,7 +58,6 @@
 		01DB22311CACDB110069ECFB /* Palpation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DB22301CACDB110069ECFB /* Palpation.swift */; };
 		01DB22331CACDB180069ECFB /* PalpationManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DB22321CACDB180069ECFB /* PalpationManagedObject.swift */; };
 		01DB22401CAD01350069ECFB /* StoryboardIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DB223F1CAD01350069ECFB /* StoryboardIdentifiers.swift */; };
-		01DFC6A41CCAE3EC0020BD55 /* Acknowledgements.json in Resources */ = {isa = PBXBuildFile; fileRef = 01DFC6A31CCAE3EC0020BD55 /* Acknowledgements.json */; };
 		01DFC6A81CCAF7330020BD55 /* PersonnelAcknowledgement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DFC6A71CCAF7330020BD55 /* PersonnelAcknowledgement.swift */; };
 		01DFC6AB1CCAF75E0020BD55 /* SoftwareAcknowledgement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DFC6AA1CCAF75E0020BD55 /* SoftwareAcknowledgement.swift */; };
 		01DFC6AD1CCAF7BA0020BD55 /* AcknowledgementsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DFC6AC1CCAF7BA0020BD55 /* AcknowledgementsManager.swift */; };
@@ -134,7 +133,6 @@
 		01DB22301CACDB110069ECFB /* Palpation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Palpation.swift; sourceTree = "<group>"; };
 		01DB22321CACDB180069ECFB /* PalpationManagedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PalpationManagedObject.swift; sourceTree = "<group>"; };
 		01DB223F1CAD01350069ECFB /* StoryboardIdentifiers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryboardIdentifiers.swift; sourceTree = "<group>"; };
-		01DFC6A31CCAE3EC0020BD55 /* Acknowledgements.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Acknowledgements.json; sourceTree = "<group>"; };
 		01DFC6A71CCAF7330020BD55 /* PersonnelAcknowledgement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonnelAcknowledgement.swift; sourceTree = "<group>"; };
 		01DFC6AA1CCAF75E0020BD55 /* SoftwareAcknowledgement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoftwareAcknowledgement.swift; sourceTree = "<group>"; };
 		01DFC6AC1CCAF7BA0020BD55 /* AcknowledgementsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AcknowledgementsManager.swift; sourceTree = "<group>"; };
@@ -268,7 +266,6 @@
 			isa = PBXGroup;
 			children = (
 				011E01611C86463400AB8BA0 /* AppDelegate.swift */,
-				01DFC6A31CCAE3EC0020BD55 /* Acknowledgements.json */,
 				01BF6F751C8D48D40067D804 /* Pocket History Guide.pdf */,
 				011E016B1C86463400AB8BA0 /* Assets.xcassets */,
 				01CD86401C865FB900E4437D /* Info.plist */,
@@ -410,7 +407,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				01DFC6A41CCAE3EC0020BD55 /* Acknowledgements.json in Resources */,
 				01CD86451C86A5F000E4437D /* Settings.bundle in Resources */,
 				01CD863A1C865F2E00E4437D /* LaunchScreen.storyboard in Resources */,
 				011E016C1C86463400AB8BA0 /* Assets.xcassets in Resources */,
