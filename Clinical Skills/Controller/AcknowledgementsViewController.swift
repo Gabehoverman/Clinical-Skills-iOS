@@ -35,7 +35,7 @@ class AcknowledgementsViewController : UIViewController {
 			return self.personnelTableViewController
 		} else {
 			if self.softwareTableViewController == nil {
-				self.storyboard?.instantiateViewControllerWithIdentifier(StoryboardIdentifiers.controller.softwareAcknowledgementTableViewController) as? SoftwareAcknowledgementTableViewController
+				self.softwareTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier(StoryboardIdentifiers.controller.softwareAcknowledgementTableViewController) as? SoftwareAcknowledgementTableViewController
 				self.softwareTableViewController!.softwareAcknowledgements = self.acknowledgementsManager!.software
 			}
 			return self.softwareTableViewController

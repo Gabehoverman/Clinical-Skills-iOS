@@ -20,6 +20,7 @@ struct StoryboardIdentifiers {
 		static let toVideoView = "ToVideoView"
 		static let toPersonnelAcknowledgementsView = "ToPersonnelAcknowledgementsView"
 		static let toSoftwareAcknowledgementsView = "ToSoftwareAcknowledgementsView"
+		static let toSoftwareWebsiteView = "ToSoftwareWebsiteView"
 	}
 	
 	struct tab {

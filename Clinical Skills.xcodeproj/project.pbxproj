@@ -52,6 +52,8 @@
 		01D6DF271CCB5C2200DFE3EC /* PersonnelAcknowledgementTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6DF261CCB5C2200DFE3EC /* PersonnelAcknowledgementTableViewCell.swift */; };
 		01D6DF291CCB630100DFE3EC /* PersonnelAcknowledgementTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6DF281CCB630100DFE3EC /* PersonnelAcknowledgementTableViewController.swift */; };
 		01D6DF2B1CCB630C00DFE3EC /* SoftwareAcknowledgementTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6DF2A1CCB630C00DFE3EC /* SoftwareAcknowledgementTableViewController.swift */; };
+		01D6DF2F1CCB74C600DFE3EC /* SoftwareAcknowledgementTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6DF2E1CCB74C600DFE3EC /* SoftwareAcknowledgementTableViewCell.swift */; };
+		01D6DF311CCB7A1A00DFE3EC /* SoftwareWebsiteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6DF301CCB7A1A00DFE3EC /* SoftwareWebsiteViewController.swift */; };
 		01DB222F1CACD76A0069ECFB /* PalpationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DB222E1CACD76A0069ECFB /* PalpationTableViewCell.swift */; };
 		01DB22311CACDB110069ECFB /* Palpation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DB22301CACDB110069ECFB /* Palpation.swift */; };
 		01DB22331CACDB180069ECFB /* PalpationManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DB22321CACDB180069ECFB /* PalpationManagedObject.swift */; };
@@ -124,6 +126,8 @@
 		01D6DF261CCB5C2200DFE3EC /* PersonnelAcknowledgementTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonnelAcknowledgementTableViewCell.swift; sourceTree = "<group>"; };
 		01D6DF281CCB630100DFE3EC /* PersonnelAcknowledgementTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonnelAcknowledgementTableViewController.swift; sourceTree = "<group>"; };
 		01D6DF2A1CCB630C00DFE3EC /* SoftwareAcknowledgementTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoftwareAcknowledgementTableViewController.swift; sourceTree = "<group>"; };
+		01D6DF2E1CCB74C600DFE3EC /* SoftwareAcknowledgementTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoftwareAcknowledgementTableViewCell.swift; sourceTree = "<group>"; };
+		01D6DF301CCB7A1A00DFE3EC /* SoftwareWebsiteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoftwareWebsiteViewController.swift; sourceTree = "<group>"; };
 		01DB222E1CACD76A0069ECFB /* PalpationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PalpationTableViewCell.swift; path = "Table View Cells/PalpationTableViewCell.swift"; sourceTree = "<group>"; };
 		01DB22301CACDB110069ECFB /* Palpation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Palpation.swift; sourceTree = "<group>"; };
 		01DB22321CACDB180069ECFB /* PalpationManagedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PalpationManagedObject.swift; sourceTree = "<group>"; };
@@ -227,6 +231,7 @@
 				01E9FFDE1CB5C018005276AC /* VideoViewController.swift */,
 				01D6DF281CCB630100DFE3EC /* PersonnelAcknowledgementTableViewController.swift */,
 				01D6DF2A1CCB630C00DFE3EC /* SoftwareAcknowledgementTableViewController.swift */,
+				01D6DF301CCB7A1A00DFE3EC /* SoftwareWebsiteViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -310,6 +315,7 @@
 				01195E321CAB515100CD7631 /* RangeOfMotionTableViewCell.swift */,
 				01DB222E1CACD76A0069ECFB /* PalpationTableViewCell.swift */,
 				01D6DF261CCB5C2200DFE3EC /* PersonnelAcknowledgementTableViewCell.swift */,
+				01D6DF2E1CCB74C600DFE3EC /* SoftwareAcknowledgementTableViewCell.swift */,
 			);
 			name = "Table View Cells";
 			sourceTree = "<group>";
@@ -451,6 +457,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				011807061CABA5880061A64F /* Muscle.swift in Sources */,
+				01D6DF311CCB7A1A00DFE3EC /* SoftwareWebsiteViewController.swift in Sources */,
 				010EC6FC1CB4FD60004AA8A1 /* ExamTechnique.swift in Sources */,
 				01D42CBA1CA503A900A2AFD3 /* RangeOfMotion.swift in Sources */,
 				01A610201CA4F20300A63ED6 /* ComponentDetailsTableViewController.swift in Sources */,
@@ -476,6 +483,7 @@
 				01D6DF271CCB5C2200DFE3EC /* PersonnelAcknowledgementTableViewCell.swift in Sources */,
 				01DFC6AD1CCAF7BA0020BD55 /* AcknowledgementsManager.swift in Sources */,
 				011E01B21C864A9D00AB8BA0 /* UserDefaultsManager.swift in Sources */,
+				01D6DF2F1CCB74C600DFE3EC /* SoftwareAcknowledgementTableViewCell.swift in Sources */,
 				0105E41E1C9154A200AC4F09 /* SpecialTestsTableViewController.swift in Sources */,
 				010EC6F61CB4DA54004AA8A1 /* SystemBreakdownViewController.swift in Sources */,
 				0105E4201C915FFD00AC4F09 /* SpecialTestManagedObject.swift in Sources */,

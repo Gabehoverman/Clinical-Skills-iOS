@@ -875,11 +875,12 @@
                         <outlet property="acknowledgementTypeSegmentedControl" destination="Cok-sN-Hw3" id="DhE-gi-pYb"/>
                         <outlet property="contentView" destination="vcA-hZ-Cnb" id="nkE-wf-HiY"/>
                         <segue destination="QcF-2F-EuM" kind="show" identifier="ToPersonnelAcknowledgementsView" id="dh9-KU-FPf"/>
+                        <segue destination="fUZ-dc-c84" kind="show" identifier="ToSoftwareAcknowledgementsView" id="j1H-JW-I0q"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XPH-si-NZQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6487" y="-239"/>
+            <point key="canvasLocation" x="6487" y="-675"/>
         </scene>
         <!--Personnel Acknowledgement Table View Controller-->
         <scene sceneID="CIX-DY-kYQ">
@@ -956,6 +957,100 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fof-j9-aAq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="7319" y="-239"/>
+        </scene>
+        <!--Software Acknowledgement Table View Controller-->
+        <scene sceneID="zx0-7M-wLz">
+            <objects>
+                <tableViewController storyboardIdentifier="SoftwareAcknowledgementTableViewController" title="Software Acknowledgement Table View Controller" useStoryboardIdentifierAsRestorationIdentifier="YES" id="fUZ-dc-c84" customClass="SoftwareAcknowledgementTableViewController" customModule="Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="uh0-C4-NWi">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="SoftwareAcknowledgementCell" rowHeight="88" id="thA-TY-1VG" customClass="SoftwareAcknowledgementTableViewCell" customModule="Clinical_Skills" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="92" width="600" height="88"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="thA-TY-1VG" id="Sp0-jw-c4T">
+                                    <rect key="frame" x="0.0" y="0.0" width="567" height="87"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="SwiftyJSON" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cT9-eZ-YjJ">
+                                            <rect key="frame" x="16" y="16" width="535" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="http://www.github.com/SwiftyJSON/SwiftyJSON" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="935-ZC-Vak">
+                                            <rect key="frame" x="16" y="45" width="535" height="26"/>
+                                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailingMargin" secondItem="cT9-eZ-YjJ" secondAttribute="trailing" constant="8" id="BSc-Vg-xHc"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="935-ZC-Vak" secondAttribute="trailing" constant="8" id="IVE-kW-uNI"/>
+                                        <constraint firstItem="935-ZC-Vak" firstAttribute="leading" secondItem="Sp0-jw-c4T" secondAttribute="leadingMargin" constant="8" id="Pe1-iD-vaD"/>
+                                        <constraint firstItem="935-ZC-Vak" firstAttribute="top" secondItem="cT9-eZ-YjJ" secondAttribute="bottom" constant="8" id="Qdo-ri-TZ1"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="935-ZC-Vak" secondAttribute="bottom" constant="8" id="YCf-kh-NOe"/>
+                                        <constraint firstItem="cT9-eZ-YjJ" firstAttribute="top" secondItem="Sp0-jw-c4T" secondAttribute="topMargin" constant="8" id="iiU-EX-cNE"/>
+                                        <constraint firstItem="cT9-eZ-YjJ" firstAttribute="leading" secondItem="Sp0-jw-c4T" secondAttribute="leadingMargin" constant="8" id="mfg-8e-OtM"/>
+                                        <constraint firstItem="935-ZC-Vak" firstAttribute="top" secondItem="cT9-eZ-YjJ" secondAttribute="bottom" constant="8" id="zFY-Ae-LgU"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="linkLabel" destination="935-ZC-Vak" id="k03-ld-lcC"/>
+                                    <outlet property="nameLabel" destination="cT9-eZ-YjJ" id="eGO-vr-5he"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="fUZ-dc-c84" id="Q5Z-NU-qcn"/>
+                            <outlet property="delegate" destination="fUZ-dc-c84" id="nyv-CB-mDt"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Software" id="uge-Se-J8F"/>
+                    <connections>
+                        <segue destination="35r-R3-5O0" kind="show" identifier="ToSoftwareWebsiteView" id="YXH-7s-9qk"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6xj-rR-Lly" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="7319" y="-1042"/>
+        </scene>
+        <!--Software Website View Controller-->
+        <scene sceneID="Afh-oF-ZBg">
+            <objects>
+                <viewController storyboardIdentifier="SoftwareWebsiteViewController" title="Software Website View Controller" useStoryboardIdentifierAsRestorationIdentifier="YES" id="35r-R3-5O0" customClass="SoftwareWebsiteViewController" customModule="Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Bcn-JL-kpy"/>
+                        <viewControllerLayoutGuide type="bottom" id="LbV-ty-ffc"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="WBS-q9-4d2">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AFl-gR-laX">
+                                <rect key="frame" x="0.0" y="20" width="600" height="531"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="AFl-gR-laX" firstAttribute="top" secondItem="WBS-q9-4d2" secondAttribute="topMargin" constant="20" id="DTD-wL-jsV"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="AFl-gR-laX" secondAttribute="trailing" constant="-20" id="QZS-cq-e6y"/>
+                            <constraint firstItem="LbV-ty-ffc" firstAttribute="top" secondItem="AFl-gR-laX" secondAttribute="bottom" id="lnn-nH-BUK"/>
+                            <constraint firstItem="AFl-gR-laX" firstAttribute="leading" secondItem="WBS-q9-4d2" secondAttribute="leadingMargin" constant="-20" id="me9-7c-ePj"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Software" id="sCL-xH-yGG"/>
+                    <connections>
+                        <outlet property="webView" destination="AFl-gR-laX" id="0MD-jC-OiK"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LmL-Vx-OAG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="8179" y="-1042"/>
         </scene>
         <!--Component Details Table View Controller-->
         <scene sceneID="6hC-Yd-T0x">
