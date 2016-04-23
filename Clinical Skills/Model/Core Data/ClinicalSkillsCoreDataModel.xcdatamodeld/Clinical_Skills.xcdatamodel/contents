@@ -36,12 +36,23 @@
         <attribute name="structure" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="component" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Component" inverseName="palpations" inverseEntity="Component" syncable="YES"/>
     </entity>
+    <entity name="PersonnelAcknowledgement" representedClassName="PersonnelAcknowledgementManagedObject" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="role" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="RangeOfMotion" representedClassName="RangeOfMotionManagedObject" syncable="YES">
         <attribute name="degrees" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="motion" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="component" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Component" inverseName="rangesOfMotion" inverseEntity="Component" syncable="YES"/>
+    </entity>
+    <entity name="SoftwareAcknowledgement" representedClassName="SoftwareAcknowledgementManagedObject" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="link" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="SpecialTest" representedClassName="SpecialTestManagedObject" syncable="YES">
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
@@ -69,6 +80,7 @@
     </entity>
     <elements>
         <element name="Component" positionX="-92" positionY="-141" width="128" height="180"/>
+        <element name="ExamTechnique" positionX="0" positionY="0" width="128" height="120"/>
         <element name="ImageLink" positionX="-198" positionY="288" width="128" height="105"/>
         <element name="Muscle" positionX="0" positionY="0" width="128" height="90"/>
         <element name="Palpation" positionX="0" positionY="0" width="128" height="120"/>
@@ -76,6 +88,7 @@
         <element name="SpecialTest" positionX="79" positionY="207" width="128" height="165"/>
         <element name="System" positionX="223" positionY="-144" width="128" height="120"/>
         <element name="VideoLink" positionX="-198" positionY="147" width="128" height="120"/>
-        <element name="ExamTechnique" positionX="0" positionY="0" width="128" height="120"/>
+        <element name="PersonnelAcknowledgement" positionX="0" positionY="0" width="128" height="105"/>
+        <element name="SoftwareAcknowledgement" positionX="9" positionY="9" width="128" height="90"/>
     </elements>
 </model>

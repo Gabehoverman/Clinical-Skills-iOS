@@ -8,18 +8,45 @@
 
 import Foundation
 import UIKit
+import CoreData
+import Async
 
 class SoftwareAcknowledgementTableViewController : UITableViewController {
 	
-	var softwareAcknowledgements: [SoftwareAcknowledgement]?
+	var fetchedResultsController: NSFetchedResultsController?
+	
+	var searchController: UISearchController!
+	var activityIndicator: UIActivityIndicatorView?
+	var presentingAlert: Bool = false
+	
+	var remoteConnectionManager: RemoteConnectionManager?
+	
+	var searchPhrase: String?
+	var defaultSearchPredicate: NSPredicate?
+	
+	override func viewDidLoad() {
+		self.fetchedResultsController = FetchedResultsControllers.allSoftwareAcknowledgementsFetchedResultController()
+		self.fetchResultsWithReload(false)
+		
+		self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), forControlEvents: .ValueChanged)
+		
+		self.initializeSearchController()
+		self.initializeActivityIndicator()
+		
+		self.remoteConnectionManager = RemoteConnectionManager(delegate: self)
+		
+		self.remoteConnectionManager!.fetchSoftwareAcknowledgements()
+		
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.backgroundManagedObjectContextDidSave(_:)), name: NSManagedObjectContextDidSaveNotification, object: nil)
+	}
 	
 	override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
 		return 1
 	}
 	
 	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		if self.softwareAcknowledgements != nil {
-			return self.softwareAcknowledgements!.count
+		if let count = self.fetchedResultsController?.fetchedObjects?.count where count != 0 {
+			return count
 		}
 		return 0
 	}
@@ -33,36 +60,181 @@ class SoftwareAcknowledgementTableViewController : UITableViewController {
 	}
 	
 	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		if self.softwareAcknowledgements != nil {
-			if let softwareAcknowledgement = self.softwareAcknowledgements?[indexPath.row] {
-				if let cell = self.tableView.dequeueReusableCellWithIdentifier(StoryboardIdentifiers.cell.softwareAcknowledgementCell) as? SoftwareAcknowledgementTableViewCell {
-					cell.nameLabel.numberOfLines = 1
-					cell.nameLabel.adjustsFontSizeToFitWidth = true
-					cell.nameLabel.text = softwareAcknowledgement.name
-					cell.linkLabel.numberOfLines = 1
-					cell.linkLabel.adjustsFontSizeToFitWidth = true
-					cell.linkLabel.text = softwareAcknowledgement.link
-					return cell
-				}
+		if let managedSoftwareAcknowledgement = self.fetchedResultsController?.objectAtIndexPath(indexPath) as? SoftwareAcknowledgementManagedObject {
+			if let cell = self.tableView.dequeueReusableCellWithIdentifier(StoryboardIdentifiers.cell.softwareAcknowledgementCell) as? SoftwareAcknowledgementTableViewCell {
+				cell.nameLabel.numberOfLines = 1
+				cell.nameLabel.adjustsFontSizeToFitWidth = true
+				cell.nameLabel.text = managedSoftwareAcknowledgement.name
+				cell.linkLabel.numberOfLines = 1
+				cell.linkLabel.adjustsFontSizeToFitWidth = true
+				cell.linkLabel.text = managedSoftwareAcknowledgement.link
+				return cell
 			}
 		}
 		return UITableViewCell()
 	}
 	
-	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-		if let softwareAcknowledgement = self.softwareAcknowledgements?[indexPath.row] {
-			self.performSegueWithIdentifier(StoryboardIdentifiers.segue.toSoftwareWebsiteView, sender: softwareAcknowledgement)
+	func fetchResultsWithReload(shouldReload: Bool) {
+		do {
+			try self.fetchedResultsController!.performFetch()
+			if shouldReload {
+				self.tableView.reloadData()
+			}
+		} catch {
+			print("Error Fetching Software Acknowledgements")
+			print("\(error)\n")
+			if !self.presentingAlert && self.presentedViewController == nil {
+				let alertController = UIAlertController(title: "Error Storing Data", message: "An error occurred while storing data. Please try agian.", preferredStyle: .Alert)
+				alertController.addAction(UIAlertAction(title: "Dismiss", style: .Default, handler: nil))
+				self.presentingAlert = true
+				self.presentViewController(alertController, animated: true, completion: { self.presentingAlert = false })
+			}
 		}
 	}
 	
-	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-		if segue.identifier == StoryboardIdentifiers.segue.toSoftwareWebsiteView {
-			if let destination = segue.destinationViewController as? SoftwareWebsiteViewController {
-				if let softwareAcknowledgement = sender as? SoftwareAcknowledgement {
-					destination.link = softwareAcknowledgement.link
+	func backgroundManagedObjectContextDidSave(saveNotification: NSNotification) {
+		Async.main {
+			if let workingContext = self.fetchedResultsController?.managedObjectContext {
+				workingContext.mergeChangesFromContextDidSaveNotification(saveNotification)
+			}
+		}
+	}
+	
+	func handleRefresh(refreshControl: UIRefreshControl) {
+		self.remoteConnectionManager?.fetchSoftwareAcknowledgements()
+	}
+	
+	func initializeActivityIndicator() {
+		self.activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+		self.activityIndicator!.frame = CGRect(x: 0, y: 0, width: 10, height: 10)
+		self.activityIndicator!.center = self.tableView.center
+		self.activityIndicator!.hidesWhenStopped = true
+		self.view.addSubview(self.activityIndicator!)
+		self.activityIndicator!.bringSubviewToFront(self.view)
+	}
+	
+	func showActivityIndicator() {
+		self.activityIndicator!.startAnimating()
+	}
+	
+	func hideActivityIndicator() {
+		self.activityIndicator!.stopAnimating()
+	}
+	
+}
+
+extension SoftwareAcknowledgementTableViewController : RemoteConnectionManagerDelegate {
+	
+	func didBeginDataRequest() {
+		if self.refreshControl != nil {
+			if !self.refreshControl!.refreshing {
+				Async.main {
+					self.showActivityIndicator()
 				}
 			}
 		}
+	}
+	
+	func didFinishDataRequestWithData(receivedData: NSData) {
+		let datastoreManager = DatastoreManager(delegate: self)
+		let parser = JSONParser(rawData: receivedData)
+		if parser.dataType == JSONParser.dataTypes.software_acknowledgement {
+			let softwareAcknowledgements = parser.parseSoftwareAcknowledgements()
+			datastoreManager.store(softwareAcknowledgements)
+		}
+	}
+	
+	func didFinishDataRequest() {
+		if self.refreshControl != nil {
+			if self.refreshControl!.refreshing {
+				self.refreshControl!.endRefreshing()
+			}
+		}
+		
+		Async.main {
+			self.hideActivityIndicator()
+		}
+	}
+	
+	func didFinishDataRequestWithError(error: NSError) {
+		Async.main {
+			print(self.remoteConnectionManager!.messageForError(error))
+			print("\(error)\n")
+			if !self.presentingAlert && self.presentedViewController == nil {
+				let alertController = UIAlertController(title: "Error Fetching Remote Data", message: "An error occured while fetching data from the server. Please try agian.", preferredStyle: .Alert)
+				alertController.addAction(UIAlertAction(title: "Dismiss", style: .Default, handler: nil))
+				self.presentingAlert = true
+				self.presentViewController(alertController, animated: true, completion: { self.presentingAlert = false })
+			}
+		}
+	}
+	
+}
+
+extension SoftwareAcknowledgementTableViewController : DatastoreManagerDelegate {
+	
+	func didFinishStoring() {
+		Async.main {
+			self.fetchResultsWithReload(true)
+		}
+	}
+	
+	func didFinishStoringWithError(error: NSError) {
+		Async.main {
+			print("Error Storing Software Acknowledgements")
+			print("\(error)\n")
+			if !self.presentingAlert && self.presentedViewController == nil {
+				let alertController = UIAlertController(title: "Error Storing Data", message: "An error occurred while storing data. Please try agian.", preferredStyle: .Alert)
+				alertController.addAction(UIAlertAction(title: "Dismiss", style: .Default, handler: nil))
+				self.presentingAlert = true
+				self.presentViewController(alertController, animated: true, completion: { self.presentingAlert = false })
+			}
+		}
+	}
+	
+}
+
+extension SoftwareAcknowledgementTableViewController : UISearchBarDelegate {
+	
+	func initializeSearchController() {
+		self.defaultSearchPredicate = self.fetchedResultsController!.fetchRequest.predicate
+		self.searchController = UISearchController(searchResultsController: nil)
+		self.searchController.dimsBackgroundDuringPresentation = true
+		self.searchController.definesPresentationContext = true
+		self.searchController.searchBar.delegate = self
+		self.tableView.tableHeaderView = self.searchController.searchBar
+		self.tableView.contentOffset = CGPointMake(0, self.searchController.searchBar.frame.size.height)
+	}
+	
+	func clearSearch() {
+		self.searchPhrase = nil
+		self.fetchedResultsController?.fetchRequest.predicate = self.defaultSearchPredicate
+		self.fetchResultsWithReload(true)
+	}
+	
+	func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+		if searchText != "" {
+			var predicates = [NSPredicate]()
+			self.searchPhrase = searchText
+			if let predicate = self.defaultSearchPredicate {
+				predicates.append(predicate)
+			}
+			let filterPredicate = NSPredicate(format: "%K CONTAINS[cd] %@", SoftwareAcknowledgementManagedObject.propertyKeys.name, searchText)
+			predicates.append(filterPredicate)
+			let fullPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
+			self.fetchedResultsController?.fetchRequest.predicate = fullPredicate
+			self.fetchResultsWithReload(true)
+		} else {
+			self.clearSearch()
+		}
+	}
+	
+	func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+		self.clearSearch()
+	}
+	
+	func searchBarTextDidEndEditing(searchBar: UISearchBar) {
+		searchBar.text = self.searchPhrase
 	}
 	
 }

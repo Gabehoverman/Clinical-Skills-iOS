@@ -27,18 +27,18 @@ class AcknowledgementsManager {
 		}
 	}
 	
-	func process() {
-		if self.acknowledgementsJSON != nil {
-			for (acknowledgementType, acknowledgements) in self.acknowledgementsJSON! {
-				for (_, acknowledgement) in acknowledgements {
-					if (acknowledgementType == PersonnelAcknowledgement.propertyKeys.type) {
-						self.personnel.append(PersonnelAcknowledgement(json: acknowledgement))
-					} else if (acknowledgementType == SoftwareAcknowledgement.propertyKeys.type) {
-						self.software.append(SoftwareAcknowledgement(json: acknowledgement))
-					}
-				}
-			}
-		}
-	}
+//	func process() {
+//		if self.acknowledgementsJSON != nil {
+//			for (acknowledgementType, acknowledgements) in self.acknowledgementsJSON! {
+//				for (_, acknowledgement) in acknowledgements {
+//					if (acknowledgementType == PersonnelAcknowledgement.propertyKeys.type) {
+//						self.personnel.append(PersonnelAcknowledgement(json: acknowledgement))
+//					} else if (acknowledgementType == SoftwareAcknowledgement.propertyKeys.type) {
+//						self.software.append(SoftwareAcknowledgement(json: acknowledgement))
+//					}
+//				}
+//			}
+//		}
+//	}
 	
 }

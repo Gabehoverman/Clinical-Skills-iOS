@@ -11,47 +11,20 @@ import SwiftyJSON
 
 class SoftwareAcknowledgement: NSObject {
 	
-	struct propertyKeys {
-		static let type = "software"
-		static let name = "name"
-		static let link = "link"
-		static let license = "license"
-	}
-	
+	var id: Int32
 	var name: String
 	var link: String
-	var license: String
-	override var description: String {
-		get {
-			return "Software: \(self.name), \(self.link)"
-		}
-	}
 	
-	override init() {
-		self.name = "Name"
-		self.link = "Link"
-		self.license = "License"
-	}
-	
-	convenience init(name: String, link: String, license: String) {
-		self.init()
+	init(id: Int32, name: String, link: String) {
+		self.id = id
 		self.name = name
 		self.link = link
-		self.license = license
 	}
 	
-	convenience init(json: JSON) {
-		self.init()
-		for (key, value) in json {
-			if (key == SoftwareAcknowledgement.propertyKeys.name) {
-				self.name = value.stringValue
-			}
-			if (key == SoftwareAcknowledgement.propertyKeys.link) {
-				self.link = value.stringValue
-			}
-			if (key == SoftwareAcknowledgement.propertyKeys.license) {
-				self.license = value.stringValue
-			}
-		}
+	init(managedObject: SoftwareAcknowledgementManagedObject) {
+		self.id = managedObject.id
+		self.name = managedObject.name
+		self.link = managedObject.link
 	}
+	
 }

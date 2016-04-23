@@ -18,12 +18,22 @@ class FetchedResultsControllers {
 		return NSFetchedResultsController(fetchRequest: request, managedObjectContext: managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
 	}
 	
-	static var allSystemsResultController: NSFetchedResultsController {
-		get {
-			let request = NSFetchRequest(entityName: SystemManagedObject.entityName)
-			request.sortDescriptors = [NSSortDescriptor(key: SystemManagedObject.propertyKeys.name, ascending: true)]
-			return fetchedResultsControllerForRequest(request)
-		}
+	class func allPersonnelAcknowledgementsFetchedResultController() -> NSFetchedResultsController {
+		let request = NSFetchRequest(entityName: PersonnelAcknowledgementManagedObject.entityName)
+		request.sortDescriptors = [NSSortDescriptor(key: PersonnelAcknowledgementManagedObject.propertyKeys.id, ascending: true)]
+		return fetchedResultsControllerForRequest(request)
+	}
+	
+	class func allSoftwareAcknowledgementsFetchedResultController() -> NSFetchedResultsController {
+		let request = NSFetchRequest(entityName: SoftwareAcknowledgementManagedObject.entityName)
+		request.sortDescriptors = [NSSortDescriptor(key: SoftwareAcknowledgementManagedObject.propertyKeys.name, ascending: true)]
+		return fetchedResultsControllerForRequest(request)
+	}
+	
+	class func allSystemsFetchedResultController() -> NSFetchedResultsController {
+		let request = NSFetchRequest(entityName: SystemManagedObject.entityName)
+		request.sortDescriptors = [NSSortDescriptor(key: SystemManagedObject.propertyKeys.name, ascending: true)]
+		return fetchedResultsControllerForRequest(request)
 	}
 	
 	class func componentsFetchedResultsController(forSystem: System) -> NSFetchedResultsController {

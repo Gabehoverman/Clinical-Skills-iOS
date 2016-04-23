@@ -16,6 +16,8 @@ class JSONParser : NSObject {
 	// MARK: - JSON Data Type Keys
 	
 	struct dataTypes {
+		static let personnel_acknowledgement = "personnel_acknowledgement"
+		static let software_acknowledgement = "software_acknowledgement"
 		static let system = "system"
 		static let examTechnique = "exam_technique"
 		static let component = "component"
@@ -57,6 +59,33 @@ class JSONParser : NSObject {
 	}
 	
 	// MARK: - Parse Methods
+	
+	func parsePersonnelAcknowledgements() -> [PersonnelAcknowledgement] {
+		var personnelAcknowledgements = [PersonnelAcknowledgement]()
+		for (_, data) in self.json {
+			for (_, personnelAcknowledgement) in data {
+				let id = Int32(personnelAcknowledgement[PersonnelAcknowledgementManagedObject.propertyKeys.id].intValue)
+				let name = personnelAcknowledgement[PersonnelAcknowledgementManagedObject.propertyKeys.name].stringValue
+				let role = personnelAcknowledgement[PersonnelAcknowledgementManagedObject.propertyKeys.role].stringValue
+				let notes = personnelAcknowledgement[PersonnelAcknowledgementManagedObject.propertyKeys.notes].stringValue
+				personnelAcknowledgements.append(PersonnelAcknowledgement(id: id, name: name, role: role, notes: notes))
+			}
+		}
+		return personnelAcknowledgements
+	}
+	
+	func parseSoftwareAcknowledgements() -> [SoftwareAcknowledgement] {
+		var softwareAcknowledgements = [SoftwareAcknowledgement]()
+		for (_, data) in self.json {
+			for (_, softwareAcknowledgement) in data {
+				let id = Int32(softwareAcknowledgement[SoftwareAcknowledgementManagedObject.propertyKeys.id].intValue)
+				let name = softwareAcknowledgement[SoftwareAcknowledgementManagedObject.propertyKeys.name].stringValue
+				let link = softwareAcknowledgement[SoftwareAcknowledgementManagedObject.propertyKeys.link].stringValue
+				softwareAcknowledgements.append(SoftwareAcknowledgement(id: id, name: name, link: link))
+			}
+		}
+		return softwareAcknowledgements
+	}
 	
 	func parseSystems() -> [System] {
 		var systems = [System]()

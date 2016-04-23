@@ -30,7 +30,17 @@ class DatastoreManager : NSObject {
 	
 	func store(objects: [AnyObject]) {
 		self.delegate?.didBeginStoring?()
-		if objects is [System] {
+		if objects is [PersonnelAcknowledgement] {
+			self.deleteObjectsForEntity(PersonnelAcknowledgementManagedObject.entityName)
+			for object in objects {
+				self.storePersonnelAcknowledgement(object as! PersonnelAcknowledgement)
+			}
+		} else if objects is [SoftwareAcknowledgement] {
+			self.deleteObjectsForEntity(SoftwareAcknowledgementManagedObject.entityName)
+			for object in objects {
+				self.storeSoftwareAcknowledgement(object as! SoftwareAcknowledgement)
+			}
+		} else if objects is [System] {
 			self.deleteObjectsForEntity(SystemManagedObject.entityName)
 			for object in objects {
 				self.storeSystem(object as! System)
@@ -80,6 +90,33 @@ class DatastoreManager : NSObject {
 	}
 	
 	// MARK: - Store Instance Methods
+	
+	private func storePersonnelAcknowledgement(personnelAcknowledgement: PersonnelAcknowledgement) {
+		if self.containsObjectWithID(personnelAcknowledgement.id, entityName: PersonnelAcknowledgementManagedObject.entityName, idPropertyKey: PersonnelAcknowledgementManagedObject.propertyKeys.id) {
+			self.updatePersonnelAcknowledgementWithID(personnelAcknowledgement.id, toPersonnelAcknowledgement: personnelAcknowledgement)
+		} else {
+			let entity = NSEntityDescription.entityForName(PersonnelAcknowledgementManagedObject.entityName, inManagedObjectContext: self.managedObjectContext)!
+			if let newManagedPersonnelAcknowledgement = NSManagedObject(entity: entity, insertIntoManagedObjectContext: self.managedObjectContext) as? PersonnelAcknowledgementManagedObject {
+				newManagedPersonnelAcknowledgement.id = personnelAcknowledgement.id
+				newManagedPersonnelAcknowledgement.name = personnelAcknowledgement.name
+				newManagedPersonnelAcknowledgement.role = personnelAcknowledgement.role
+				newManagedPersonnelAcknowledgement.notes = personnelAcknowledgement.notes
+			}
+		}
+	}
+	
+	private func storeSoftwareAcknowledgement(softwareAcknowledgement: SoftwareAcknowledgement) {
+		if self.containsObjectWithID(softwareAcknowledgement.id, entityName: SoftwareAcknowledgementManagedObject.entityName, idPropertyKey: SoftwareAcknowledgementManagedObject.propertyKeys.id) {
+			self.updateSoftwareAcknowledgementWithID(softwareAcknowledgement.id, toSoftwareAcknowledgement: softwareAcknowledgement)
+		} else {
+			let entity = NSEntityDescription.entityForName(SoftwareAcknowledgementManagedObject.entityName, inManagedObjectContext: self.managedObjectContext)!
+			if let newManagedSoftwareAcknowledgement = NSManagedObject(entity: entity, insertIntoManagedObjectContext: self.managedObjectContext) as? SoftwareAcknowledgementManagedObject {
+				newManagedSoftwareAcknowledgement.id = softwareAcknowledgement.id
+				newManagedSoftwareAcknowledgement.name = softwareAcknowledgement.name
+				newManagedSoftwareAcknowledgement.link = softwareAcknowledgement.link
+			}
+		}
+	}
 	
 	private func storeSystem(system: System) {
 		if self.containsObjectWithID(system.id, entityName: SystemManagedObject.entityName, idPropertyKey: SystemManagedObject.propertyKeys.id) {
@@ -234,6 +271,25 @@ class DatastoreManager : NSObject {
 	}
 	
 	// MARK: - Update Methods
+	
+	private func updatePersonnelAcknowledgementWithID(id: Int32, toPersonnelAcknowledgement: PersonnelAcknowledgement) {
+		if let managedPersonnelAcknowledgement = self.retrieveObjectWithID(id, entityName: PersonnelAcknowledgementManagedObject.entityName, idPropertyKey: PersonnelAcknowledgementManagedObject.propertyKeys.id) as? PersonnelAcknowledgementManagedObject {
+			if (managedPersonnelAcknowledgement != toPersonnelAcknowledgement) {
+				managedPersonnelAcknowledgement.name = toPersonnelAcknowledgement.name
+				managedPersonnelAcknowledgement.role = toPersonnelAcknowledgement.role
+				managedPersonnelAcknowledgement.notes = toPersonnelAcknowledgement.notes
+			}
+		}
+	}
+	
+	private func updateSoftwareAcknowledgementWithID(id: Int32, toSoftwareAcknowledgement: SoftwareAcknowledgement) {
+		if let managedSoftwareAcknowledgement = self.retrieveObjectWithID(id, entityName: SoftwareAcknowledgementManagedObject.entityName, idPropertyKey: SoftwareAcknowledgementManagedObject.propertyKeys.id) as? SoftwareAcknowledgementManagedObject {
+			if (managedSoftwareAcknowledgement != toSoftwareAcknowledgement) {
+				managedSoftwareAcknowledgement.name = toSoftwareAcknowledgement.name
+				managedSoftwareAcknowledgement.link = toSoftwareAcknowledgement.link
+			}
+		}
+	}
 	
 	private func updateSystemWithID(id: Int32, toSystem: System) {
 		if let managedSystem = self.retrieveObjectWithID(id, entityName: SystemManagedObject.entityName, idPropertyKey: SystemManagedObject.propertyKeys.id) as? SystemManagedObject {

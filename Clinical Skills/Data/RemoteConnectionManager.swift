@@ -25,7 +25,9 @@ class RemoteConnectionManager : NSObject {
 	}
 	
 	struct dataURLs {
-		static let systems = "systems/all.json"
+		static let personnelAcknowledgement = "personnel_acknowledgements.json"
+		static let softwareAcknowledgement = "software_acknowledgements.json"
+		static let systems = "systems.json"
 		static let examTechnique = "exam_techniques.json"
 		static let components = "components.json"
 		static let palpations = "palpations.json"
@@ -77,6 +79,16 @@ class RemoteConnectionManager : NSObject {
 	}
 	
 	// MARK: - Fetch Methods
+	
+	func fetchPersonnelAcknowledgements() {
+		self.isCloudinaryFetch = false
+		self.fetchWithQueryString(dataURLs.personnelAcknowledgement)
+	}
+	
+	func fetchSoftwareAcknowledgements() {
+		self.isCloudinaryFetch = false
+		self.fetchWithQueryString(dataURLs.softwareAcknowledgement)
+	}
 	
 	func fetchSystems() {
 		self.isCloudinaryFetch = false
