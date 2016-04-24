@@ -16,8 +16,6 @@ class RemoteConnectionManager : NSObject {
 		get {
 			if self.shouldRequestFromLocal {
 				return "http://localhost:3000/"
-			} else if self.isCloudinaryFetch {
-				return "https://res.cloudinary.com/"
 			} else {
 				return "https://wvsom-clinical-skills.herokuapp.com/"
 			}
@@ -25,24 +23,23 @@ class RemoteConnectionManager : NSObject {
 	}
 	
 	struct dataURLs {
-		static let personnelAcknowledgement = "personnel_acknowledgements.json"
-		static let softwareAcknowledgement = "software_acknowledgements.json"
-		static let systems = "systems.json"
-		static let examTechnique = "exam_techniques.json"
-		static let components = "components.json"
-		static let palpations = "palpations.json"
-		static let rangesOfMotion = "ranges_of_motion.json"
-		static let muscles = "muscles.json"
-		static let specialTests = "special_tests.json"
-		static let imageLinks = "image_links.json"
-		static let videoLinks = "video_links.json"
+		static let personnelAcknowledgement = "personnel_acknowledgements"
+		static let softwareAcknowledgement = "software_acknowledgements"
+		static let systems = "systems"
+		static let examTechnique = "exam_techniques"
+		static let components = "components"
+		static let palpations = "palpations"
+		static let rangesOfMotion = "ranges_of_motion"
+		static let muscles = "muscles"
+		static let specialTests = "special_tests"
+		static let imageLinks = "image_links"
+		static let videoLinks = "video_links"
 		static let images = "wvsom/image/upload/v1/"
 	}
 	
 	// MARK: - Properties
 
 	var shouldRequestFromLocal: Bool
-	var isCloudinaryFetch: Bool
 	
 	var statusCode: Int
 	var statusMessage: String {
@@ -65,7 +62,6 @@ class RemoteConnectionManager : NSObject {
 	
 	init(delegate: RemoteConnectionManagerDelegate?) {
 		self.shouldRequestFromLocal = UserDefaultsManager.userDefaults.boolForKey(UserDefaultsManager.userDefaultsKeys.requestFromLocalHost).boolValue
-		self.isCloudinaryFetch = false
 		self.statusCode = 0
 		self.delegate = delegate
 		super.init()
@@ -81,80 +77,84 @@ class RemoteConnectionManager : NSObject {
 	// MARK: - Fetch Methods
 	
 	func fetchPersonnelAcknowledgements() {
-		self.isCloudinaryFetch = false
-		self.fetchWithQueryString(dataURLs.personnelAcknowledgement)
+		self.fetchWithQueryString(dataURLs.personnelAcknowledgement, queryString: nil)
 	}
 	
 	func fetchSoftwareAcknowledgements() {
-		self.isCloudinaryFetch = false
-		self.fetchWithQueryString(dataURLs.softwareAcknowledgement)
+		self.fetchWithQueryString(dataURLs.softwareAcknowledgement, queryString: nil)
 	}
 	
 	func fetchSystems() {
-		self.isCloudinaryFetch = false
-		self.fetchWithQueryString(dataURLs.systems)
+		self.fetchWithQueryString(dataURLs.systems, queryString: nil)
 	}
 	
 	func fetchExamTechniques(forSystem system: System) {
-		self.isCloudinaryFetch = false
-		self.fetchWithQueryString(dataURLs.examTechnique + "?system=\(system.name)")
+		self.fetchWithQueryString(dataURLs.examTechnique, queryString: "system=\(system.name)")
 	}
 	
 	func fetchComponents(forSystem system: System) {
-		self.isCloudinaryFetch = false
-		self.fetchWithQueryString(dataURLs.components + "?system=\(system.name)")
+		self.fetchWithQueryString(dataURLs.components, queryString: "system=\(system.name)")
 	}
 	
 	func fetchPalpations(forComponent component: Component) {
-		self.isCloudinaryFetch = false
-		self.fetchWithQueryString(dataURLs.palpations + "?component=\(component.name)")
+		self.fetchWithQueryString(dataURLs.palpations, queryString: "component=\(component.name)")
 	}
 	
 	func fetchRangesOfMotion(forComponent component: Component) {
-		self.isCloudinaryFetch = false
-		self.fetchWithQueryString(dataURLs.rangesOfMotion + "?component=\(component.name)")
+		self.fetchWithQueryString(dataURLs.rangesOfMotion, queryString: "component=\(component.name)")
 	}
 	
 	func fetchMuscles(forComponent component: Component) {
-		self.isCloudinaryFetch = false
-		self.fetchWithQueryString(dataURLs.muscles + "?component=\(component.name)")
+		self.fetchWithQueryString(dataURLs.muscles, queryString: "component=\(component.name)")
 	}
 	
 	func fetchSpecialTests(forComponent component: Component) {
-		self.isCloudinaryFetch = false
-		self.fetchWithQueryString(dataURLs.specialTests + "?component=\(component.name)")
+		self.fetchWithQueryString(dataURLs.specialTests, queryString: "component=\(component.name)")
 	}
 	
 	func fetchImageLinks(forSpecialTest specialTest: SpecialTest) {
-		self.isCloudinaryFetch = false
-		self.fetchWithQueryString(dataURLs.imageLinks + "?special_test=\(specialTest.name)")
+		self.fetchWithQueryString(dataURLs.imageLinks, queryString: "special_test=\(specialTest.name)")
 	}
 	
 	func fetchVideoLinks(forSpecialTest specialTest: SpecialTest) {
-		self.isCloudinaryFetch = false
-		self.fetchWithQueryString(dataURLs.videoLinks + "?special_test=\(specialTest.name)")
+		self.fetchWithQueryString(dataURLs.videoLinks, queryString: "special_test=\(specialTest.name)")
 	}
 	
 	func fetchVideoLinks(forExamTechnique examTechnique: ExamTechnique) {
-		self.isCloudinaryFetch = false
-		self.fetchWithQueryString(dataURLs.videoLinks + "?exam_technique=\(examTechnique.name)")
+		self.fetchWithQueryString(dataURLs.videoLinks, queryString: "exam_technique=\(examTechnique.name)")
 	}
 	
 	func fetchImageData(forCloudinaryLink cloudinaryLink: String) {
-		self.isCloudinaryFetch = true
-		self.fetchWithQueryString(cloudinaryLink)
+		self.fetchWithCloudinaryLink(cloudinaryLink)
 	}
 	
-	private func fetchWithQueryString(queryString: String) {
-		var urlString = self.baseURL
-		urlString += queryString
+	private func fetchWithQueryString(urlRoute: String, queryString: String?) {
+		var urlString = self.baseURL + urlRoute + "?"
+		if (queryString != nil) {
+			urlString += queryString! + "&"
+		}
+		urlString += "format=json"
+		if (urlString.characters.last == "?" || urlString.characters.last == "&") {
+			urlString = String(urlString.characters.dropLast())
+		}
 		urlString = urlString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
 		if let url = NSURL(string: urlString) {
 			print("Fetching with URL \(url.absoluteString)")
 			let session = NSURLSession.sharedSession()
 			session.dataTaskWithURL(url, completionHandler: {
 				(receivedData: NSData?, httpResponse: NSURLResponse?, error: NSError?) -> Void in
-				self.completedDataTaskReceivingData(receivedData, response: httpResponse, error: error)
+				self.completedDataRequestWithData(false, data: receivedData, response: httpResponse, error: error)
+			}).resume()
+			self.delegate?.didBeginDataRequest?()
+		}
+	}
+	
+	private func fetchWithCloudinaryLink(cloudinaryLink: String) {
+		if let url = NSURL(string: cloudinaryLink) {
+			print("Fetching with URL \(url.absoluteString)")
+			let session = NSURLSession.sharedSession()
+			session.dataTaskWithURL(url, completionHandler: { (receivedData: NSData?, httpResponse: NSURLResponse?, error: NSError?) in
+				self.completedDataRequestWithData(true, data: receivedData, response: httpResponse, error: error)
 			}).resume()
 			self.delegate?.didBeginDataRequest?()
 		}
@@ -162,7 +162,7 @@ class RemoteConnectionManager : NSObject {
 	
 	// MARK: - Completion Methods
 	
-	private func completedDataTaskReceivingData(data: NSData?, response: NSURLResponse?, error: NSError?) {
+	private func completedDataRequestWithData(isCloudinaryFetch: Bool, data: NSData?, response: NSURLResponse?, error: NSError?) {
 		if let statusCode = (response as? NSHTTPURLResponse)?.statusCode {
 			self.statusCode = statusCode
 		} else {
@@ -175,7 +175,7 @@ class RemoteConnectionManager : NSObject {
 		}
 		
 		if data != nil {
-			if self.isCloudinaryFetch {
+			if isCloudinaryFetch {
 				self.delegate?.didFinishCloudinaryImageRequestWithData?(data!)
 			} else {
 				self.delegate?.didFinishDataRequestWithData?(data!)
