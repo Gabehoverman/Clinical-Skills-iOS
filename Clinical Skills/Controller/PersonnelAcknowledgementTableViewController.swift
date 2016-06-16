@@ -68,9 +68,11 @@ class PersonnelAcknowledgementTableViewController : UITableViewController {
 				cell.roleLabel.numberOfLines = 1
 				cell.roleLabel.adjustsFontSizeToFitWidth = true
 				cell.roleLabel.text = managedPersonnelAcknowledgement.role
+                cell.notesLabel.numberOfLines = 5
 				cell.notesLabel.text = managedPersonnelAcknowledgement.notes
 				return cell
 			}
+
 		}
 		return UITableViewCell()
 	}
