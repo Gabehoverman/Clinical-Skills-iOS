@@ -141,7 +141,7 @@
         <scene sceneID="lRf-9M-Yri">
             <objects>
                 <navigationController id="gpy-Xf-2AT" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Head To Toe" id="Kte-Fv-NX4"/>
+                    <tabBarItem key="tabBarItem" title="Head To Toe" image="HeadToToeTabBarIcon" id="Kte-Fv-NX4"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="tac-fK-gLc">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -171,7 +171,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="Show"/>
                                 <connections>
-                                    <action selector="show:" destination="naU-fq-aVx" eventType="touchUpInside" id="w5u-uT-49e"/>
+                                    <action selector="show:" destination="OCm-0N-LfY" eventType="touchUpInside" id="VWp-3d-fRL"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1581,6 +1581,7 @@
     <resources>
         <image name="AcknowledgementsButton" width="22" height="22"/>
         <image name="ClinicalSkillsTabBarIcon" width="25" height="25"/>
+        <image name="HeadToToeTabBarIcon" width="25" height="25"/>
         <image name="OutlinedReviewTabBarIcon" width="25" height="25"/>
         <image name="PocketHistoryTabBarIcon" width="25" height="25"/>
     </resources>
