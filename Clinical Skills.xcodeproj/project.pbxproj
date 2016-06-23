@@ -65,6 +65,8 @@
 		01E9FFDF1CB5C018005276AC /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E9FFDE1CB5C018005276AC /* VideoViewController.swift */; };
 		01EFD90A1CCC245000730D3C /* PersonnelAcknowledgementManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01EFD9091CCC245000730D3C /* PersonnelAcknowledgementManagedObject.swift */; };
 		01EFD90C1CCC245A00730D3C /* SoftwareAcknowledgementManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01EFD90B1CCC245A00730D3C /* SoftwareAcknowledgementManagedObject.swift */; };
+		C980B43E1D1C6D80003181E4 /* HeadToToeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C980B43D1D1C6D80003181E4 /* HeadToToeViewController.swift */; };
+		C980B4401D1C78A0003181E4 /* Head To Toe.pdf in Resources */ = {isa = PBXBuildFile; fileRef = C980B43F1D1C78A0003181E4 /* Head To Toe.pdf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -140,6 +142,8 @@
 		01E9FFDE1CB5C018005276AC /* VideoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
 		01EFD9091CCC245000730D3C /* PersonnelAcknowledgementManagedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonnelAcknowledgementManagedObject.swift; sourceTree = "<group>"; };
 		01EFD90B1CCC245A00730D3C /* SoftwareAcknowledgementManagedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoftwareAcknowledgementManagedObject.swift; sourceTree = "<group>"; };
+		C980B43D1D1C6D80003181E4 /* HeadToToeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeadToToeViewController.swift; sourceTree = "<group>"; };
+		C980B43F1D1C78A0003181E4 /* Head To Toe.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Head To Toe.pdf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -236,6 +240,7 @@
 				01D6DF281CCB630100DFE3EC /* PersonnelAcknowledgementTableViewController.swift */,
 				01D6DF2A1CCB630C00DFE3EC /* SoftwareAcknowledgementTableViewController.swift */,
 				01D6DF301CCB7A1A00DFE3EC /* SoftwareWebsiteViewController.swift */,
+				C980B43D1D1C6D80003181E4 /* HeadToToeViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -265,6 +270,7 @@
 		011E017B1C8646B200AB8BA0 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C980B43F1D1C78A0003181E4 /* Head To Toe.pdf */,
 				011E01611C86463400AB8BA0 /* AppDelegate.swift */,
 				01BF6F751C8D48D40067D804 /* Pocket History Guide.pdf */,
 				011E016B1C86463400AB8BA0 /* Assets.xcassets */,
@@ -296,8 +302,8 @@
 		011E01BC1C86500400AB8BA0 /* Storyboard */ = {
 			isa = PBXGroup;
 			children = (
-				01CD86381C865F2E00E4437D /* LaunchScreen.storyboard */,
 				01CD86391C865F2E00E4437D /* Main.storyboard */,
+				01CD86381C865F2E00E4437D /* LaunchScreen.storyboard */,
 			);
 			path = Storyboard;
 			sourceTree = "<group>";
@@ -411,6 +417,7 @@
 				01CD863A1C865F2E00E4437D /* LaunchScreen.storyboard in Resources */,
 				011E016C1C86463400AB8BA0 /* Assets.xcassets in Resources */,
 				01BF6F761C8D48D40067D804 /* Pocket History Guide.pdf in Resources */,
+				C980B4401D1C78A0003181E4 /* Head To Toe.pdf in Resources */,
 				01CD863B1C865F2E00E4437D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -487,6 +494,7 @@
 				011E01AC1C864A9200AB8BA0 /* SystemManagedObject.swift in Sources */,
 				011F3DA51C927522002749E5 /* VideoLinkManagedObject.swift in Sources */,
 				011F3DA31C927519002749E5 /* VideoLink.swift in Sources */,
+				C980B43E1D1C6D80003181E4 /* HeadToToeViewController.swift in Sources */,
 				010EC6FE1CB4FD69004AA8A1 /* ExamTechniqueManagedObject.swift in Sources */,
 				011F3DA11C920A5F002749E5 /* SpecialTestDetailTableViewController.swift in Sources */,
 				0118070E1CABD4B50061A64F /* BasicPhoto.swift in Sources */,
