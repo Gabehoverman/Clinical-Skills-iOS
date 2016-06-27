@@ -166,7 +166,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gK0-HE-Po6">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gK0-HE-Po6">
                                 <rect key="frame" x="275" y="282" width="51" height="36"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="Show"/>
@@ -176,12 +176,16 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="gK0-HE-Po6" firstAttribute="centerX" secondItem="ddG-6o-Aq3" secondAttribute="centerX" id="Rwk-Xk-byB"/>
+                            <constraint firstItem="gK0-HE-Po6" firstAttribute="centerY" secondItem="ddG-6o-Aq3" secondAttribute="centerY" id="zkQ-gK-eFS"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="fzU-jK-Gka"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YYv-ks-NT5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3894" y="1615"/>
+            <point key="canvasLocation" x="3934" y="1637"/>
         </scene>
         <!--History Guide-->
         <scene sceneID="slg-SH-Fiw">
