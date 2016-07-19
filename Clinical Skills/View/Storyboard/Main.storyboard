@@ -129,7 +129,6 @@
                     <connections>
                         <segue destination="DPO-nQ-hdc" kind="relationship" relationship="viewControllers" id="q1F-WM-ikm"/>
                         <segue destination="0QA-JC-iao" kind="relationship" relationship="viewControllers" id="iR7-3r-3Lx"/>
-                        <segue destination="xOX-NA-B1v" kind="relationship" relationship="viewControllers" id="KIL-HY-Phx"/>
                         <segue destination="gpy-Xf-2AT" kind="relationship" relationship="viewControllers" id="Czq-uX-sK4"/>
                     </connections>
                 </tabBarController>

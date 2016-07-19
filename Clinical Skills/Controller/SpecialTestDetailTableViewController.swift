@@ -112,13 +112,13 @@ class SpecialTestDetailTableViewController : UITableViewController {
 			case 2: cell.textLabel?.text = self.parentSpecialTest?.indication
 			case 3: cell.textLabel?.text = self.parentSpecialTest?.notes
 			case 4:
-				if let imagesCell = tableView.dequeueReusableCellWithIdentifier(StoryboardIdentifiers.cell.specialTestImagesCell) as? ImagesTableViewCell {
-					imagesCell.imagesCollectionView.backgroundColor = UIColor.clearColor()
-					imagesCell.imagesCollectionView.dataSource = self
-					imagesCell.imagesCollectionView.delegate = self
-					self.imagesCollectionView = imagesCell.imagesCollectionView
-					return imagesCell
-				}
+                if let imagesCell = tableView.dequeueReusableCellWithIdentifier(StoryboardIdentifiers.cell.specialTestImagesCell) as? ImagesTableViewCell {
+                    imagesCell.imagesCollectionView.backgroundColor = UIColor.clearColor()
+                    imagesCell.imagesCollectionView.dataSource = self
+                    imagesCell.imagesCollectionView.delegate = self
+                    self.imagesCollectionView = imagesCell.imagesCollectionView
+                    return imagesCell
+                }
 			case 5:
 				if let managedVideoLink = self.videoLinksFetchedResultsController?.objectAtIndexPath(fixedSectionIndexPath) as? VideoLinkManagedObject {
 					cell.accessoryType = .DisclosureIndicator
@@ -131,7 +131,7 @@ class SpecialTestDetailTableViewController : UITableViewController {
 	
 	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 		if indexPath.section == 5 {
-			let fixedSectionIndexPath = NSIndexPath(forRow: indexPath.row, inSection: 0) // NSIndexPath referencing section 0 to avoid "no section at index 3" error
+			let fixedSectionIndexPath = NSIndexPath(forRow: indexPath.row, inSection: 2) // NSIndexPath referencing section 0 to avoid "no section at index 3" error
 			if let managedVideoLink = self.videoLinksFetchedResultsController?.objectAtIndexPath(fixedSectionIndexPath) as? VideoLinkManagedObject {
 				self.performSegueWithIdentifier(StoryboardIdentifiers.segue.toVideoView, sender: managedVideoLink)
 			}
