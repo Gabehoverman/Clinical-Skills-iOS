@@ -67,6 +67,7 @@
 		01EFD90C1CCC245A00730D3C /* SoftwareAcknowledgementManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01EFD90B1CCC245A00730D3C /* SoftwareAcknowledgementManagedObject.swift */; };
 		C980B43E1D1C6D80003181E4 /* HeadToToeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C980B43D1D1C6D80003181E4 /* HeadToToeViewController.swift */; };
 		C980B4401D1C78A0003181E4 /* Head To Toe.pdf in Resources */ = {isa = PBXBuildFile; fileRef = C980B43F1D1C78A0003181E4 /* Head To Toe.pdf */; };
+		C9C0F10A1DDBD0EB00865557 /* DisclaimerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C0F1091DDBD0EB00865557 /* DisclaimerViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -144,6 +145,7 @@
 		01EFD90B1CCC245A00730D3C /* SoftwareAcknowledgementManagedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoftwareAcknowledgementManagedObject.swift; sourceTree = "<group>"; };
 		C980B43D1D1C6D80003181E4 /* HeadToToeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeadToToeViewController.swift; sourceTree = "<group>"; };
 		C980B43F1D1C78A0003181E4 /* Head To Toe.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Head To Toe.pdf"; sourceTree = "<group>"; };
+		C9C0F1091DDBD0EB00865557 /* DisclaimerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisclaimerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -241,6 +243,7 @@
 				01D6DF2A1CCB630C00DFE3EC /* SoftwareAcknowledgementTableViewController.swift */,
 				01D6DF301CCB7A1A00DFE3EC /* SoftwareWebsiteViewController.swift */,
 				C980B43D1D1C6D80003181E4 /* HeadToToeViewController.swift */,
+				C9C0F1091DDBD0EB00865557 /* DisclaimerViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -468,6 +471,7 @@
 				01DB22311CACDB110069ECFB /* Palpation.swift in Sources */,
 				010EC6FA1CB4F0FB004AA8A1 /* ExamTechniqueDetailsTableViewController.swift in Sources */,
 				01DFC6A81CCAF7330020BD55 /* PersonnelAcknowledgement.swift in Sources */,
+				C9C0F10A1DDBD0EB00865557 /* DisclaimerViewController.swift in Sources */,
 				011807081CABA5AC0061A64F /* MuscleManagedObject.swift in Sources */,
 				01DB22401CAD01350069ECFB /* StoryboardIdentifiers.swift in Sources */,
 				01A610221CA4FB2600A63ED6 /* RangeOfMotionManagedObject.swift in Sources */,

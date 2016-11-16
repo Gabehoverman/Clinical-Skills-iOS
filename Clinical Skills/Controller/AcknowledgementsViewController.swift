@@ -17,7 +17,8 @@ class AcknowledgementsViewController : UIViewController {
 	var currentViewController: UIViewController?
 	var personnelTableViewController: PersonnelAcknowledgementTableViewController?
 	var softwareTableViewController: SoftwareAcknowledgementTableViewController?
-	
+    var disclaimerViewController: DisclaimerViewController?
+    
 	override func viewDidLoad() {
 		self.displayViewControllerForSegmentIndex(0)
 	}
@@ -28,12 +29,18 @@ class AcknowledgementsViewController : UIViewController {
 				self.personnelTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier(StoryboardIdentifiers.controller.personnelAcknowledgementTableViewController) as? PersonnelAcknowledgementTableViewController
 			}
 			return self.personnelTableViewController
-		} else {
+		} else if index == 1 {
 			if self.softwareTableViewController == nil {
 				self.softwareTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier(StoryboardIdentifiers.controller.softwareAcknowledgementTableViewController) as? SoftwareAcknowledgementTableViewController
 			}
 			return self.softwareTableViewController
-		}
+        } else {
+            if self.disclaimerViewController == nil {
+                self.disclaimerViewController = self.storyboard?.instantiateViewControllerWithIdentifier(StoryboardIdentifiers.controller.disclaimerViewController) as?
+                    DisclaimerViewController
+            }
+            return self.disclaimerViewController
+        }
 	}
 	
 	func displayViewControllerForSegmentIndex(index: Int) {

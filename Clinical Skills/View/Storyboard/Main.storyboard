@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Du2-Kh-XVf">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Du2-Kh-XVf">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -184,7 +184,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YYv-ks-NT5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3934" y="1637"/>
+            <point key="canvasLocation" x="3942" y="1615"/>
         </scene>
         <!--History Guide-->
         <scene sceneID="slg-SH-Fiw">
@@ -882,6 +882,40 @@
             </objects>
             <point key="canvasLocation" x="6487" y="531"/>
         </scene>
+        <!--Disclaimer View Controller-->
+        <scene sceneID="l8x-My-mAl">
+            <objects>
+                <viewController storyboardIdentifier="DisclaimerViewController" title="Disclaimer View Controller" useStoryboardIdentifierAsRestorationIdentifier="YES" id="YOJ-pp-FNc" customClass="DisclaimerViewController" customModule="Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="TrI-0x-3VD"/>
+                        <viewControllerLayoutGuide type="bottom" id="70x-hI-D6l"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ym7-i2-NbP">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="DISCLAIMER – EDUCATIONAL PURPOSES ONLY" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O7d-7U-C7I">
+                                <rect key="frame" x="20" y="79" width="374" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Gb-bX-p96">
+                                <rect key="frame" x="25" y="0.0" width="354" height="618"/>
+                                <mutableString key="text">The information contained in this mobile application (“App”) is to be used for educational and informational purposes only. The medical information contained herein should not, under any circumstances, be viewed or treated as a substitute for the advice or diagnosis from a qualified physician or other medical professional. Though efforts have been made to ensure the information provided is correct and up to date, there is no guarantee that this information is accurate or current. Do not disregard medical advice due to any information contained herein. This App may not include information such as FDA warnings or alerts, new developments in medical research, interactions between certain drugs and/or medications, or other unusual/unpredictable medical circumstances. Furthermore, information contained herein is not to be used for medical diagnosis and/or treatment under any circumstances. Reliance on any information contained in this App is solely at your own risk. If you are currently having a medical emergency or need urgent care, please contact your physician immediately or dial 911. There is no warranty, express or implied, as to the accuracy of any information found in this App, and WVSOM shall not be liable for any injury or damage associated with or arising out of the use of this App or any information contained herein. By clicking the button below and opening this App, the user acknowledges, understands, and accepts the information noted in this Disclaimer.</mutableString>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Disclaimer" id="ciW-6s-go6"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="49q-6d-pIC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="7313" y="-2603"/>
+        </scene>
         <!--Acknowledgements-->
         <scene sceneID="Ze0-uA-x7a">
             <objects>
@@ -899,6 +933,7 @@
                                 <segments>
                                     <segment title="Personnel"/>
                                     <segment title="Software"/>
+                                    <segment title="Disclaimer"/>
                                 </segments>
                                 <connections>
                                     <action selector="acknowledgementTypeChanged:" destination="rAv-kp-9pr" eventType="valueChanged" id="6gn-43-P3z"/>
@@ -926,11 +961,12 @@
                         <outlet property="contentView" destination="vcA-hZ-Cnb" id="nkE-wf-HiY"/>
                         <segue destination="QcF-2F-EuM" kind="show" identifier="ToPersonnelAcknowledgementsView" id="dh9-KU-FPf"/>
                         <segue destination="fUZ-dc-c84" kind="show" identifier="ToSoftwareAcknowledgementsView" id="j1H-JW-I0q"/>
+                        <segue destination="YOJ-pp-FNc" kind="show" identifier="ToDisclaimerView" id="Oma-P4-um0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XPH-si-NZQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6487" y="-675"/>
+            <point key="canvasLocation" x="6487" y="-1501"/>
         </scene>
         <!--Personnel Acknowledgement Table View Controller-->
         <scene sceneID="CIX-DY-kYQ">
@@ -1017,7 +1053,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fof-j9-aAq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7319" y="-239"/>
+            <point key="canvasLocation" x="7295" y="-1055"/>
         </scene>
         <!--Software Acknowledgement Table View Controller-->
         <scene sceneID="zx0-7M-wLz">
@@ -1077,7 +1113,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6xj-rR-Lly" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7319" y="-1042"/>
+            <point key="canvasLocation" x="7295" y="-1858"/>
         </scene>
         <!--Software Website View Controller-->
         <scene sceneID="Afh-oF-ZBg">
@@ -1111,7 +1147,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LmL-Vx-OAG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="8179" y="-1042"/>
+            <point key="canvasLocation" x="8155" y="-1858"/>
         </scene>
         <!--Component Details Table View Controller-->
         <scene sceneID="6hC-Yd-T0x">

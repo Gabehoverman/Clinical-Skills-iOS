@@ -21,6 +21,7 @@ struct StoryboardIdentifiers {
 		static let toPersonnelAcknowledgementsView = "ToPersonnelAcknowledgementsView"
 		static let toSoftwareAcknowledgementsView = "ToSoftwareAcknowledgementsView"
 		static let toSoftwareWebsiteView = "ToSoftwareWebsiteView"
+        static let toDisclaimerView = "ToDisclaimerView"
         //static let toPocketHistory = "ToPocketHistoryView"
 	}
 	
@@ -35,6 +36,7 @@ struct StoryboardIdentifiers {
 		static let examTechniquesTableViewController = "ExamTechniquesTableViewController"
 		static let personnelAcknowledgementTableViewController = "PersonnelAcknowledgementTableViewController"
 		static let softwareAcknowledgementTableViewController = "SoftwareAcknowledgementTableViewController"
+        static let disclaimerViewController = "DisclaimerViewController"
 	}
 	
 	struct cell {
