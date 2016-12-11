@@ -23,30 +23,30 @@ class AcknowledgementsViewController : UIViewController {
 		self.displayViewControllerForSegmentIndex(0)
 	}
 	
-	func viewControllerForSelectedSegmentIndex(index: Int) -> UIViewController? {
+	func viewControllerForSelectedSegmentIndex(_ index: Int) -> UIViewController? {
 		if index == 0 {
 			if self.personnelTableViewController == nil {
-				self.personnelTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier(StoryboardIdentifiers.controller.personnelAcknowledgementTableViewController) as? PersonnelAcknowledgementTableViewController
+				self.personnelTableViewController = self.storyboard?.instantiateViewController(withIdentifier: StoryboardIdentifiers.controller.personnelAcknowledgementTableViewController) as? PersonnelAcknowledgementTableViewController
 			}
 			return self.personnelTableViewController
 		} else if index == 1 {
 			if self.softwareTableViewController == nil {
-				self.softwareTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier(StoryboardIdentifiers.controller.softwareAcknowledgementTableViewController) as? SoftwareAcknowledgementTableViewController
+				self.softwareTableViewController = self.storyboard?.instantiateViewController(withIdentifier: StoryboardIdentifiers.controller.softwareAcknowledgementTableViewController) as? SoftwareAcknowledgementTableViewController
 			}
 			return self.softwareTableViewController
         } else {
             if self.disclaimerViewController == nil {
-                self.disclaimerViewController = self.storyboard?.instantiateViewControllerWithIdentifier(StoryboardIdentifiers.controller.disclaimerViewController) as?
+                self.disclaimerViewController = self.storyboard?.instantiateViewController(withIdentifier: StoryboardIdentifiers.controller.disclaimerViewController) as?
                     DisclaimerViewController
             }
             return self.disclaimerViewController
         }
 	}
 	
-	func displayViewControllerForSegmentIndex(index: Int) {
+	func displayViewControllerForSegmentIndex(_ index: Int) {
 		if let viewController = self.viewControllerForSelectedSegmentIndex(index) {
 			self.addChildViewController(viewController)
-			viewController.didMoveToParentViewController(self)
+			viewController.didMove(toParentViewController: self)
 			
 			viewController.view.frame = self.contentView.bounds
 			self.contentView.addSubview(viewController.view)
@@ -55,7 +55,7 @@ class AcknowledgementsViewController : UIViewController {
 		}
 	}
 	
-	@IBAction func acknowledgementTypeChanged(sender: UISegmentedControl) {
+	@IBAction func acknowledgementTypeChanged(_ sender: UISegmentedControl) {
 		self.currentViewController?.view.removeFromSuperview()
 		self.currentViewController?.removeFromParentViewController()
 		

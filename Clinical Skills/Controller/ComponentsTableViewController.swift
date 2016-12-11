@@ -17,7 +17,7 @@ class ComponentsTableViewController : UITableViewController {
 	
 	var system: System?
 	
-	var fetchedResultsController: NSFetchedResultsController?
+	var fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult>?
 	
 	var searchController: UISearchController!
 	var activityIndicator: UIActivityIndicatorView?
@@ -36,7 +36,7 @@ class ComponentsTableViewController : UITableViewController {
 			self.fetchedResultsController = FetchedResultsControllers.componentsFetchedResultsController(self.system!)
 			self.fetchResultsWithReload(false)
 		
-			self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), forControlEvents: .ValueChanged)
+			self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), for: .valueChanged)
 			
 			self.initializeSearchController()
 			self.initializeActivityIndicator()
@@ -45,30 +45,30 @@ class ComponentsTableViewController : UITableViewController {
 			
 			self.remoteConnectionManager?.fetchComponents(forSystem: self.system!)
 		
-			NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.backgroundManagedObjectContextDidSave(_:)), name: NSManagedObjectContextDidSaveNotification, object: nil)
+			NotificationCenter.default.addObserver(self, selector: #selector(self.backgroundManagedObjectContextDidSave(_:)), name: NSNotification.Name.NSManagedObjectContextDidSave, object: nil)
 		}
 	}
 	
 	// MARK: - Table View Controller Methods
 	
-	override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+	override func numberOfSections(in tableView: UITableView) -> Int {
 		return 1
 	}
 	
-	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		if let count = self.fetchedResultsController?.fetchedObjects?.count {
 			return count
 		}
 		return 0
 	}
 	
-	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = UITableViewCell()
-		cell.accessoryType = .DisclosureIndicator
+		cell.accessoryType = .disclosureIndicator
 		cell.textLabel?.numberOfLines = 0
-		cell.textLabel?.lineBreakMode = .ByWordWrapping
-		cell.textLabel?.font = UIFont.systemFontOfSize(18, weight: UIFontWeightSemibold)
-		if let managedComponent = self.fetchedResultsController?.objectAtIndexPath(indexPath) as? ComponentManagedObject {
+		cell.textLabel?.lineBreakMode = .byWordWrapping
+		cell.textLabel?.font = UIFont.systemFont(ofSize: 18, weight: UIFontWeightSemibold)
+		if let managedComponent = self.fetchedResultsController?.object(at: indexPath) as? ComponentManagedObject {
 			cell.textLabel?.text = managedComponent.name
 		} else {
 			cell.textLabel?.text = "Error Fetching Component Name"
@@ -76,13 +76,13 @@ class ComponentsTableViewController : UITableViewController {
 		return cell
 	}
 	
-	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		if self.fetchedResultsController != nil {
-			if let managedComponent = self.fetchedResultsController!.objectAtIndexPath(indexPath) as? ComponentManagedObject {
+			if let managedComponent = self.fetchedResultsController!.object(at: indexPath) as? ComponentManagedObject {
 				if self.tabBarController?.selectedIndex == StoryboardIdentifiers.tab.clinicalSkills {
-					self.performSegueWithIdentifier(StoryboardIdentifiers.segue.toComponentDetailsView, sender: managedComponent)
+					self.performSegue(withIdentifier: StoryboardIdentifiers.segue.toComponentDetailsView, sender: managedComponent)
 				} else {
-					self.performSegueWithIdentifier(StoryboardIdentifiers.segue.toSpecialTestsView, sender: managedComponent)
+					self.performSegue(withIdentifier: StoryboardIdentifiers.segue.toSpecialTestsView, sender: managedComponent)
 				}
 			}
 		}
@@ -90,7 +90,7 @@ class ComponentsTableViewController : UITableViewController {
 	
 	// MARK: - Fetch Methods
 	
-	func fetchResultsWithReload(shouldReload: Bool) {
+	func fetchResultsWithReload(_ shouldReload: Bool) {
 		do {
 			try self.fetchedResultsController!.performFetch()
 			if shouldReload {
@@ -100,39 +100,39 @@ class ComponentsTableViewController : UITableViewController {
 			print("Error Fetching Components")
 			print("\(error)\n")
 			if !self.presentingAlert && self.presentedViewController == nil {
-				let alertController = UIAlertController(title: "Error Storing Data", message: "An error occurred while storing data. Please try agian.", preferredStyle: .Alert)
-				alertController.addAction(UIAlertAction(title: "Dismiss", style: .Default, handler: nil))
+				let alertController = UIAlertController(title: "Error Storing Data", message: "An error occurred while storing data. Please try agian.", preferredStyle: .alert)
+				alertController.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
 				self.presentingAlert = true
-				self.presentViewController(alertController, animated: true, completion: { self.presentingAlert = false })
+				self.present(alertController, animated: true, completion: { self.presentingAlert = false })
 			}
 		}
 	}
 	
 	// MARK: - Core Data Notification Methods
 	
-	func backgroundManagedObjectContextDidSave(saveNotification: NSNotification) {
+	func backgroundManagedObjectContextDidSave(_ saveNotification: Notification) {
 		Async.main {
 			if let workingContext = self.fetchedResultsController?.managedObjectContext {
-				workingContext.mergeChangesFromContextDidSaveNotification(saveNotification)
+				workingContext.mergeChanges(fromContextDidSave: saveNotification)
 			}
 		}
 	}
 	
 	// MARK: - Refresh Methods
 	
-	func handleRefresh(refreshControl: UIRefreshControl) {
+	func handleRefresh(_ refreshControl: UIRefreshControl) {
 		self.remoteConnectionManager!.fetchComponents(forSystem: self.system!)
 	}
 	
 	// MARK: - Activity Indicator Methods
 	
 	func initializeActivityIndicator() {
-		self.activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+		self.activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
 		self.activityIndicator!.frame = CGRect(x: 0, y: 0, width: 10, height: 10)
 		self.activityIndicator!.center = self.tableView.center
 		self.activityIndicator!.hidesWhenStopped = true
 		self.view.addSubview(self.activityIndicator!)
-		self.activityIndicator!.bringSubviewToFront(self.view)
+		self.activityIndicator!.bringSubview(toFront: self.view)
 	}
 	
 	func showActivityIndicator() {
@@ -143,15 +143,15 @@ class ComponentsTableViewController : UITableViewController {
 		self.activityIndicator!.stopAnimating()
 	}
 	
-	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if segue.identifier == StoryboardIdentifiers.segue.toComponentDetailsView {
-			if let destination = segue.destinationViewController as? ComponentDetailsTableViewController {
+			if let destination = segue.destination as? ComponentDetailsTableViewController {
 				if let managedComponent = sender as? ComponentManagedObject {
 					destination.component = Component(managedObject: managedComponent)
 				}
 			}
 		} else if segue.identifier == StoryboardIdentifiers.segue.toSpecialTestsView {
-			if let destination = segue.destinationViewController as? SpecialTestsTableViewController {
+			if let destination = segue.destination as? SpecialTestsTableViewController {
 				if let managedComponent = sender as? ComponentManagedObject {
 					destination.component = Component(managedObject: managedComponent)
 				}
@@ -167,7 +167,7 @@ extension ComponentsTableViewController : RemoteConnectionManagerDelegate {
 	
 	func didBeginDataRequest() {
 		if self.refreshControl != nil {
-			if !self.refreshControl!.refreshing {
+			if !self.refreshControl!.isRefreshing {
 				Async.main {
 					self.showActivityIndicator()
 				}
@@ -175,7 +175,7 @@ extension ComponentsTableViewController : RemoteConnectionManagerDelegate {
 		}
 	}
 	
-	func didFinishDataRequestWithData(receivedData: NSData) {
+	func didFinishDataRequestWithData(_ receivedData: Data) {
 		let datastoreManager = DatastoreManager(delegate: self)
 		let parser = JSONParser(rawData: receivedData)
 		if parser.dataType == JSONParser.dataTypes.component {
@@ -192,7 +192,7 @@ extension ComponentsTableViewController : RemoteConnectionManagerDelegate {
 	
 	func didFinishDataRequest() {
 		if self.refreshControl != nil {
-			if self.refreshControl!.refreshing {
+			if self.refreshControl!.isRefreshing {
 				self.refreshControl!.endRefreshing()
 			}
 		}
@@ -202,15 +202,15 @@ extension ComponentsTableViewController : RemoteConnectionManagerDelegate {
 		}
 	}
 	
-	func didFinishDataRequestWithError(error: NSError) {
+	func didFinishDataRequestWithError(_ error: NSError) {
 		Async.main {
 			print(self.remoteConnectionManager!.messageForError(error))
 			print("\(error)\n")
 			if !self.presentingAlert && self.presentedViewController == nil {
-				let alertController = UIAlertController(title: "Error Fetching Remote Data", message: "An error occured while fetching data from the server. Please try agian.", preferredStyle: .Alert)
-				alertController.addAction(UIAlertAction(title: "Dismiss", style: .Default, handler: nil))
+				let alertController = UIAlertController(title: "Error Fetching Remote Data", message: "An error occured while fetching data from the server. Please try agian.", preferredStyle: .alert)
+				alertController.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
 				self.presentingAlert = true
-				self.presentViewController(alertController, animated: true, completion: { self.presentingAlert = false })
+				self.present(alertController, animated: true, completion: { self.presentingAlert = false })
 			}
 		}
 	}
@@ -225,15 +225,15 @@ extension ComponentsTableViewController : DatastoreManagerDelegate {
 		}
 	}
 	
-	func didFinishStoringWithError(error: NSError) {
+	func didFinishStoringWithError(_ error: NSError) {
 		Async.main {
 			print("Error Storing Components")
 			print("\(error)\n")
 			if !self.presentingAlert && self.presentedViewController == nil {
-				let alertController = UIAlertController(title: "Error Storing Data", message: "An error occurred while storing data. Please try agian.", preferredStyle: .Alert)
-				alertController.addAction(UIAlertAction(title: "Dismiss", style: .Default, handler: nil))
+				let alertController = UIAlertController(title: "Error Storing Data", message: "An error occurred while storing data. Please try agian.", preferredStyle: .alert)
+				alertController.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
 				self.presentingAlert = true
-				self.presentViewController(alertController, animated: true, completion: { self.presentingAlert = false })
+				self.present(alertController, animated: true, completion: { self.presentingAlert = false })
 			}
 		}
 	}
@@ -250,7 +250,7 @@ extension ComponentsTableViewController : UISearchBarDelegate {
 		self.searchController.definesPresentationContext = true
 		self.searchController.searchBar.delegate = self
 		self.tableView.tableHeaderView = self.searchController.searchBar
-		self.tableView.contentOffset = CGPointMake(0, self.searchController.searchBar.frame.size.height)
+		self.tableView.contentOffset = CGPoint(x: 0, y: self.searchController.searchBar.frame.size.height)
 	}
 	
 	func clearSearch() {
@@ -259,7 +259,7 @@ extension ComponentsTableViewController : UISearchBarDelegate {
 		self.fetchResultsWithReload(true)
 	}
 	
-	func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
 		if searchText != "" {
 			var predicates = [NSPredicate]()
 			self.searchPhrase = searchText
@@ -276,11 +276,11 @@ extension ComponentsTableViewController : UISearchBarDelegate {
 		}
 	}
 	
-	func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+	func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
 		self.clearSearch()
 	}
 	
-	func searchBarTextDidEndEditing(searchBar: UISearchBar) {
+	func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
 		searchBar.text = self.searchPhrase
 	}
 }

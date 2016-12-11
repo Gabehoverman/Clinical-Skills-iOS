@@ -21,8 +21,8 @@ class VideoViewController : UIViewController {
 	
 	override func viewDidLoad() {
 		if self.videoLink != nil {
-			if let url = NSURL(string: self.videoLink!.link) {
-				let request = NSURLRequest(URL: url)
+			if let url = URL(string: self.videoLink!.link) {
+				let request = URLRequest(url: url)
 				self.webView.loadRequest(request)
 			}
 		}

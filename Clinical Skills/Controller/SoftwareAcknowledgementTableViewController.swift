@@ -13,7 +13,7 @@ import Async
 
 class SoftwareAcknowledgementTableViewController : UITableViewController {
 	
-	var fetchedResultsController: NSFetchedResultsController?
+	var fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult>?
 	
 	var searchController: UISearchController!
 	var activityIndicator: UIActivityIndicatorView?
@@ -28,7 +28,7 @@ class SoftwareAcknowledgementTableViewController : UITableViewController {
 		self.fetchedResultsController = FetchedResultsControllers.allSoftwareAcknowledgementsFetchedResultController()
 		self.fetchResultsWithReload(false)
 		
-		self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), forControlEvents: .ValueChanged)
+		self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), for: .valueChanged)
 		
 		self.initializeSearchController()
 		self.initializeActivityIndicator()
@@ -37,31 +37,31 @@ class SoftwareAcknowledgementTableViewController : UITableViewController {
 		
 		self.remoteConnectionManager!.fetchSoftwareAcknowledgements()
 		
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.backgroundManagedObjectContextDidSave(_:)), name: NSManagedObjectContextDidSaveNotification, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.backgroundManagedObjectContextDidSave(_:)), name: NSNotification.Name.NSManagedObjectContextDidSave, object: nil)
 	}
 	
-	override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+	override func numberOfSections(in tableView: UITableView) -> Int {
 		return 1
 	}
 	
-	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		if let count = self.fetchedResultsController?.fetchedObjects?.count where count != 0 {
+	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		if let count = self.fetchedResultsController?.fetchedObjects?.count, count != 0 {
 			return count
 		}
 		return 0
 	}
 	
-	override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+	override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
 		return UITableViewAutomaticDimension
 	}
 	
-	override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		return UITableViewAutomaticDimension
 	}
 	
-	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		if let managedSoftwareAcknowledgement = self.fetchedResultsController?.objectAtIndexPath(indexPath) as? SoftwareAcknowledgementManagedObject {
-			if let cell = self.tableView.dequeueReusableCellWithIdentifier(StoryboardIdentifiers.cell.softwareAcknowledgementCell) as? SoftwareAcknowledgementTableViewCell {
+	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		if let managedSoftwareAcknowledgement = self.fetchedResultsController?.object(at: indexPath) as? SoftwareAcknowledgementManagedObject {
+			if let cell = self.tableView.dequeueReusableCell(withIdentifier: StoryboardIdentifiers.cell.softwareAcknowledgementCell) as? SoftwareAcknowledgementTableViewCell {
 				cell.nameLabel.numberOfLines = 1
 				cell.nameLabel.adjustsFontSizeToFitWidth = true
 				cell.nameLabel.text = managedSoftwareAcknowledgement.name
@@ -74,7 +74,7 @@ class SoftwareAcknowledgementTableViewController : UITableViewController {
 		return UITableViewCell()
 	}
 	
-	func fetchResultsWithReload(shouldReload: Bool) {
+	func fetchResultsWithReload(_ shouldReload: Bool) {
 		do {
 			try self.fetchedResultsController!.performFetch()
 			if shouldReload {
@@ -84,33 +84,33 @@ class SoftwareAcknowledgementTableViewController : UITableViewController {
 			print("Error Fetching Software Acknowledgements")
 			print("\(error)\n")
 			if !self.presentingAlert && self.presentedViewController == nil {
-				let alertController = UIAlertController(title: "Error Storing Data", message: "An error occurred while storing data. Please try agian.", preferredStyle: .Alert)
-				alertController.addAction(UIAlertAction(title: "Dismiss", style: .Default, handler: nil))
+				let alertController = UIAlertController(title: "Error Storing Data", message: "An error occurred while storing data. Please try agian.", preferredStyle: .alert)
+				alertController.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
 				self.presentingAlert = true
-				self.presentViewController(alertController, animated: true, completion: { self.presentingAlert = false })
+				self.present(alertController, animated: true, completion: { self.presentingAlert = false })
 			}
 		}
 	}
 	
-	func backgroundManagedObjectContextDidSave(saveNotification: NSNotification) {
+	func backgroundManagedObjectContextDidSave(_ saveNotification: Notification) {
 		Async.main {
 			if let workingContext = self.fetchedResultsController?.managedObjectContext {
-				workingContext.mergeChangesFromContextDidSaveNotification(saveNotification)
+				workingContext.mergeChanges(fromContextDidSave: saveNotification)
 			}
 		}
 	}
 	
-	func handleRefresh(refreshControl: UIRefreshControl) {
+	func handleRefresh(_ refreshControl: UIRefreshControl) {
 		self.remoteConnectionManager?.fetchSoftwareAcknowledgements()
 	}
 	
 	func initializeActivityIndicator() {
-		self.activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+		self.activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
 		self.activityIndicator!.frame = CGRect(x: 0, y: 0, width: 10, height: 10)
 		self.activityIndicator!.center = self.tableView.center
 		self.activityIndicator!.hidesWhenStopped = true
 		self.view.addSubview(self.activityIndicator!)
-		self.activityIndicator!.bringSubviewToFront(self.view)
+		self.activityIndicator!.bringSubview(toFront: self.view)
 	}
 	
 	func showActivityIndicator() {
@@ -127,7 +127,7 @@ extension SoftwareAcknowledgementTableViewController : RemoteConnectionManagerDe
 	
 	func didBeginDataRequest() {
 		if self.refreshControl != nil {
-			if !self.refreshControl!.refreshing {
+			if !self.refreshControl!.isRefreshing {
 				Async.main {
 					self.showActivityIndicator()
 				}
@@ -135,7 +135,7 @@ extension SoftwareAcknowledgementTableViewController : RemoteConnectionManagerDe
 		}
 	}
 	
-	func didFinishDataRequestWithData(receivedData: NSData) {
+	func didFinishDataRequestWithData(_ receivedData: Data) {
 		let datastoreManager = DatastoreManager(delegate: self)
 		let parser = JSONParser(rawData: receivedData)
 		if parser.dataType == JSONParser.dataTypes.software_acknowledgement {
@@ -146,7 +146,7 @@ extension SoftwareAcknowledgementTableViewController : RemoteConnectionManagerDe
 	
 	func didFinishDataRequest() {
 		if self.refreshControl != nil {
-			if self.refreshControl!.refreshing {
+			if self.refreshControl!.isRefreshing {
 				self.refreshControl!.endRefreshing()
 			}
 		}
@@ -156,15 +156,15 @@ extension SoftwareAcknowledgementTableViewController : RemoteConnectionManagerDe
 		}
 	}
 	
-	func didFinishDataRequestWithError(error: NSError) {
+	func didFinishDataRequestWithError(_ error: NSError) {
 		Async.main {
 			print(self.remoteConnectionManager!.messageForError(error))
 			print("\(error)\n")
 			if !self.presentingAlert && self.presentedViewController == nil {
-				let alertController = UIAlertController(title: "Error Fetching Remote Data", message: "An error occured while fetching data from the server. Please try agian.", preferredStyle: .Alert)
-				alertController.addAction(UIAlertAction(title: "Dismiss", style: .Default, handler: nil))
+				let alertController = UIAlertController(title: "Error Fetching Remote Data", message: "An error occured while fetching data from the server. Please try agian.", preferredStyle: .alert)
+				alertController.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
 				self.presentingAlert = true
-				self.presentViewController(alertController, animated: true, completion: { self.presentingAlert = false })
+				self.present(alertController, animated: true, completion: { self.presentingAlert = false })
 			}
 		}
 	}
@@ -179,15 +179,15 @@ extension SoftwareAcknowledgementTableViewController : DatastoreManagerDelegate 
 		}
 	}
 	
-	func didFinishStoringWithError(error: NSError) {
+	func didFinishStoringWithError(_ error: NSError) {
 		Async.main {
 			print("Error Storing Software Acknowledgements")
 			print("\(error)\n")
 			if !self.presentingAlert && self.presentedViewController == nil {
-				let alertController = UIAlertController(title: "Error Storing Data", message: "An error occurred while storing data. Please try agian.", preferredStyle: .Alert)
-				alertController.addAction(UIAlertAction(title: "Dismiss", style: .Default, handler: nil))
+				let alertController = UIAlertController(title: "Error Storing Data", message: "An error occurred while storing data. Please try agian.", preferredStyle: .alert)
+				alertController.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
 				self.presentingAlert = true
-				self.presentViewController(alertController, animated: true, completion: { self.presentingAlert = false })
+				self.present(alertController, animated: true, completion: { self.presentingAlert = false })
 			}
 		}
 	}
@@ -203,7 +203,7 @@ extension SoftwareAcknowledgementTableViewController : UISearchBarDelegate {
 		self.searchController.definesPresentationContext = true
 		self.searchController.searchBar.delegate = self
 		self.tableView.tableHeaderView = self.searchController.searchBar
-		self.tableView.contentOffset = CGPointMake(0, self.searchController.searchBar.frame.size.height)
+		self.tableView.contentOffset = CGPoint(x: 0, y: self.searchController.searchBar.frame.size.height)
 	}
 	
 	func clearSearch() {
@@ -212,7 +212,7 @@ extension SoftwareAcknowledgementTableViewController : UISearchBarDelegate {
 		self.fetchResultsWithReload(true)
 	}
 	
-	func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
 		if searchText != "" {
 			var predicates = [NSPredicate]()
 			self.searchPhrase = searchText
@@ -229,11 +229,11 @@ extension SoftwareAcknowledgementTableViewController : UISearchBarDelegate {
 		}
 	}
 	
-	func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+	func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
 		self.clearSearch()
 	}
 	
-	func searchBarTextDidEndEditing(searchBar: UISearchBar) {
+	func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
 		searchBar.text = self.searchPhrase
 	}
 	

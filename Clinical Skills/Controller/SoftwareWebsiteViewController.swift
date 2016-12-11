@@ -17,8 +17,8 @@ class SoftwareWebsiteViewController : UIViewController {
 	
 	override func viewDidLoad() {
 		if self.link != nil {
-			if let url = NSURL(string: self.link!) {
-				let request = NSURLRequest(URL: url)
+			if let url = URL(string: self.link!) {
+				let request = URLRequest(url: url)
 				self.webView.loadRequest(request)
 			}
 		}

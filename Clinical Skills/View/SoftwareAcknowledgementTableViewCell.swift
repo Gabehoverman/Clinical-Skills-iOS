@@ -14,7 +14,7 @@ class SoftwareAcknowledgementTableViewCell: UITableViewCell {
 	@IBOutlet weak var nameLabel: UILabel!
 	@IBOutlet weak var linkLabel: UILabel!
 	
-	@IBAction func licenseButtonPressed(sender: UIButton) {
+	@IBAction func licenseButtonPressed(_ sender: UIButton) {
 		
 	}
 	

@@ -21,8 +21,8 @@ class SpecialTestDetailTableViewController : UITableViewController {
 	
 	weak var imagesCollectionView: UICollectionView?
 	
-	var imageLinksFetchedResultsController: NSFetchedResultsController?
-	var videoLinksFetchedResultsController: NSFetchedResultsController?
+	var imageLinksFetchedResultsController: NSFetchedResultsController<NSFetchRequestResult>?
+	var videoLinksFetchedResultsController: NSFetchedResultsController<NSFetchRequestResult>?
 	
 	var remoteConnectionManager: RemoteConnectionManager?
 	
@@ -40,24 +40,24 @@ class SpecialTestDetailTableViewController : UITableViewController {
 			self.videoLinksFetchedResultsController = FetchedResultsControllers.videoLinksFetchedResultsController(self.parentSpecialTest!)
 			self.fetchResultsWithReload(false)
 			
-			self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), forControlEvents: .ValueChanged)
+			self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), for: .valueChanged)
 			self.initializeActivityIndicator()
 			
 			self.remoteConnectionManager = RemoteConnectionManager(delegate: self)
 			self.remoteConnectionManager?.fetchVideoLinks(forSpecialTest: self.parentSpecialTest!)
 			self.remoteConnectionManager?.fetchImageLinks(forSpecialTest: self.parentSpecialTest!)
 			
-			NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.backgroundManagedObjectContextDidSave(_:)), name: NSManagedObjectContextDidSaveNotification, object: nil)
+			NotificationCenter.default.addObserver(self, selector: #selector(self.backgroundManagedObjectContextDidSave(_:)), name: NSNotification.Name.NSManagedObjectContextDidSave, object: nil)
 		}
 	}
 	
 	// MARK: - Table View Controller Methods
 	
-	override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+	override func numberOfSections(in tableView: UITableView) -> Int {
 		return 6
 	}
 	
-	override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 		switch (section) {
 			case 0: return "Name"
 			case 1: return "Positive Sign"
@@ -69,7 +69,7 @@ class SpecialTestDetailTableViewController : UITableViewController {
 		}
 	}
 	
-	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		if self.parentSpecialTest != nil {
 			if section == 0 && self.parentSpecialTest!.name != "" {
 				return 1
@@ -80,7 +80,7 @@ class SpecialTestDetailTableViewController : UITableViewController {
 			} else if section == 3 && self.parentSpecialTest!.notes != "" {
 				return 1
 			} else if section == 4 {
-				if let count = self.imageLinksFetchedResultsController?.fetchedObjects?.count where count != 0 {
+				if let count = self.imageLinksFetchedResultsController?.fetchedObjects?.count, count != 0 {
 					return 1
 				}
 			} else if section == 5 {
@@ -92,7 +92,7 @@ class SpecialTestDetailTableViewController : UITableViewController {
 		return 0
 	}
 	
-	override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		if indexPath.section == 4 {
 			return 132
 		} else {
@@ -100,28 +100,28 @@ class SpecialTestDetailTableViewController : UITableViewController {
 		}
 	}
 	
-	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		let fixedSectionIndexPath = NSIndexPath(forRow: indexPath.row, inSection: 0) // NSIndexPath referencing section 0 to avoid "no section at index 3" error
+	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		let fixedSectionIndexPath = IndexPath(row: indexPath.row, section: 0) // NSIndexPath referencing section 0 to avoid "no section at index 3" error
 		let cell = UITableViewCell()
 		cell.textLabel?.numberOfLines = 0
-		cell.textLabel?.lineBreakMode = .ByWordWrapping
-		cell.textLabel?.font = UIFont.systemFontOfSize(15)
+		cell.textLabel?.lineBreakMode = .byWordWrapping
+		cell.textLabel?.font = UIFont.systemFont(ofSize: 15)
 		switch (indexPath.section) {
 			case 0: cell.textLabel?.text = self.parentSpecialTest?.name
 			case 1: cell.textLabel?.text = self.parentSpecialTest?.positiveSign
 			case 2: cell.textLabel?.text = self.parentSpecialTest?.indication
 			case 3: cell.textLabel?.text = self.parentSpecialTest?.notes
 			case 4:
-                if let imagesCell = tableView.dequeueReusableCellWithIdentifier(StoryboardIdentifiers.cell.specialTestImagesCell) as? ImagesTableViewCell {
-                    imagesCell.imagesCollectionView.backgroundColor = UIColor.clearColor()
+                if let imagesCell = tableView.dequeueReusableCell(withIdentifier: StoryboardIdentifiers.cell.specialTestImagesCell) as? ImagesTableViewCell {
+                    imagesCell.imagesCollectionView.backgroundColor = UIColor.clear
                     imagesCell.imagesCollectionView.dataSource = self
                     imagesCell.imagesCollectionView.delegate = self
                     self.imagesCollectionView = imagesCell.imagesCollectionView
                     return imagesCell
                 }
 			case 5:
-				if let managedVideoLink = self.videoLinksFetchedResultsController?.objectAtIndexPath(fixedSectionIndexPath) as? VideoLinkManagedObject {
-					cell.accessoryType = .DisclosureIndicator
+				if let managedVideoLink = self.videoLinksFetchedResultsController?.object(at: fixedSectionIndexPath) as? VideoLinkManagedObject {
+					cell.accessoryType = .disclosureIndicator
 					cell.textLabel?.text = managedVideoLink.title
 				}
 			default: cell.textLabel?.text = ""
@@ -129,18 +129,18 @@ class SpecialTestDetailTableViewController : UITableViewController {
 		return cell
 	}
 	
-	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		if indexPath.section == 5 {
-			let fixedSectionIndexPath = NSIndexPath(forRow: indexPath.row, inSection: 2) // NSIndexPath referencing section 0 to avoid "no section at index 3" error
-			if let managedVideoLink = self.videoLinksFetchedResultsController?.objectAtIndexPath(fixedSectionIndexPath) as? VideoLinkManagedObject {
-				self.performSegueWithIdentifier(StoryboardIdentifiers.segue.toVideoView, sender: managedVideoLink)
+			let fixedSectionIndexPath = IndexPath(row: indexPath.row, section: 2) // NSIndexPath referencing section 0 to avoid "no section at index 3" error
+			if let managedVideoLink = self.videoLinksFetchedResultsController?.object(at: fixedSectionIndexPath) as? VideoLinkManagedObject {
+				self.performSegue(withIdentifier: StoryboardIdentifiers.segue.toVideoView, sender: managedVideoLink)
 			}
 		}
 	}
 	
 	// MARK: - Fetch Methods
 	
-	func fetchResultsWithReload(shouldReload: Bool) {
+	func fetchResultsWithReload(_ shouldReload: Bool) {
 		do {
 			try self.imageLinksFetchedResultsController?.performFetch()
 			try self.videoLinksFetchedResultsController?.performFetch()
@@ -152,43 +152,43 @@ class SpecialTestDetailTableViewController : UITableViewController {
 			print("Error Fetching Special Test Details")
 			print("\(error)\n")
 			if !self.presentingAlert && self.presentedViewController == nil {
-				let alertController = UIAlertController(title: "Error Storing Data", message: "An error occurred while storing data. Please try agian.", preferredStyle: .Alert)
-				alertController.addAction(UIAlertAction(title: "Dismiss", style: .Default, handler: nil))
+				let alertController = UIAlertController(title: "Error Storing Data", message: "An error occurred while storing data. Please try agian.", preferredStyle: .alert)
+				alertController.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
 				self.presentingAlert = true
-				self.presentViewController(alertController, animated: true, completion: { self.presentingAlert = false })
+				self.present(alertController, animated: true, completion: { self.presentingAlert = false })
 			}
 		}
 	}
 	
 	// MARK: - Core Data Notification Methods
 	
-	func backgroundManagedObjectContextDidSave(saveNotification: NSNotification) {
+	func backgroundManagedObjectContextDidSave(_ saveNotification: Notification) {
 		Async.main {
 			if let workingContext = self.videoLinksFetchedResultsController?.managedObjectContext {
-				workingContext.mergeChangesFromContextDidSaveNotification(saveNotification)
+				workingContext.mergeChanges(fromContextDidSave: saveNotification)
 			}
 			
 			if let workingContext = self.imageLinksFetchedResultsController?.managedObjectContext {
-				workingContext.mergeChangesFromContextDidSaveNotification(saveNotification)
+				workingContext.mergeChanges(fromContextDidSave: saveNotification)
 			}
 		}
 	}
 	
 	// MARK: - Refresh Methods
 	
-	func handleRefresh(refreshControl: UIRefreshControl) {
+	func handleRefresh(_ refreshControl: UIRefreshControl) {
 		self.remoteConnectionManager!.fetchVideoLinks(forSpecialTest: self.parentSpecialTest!)
 	}
 	
 	// MARK: - Activity Indicator Methods
 	
 	func initializeActivityIndicator() {
-		self.activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+		self.activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
 		self.activityIndicator!.frame = CGRect(x: 0, y: 0, width: 10, height: 10)
 		self.activityIndicator!.center = CGPoint(x: self.tableView.center.x, y: self.tableView.center.y * 1.5)
 		self.activityIndicator!.hidesWhenStopped = true
 		self.view.addSubview(self.activityIndicator!)
-		self.activityIndicator!.bringSubviewToFront(self.view)
+		self.activityIndicator!.bringSubview(toFront: self.view)
 	}
 	
 	func showActivityIndicator() {
@@ -201,9 +201,9 @@ class SpecialTestDetailTableViewController : UITableViewController {
 	
 	// MARK: - Navigation Methods
 	
-	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if segue.identifier == StoryboardIdentifiers.segue.toVideoView {
-			if let destination = segue.destinationViewController as? VideoViewController {
+			if let destination = segue.destination as? VideoViewController {
 				if let managedVideoLink = sender as? VideoLinkManagedObject {
 					destination.videoLink = VideoLink(managedObject: managedVideoLink)
 				}
@@ -214,7 +214,7 @@ class SpecialTestDetailTableViewController : UITableViewController {
 }
 
 extension SpecialTestDetailTableViewController : UICollectionViewDelegateFlowLayout {
-	func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 		let squareSize = 100
 		return CGSize(width: squareSize, height: squareSize)
 	}
@@ -224,11 +224,11 @@ extension SpecialTestDetailTableViewController : UICollectionViewDelegateFlowLay
 
 extension SpecialTestDetailTableViewController : UICollectionViewDataSource {
 	
-	func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+	func numberOfSections(in collectionView: UICollectionView) -> Int {
 		return 1
 	}
 	
-	func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		if let count = self.images?.count {
 			return count
 		} else {
@@ -236,16 +236,16 @@ extension SpecialTestDetailTableViewController : UICollectionViewDataSource {
 		}
 	}
 	
-	func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+	private func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		if let initialImage = self.images?[indexPath.row] {
 			let photosViewController = NYTPhotosViewController(photos: self.images, initialPhoto: initialImage)
-			self.presentViewController(photosViewController, animated: true, completion: nil)
+			self.present(photosViewController, animated: true, completion: nil)
 		}
 	}
 	
 	
-	func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-		if let cell = collectionView.dequeueReusableCellWithReuseIdentifier(StoryboardIdentifiers.cell.collectionImageCell, forIndexPath: indexPath) as? ImageCollectionViewCell {
+	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+		if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: StoryboardIdentifiers.cell.collectionImageCell, for: indexPath) as? ImageCollectionViewCell {
 			if let photo = self.images?[indexPath.row] {
 				cell.imageView.image = photo.image
 			}
@@ -266,7 +266,7 @@ extension SpecialTestDetailTableViewController : UICollectionViewDelegate {
 extension SpecialTestDetailTableViewController : RemoteConnectionManagerDelegate {
 	func didBeginDataRequest() {
 		if self.refreshControl != nil {
-			if !self.refreshControl!.refreshing {
+			if !self.refreshControl!.isRefreshing {
 				Async.main {
 					self.showActivityIndicator()
 				}
@@ -274,7 +274,7 @@ extension SpecialTestDetailTableViewController : RemoteConnectionManagerDelegate
 		}
 	}
 	
-	func didFinishDataRequestWithData(receivedData: NSData) {
+	func didFinishDataRequestWithData(_ receivedData: Data) {
 		let datastoreManager = DatastoreManager(delegate: self)
 		let parser = JSONParser(rawData: receivedData)
 		if parser.dataType == JSONParser.dataTypes.imageLink {
@@ -289,14 +289,14 @@ extension SpecialTestDetailTableViewController : RemoteConnectionManagerDelegate
 			if self.parentSpecialTest != nil {
 				let videoLinks = parser.parseVideoLinks(self.parentSpecialTest!)
 				datastoreManager.store(videoLinks)
-				if let count = self.imageLinksFetchedResultsController?.fetchedObjects?.count where count == 0 {
+				if let count = self.imageLinksFetchedResultsController?.fetchedObjects?.count, count == 0 {
 					self.remoteConnectionManager?.fetchImageLinks(forSpecialTest: self.parentSpecialTest!)
 				}
 			}
 		}
 	}
 	
-	func didFinishCloudinaryImageRequestWithData(receivedData: NSData) {
+	func didFinishCloudinaryImageRequestWithData(_ receivedData: Data) {
 		if let image = UIImage(data: receivedData) {
 			let photo = BasicPhoto(image: image, imageData: receivedData, captionTitle: NSAttributedString(string: ""))
 			self.images!.append(photo)
@@ -308,7 +308,7 @@ extension SpecialTestDetailTableViewController : RemoteConnectionManagerDelegate
 	
 	func didFinishDataRequest() {
 		if self.refreshControl != nil {
-			if self.refreshControl!.refreshing {
+			if self.refreshControl!.isRefreshing {
 				self.refreshControl!.endRefreshing()
 			}
 		}
@@ -318,15 +318,15 @@ extension SpecialTestDetailTableViewController : RemoteConnectionManagerDelegate
 		}
 	}
 	
-	func didFinishDataRequestWithError(error: NSError) {
+	func didFinishDataRequestWithError(_ error: NSError) {
 		Async.main {
 			print(self.remoteConnectionManager!.messageForError(error))
 			print("\(error)\n")
 			if !self.presentingAlert && self.presentedViewController == nil {
-				let alertController = UIAlertController(title: "Error Fetching Remote Data", message: "An error occured while fetching data from the server. Please try agian.", preferredStyle: .Alert)
-				alertController.addAction(UIAlertAction(title: "Dismiss", style: .Default, handler: nil))
+				let alertController = UIAlertController(title: "Error Fetching Remote Data", message: "An error occured while fetching data from the server. Please try agian.", preferredStyle: .alert)
+				alertController.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
 				self.presentingAlert = true
-				self.presentViewController(alertController, animated: true, completion: { self.presentingAlert = false })
+				self.present(alertController, animated: true, completion: { self.presentingAlert = false })
 			}
 		}
 	}
@@ -342,15 +342,15 @@ extension SpecialTestDetailTableViewController : DatastoreManagerDelegate {
 		}
 	}
 	
-	func didFinishStoringWithError(error: NSError) {
+	func didFinishStoringWithError(_ error: NSError) {
 		Async.main {
 			print("Error Storing Special Test Details")
 			print("\(error)\n")
 			if !self.presentingAlert && self.presentedViewController == nil {
-				let alertController = UIAlertController(title: "Error Storing Data", message: "An error occurred while storing data. Please try agian.", preferredStyle: .Alert)
-				alertController.addAction(UIAlertAction(title: "Dismiss", style: .Default, handler: nil))
+				let alertController = UIAlertController(title: "Error Storing Data", message: "An error occurred while storing data. Please try agian.", preferredStyle: .alert)
+				alertController.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
 				self.presentingAlert = true
-				self.presentViewController(alertController, animated: true, completion: { self.presentingAlert = false })
+				self.present(alertController, animated: true, completion: { self.presentingAlert = false })
 			}
 		}
 	}

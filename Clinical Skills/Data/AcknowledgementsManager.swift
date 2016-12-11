@@ -11,7 +11,7 @@ import SwiftyJSON
 
 class AcknowledgementsManager {
 	
-	let acknowledgementFileURL = NSBundle.mainBundle().URLForResource("Acknowledgements", withExtension: "json")
+	let acknowledgementFileURL = Bundle.main.url(forResource: "Acknowledgements", withExtension: "json")
 	
 	var personnel: [PersonnelAcknowledgement]
 	var software: [SoftwareAcknowledgement]
@@ -21,7 +21,7 @@ class AcknowledgementsManager {
 		self.personnel = [PersonnelAcknowledgement]()
 		self.software = [SoftwareAcknowledgement]()
 		if self.acknowledgementFileURL != nil {
-			if let acknowledgementsData = NSData(contentsOfURL: self.acknowledgementFileURL!) {
+			if let acknowledgementsData = try? Data(contentsOf: self.acknowledgementFileURL!) {
 				self.acknowledgementsJSON = JSON(data: acknowledgementsData)
 			}
 		}

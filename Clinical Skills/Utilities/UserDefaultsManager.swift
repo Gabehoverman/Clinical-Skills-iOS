@@ -10,7 +10,7 @@ import Foundation
 
 class UserDefaultsManager {
 	
-	static let userDefaults = NSUserDefaults.standardUserDefaults()
+	static let userDefaults = UserDefaults.standard
 	
 	struct userDefaultsKeys {
 		static let requestFromLocalHost = "requestFromLocalHost"
@@ -20,23 +20,23 @@ class UserDefaultsManager {
 		userDefaultsKeys.requestFromLocalHost,
 	]
 	
-	static func titleFromKey(key: String) -> String {
-		let splitRegex = try! NSRegularExpression(pattern: "([a-z])([A-Z])", options: .AllowCommentsAndWhitespace)
-		let splitString = splitRegex.stringByReplacingMatchesInString(key, options: .WithoutAnchoringBounds, range: NSRange(location: 0, length: key.characters.count), withTemplate: "$1 $2")
-		return splitString.capitalizedString
+	static func titleFromKey(_ key: String) -> String {
+		let splitRegex = try! NSRegularExpression(pattern: "([a-z])([A-Z])", options: .allowCommentsAndWhitespace)
+		let splitString = splitRegex.stringByReplacingMatches(in: key, options: .withoutAnchoringBounds, range: NSRange(location: 0, length: key.characters.count), withTemplate: "$1 $2")
+		return splitString.capitalized
 	}
 	
 	static func loadFromSettingsBundle() {
-		if let settingsBundle = NSBundle.mainBundle().pathForResource("Settings", ofType: "bundle") {
-			if let settings = NSDictionary(contentsOfFile: NSString(string: settingsBundle).stringByAppendingPathComponent("Root.plist")) {
-				if let preferences: [NSDictionary] = settings.objectForKey("PreferenceSpecifiers") as? [NSDictionary] {
+		if let settingsBundle = Bundle.main.path(forResource: "Settings", ofType: "bundle") {
+			if let settings = NSDictionary(contentsOfFile: NSString(string: settingsBundle).appendingPathComponent("Root.plist")) {
+				if let preferences: [NSDictionary] = settings.object(forKey: "PreferenceSpecifiers") as? [NSDictionary] {
 					var defaultsToRegister = [String : AnyObject]()
 					for preferenceSpecifier in preferences {
-						if let key = preferenceSpecifier.objectForKey("Key") as? String {
-							defaultsToRegister[key] = preferenceSpecifier.objectForKey("DefaultValue")!
+						if let key = preferenceSpecifier.object(forKey: "Key") as? String {
+							defaultsToRegister[key] = preferenceSpecifier.object(forKey: "DefaultValue")! as AnyObject?
 						}
 					}
-					NSUserDefaults.standardUserDefaults().registerDefaults(defaultsToRegister)
+					UserDefaults.standard.register(defaults: defaultsToRegister)
 				} else {
 					print("Error reading Preferences")
 				}
@@ -50,7 +50,7 @@ class UserDefaultsManager {
 	
 	static func printUserDefaults() {
 		for key in userDefaultsKeysList {
-			if let value = userDefaults.objectForKey(key) {
+			if let value = userDefaults.object(forKey: key) {
 				print("\(key) -> \(value)")
 			}
 		}

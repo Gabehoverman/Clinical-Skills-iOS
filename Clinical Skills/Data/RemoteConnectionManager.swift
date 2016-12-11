@@ -47,7 +47,7 @@ class RemoteConnectionManager : NSObject {
 			if self.statusCode == 0 {
 				return "No Response"
 			}
-			return "Status Code \(statusCode): \(NSHTTPURLResponse.localizedStringForStatusCode(statusCode).capitalizedString)"
+			return "Status Code \(statusCode): \(HTTPURLResponse.localizedString(forStatusCode: statusCode).capitalized)"
 		}
 	}
 	var statusSuccess: Bool {
@@ -61,17 +61,17 @@ class RemoteConnectionManager : NSObject {
 	// MARK: - Initializers
 	
 	init(delegate: RemoteConnectionManagerDelegate?) {
-		self.shouldRequestFromLocal = UserDefaultsManager.userDefaults.boolForKey(UserDefaultsManager.userDefaultsKeys.requestFromLocalHost).boolValue
+		self.shouldRequestFromLocal = UserDefaultsManager.userDefaults.bool(forKey: UserDefaultsManager.userDefaultsKeys.requestFromLocalHost)
 		self.statusCode = 0
 		self.delegate = delegate
 		super.init()
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.setShouldRequestFromLocal), name: NSUserDefaultsDidChangeNotification, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.setShouldRequestFromLocal), name: UserDefaults.didChangeNotification, object: nil)
 	}
 	
 	// MARK: - Deinitializers
 	
 	deinit {
-		NSNotificationCenter.defaultCenter().removeObserver(self)
+		NotificationCenter.default.removeObserver(self)
 	}
 	
 	// MARK: - Fetch Methods
@@ -128,7 +128,7 @@ class RemoteConnectionManager : NSObject {
 		self.fetchWithCloudinaryLink(cloudinaryLink)
 	}
 	
-	private func fetchWithQueryString(urlRoute: String, queryString: String?) {
+	fileprivate func fetchWithQueryString(_ urlRoute: String, queryString: String?) {
 		var urlString = self.baseURL + urlRoute + "?"
 		if (queryString != nil) {
 			urlString += queryString! + "&"
@@ -137,33 +137,35 @@ class RemoteConnectionManager : NSObject {
 		if (urlString.characters.last == "?" || urlString.characters.last == "&") {
 			urlString = String(urlString.characters.dropLast())
 		}
-		urlString = urlString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
-		if let url = NSURL(string: urlString) {
+		urlString = urlString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
+		if let url = URL(string: urlString) {
 			print("Fetching with URL \(url.absoluteString)")
-			let session = NSURLSession.sharedSession()
-			session.dataTaskWithURL(url, completionHandler: {
-				(receivedData: NSData?, httpResponse: NSURLResponse?, error: NSError?) -> Void in
-				self.completedDataRequestWithData(false, data: receivedData, response: httpResponse, error: error)
-			}).resume()
+			let session = URLSession.shared
+
+            session.dataTask(with: url, completionHandler: { (data, response, error) in
+                self.completedDataRequestWithData(false, data: data, response: response, error: error as NSError?)
+            }).resume()
+            
 			self.delegate?.didBeginDataRequest?()
 		}
 	}
 	
-	private func fetchWithCloudinaryLink(cloudinaryLink: String) {
-		if let url = NSURL(string: cloudinaryLink) {
+	fileprivate func fetchWithCloudinaryLink(_ cloudinaryLink: String) {
+		if let url = URL(string: cloudinaryLink) {
 			print("Fetching with URL \(url.absoluteString)")
-			let session = NSURLSession.sharedSession()
-			session.dataTaskWithURL(url, completionHandler: { (receivedData: NSData?, httpResponse: NSURLResponse?, error: NSError?) in
-				self.completedDataRequestWithData(true, data: receivedData, response: httpResponse, error: error)
-			}).resume()
+			let session = URLSession.shared
+            session.dataTask(with: url, completionHandler: { (data, response, error) in
+                self.completedDataRequestWithData(true, data: data, response: response, error: error as NSError?)
+            }).resume()
+            
 			self.delegate?.didBeginDataRequest?()
 		}
 	}
 	
 	// MARK: - Completion Methods
 	
-	private func completedDataRequestWithData(isCloudinaryFetch: Bool, data: NSData?, response: NSURLResponse?, error: NSError?) {
-		if let statusCode = (response as? NSHTTPURLResponse)?.statusCode {
+	fileprivate func completedDataRequestWithData(_ isCloudinaryFetch: Bool, data: Data?, response: URLResponse?, error: NSError?) {
+		if let statusCode = (response as? HTTPURLResponse)?.statusCode {
 			self.statusCode = statusCode
 		} else {
 			self.statusCode = 0
@@ -186,14 +188,14 @@ class RemoteConnectionManager : NSObject {
 	
 	// MARK: - Error Handling Methods
 	
-	func messageForError(error: NSError) -> String {
+	func messageForError(_ error: NSError) -> String {
 		return "Error Fetching Remote Data" + "\n" + "\(error.localizedDescription)"
 	}
 	
 	// MARK: - Notification Center Observer Methods
 	
 	func setShouldRequestFromLocal() {
-		self.shouldRequestFromLocal = UserDefaultsManager.userDefaults.boolForKey(UserDefaultsManager.userDefaultsKeys.requestFromLocalHost).boolValue
+		self.shouldRequestFromLocal = UserDefaultsManager.userDefaults.bool(forKey: UserDefaultsManager.userDefaultsKeys.requestFromLocalHost)
 	}
 	
 }
@@ -201,9 +203,9 @@ class RemoteConnectionManager : NSObject {
 // MARK: - Remote Connection Manager Protocol
 
 @objc protocol RemoteConnectionManagerDelegate {
-	optional func didBeginDataRequest()
-	optional func didFinishDataRequest()
-	optional func didFinishDataRequestWithData(receivedData: NSData)
-	optional func didFinishCloudinaryImageRequestWithData(receivedData: NSData)
-	optional func didFinishDataRequestWithError(error: NSError)
+	@objc optional func didBeginDataRequest()
+	@objc optional func didFinishDataRequest()
+	@objc optional func didFinishDataRequestWithData(_ receivedData: Data)
+	@objc optional func didFinishCloudinaryImageRequestWithData(_ receivedData: Data)
+	@objc optional func didFinishDataRequestWithError(_ error: NSError)
 }

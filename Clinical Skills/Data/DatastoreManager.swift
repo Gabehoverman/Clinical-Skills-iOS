@@ -20,15 +20,15 @@ class DatastoreManager : NSObject {
 	// MARK: - Initializers
 	
 	init(delegate: DatastoreManagerDelegate?) {
-		self.managedObjectContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
-		self.managedObjectContext.persistentStoreCoordinator = (UIApplication.sharedApplication().delegate as! AppDelegate).persistentStoreCoordinator
+		self.managedObjectContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+		self.managedObjectContext.persistentStoreCoordinator = (UIApplication.shared.delegate as! AppDelegate).persistentStoreCoordinator
 		self.delegate = delegate
 		super.init()
 	}
 	
 	// MARK: - Store Collection Methods
 	
-	func store(objects: [AnyObject]) {
+	func store(_ objects: [AnyObject]) {
 		self.delegate?.didBeginStoring?()
 		if objects is [PersonnelAcknowledgement] {
 			self.deleteObjectsForEntity(PersonnelAcknowledgementManagedObject.entityName)
@@ -91,12 +91,12 @@ class DatastoreManager : NSObject {
 	
 	// MARK: - Store Instance Methods
 	
-	private func storePersonnelAcknowledgement(personnelAcknowledgement: PersonnelAcknowledgement) {
+	fileprivate func storePersonnelAcknowledgement(_ personnelAcknowledgement: PersonnelAcknowledgement) {
 		if self.containsObjectWithID(personnelAcknowledgement.id, entityName: PersonnelAcknowledgementManagedObject.entityName, idPropertyKey: PersonnelAcknowledgementManagedObject.propertyKeys.id) {
 			self.updatePersonnelAcknowledgementWithID(personnelAcknowledgement.id, toPersonnelAcknowledgement: personnelAcknowledgement)
 		} else {
-			let entity = NSEntityDescription.entityForName(PersonnelAcknowledgementManagedObject.entityName, inManagedObjectContext: self.managedObjectContext)!
-			if let newManagedPersonnelAcknowledgement = NSManagedObject(entity: entity, insertIntoManagedObjectContext: self.managedObjectContext) as? PersonnelAcknowledgementManagedObject {
+			let entity = NSEntityDescription.entity(forEntityName: PersonnelAcknowledgementManagedObject.entityName, in: self.managedObjectContext)!
+			if let newManagedPersonnelAcknowledgement = NSManagedObject(entity: entity, insertInto: self.managedObjectContext) as? PersonnelAcknowledgementManagedObject {
 				newManagedPersonnelAcknowledgement.id = personnelAcknowledgement.id
 				newManagedPersonnelAcknowledgement.name = personnelAcknowledgement.name
 				newManagedPersonnelAcknowledgement.role = personnelAcknowledgement.role
@@ -105,12 +105,12 @@ class DatastoreManager : NSObject {
 		}
 	}
 	
-	private func storeSoftwareAcknowledgement(softwareAcknowledgement: SoftwareAcknowledgement) {
+	fileprivate func storeSoftwareAcknowledgement(_ softwareAcknowledgement: SoftwareAcknowledgement) {
 		if self.containsObjectWithID(softwareAcknowledgement.id, entityName: SoftwareAcknowledgementManagedObject.entityName, idPropertyKey: SoftwareAcknowledgementManagedObject.propertyKeys.id) {
 			self.updateSoftwareAcknowledgementWithID(softwareAcknowledgement.id, toSoftwareAcknowledgement: softwareAcknowledgement)
 		} else {
-			let entity = NSEntityDescription.entityForName(SoftwareAcknowledgementManagedObject.entityName, inManagedObjectContext: self.managedObjectContext)!
-			if let newManagedSoftwareAcknowledgement = NSManagedObject(entity: entity, insertIntoManagedObjectContext: self.managedObjectContext) as? SoftwareAcknowledgementManagedObject {
+			let entity = NSEntityDescription.entity(forEntityName: SoftwareAcknowledgementManagedObject.entityName, in: self.managedObjectContext)!
+			if let newManagedSoftwareAcknowledgement = NSManagedObject(entity: entity, insertInto: self.managedObjectContext) as? SoftwareAcknowledgementManagedObject {
 				newManagedSoftwareAcknowledgement.id = softwareAcknowledgement.id
 				newManagedSoftwareAcknowledgement.name = softwareAcknowledgement.name
 				newManagedSoftwareAcknowledgement.link = softwareAcknowledgement.link
@@ -118,12 +118,12 @@ class DatastoreManager : NSObject {
 		}
 	}
 	
-	private func storeSystem(system: System) {
+	fileprivate func storeSystem(_ system: System) {
 		if self.containsObjectWithID(system.id, entityName: SystemManagedObject.entityName, idPropertyKey: SystemManagedObject.propertyKeys.id) {
 			self.updateSystemWithID(system.id, toSystem: system)
 		} else {
-			let entity = NSEntityDescription.entityForName(SystemManagedObject.entityName, inManagedObjectContext: self.managedObjectContext)!
-			if let newManagedSystem = NSManagedObject(entity: entity, insertIntoManagedObjectContext: self.managedObjectContext) as? SystemManagedObject {
+			let entity = NSEntityDescription.entity(forEntityName: SystemManagedObject.entityName, in: self.managedObjectContext)!
+			if let newManagedSystem = NSManagedObject(entity: entity, insertInto: self.managedObjectContext) as? SystemManagedObject {
 				newManagedSystem.id = system.id
 				newManagedSystem.name = system.name
 				newManagedSystem.details = system.details
@@ -131,12 +131,12 @@ class DatastoreManager : NSObject {
 		}
 	}
 	
-	private func storeExamTechnique(examTechnique: ExamTechnique) {
+	fileprivate func storeExamTechnique(_ examTechnique: ExamTechnique) {
 		if self.containsObjectWithID(examTechnique.id, entityName: ExamTechniqueManagedObject.entityName, idPropertyKey: ExamTechniqueManagedObject.propertyKeys.id) {
 			self.updateExamTechniqueWithID(examTechnique.id, toExamTechnique: examTechnique)
 		} else {
-			let entity = NSEntityDescription.entityForName(ExamTechniqueManagedObject.entityName, inManagedObjectContext: self.managedObjectContext)!
-			if let newManagedExamTechnique = NSManagedObject(entity: entity, insertIntoManagedObjectContext: self.managedObjectContext) as? ExamTechniqueManagedObject {
+			let entity = NSEntityDescription.entity(forEntityName: ExamTechniqueManagedObject.entityName, in: self.managedObjectContext)!
+			if let newManagedExamTechnique = NSManagedObject(entity: entity, insertInto: self.managedObjectContext) as? ExamTechniqueManagedObject {
 				newManagedExamTechnique.id = examTechnique.id
 				newManagedExamTechnique.name = examTechnique.name
 				newManagedExamTechnique.details = examTechnique.details
@@ -147,12 +147,12 @@ class DatastoreManager : NSObject {
 		}
 	}
 	
-	private func storeComponent(component: Component) {
+	fileprivate func storeComponent(_ component: Component) {
 		if self.containsObjectWithID(component.id, entityName: ComponentManagedObject.entityName, idPropertyKey: ComponentManagedObject.propertyKeys.id) {
 			self.updateComponentWithID(component.id, toComponent: component)
 		} else {
-			let entity = NSEntityDescription.entityForName(ComponentManagedObject.entityName, inManagedObjectContext: self.managedObjectContext)!
-			if let newManagedComponent = NSManagedObject(entity: entity, insertIntoManagedObjectContext: self.managedObjectContext) as? ComponentManagedObject {
+			let entity = NSEntityDescription.entity(forEntityName: ComponentManagedObject.entityName, in: self.managedObjectContext)!
+			if let newManagedComponent = NSManagedObject(entity: entity, insertInto: self.managedObjectContext) as? ComponentManagedObject {
 				newManagedComponent.id = component.id
 				newManagedComponent.name = component.name
 				newManagedComponent.inspection = component.inspection
@@ -164,12 +164,12 @@ class DatastoreManager : NSObject {
 		}
 	}
 	
-	private func storePalpation(palpation: Palpation) {
+	fileprivate func storePalpation(_ palpation: Palpation) {
 		if self.containsObjectWithID(palpation.id, entityName: PalpationManagedObject.entityName, idPropertyKey: PalpationManagedObject.propertyKeys.id) {
 			self.updatePalpationWithID(palpation.id, toPalpation: palpation)
 		} else {
-			let entity = NSEntityDescription.entityForName(PalpationManagedObject.entityName, inManagedObjectContext: self.managedObjectContext)!
-			if let newManagedPalpation = NSManagedObject(entity: entity, insertIntoManagedObjectContext: self.managedObjectContext) as? PalpationManagedObject {
+			let entity = NSEntityDescription.entity(forEntityName: PalpationManagedObject.entityName, in: self.managedObjectContext)!
+			if let newManagedPalpation = NSManagedObject(entity: entity, insertInto: self.managedObjectContext) as? PalpationManagedObject {
 				newManagedPalpation.id = palpation.id
 				newManagedPalpation.structure = palpation.structure
 				newManagedPalpation.details = palpation.details
@@ -181,12 +181,12 @@ class DatastoreManager : NSObject {
 		}
 	}
 	
-	private func storeRangeOfMotion(rangeOfMotion: RangeOfMotion) {
+	fileprivate func storeRangeOfMotion(_ rangeOfMotion: RangeOfMotion) {
 		if self.containsObjectWithID(rangeOfMotion.id, entityName: RangeOfMotionManagedObject.entityName, idPropertyKey: RangeOfMotionManagedObject.propertyKeys.id) {
 			self.updateRangeOfMotionWithID(rangeOfMotion.id, toRangeOfMotion: rangeOfMotion)
 		} else {
-			let entity = NSEntityDescription.entityForName(RangeOfMotionManagedObject.entityName, inManagedObjectContext: self.managedObjectContext)!
-			if let newManagedRangeOfMotion = NSManagedObject(entity: entity, insertIntoManagedObjectContext: self.managedObjectContext) as? RangeOfMotionManagedObject {
+			let entity = NSEntityDescription.entity(forEntityName: RangeOfMotionManagedObject.entityName, in: self.managedObjectContext)!
+			if let newManagedRangeOfMotion = NSManagedObject(entity: entity, insertInto: self.managedObjectContext) as? RangeOfMotionManagedObject {
 				newManagedRangeOfMotion.id = rangeOfMotion.id
 				newManagedRangeOfMotion.motion = rangeOfMotion.motion
 				newManagedRangeOfMotion.degrees = rangeOfMotion.degrees
@@ -198,12 +198,12 @@ class DatastoreManager : NSObject {
 		}
 	}
 	
-	private func storeMuscle(muscle: Muscle) {
+	fileprivate func storeMuscle(_ muscle: Muscle) {
 		if self.containsObjectWithID(muscle.id, entityName: MuscleManagedObject.entityName, idPropertyKey: MuscleManagedObject.propertyKeys.id) {
 			self.updateMuscleWithID(muscle.id, toMuscle: muscle)
 		} else {
-			let entity = NSEntityDescription.entityForName(MuscleManagedObject.entityName, inManagedObjectContext: self.managedObjectContext)!
-			if let newManagedMuscle = NSManagedObject(entity: entity, insertIntoManagedObjectContext: self.managedObjectContext) as? MuscleManagedObject {
+			let entity = NSEntityDescription.entity(forEntityName: MuscleManagedObject.entityName, in: self.managedObjectContext)!
+			if let newManagedMuscle = NSManagedObject(entity: entity, insertInto: self.managedObjectContext) as? MuscleManagedObject {
 				newManagedMuscle.id = muscle.id
 				newManagedMuscle.name = muscle.name
 				if let managedComponent = self.retrieveObjectWithID(muscle.component.id, entityName: ComponentManagedObject.entityName, idPropertyKey: ComponentManagedObject.propertyKeys.id) as? ComponentManagedObject {
@@ -213,12 +213,12 @@ class DatastoreManager : NSObject {
 		}
 	}
 	
-	private func storeSpecialTest(specialTest: SpecialTest) {
+	fileprivate func storeSpecialTest(_ specialTest: SpecialTest) {
 		if self.containsObjectWithID(specialTest.id, entityName: SpecialTestManagedObject.entityName, idPropertyKey: SpecialTestManagedObject.propertyKeys.id) {
 			self.updateSpecialTestWithID(specialTest.id, toSpecialTest: specialTest)
 		} else {
-			let entity = NSEntityDescription.entityForName(SpecialTestManagedObject.entityName, inManagedObjectContext: self.managedObjectContext)!
-			if let newManagedSpecialTest = NSManagedObject(entity: entity, insertIntoManagedObjectContext: self.managedObjectContext) as? SpecialTestManagedObject {
+			let entity = NSEntityDescription.entity(forEntityName: SpecialTestManagedObject.entityName, in: self.managedObjectContext)!
+			if let newManagedSpecialTest = NSManagedObject(entity: entity, insertInto: self.managedObjectContext) as? SpecialTestManagedObject {
 				newManagedSpecialTest.id = specialTest.id
 				newManagedSpecialTest.name = specialTest.name
 				newManagedSpecialTest.positiveSign = specialTest.positiveSign
@@ -231,12 +231,12 @@ class DatastoreManager : NSObject {
 		}
 	}
 	
-	private func storeImageLink(imageLink: ImageLink) {
+	fileprivate func storeImageLink(_ imageLink: ImageLink) {
 		if self.containsObjectWithID(imageLink.id, entityName: ImageLinkManagedObject.entityName, idPropertyKey: ImageLinkManagedObject.propertyKeys.id) {
 			self.updateImageLinkWithID(imageLink.id, toImageLink: imageLink)
 		} else {
-			let entity = NSEntityDescription.entityForName(ImageLinkManagedObject.entityName, inManagedObjectContext: self.managedObjectContext)!
-			if let newManagedImageLink = NSManagedObject(entity: entity, insertIntoManagedObjectContext: self.managedObjectContext) as? ImageLinkManagedObject {
+			let entity = NSEntityDescription.entity(forEntityName: ImageLinkManagedObject.entityName, in: self.managedObjectContext)!
+			if let newManagedImageLink = NSManagedObject(entity: entity, insertInto: self.managedObjectContext) as? ImageLinkManagedObject {
 				newManagedImageLink.id = imageLink.id
 				newManagedImageLink.title = imageLink.title
 				newManagedImageLink.link = imageLink.link
@@ -247,12 +247,12 @@ class DatastoreManager : NSObject {
 		}
 	}
 	
-	private func storeVideoLink(videoLink: VideoLink) {
+	fileprivate func storeVideoLink(_ videoLink: VideoLink) {
 		if self.containsObjectWithID(videoLink.id, entityName: VideoLinkManagedObject.entityName, idPropertyKey: VideoLinkManagedObject.propertyKeys.id) {
 			self.updateVideoLinkWithID(videoLink.id, toVideoLink: videoLink)
 		} else {
-			let entity = NSEntityDescription.entityForName(VideoLinkManagedObject.entityName, inManagedObjectContext: self.managedObjectContext)!
-			if let newManagedVideoLink = NSManagedObject(entity: entity, insertIntoManagedObjectContext: self.managedObjectContext) as? VideoLinkManagedObject {
+			let entity = NSEntityDescription.entity(forEntityName: VideoLinkManagedObject.entityName, in: self.managedObjectContext)!
+			if let newManagedVideoLink = NSManagedObject(entity: entity, insertInto: self.managedObjectContext) as? VideoLinkManagedObject {
 				newManagedVideoLink.id = videoLink.id
 				newManagedVideoLink.title = videoLink.title
 				newManagedVideoLink.link = videoLink.link
@@ -272,7 +272,7 @@ class DatastoreManager : NSObject {
 	
 	// MARK: - Update Methods
 	
-	private func updatePersonnelAcknowledgementWithID(id: Int32, toPersonnelAcknowledgement: PersonnelAcknowledgement) {
+	fileprivate func updatePersonnelAcknowledgementWithID(_ id: Int32, toPersonnelAcknowledgement: PersonnelAcknowledgement) {
 		if let managedPersonnelAcknowledgement = self.retrieveObjectWithID(id, entityName: PersonnelAcknowledgementManagedObject.entityName, idPropertyKey: PersonnelAcknowledgementManagedObject.propertyKeys.id) as? PersonnelAcknowledgementManagedObject {
 			if (managedPersonnelAcknowledgement != toPersonnelAcknowledgement) {
 				managedPersonnelAcknowledgement.name = toPersonnelAcknowledgement.name
@@ -282,7 +282,7 @@ class DatastoreManager : NSObject {
 		}
 	}
 	
-	private func updateSoftwareAcknowledgementWithID(id: Int32, toSoftwareAcknowledgement: SoftwareAcknowledgement) {
+	fileprivate func updateSoftwareAcknowledgementWithID(_ id: Int32, toSoftwareAcknowledgement: SoftwareAcknowledgement) {
 		if let managedSoftwareAcknowledgement = self.retrieveObjectWithID(id, entityName: SoftwareAcknowledgementManagedObject.entityName, idPropertyKey: SoftwareAcknowledgementManagedObject.propertyKeys.id) as? SoftwareAcknowledgementManagedObject {
 			if (managedSoftwareAcknowledgement != toSoftwareAcknowledgement) {
 				managedSoftwareAcknowledgement.name = toSoftwareAcknowledgement.name
@@ -291,7 +291,7 @@ class DatastoreManager : NSObject {
 		}
 	}
 	
-	private func updateSystemWithID(id: Int32, toSystem: System) {
+	fileprivate func updateSystemWithID(_ id: Int32, toSystem: System) {
 		if let managedSystem = self.retrieveObjectWithID(id, entityName: SystemManagedObject.entityName, idPropertyKey: SystemManagedObject.propertyKeys.id) as? SystemManagedObject {
 			if (managedSystem != toSystem) {
 				managedSystem.name = toSystem.name
@@ -300,7 +300,7 @@ class DatastoreManager : NSObject {
 		}
 	}
 	
-	private func updateComponentWithID(id: Int32, toComponent: Component) {
+	fileprivate func updateComponentWithID(_ id: Int32, toComponent: Component) {
 		if let managedComponent = self.retrieveObjectWithID(id, entityName: ComponentManagedObject.entityName, idPropertyKey: ComponentManagedObject.propertyKeys.id) as? ComponentManagedObject {
 			managedComponent.name = toComponent.name
 			managedComponent.inspection = toComponent.inspection
@@ -311,7 +311,7 @@ class DatastoreManager : NSObject {
 		}
 	}
 	
-	private func updateExamTechniqueWithID(id: Int32, toExamTechnique: ExamTechnique) {
+	fileprivate func updateExamTechniqueWithID(_ id: Int32, toExamTechnique: ExamTechnique) {
 		print("Updating Exam Techniques")
 		if let managedExamTechnique = self.retrieveObjectWithID(id, entityName: ComponentManagedObject.entityName, idPropertyKey: ComponentManagedObject.propertyKeys.id) as? ExamTechniqueManagedObject {
 			managedExamTechnique.name = toExamTechnique.name
@@ -322,7 +322,7 @@ class DatastoreManager : NSObject {
 		}
 	}
 	
-	private func updatePalpationWithID(id: Int32, toPalpation: Palpation) {
+	fileprivate func updatePalpationWithID(_ id: Int32, toPalpation: Palpation) {
 		if let managedPalpation = self.retrieveObjectWithID(id, entityName: PalpationManagedObject.entityName, idPropertyKey: PalpationManagedObject.propertyKeys.id) as? PalpationManagedObject {
 			managedPalpation.structure = toPalpation.structure
 			managedPalpation.details = toPalpation.details
@@ -333,7 +333,7 @@ class DatastoreManager : NSObject {
 		}
 	}
 	
-	private func updateRangeOfMotionWithID(id: Int32, toRangeOfMotion: RangeOfMotion) {
+	fileprivate func updateRangeOfMotionWithID(_ id: Int32, toRangeOfMotion: RangeOfMotion) {
 		if let managedRangeOfMotion = self.retrieveObjectWithID(id, entityName: RangeOfMotionManagedObject.entityName, idPropertyKey: RangeOfMotionManagedObject.propertyKeys.id) as? RangeOfMotionManagedObject {
 			managedRangeOfMotion.motion = toRangeOfMotion.motion
 			managedRangeOfMotion.degrees = toRangeOfMotion.degrees
@@ -344,7 +344,7 @@ class DatastoreManager : NSObject {
 		}
 	}
 	
-	private func updateMuscleWithID(id: Int32, toMuscle: Muscle) {
+	fileprivate func updateMuscleWithID(_ id: Int32, toMuscle: Muscle) {
 		if let managedMuscle = self.retrieveObjectWithID(id, entityName: MuscleManagedObject.entityName, idPropertyKey: MuscleManagedObject.propertyKeys.id) as? MuscleManagedObject {
 			managedMuscle.name = toMuscle.name
 			if let managedComponent = self.retrieveObjectWithID(toMuscle.component.id, entityName: ComponentManagedObject.entityName, idPropertyKey: ComponentManagedObject.propertyKeys.id) as? ComponentManagedObject {
@@ -353,7 +353,7 @@ class DatastoreManager : NSObject {
 		}
 	}
 	
-	private func updateSpecialTestWithID(id: Int32, toSpecialTest: SpecialTest) {
+	fileprivate func updateSpecialTestWithID(_ id: Int32, toSpecialTest: SpecialTest) {
 		if let managedSpecialTest = self.retrieveObjectWithID(id, entityName: SpecialTestManagedObject.entityName, idPropertyKey: SpecialTestManagedObject.propertyKeys.id) as? SpecialTestManagedObject {
 			managedSpecialTest.name = toSpecialTest.name
 			managedSpecialTest.positiveSign = toSpecialTest.positiveSign
@@ -365,7 +365,7 @@ class DatastoreManager : NSObject {
 		}
 	}
 	
-	private func updateImageLinkWithID(id: Int32, toImageLink: ImageLink) {
+	fileprivate func updateImageLinkWithID(_ id: Int32, toImageLink: ImageLink) {
 		if let managedImageLink = self.retrieveObjectWithID(id, entityName: ImageLinkManagedObject.entityName, idPropertyKey: ImageLinkManagedObject.propertyKeys.id) as? ImageLinkManagedObject {
 			managedImageLink.title = toImageLink.title
 			managedImageLink.link = toImageLink.link
@@ -375,7 +375,7 @@ class DatastoreManager : NSObject {
 		}
 	}
 	
-	private func updateVideoLinkWithID(id: Int32, toVideoLink: VideoLink) {
+	fileprivate func updateVideoLinkWithID(_ id: Int32, toVideoLink: VideoLink) {
 		if let managedVideoLink = self.retrieveObjectWithID(id, entityName: VideoLinkManagedObject.entityName, idPropertyKey: VideoLinkManagedObject.propertyKeys.id) as? VideoLinkManagedObject {
 			managedVideoLink.title = toVideoLink.title
 			managedVideoLink.link = toVideoLink.link
@@ -394,11 +394,11 @@ class DatastoreManager : NSObject {
 	
 	// MARK: - Delete Methods
 	
-	func deleteObjectsForEntity(entityName: String) {
-		let request = NSFetchRequest(entityName: entityName)
-		if let managedObjects = try! self.managedObjectContext.executeFetchRequest(request) as? [NSManagedObject] {
+	func deleteObjectsForEntity(_ entityName: String) {
+		let request = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
+		if let managedObjects = try! self.managedObjectContext.fetch(request) as? [NSManagedObject] {
 			for managedObject in managedObjects {
-				self.managedObjectContext.deleteObject(managedObject)
+				self.managedObjectContext.delete(managedObject)
 			}
 		}
 		self.save()
@@ -406,24 +406,24 @@ class DatastoreManager : NSObject {
 	
 	// MARK: - Retrieve Methods
 	
-	private func retrieveObjectWithID(id: Int32, entityName: String, idPropertyKey: String) -> NSManagedObject? {
-		let request = NSFetchRequest(entityName: entityName)
+	fileprivate func retrieveObjectWithID(_ id: Int32, entityName: String, idPropertyKey: String) -> NSManagedObject? {
+		let request = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
 		request.predicate = NSPredicate(format: "%K = %d", idPropertyKey, id)
-		return try! self.managedObjectContext.executeFetchRequest(request).first as? NSManagedObject
+		return try! self.managedObjectContext.fetch(request).first as? NSManagedObject
 	}
 	
 	// MARK: - Contains Methods
 	
-	private func containsObjectWithID(id: Int32, entityName: String, idPropertyKey: String) -> Bool {
-		let request = NSFetchRequest(entityName: entityName)
+	fileprivate func containsObjectWithID(_ id: Int32, entityName: String, idPropertyKey: String) -> Bool {
+		let request = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
 		request.predicate = NSPredicate(format: "%K = %d", idPropertyKey, id)
-		let results = try! self.managedObjectContext.executeFetchRequest(request)
+		let results = try! self.managedObjectContext.fetch(request)
 		return results.count != 0
 	}
 	
 	// MARK: - Save Methods
 	
-	private func save() {
+	fileprivate func save() {
 		do {
 			print("\(self.managedObjectContext.deletedObjects.count) Objects to be Deleted")
 			print("\(self.managedObjectContext.updatedObjects.count) Objects to be Updated")
@@ -442,7 +442,7 @@ class DatastoreManager : NSObject {
 // MARK: - Datastore Manager Protocol
 
 @objc protocol DatastoreManagerDelegate {
-	optional func didBeginStoring()
-	optional func didFinishStoring()
-	optional func didFinishStoringWithError(error: NSError)
+	@objc optional func didBeginStoring()
+	@objc optional func didFinishStoring()
+	@objc optional func didFinishStoringWithError(_ error: NSError)
 }

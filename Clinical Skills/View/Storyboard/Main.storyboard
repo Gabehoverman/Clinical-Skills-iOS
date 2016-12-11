@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Du2-Kh-XVf">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16C48b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="NO" initialViewController="Du2-Kh-XVf">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <development version="7000" identifier="xcode"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -11,9 +12,9 @@
             <objects>
                 <tableViewController storyboardIdentifier="ClinicalSkillsSystemsTableViewController" title="Systems Table View Controller" id="1Lz-Nd-jFp" customClass="SystemsTableViewController" customModule="Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="bX3-Bn-OUd">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="SystemCell" textLabel="gk5-cq-5HZ" style="IBUITableViewCellStyleDefault" id="jig-Zq-dLD">
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>
@@ -93,7 +94,7 @@
                         <viewControllerLayoutGuide type="bottom" id="2ek-6n-wsA"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="y6u-Mw-7I6">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="axi-7T-X2Q">
@@ -105,7 +106,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="axi-7T-X2Q" firstAttribute="centerY" secondItem="y6u-Mw-7I6" secondAttribute="centerY" id="I5m-JH-T5z"/>
                             <constraint firstItem="axi-7T-X2Q" firstAttribute="centerX" secondItem="y6u-Mw-7I6" secondAttribute="centerX" id="Yyt-aK-RyQ"/>
@@ -124,7 +125,7 @@
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="jje-6b-R5X">
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
                     </tabBar>
                     <connections>
                         <segue destination="DPO-nQ-hdc" kind="relationship" relationship="viewControllers" id="q1F-WM-ikm"/>
@@ -162,7 +163,7 @@
                         <viewControllerLayoutGuide type="bottom" id="IOW-b3-v1J"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ddG-6o-Aq3">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gK0-HE-Po6">
@@ -174,7 +175,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="gK0-HE-Po6" firstAttribute="centerX" secondItem="ddG-6o-Aq3" secondAttribute="centerX" id="Rwk-Xk-byB"/>
                             <constraint firstItem="gK0-HE-Po6" firstAttribute="centerY" secondItem="ddG-6o-Aq3" secondAttribute="centerY" id="zkQ-gK-eFS"/>
@@ -229,9 +230,9 @@
             <objects>
                 <tableViewController storyboardIdentifier="OutlinedReviewSystemsTableViewController" title="Systems Table View Controller" id="vXe-lr-Rna" customClass="SystemsTableViewController" customModule="Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="umg-d3-BCv">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="SystemCell" textLabel="4Yb-F6-vJ1" style="IBUITableViewCellStyleDefault" id="wyL-KJ-SIG">
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>
@@ -286,7 +287,7 @@
                         <viewControllerLayoutGuide type="bottom" id="ids-dF-6CT"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="zGl-uE-vy3">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="RRZ-Uv-b4P">
@@ -303,7 +304,7 @@
                                 <rect key="frame" x="0.0" y="64" width="600" height="443"/>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="e0g-Be-RNA" firstAttribute="leading" secondItem="zGl-uE-vy3" secondAttribute="leadingMargin" constant="-20" id="ATf-wC-pcZ"/>
                             <constraint firstItem="RRZ-Uv-b4P" firstAttribute="top" secondItem="e0g-Be-RNA" secondAttribute="bottom" constant="8" id="HIM-xl-ZWC"/>
@@ -331,9 +332,9 @@
             <objects>
                 <tableViewController storyboardIdentifier="ComponentsTableViewController" title="Components Table View Controller" useStoryboardIdentifierAsRestorationIdentifier="YES" id="O6Y-Bg-GKe" customClass="ComponentsTableViewController" customModule="Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="WgV-AU-UvC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="ComponentCell" textLabel="Yl2-yh-mgo" style="IBUITableViewCellStyleDefault" id="9oV-Wq-w9s">
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>
@@ -383,9 +384,9 @@
             <objects>
                 <tableViewController storyboardIdentifier="ExamTechniquesTableViewController" title="Exam Techniques Table View Controller" useStoryboardIdentifierAsRestorationIdentifier="YES" id="slT-cx-dZE" customClass="ExamTechniquesTableViewController" customModule="Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="wdU-6S-uFp">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ExamTechniqueCell" id="jtE-l0-dRN">
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>
@@ -440,9 +441,9 @@
             <objects>
                 <tableViewController storyboardIdentifier="SpecialTestsTableViewController" title="Special Tests Table View Controller" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Ulh-n3-PXy" userLabel="Special Tests Table View Controller" customClass="SpecialTestsTableViewController" customModule="Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="41" sectionHeaderHeight="28" sectionFooterHeight="28" id="fCX-1w-6ux">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SpecialTestCell" id="ew1-u5-9hq">
                                 <rect key="frame" x="0.0" y="92" width="600" height="41"/>
@@ -497,9 +498,9 @@
             <objects>
                 <tableViewController storyboardIdentifier="ExamTechniqueDetailsTableViewController" title="Exam Technique Details Table View Controller" useStoryboardIdentifierAsRestorationIdentifier="YES" id="YkU-89-rxj" customClass="ExamTechniqueDetailsTableViewController" customModule="Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="JTv-kh-Ayd">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ExamTechniqueNameCell" id="CmP-b9-IYE">
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>
@@ -598,9 +599,9 @@
             <objects>
                 <tableViewController title="Special Tests Detail Table View Controller" id="cUl-w5-RUd" customClass="SpecialTestDetailTableViewController" customModule="Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="v2U-xa-rwx">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SpecialTestNameCell" id="P77-7g-E7H">
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>
@@ -717,7 +718,6 @@
                                                                 <rect key="frame" x="8" y="8" width="84" height="84"/>
                                                             </imageView>
                                                         </subviews>
-                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     </view>
                                                     <constraints>
                                                         <constraint firstAttribute="trailingMargin" secondItem="JBI-9X-Co8" secondAttribute="trailing" id="bxT-lj-dQf"/>
@@ -805,15 +805,15 @@
                         <viewControllerLayoutGuide type="bottom" id="iTY-MN-gjM"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="yK8-1k-2cx">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <webView contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eTC-jQ-J9V">
                                 <rect key="frame" x="0.0" y="20" width="600" height="580"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </webView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="eTC-jQ-J9V" firstAttribute="leading" secondItem="yK8-1k-2cx" secondAttribute="leadingMargin" constant="-20" id="62x-bt-EJt"/>
                             <constraint firstAttribute="trailingMargin" secondItem="eTC-jQ-J9V" secondAttribute="trailing" constant="-20" id="CYP-QV-y0j"/>
@@ -835,9 +835,9 @@
             <objects>
                 <tableViewController title="Components Table View Controller" id="yzK-o4-xGa" customClass="ComponentsTableViewController" customModule="Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="KXf-4k-kZN">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="ComponentCell" textLabel="fLl-Bj-Gdz" style="IBUITableViewCellStyleDefault" id="Uo6-af-IhL">
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>
@@ -891,24 +891,26 @@
                         <viewControllerLayoutGuide type="bottom" id="70x-hI-D6l"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ym7-i2-NbP">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="DISCLAIMER – EDUCATIONAL PURPOSES ONLY" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O7d-7U-C7I">
                                 <rect key="frame" x="20" y="79" width="374" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Gb-bX-p96">
                                 <rect key="frame" x="25" y="0.0" width="354" height="618"/>
-                                <mutableString key="text">The information contained in this mobile application (“App”) is to be used for educational and informational purposes only. The medical information contained herein should not, under any circumstances, be viewed or treated as a substitute for the advice or diagnosis from a qualified physician or other medical professional. Though efforts have been made to ensure the information provided is correct and up to date, there is no guarantee that this information is accurate or current. Do not disregard medical advice due to any information contained herein. This App may not include information such as FDA warnings or alerts, new developments in medical research, interactions between certain drugs and/or medications, or other unusual/unpredictable medical circumstances. Furthermore, information contained herein is not to be used for medical diagnosis and/or treatment under any circumstances. Reliance on any information contained in this App is solely at your own risk. If you are currently having a medical emergency or need urgent care, please contact your physician immediately or dial 911. There is no warranty, express or implied, as to the accuracy of any information found in this App, and WVSOM shall not be liable for any injury or damage associated with or arising out of the use of this App or any information contained herein. By clicking the button below and opening this App, the user acknowledges, understands, and accepts the information noted in this Disclaimer.</mutableString>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <string key="text">The information contained in this mobile application (“App”) is to be used for educational and informational purposes only. The medical information contained herein should not, under any circumstances, be viewed or treated as a substitute for the advice or diagnosis from a qualified physician or other medical professional. Though efforts have been made to ensure the information provided is correct and up to date, there is no guarantee that this information is accurate or current. Do not disregard medical advice due to any information contained herein. This App may not include information such as FDA warnings or alerts, new developments in medical research, interactions between certain drugs and/or medications, or other unusual/unpredictable medical circumstances. Furthermore, information contained herein is not to be used for medical diagnosis and/or treatment under any circumstances. Reliance on any information contained in this App is solely at your own risk. If you are currently having a medical emergency or need urgent care, please contact your physician immediately or dial 911. There is no warranty, express or implied, as to the accuracy of any information found in this App, and WVSOM shall not be liable for any injury or damage associated with or arising out of the use of this App or any information contained herein. By clicking the button below and opening this App, the user acknowledges, understands, and accepts the information noted in this Disclaimer.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <navigationItem key="navigationItem" title="Disclaimer" id="ciW-6s-go6"/>
                 </viewController>
@@ -925,7 +927,7 @@
                         <viewControllerLayoutGuide type="bottom" id="vfF-E4-qHX"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="TUc-ye-ubP">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Cok-sN-Hw3">
@@ -943,7 +945,7 @@
                                 <rect key="frame" x="0.0" y="64" width="600" height="443"/>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="vcA-hZ-Cnb" firstAttribute="leading" secondItem="TUc-ye-ubP" secondAttribute="leadingMargin" constant="-20" id="1PK-BQ-EWi"/>
                             <constraint firstItem="vfF-E4-qHX" firstAttribute="top" secondItem="Cok-sN-Hw3" secondAttribute="bottom" constant="8" id="YJG-GI-ewo"/>
@@ -973,9 +975,9 @@
             <objects>
                 <tableViewController storyboardIdentifier="PersonnelAcknowledgementTableViewController" title="Personnel Acknowledgement Table View Controller" useStoryboardIdentifierAsRestorationIdentifier="YES" id="QcF-2F-EuM" customClass="PersonnelAcknowledgementTableViewController" customModule="Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="d2L-uJ-s4w">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PersonnelAcknowledgementCell" rowHeight="88" id="b5D-za-ULV" customClass="PersonnelAcknowledgementTableViewCell" customModule="Clinical_Skills" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="92" width="600" height="88"/>
@@ -1060,9 +1062,9 @@
             <objects>
                 <tableViewController storyboardIdentifier="SoftwareAcknowledgementTableViewController" title="Software Acknowledgement Table View Controller" useStoryboardIdentifierAsRestorationIdentifier="YES" id="fUZ-dc-c84" customClass="SoftwareAcknowledgementTableViewController" customModule="Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="uh0-C4-NWi">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="SoftwareAcknowledgementCell" rowHeight="88" id="thA-TY-1VG" customClass="SoftwareAcknowledgementTableViewCell" customModule="Clinical_Skills" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="92" width="600" height="88"/>
@@ -1124,15 +1126,15 @@
                         <viewControllerLayoutGuide type="bottom" id="LbV-ty-ffc"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="WBS-q9-4d2">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AFl-gR-laX">
                                 <rect key="frame" x="0.0" y="20" width="600" height="531"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </webView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="AFl-gR-laX" firstAttribute="top" secondItem="WBS-q9-4d2" secondAttribute="topMargin" constant="20" id="DTD-wL-jsV"/>
                             <constraint firstAttribute="trailingMargin" secondItem="AFl-gR-laX" secondAttribute="trailing" constant="-20" id="QZS-cq-e6y"/>
@@ -1154,9 +1156,9 @@
             <objects>
                 <tableViewController title="Component Details Table View Controller" id="jl6-Uy-zHF" customClass="ComponentDetailsTableViewController" customModule="Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="UqZ-G3-mrl">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ComponentInspectionCell" id="aOU-gC-yMa">
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>
@@ -1350,9 +1352,9 @@
             <objects>
                 <tableViewController title="Special Tests Detail Table View Controller" id="446-b4-ooc" customClass="SpecialTestDetailTableViewController" customModule="Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="9Ti-tB-kmS">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SpecialTestNameCell" id="eH7-O5-h3M">
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>
@@ -1469,7 +1471,6 @@
                                                                 <rect key="frame" x="8" y="8" width="84" height="84"/>
                                                             </imageView>
                                                         </subviews>
-                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     </view>
                                                     <constraints>
                                                         <constraint firstItem="yKh-P8-E0h" firstAttribute="leading" secondItem="8TV-PK-3ga" secondAttribute="leadingMargin" id="CdV-JU-Q3U"/>
@@ -1557,15 +1558,15 @@
                         <viewControllerLayoutGuide type="bottom" id="yFa-Ey-8r3"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="nd6-mN-xCx">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <webView contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LtA-vF-NpJ">
                                 <rect key="frame" x="0.0" y="20" width="600" height="580"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </webView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="LtA-vF-NpJ" firstAttribute="leading" secondItem="nd6-mN-xCx" secondAttribute="leadingMargin" constant="-20" id="PAg-yi-wmS"/>
                             <constraint firstAttribute="trailingMargin" secondItem="LtA-vF-NpJ" secondAttribute="trailing" constant="-20" id="fBT-du-oJm"/>
@@ -1591,15 +1592,15 @@
                         <viewControllerLayoutGuide type="bottom" id="Fkb-Iw-smO"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="aPP-B9-VzY">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <webView contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aXC-yK-N1S">
                                 <rect key="frame" x="0.0" y="20" width="600" height="580"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </webView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="aXC-yK-N1S" firstAttribute="bottom" secondItem="aPP-B9-VzY" secondAttribute="bottomMargin" id="Mxx-t7-OJq"/>
                             <constraint firstItem="aXC-yK-N1S" firstAttribute="leading" secondItem="aPP-B9-VzY" secondAttribute="leadingMargin" constant="-20" id="RsM-fv-QRR"/>

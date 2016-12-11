@@ -13,13 +13,13 @@ import NYTPhotoViewer
 class BasicPhoto : NSObject, NYTPhoto {
 	
 	var image: UIImage?
-	var imageData: NSData?
+	var imageData: Data?
 	var placeholderImage: UIImage?
 	let attributedCaptionTitle: NSAttributedString?
 	let attributedCaptionSummary: NSAttributedString?
 	let attributedCaptionCredit: NSAttributedString?
 	
-	init(image: UIImage? = nil, imageData: NSData? = nil, captionTitle: NSAttributedString) {
+	init(image: UIImage? = nil, imageData: Data? = nil, captionTitle: NSAttributedString) {
 		self.image = image
 		self.imageData = imageData
 		self.attributedCaptionTitle = captionTitle

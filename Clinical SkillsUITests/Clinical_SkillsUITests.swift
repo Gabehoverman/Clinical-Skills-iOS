@@ -267,14 +267,14 @@ class Clinical_SkillsUITests: XCTestCase {
 		let examTechniquesButton = app.buttons["Exam Techniques"]
 		examTechniquesButton.tap()
 		
-		let element = app.statusBars.childrenMatchingType(.Other).elementBoundByIndex(1)
-		element.childrenMatchingType(.Other).elementBoundByIndex(1).tap()
+		let element = app.statusBars.children(matching: .other).element(boundBy: 1)
+		element.children(matching: .other).element(boundBy: 1).tap()
 		tablesQuery.staticTexts["Eye"].tap()
 		examTechniquesButton.tap()
 		tablesQuery.staticTexts["Far Visual Acuity"].tap()
 		
 		let examTechniqueDetailsNavigationBar = app.navigationBars["Exam Technique Details"]
-		let backButton = examTechniqueDetailsNavigationBar.childrenMatchingType(.Button).matchingIdentifier("Back").elementBoundByIndex(0)
+		let backButton = examTechniqueDetailsNavigationBar.children(matching: .button).matching(identifier: "Back").element(boundBy: 0)
 		backButton.tap()
 		tablesQuery.staticTexts["Near Visual Acuity"].tap()
 		examTechniqueDetailsNavigationBar.tap()

@@ -30,26 +30,26 @@ class SystemBreakdownViewController : UIViewController {
 	
 	// MARK: - Segmented Control Logic Methods
 	
-	func viewControllerForSelectedSegmentIndex(index: Int) -> UIViewController? {
+	func viewControllerForSelectedSegmentIndex(_ index: Int) -> UIViewController? {
 		if index == 0 {
 			if self.componentsTableViewController == nil {
-				self.componentsTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier(StoryboardIdentifiers.controller.componentsTableViewController) as? ComponentsTableViewController
+				self.componentsTableViewController = self.storyboard?.instantiateViewController(withIdentifier: StoryboardIdentifiers.controller.componentsTableViewController) as? ComponentsTableViewController
 				self.componentsTableViewController?.system = self.system
 			}
 			return self.componentsTableViewController
 		} else {
 			if self.examTechniquesTableViewController == nil {
-				self.examTechniquesTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier(StoryboardIdentifiers.controller.examTechniquesTableViewController) as? ExamTechniquesTableViewController
+				self.examTechniquesTableViewController = self.storyboard?.instantiateViewController(withIdentifier: StoryboardIdentifiers.controller.examTechniquesTableViewController) as? ExamTechniquesTableViewController
 				self.examTechniquesTableViewController?.system = system
 			}
 			return self.examTechniquesTableViewController
 		}
 	}
 	
-	func displayViewControllerForSegmentIndex(index: Int) {
+	func displayViewControllerForSegmentIndex(_ index: Int) {
 		if let viewController = self.viewControllerForSelectedSegmentIndex(index) {
 			self.addChildViewController(viewController)
-			viewController.didMoveToParentViewController(self)
+			viewController.didMove(toParentViewController: self)
 			
 			viewController.view.frame = self.contentView.bounds
 			self.contentView.addSubview(viewController.view)
@@ -60,7 +60,7 @@ class SystemBreakdownViewController : UIViewController {
 	
 	// MARK: - Interface Builder Connections
 	
-	@IBAction func segmentChanged(sender: UISegmentedControl) {
+	@IBAction func segmentChanged(_ sender: UISegmentedControl) {
 		self.currentViewController?.view.removeFromSuperview()
 		self.currentViewController?.removeFromParentViewController()
 		

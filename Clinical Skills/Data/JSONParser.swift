@@ -33,7 +33,7 @@ class JSONParser : NSObject {
 	
 	// MARK: - Properties
 
-	let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+	let managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
 	
 	let json: JSON
 	
@@ -44,7 +44,7 @@ class JSONParser : NSObject {
 				type = "empty"
 			}
 			for (_, subJSON) in self.json {
-				if let key = subJSON.dictionary?.keys.first?.lowercaseString {
+				if let key = subJSON.dictionary?.keys.first?.lowercased() {
 					type = key
 				}
 			}
@@ -54,7 +54,7 @@ class JSONParser : NSObject {
 	
 	// MARK: - Initializers
 	
-	init(rawData: NSData) {
+	init(rawData: Data) {
 		self.json = JSON(data: rawData)
 	}
 	
@@ -101,7 +101,7 @@ class JSONParser : NSObject {
 		return systems
 	}
 	
-	func parseExamTechniques(system: System) -> [ExamTechnique] {
+	func parseExamTechniques(_ system: System) -> [ExamTechnique] {
 		var examTechniques = [ExamTechnique]()
 		for (_, data) in self.json {
 			for (_, examTechnique) in data {
@@ -114,7 +114,7 @@ class JSONParser : NSObject {
 		return examTechniques
 	}
 	
-	func parseComponents(system: System) -> [Component] {
+	func parseComponents(_ system: System) -> [Component] {
 		var components = [Component]()
 		for (_, data) in self.json {
 			for (_, component) in data {
@@ -128,7 +128,7 @@ class JSONParser : NSObject {
 		return components
 	}
 	
-	func parsePalpations(component: Component) -> [Palpation] {
+	func parsePalpations(_ component: Component) -> [Palpation] {
 		var palpations = [Palpation]()
 		for (_, data) in self.json {
 			for (_, palpation) in data {
@@ -142,7 +142,7 @@ class JSONParser : NSObject {
 		return palpations
 	}
 	
-	func parseRangesOfMotion(component: Component) -> [RangeOfMotion] {
+	func parseRangesOfMotion(_ component: Component) -> [RangeOfMotion] {
 		var rangesOfMotion = [RangeOfMotion]()
 		for (_, data) in self.json {
 			for (_, rangeOfMotion) in data {
@@ -156,7 +156,7 @@ class JSONParser : NSObject {
 		return rangesOfMotion
 	}
 	
-	func parseMuscles(component: Component) -> [Muscle] {
+	func parseMuscles(_ component: Component) -> [Muscle] {
 		var muscles = [Muscle]()
 		for (_, data) in self.json {
 			for (_, muscle) in data {
@@ -168,7 +168,7 @@ class JSONParser : NSObject {
 		return muscles
 	}
 	
-	func parseSpecialTests(component: Component) -> [SpecialTest] {
+	func parseSpecialTests(_ component: Component) -> [SpecialTest] {
 		var specialTests = [SpecialTest]()
 		for (_, data) in self.json {
 			for (_, specialTest) in data {
@@ -183,7 +183,7 @@ class JSONParser : NSObject {
 		return specialTests
 	}
 	
-	func parseImageLinks(specialTest: SpecialTest) -> [ImageLink] {
+	func parseImageLinks(_ specialTest: SpecialTest) -> [ImageLink] {
 		var imageLinks = [ImageLink]()
 		for (_, data) in self.json {
 			for (_, imageLink) in data {
@@ -196,7 +196,7 @@ class JSONParser : NSObject {
 		return imageLinks
 	}
 	
-	func parseVideoLinks(specialTest: SpecialTest) -> [VideoLink] {
+	func parseVideoLinks(_ specialTest: SpecialTest) -> [VideoLink] {
 		var videoLinks = [VideoLink]()
 		for (_, data) in self.json {
 			for (_, videoLink) in data {
@@ -209,7 +209,7 @@ class JSONParser : NSObject {
 		return videoLinks
 	}
 	
-	func parseVideoLinks(examTechnqiue: ExamTechnique) -> [VideoLink] {
+	func parseVideoLinks(_ examTechnqiue: ExamTechnique) -> [VideoLink] {
 		var videoLinks = [VideoLink]()
 		for (_, data) in self.json {
 			for (_, videoLink) in data {

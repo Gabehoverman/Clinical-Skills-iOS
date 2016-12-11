@@ -18,24 +18,24 @@ class HeadToToeViewController : UIViewController {
     // MARK: - View Controller Methods
     
     override func viewDidLoad() {
-        if let url = NSBundle.mainBundle().URLForResource("Head To Toe", withExtension: "pdf") {
-            self.documentController = UIDocumentInteractionController(URL: url)
+        if let url = Bundle.main.url(forResource: "Head To Toe", withExtension: "pdf") {
+            self.documentController = UIDocumentInteractionController(url: url)
             self.documentController!.delegate = self
             self.dismissing = false
         }
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         self.presentPreview()
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         self.dismissing = false
     }
     
     // MARK: - Interface Builder Connections
     
-    @IBAction func show(sender: UIButton) {
+    @IBAction func show(_ sender: UIButton) {
         self.dismissing = false
         self.presentPreview()
     }
@@ -43,9 +43,9 @@ class HeadToToeViewController : UIViewController {
     // MARK: - Navigation Methods
     
     func presentPreview() {
-        if let dismissing = self.dismissing where dismissing == false {
+        if let dismissing = self.dismissing, dismissing == false {
             if self.documentController != nil {
-                self.documentController!.presentPreviewAnimated(true)
+                self.documentController!.presentPreview(animated: true)
             }
         }
     }
@@ -55,11 +55,11 @@ class HeadToToeViewController : UIViewController {
 // MARK: - Document Interface Controller Delegate Methods
 
 extension HeadToToeViewController : UIDocumentInteractionControllerDelegate {
-    func documentInteractionControllerViewControllerForPreview(controller: UIDocumentInteractionController) -> UIViewController {
+    func documentInteractionControllerViewControllerForPreview(_ controller: UIDocumentInteractionController) -> UIViewController {
         return self.navigationController!
     }
     
-    func documentInteractionControllerDidEndPreview(controller: UIDocumentInteractionController) {
+    func documentInteractionControllerDidEndPreview(_ controller: UIDocumentInteractionController) {
         self.dismissing = true
     }
 }
