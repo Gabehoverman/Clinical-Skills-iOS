@@ -54,7 +54,7 @@ class SpecialTestDetailTableViewController : UITableViewController {
 	// MARK: - Table View Controller Methods
 	
 	override func numberOfSections(in tableView: UITableView) -> Int {
-		return 6
+		return 5
 	}
 	
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -63,8 +63,8 @@ class SpecialTestDetailTableViewController : UITableViewController {
 			case 1: return "Positive Sign"
 			case 2: return "Indication"
 			case 3: return "Notes"
-			case 4: return "Images"
-			case 5: return "Video Links"
+            //case 4: return "Images"
+			case 4: return "Video Links"
 			default: return  "Section \(section)"
 		}
 	}
@@ -79,10 +79,12 @@ class SpecialTestDetailTableViewController : UITableViewController {
 				return 1
 			} else if section == 3 && self.parentSpecialTest!.notes != "" {
 				return 1
-			} else if section == 4 {
-				if let count = self.imageLinksFetchedResultsController?.fetchedObjects?.count, count != 0 {
-					return 1
-				}
+                
+            //IMAGE REMOVAL
+			//} else if section == 4 {
+				//if let count = self.imageLinksFetchedResultsController?.fetchedObjects?.count, count != 0 {
+					//return 1
+                //}
 			} else if section == 5 {
 				if let count = self.videoLinksFetchedResultsController?.fetchedObjects?.count {
 					return count
@@ -111,14 +113,16 @@ class SpecialTestDetailTableViewController : UITableViewController {
 			case 1: cell.textLabel?.text = self.parentSpecialTest?.positiveSign
 			case 2: cell.textLabel?.text = self.parentSpecialTest?.indication
 			case 3: cell.textLabel?.text = self.parentSpecialTest?.notes
-			case 4:
-                if let imagesCell = tableView.dequeueReusableCell(withIdentifier: StoryboardIdentifiers.cell.specialTestImagesCell) as? ImagesTableViewCell {
-                    imagesCell.imagesCollectionView.backgroundColor = UIColor.clear
-                    imagesCell.imagesCollectionView.dataSource = self
-                    imagesCell.imagesCollectionView.delegate = self
-                    self.imagesCollectionView = imagesCell.imagesCollectionView
-                    return imagesCell
-                }
+            
+            //IMAGE REMOVAL
+			//case 4:
+                //if let imagesCell = tableView.dequeueReusableCell(withIdentifier: StoryboardIdentifiers.cell.specialTestImagesCell) as? ImagesTableViewCell {
+                    //imagesCell.imagesCollectionView.backgroundColor = UIColor.clear
+                    //imagesCell.imagesCollectionView.dataSource = self
+                    //imagesCell.imagesCollectionView.delegate = self
+                    //self.imagesCollectionView = imagesCell.imagesCollectionView
+                    //return imagesCell
+                //}
 			case 5:
 				if let managedVideoLink = self.videoLinksFetchedResultsController?.object(at: fixedSectionIndexPath) as? VideoLinkManagedObject {
 					cell.accessoryType = .disclosureIndicator

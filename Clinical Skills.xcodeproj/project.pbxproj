@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 48;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -39,7 +39,6 @@
 		01BCAE671C8FC1920076ECE5 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BCAE661C8FC1920076ECE5 /* Component.swift */; };
 		01BCAE691C8FC2720076ECE5 /* ComponentManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BCAE681C8FC2720076ECE5 /* ComponentManagedObject.swift */; };
 		01BF47DF1C9555B6003B10CB /* ImagesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BF47DE1C9555B6003B10CB /* ImagesTableViewCell.swift */; };
-		01BF6F761C8D48D40067D804 /* Pocket History Guide.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 01BF6F751C8D48D40067D804 /* Pocket History Guide.pdf */; };
 		01BF6F781C8D4A410067D804 /* PocketHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BF6F771C8D4A410067D804 /* PocketHistoryViewController.swift */; };
 		01C157421CC36D83008B8240 /* FetchedResultsControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C157411CC36D83008B8240 /* FetchedResultsControllers.swift */; };
 		01CD863A1C865F2E00E4437D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01CD86381C865F2E00E4437D /* LaunchScreen.storyboard */; };
@@ -66,8 +65,11 @@
 		01EFD90A1CCC245000730D3C /* PersonnelAcknowledgementManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01EFD9091CCC245000730D3C /* PersonnelAcknowledgementManagedObject.swift */; };
 		01EFD90C1CCC245A00730D3C /* SoftwareAcknowledgementManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01EFD90B1CCC245A00730D3C /* SoftwareAcknowledgementManagedObject.swift */; };
 		C980B43E1D1C6D80003181E4 /* HeadToToeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C980B43D1D1C6D80003181E4 /* HeadToToeViewController.swift */; };
-		C980B4401D1C78A0003181E4 /* Head To Toe.pdf in Resources */ = {isa = PBXBuildFile; fileRef = C980B43F1D1C78A0003181E4 /* Head To Toe.pdf */; };
 		C9C0F10A1DDBD0EB00865557 /* DisclaimerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C0F1091DDBD0EB00865557 /* DisclaimerViewController.swift */; };
+		C9DD200C1E201F2F00D018C0 /* OutlinedReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DD200B1E201F2F00D018C0 /* OutlinedReviewViewController.swift */; };
+		C9DD20131E2026E200D018C0 /* Head To Toe.docx in Resources */ = {isa = PBXBuildFile; fileRef = C9DD20111E2026E200D018C0 /* Head To Toe.docx */; };
+		C9DD20141E2026E200D018C0 /* Outlined Review.docx in Resources */ = {isa = PBXBuildFile; fileRef = C9DD20121E2026E200D018C0 /* Outlined Review.docx */; };
+		C9DD20161E20291600D018C0 /* Pocket History Guide.docx in Resources */ = {isa = PBXBuildFile; fileRef = C9DD20151E20291600D018C0 /* Pocket History Guide.docx */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -116,7 +118,6 @@
 		01BCAE661C8FC1920076ECE5 /* Component.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
 		01BCAE681C8FC2720076ECE5 /* ComponentManagedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentManagedObject.swift; sourceTree = "<group>"; };
 		01BF47DE1C9555B6003B10CB /* ImagesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImagesTableViewCell.swift; path = Storyboard/ImagesTableViewCell.swift; sourceTree = "<group>"; };
-		01BF6F751C8D48D40067D804 /* Pocket History Guide.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Pocket History Guide.pdf"; sourceTree = "<group>"; };
 		01BF6F771C8D4A410067D804 /* PocketHistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PocketHistoryViewController.swift; sourceTree = "<group>"; };
 		01C157411CC36D83008B8240 /* FetchedResultsControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FetchedResultsControllers.swift; path = "../Model/Core Data/FetchedResultsControllers.swift"; sourceTree = "<group>"; };
 		01CD86381C865F2E00E4437D /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -144,8 +145,11 @@
 		01EFD9091CCC245000730D3C /* PersonnelAcknowledgementManagedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonnelAcknowledgementManagedObject.swift; sourceTree = "<group>"; };
 		01EFD90B1CCC245A00730D3C /* SoftwareAcknowledgementManagedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoftwareAcknowledgementManagedObject.swift; sourceTree = "<group>"; };
 		C980B43D1D1C6D80003181E4 /* HeadToToeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeadToToeViewController.swift; sourceTree = "<group>"; };
-		C980B43F1D1C78A0003181E4 /* Head To Toe.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Head To Toe.pdf"; sourceTree = "<group>"; };
 		C9C0F1091DDBD0EB00865557 /* DisclaimerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisclaimerViewController.swift; sourceTree = "<group>"; };
+		C9DD200B1E201F2F00D018C0 /* OutlinedReviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutlinedReviewViewController.swift; sourceTree = "<group>"; };
+		C9DD20111E2026E200D018C0 /* Head To Toe.docx */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Head To Toe.docx"; sourceTree = "<group>"; };
+		C9DD20121E2026E200D018C0 /* Outlined Review.docx */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Outlined Review.docx"; sourceTree = "<group>"; };
+		C9DD20151E20291600D018C0 /* Pocket History Guide.docx */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pocket History Guide.docx"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -244,6 +248,7 @@
 				01D6DF301CCB7A1A00DFE3EC /* SoftwareWebsiteViewController.swift */,
 				C980B43D1D1C6D80003181E4 /* HeadToToeViewController.swift */,
 				C9C0F1091DDBD0EB00865557 /* DisclaimerViewController.swift */,
+				C9DD200B1E201F2F00D018C0 /* OutlinedReviewViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -273,9 +278,10 @@
 		011E017B1C8646B200AB8BA0 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				C980B43F1D1C78A0003181E4 /* Head To Toe.pdf */,
+				C9DD20151E20291600D018C0 /* Pocket History Guide.docx */,
+				C9DD20111E2026E200D018C0 /* Head To Toe.docx */,
+				C9DD20121E2026E200D018C0 /* Outlined Review.docx */,
 				011E01611C86463400AB8BA0 /* AppDelegate.swift */,
-				01BF6F751C8D48D40067D804 /* Pocket History Guide.pdf */,
 				011E016B1C86463400AB8BA0 /* Assets.xcassets */,
 				01CD86401C865FB900E4437D /* Info.plist */,
 				01CD86441C86A5F000E4437D /* Settings.bundle */,
@@ -384,7 +390,6 @@
 				TargetAttributes = {
 					011E015D1C86463400AB8BA0 = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = 7GZ48WN6Q5;
 						LastSwiftMigration = 0810;
 					};
 					01AB774A1CC059640059813F = {
@@ -395,7 +400,7 @@
 				};
 			};
 			buildConfigurationList = 011E01591C86463400AB8BA0 /* Build configuration list for PBXProject "Clinical Skills" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -420,10 +425,11 @@
 			files = (
 				01CD86451C86A5F000E4437D /* Settings.bundle in Resources */,
 				01CD863A1C865F2E00E4437D /* LaunchScreen.storyboard in Resources */,
+				C9DD20131E2026E200D018C0 /* Head To Toe.docx in Resources */,
 				011E016C1C86463400AB8BA0 /* Assets.xcassets in Resources */,
-				01BF6F761C8D48D40067D804 /* Pocket History Guide.pdf in Resources */,
-				C980B4401D1C78A0003181E4 /* Head To Toe.pdf in Resources */,
+				C9DD20141E2026E200D018C0 /* Outlined Review.docx in Resources */,
 				01CD863B1C865F2E00E4437D /* Main.storyboard in Resources */,
+				C9DD20161E20291600D018C0 /* Pocket History Guide.docx in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -491,6 +497,7 @@
 				01D6DF271CCB5C2200DFE3EC /* PersonnelAcknowledgementTableViewCell.swift in Sources */,
 				01DFC6AD1CCAF7BA0020BD55 /* AcknowledgementsManager.swift in Sources */,
 				011E01B21C864A9D00AB8BA0 /* UserDefaultsManager.swift in Sources */,
+				C9DD200C1E201F2F00D018C0 /* OutlinedReviewViewController.swift in Sources */,
 				01D6DF2F1CCB74C600DFE3EC /* SoftwareAcknowledgementTableViewCell.swift in Sources */,
 				0105E41E1C9154A200AC4F09 /* SpecialTestsTableViewController.swift in Sources */,
 				010EC6F61CB4DA54004AA8A1 /* SystemBreakdownViewController.swift in Sources */,
@@ -632,6 +639,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = AREE863LSY;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -652,6 +660,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = AREE863LSY;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

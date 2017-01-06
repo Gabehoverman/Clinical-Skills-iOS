@@ -219,7 +219,7 @@ extension SpecialTestsTableViewController : DatastoreManagerDelegate {
 			print("Error Storing Special Tests")
 			print("\(error)\n")
 			if !self.presentingAlert && self.presentedViewController == nil {
-				let alertController = UIAlertController(title: "Error Storing Data", message: "An error occurred while storing data. Please try agian.", preferredStyle: .alert)
+				let alertController = UIAlertController(title: "Error Storing Data", message: "An error occurred while storing data. Please try again.", preferredStyle: .alert)
 				alertController.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
 				self.presentingAlert = true
 				self.present(alertController, animated: true, completion: { self.presentingAlert = false })

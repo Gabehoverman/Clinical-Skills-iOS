@@ -19,7 +19,7 @@ class PocketHistoryViewController : UIViewController {
 	// MARK: - View Controller Methods
 	
 	override func viewDidLoad() {
-		if let url = Bundle.main.url(forResource: "Pocket History Guide", withExtension: "pdf") {
+		if let url = Bundle.main.url(forResource: "Pocket History Guide", withExtension: "docx") {
 			self.documentController = UIDocumentInteractionController(url: url)
 			self.documentController!.delegate = self
 			self.dismissing = false

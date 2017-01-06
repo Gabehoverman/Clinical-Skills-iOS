@@ -6,7 +6,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Clinical Skills/Controller/AcknowledgementsViewController.swift"
@@ -16,7 +16,7 @@
             startingLineNumber = "33"
             endingLineNumber = "33"
             landmarkName = "viewControllerForSelectedSegmentIndex(_:)"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -32,7 +32,7 @@
             startingLineNumber = "44"
             endingLineNumber = "44"
             landmarkName = "viewControllerForSelectedSegmentIndex(_:)"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

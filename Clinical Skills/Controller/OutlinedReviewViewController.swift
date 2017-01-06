@@ -1,14 +1,15 @@
 //
-//  HeadToToeViewController.swift
+//  OutlinedReviewViewController.swift
 //  Clinical Skills
 //
-//  Created by Matthew Taylor on 6/23/16.
-//  Copyright © 2016 Nick. All rights reserved.
+//  Created by Matthew Taylor on 1/6/17.
+//  Copyright © 2017 Nick. All rights reserved.
 //
+
 import Foundation
 import UIKit
 
-class HeadToToeViewController : UIViewController {
+class OutlinedReviewViewController : UIViewController {
     
     // MARK: - Properties
     
@@ -18,7 +19,7 @@ class HeadToToeViewController : UIViewController {
     // MARK: - View Controller Methods
     
     override func viewDidLoad() {
-        if let url = Bundle.main.url(forResource: "Head To Toe", withExtension: "docx") {
+        if let url = Bundle.main.url(forResource: "Outlined Review", withExtension: "docx") {
             self.documentController = UIDocumentInteractionController(url: url)
             self.documentController!.delegate = self
             self.dismissing = false
@@ -54,7 +55,7 @@ class HeadToToeViewController : UIViewController {
 
 // MARK: - Document Interface Controller Delegate Methods
 
-extension HeadToToeViewController : UIDocumentInteractionControllerDelegate {
+extension OutlinedReviewViewController : UIDocumentInteractionControllerDelegate {
     func documentInteractionControllerViewControllerForPreview(_ controller: UIDocumentInteractionController) -> UIViewController {
         return self.navigationController!
     }
