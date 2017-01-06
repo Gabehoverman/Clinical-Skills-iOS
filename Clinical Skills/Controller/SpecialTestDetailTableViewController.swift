@@ -36,7 +36,7 @@ class SpecialTestDetailTableViewController : UITableViewController {
 		if self.parentSpecialTest != nil {
 			self.images = [BasicPhoto]()
 			
-			self.imageLinksFetchedResultsController = FetchedResultsControllers.imageLinksFetchedResultsController(self.parentSpecialTest!)
+			//self.imageLinksFetchedResultsController = FetchedResultsControllers.imageLinksFetchedResultsController(self.parentSpecialTest!)
 			self.videoLinksFetchedResultsController = FetchedResultsControllers.videoLinksFetchedResultsController(self.parentSpecialTest!)
 			self.fetchResultsWithReload(false)
 			
@@ -45,7 +45,7 @@ class SpecialTestDetailTableViewController : UITableViewController {
 			
 			self.remoteConnectionManager = RemoteConnectionManager(delegate: self)
 			self.remoteConnectionManager?.fetchVideoLinks(forSpecialTest: self.parentSpecialTest!)
-			self.remoteConnectionManager?.fetchImageLinks(forSpecialTest: self.parentSpecialTest!)
+			//self.remoteConnectionManager?.fetchImageLinks(forSpecialTest: self.parentSpecialTest!)
 			
 			NotificationCenter.default.addObserver(self, selector: #selector(self.backgroundManagedObjectContextDidSave(_:)), name: NSNotification.Name.NSManagedObjectContextDidSave, object: nil)
 		}
@@ -85,7 +85,7 @@ class SpecialTestDetailTableViewController : UITableViewController {
 				//if let count = self.imageLinksFetchedResultsController?.fetchedObjects?.count, count != 0 {
 					//return 1
                 //}
-			} else if section == 5 {
+			} else if section == 4 {
 				if let count = self.videoLinksFetchedResultsController?.fetchedObjects?.count {
 					return count
 				}
@@ -95,7 +95,7 @@ class SpecialTestDetailTableViewController : UITableViewController {
 	}
 	
 	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-		if indexPath.section == 4 {
+		if indexPath.section == 3 {
 			return 132
 		} else {
 			return UITableViewAutomaticDimension
@@ -123,7 +123,7 @@ class SpecialTestDetailTableViewController : UITableViewController {
                     //self.imagesCollectionView = imagesCell.imagesCollectionView
                     //return imagesCell
                 //}
-			case 5:
+			case 4:
 				if let managedVideoLink = self.videoLinksFetchedResultsController?.object(at: fixedSectionIndexPath) as? VideoLinkManagedObject {
 					cell.accessoryType = .disclosureIndicator
 					cell.textLabel?.text = managedVideoLink.title
@@ -134,7 +134,7 @@ class SpecialTestDetailTableViewController : UITableViewController {
 	}
 	
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		if indexPath.section == 5 {
+		if indexPath.section == 4 {
 			let fixedSectionIndexPath = IndexPath(row: indexPath.row, section: 2) // NSIndexPath referencing section 0 to avoid "no section at index 3" error
 			if let managedVideoLink = self.videoLinksFetchedResultsController?.object(at: fixedSectionIndexPath) as? VideoLinkManagedObject {
 				self.performSegue(withIdentifier: StoryboardIdentifiers.segue.toVideoView, sender: managedVideoLink)
@@ -146,11 +146,11 @@ class SpecialTestDetailTableViewController : UITableViewController {
 	
 	func fetchResultsWithReload(_ shouldReload: Bool) {
 		do {
-			try self.imageLinksFetchedResultsController?.performFetch()
+			//try self.imageLinksFetchedResultsController?.performFetch()
 			try self.videoLinksFetchedResultsController?.performFetch()
 			if shouldReload {
 				self.tableView.reloadData()
-				self.imagesCollectionView?.reloadData()
+				//self.imagesCollectionView?.reloadData()
 			}
 		} catch {
 			print("Error Fetching Special Test Details")

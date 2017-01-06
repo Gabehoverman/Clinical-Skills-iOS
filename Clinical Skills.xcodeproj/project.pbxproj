@@ -69,7 +69,8 @@
 		C9DD200C1E201F2F00D018C0 /* OutlinedReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DD200B1E201F2F00D018C0 /* OutlinedReviewViewController.swift */; };
 		C9DD20131E2026E200D018C0 /* Head To Toe.docx in Resources */ = {isa = PBXBuildFile; fileRef = C9DD20111E2026E200D018C0 /* Head To Toe.docx */; };
 		C9DD20141E2026E200D018C0 /* Outlined Review.docx in Resources */ = {isa = PBXBuildFile; fileRef = C9DD20121E2026E200D018C0 /* Outlined Review.docx */; };
-		C9DD20161E20291600D018C0 /* Pocket History Guide.docx in Resources */ = {isa = PBXBuildFile; fileRef = C9DD20151E20291600D018C0 /* Pocket History Guide.docx */; };
+		C9DD20181E203FE900D018C0 /* Pocket History Guide.docx in Resources */ = {isa = PBXBuildFile; fileRef = C9DD20171E203FE900D018C0 /* Pocket History Guide.docx */; };
+		C9DD201A1E2040A400D018C0 /* Pocket History Guide.pdf in Resources */ = {isa = PBXBuildFile; fileRef = C9DD20191E2040A400D018C0 /* Pocket History Guide.pdf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -149,7 +150,8 @@
 		C9DD200B1E201F2F00D018C0 /* OutlinedReviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutlinedReviewViewController.swift; sourceTree = "<group>"; };
 		C9DD20111E2026E200D018C0 /* Head To Toe.docx */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Head To Toe.docx"; sourceTree = "<group>"; };
 		C9DD20121E2026E200D018C0 /* Outlined Review.docx */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Outlined Review.docx"; sourceTree = "<group>"; };
-		C9DD20151E20291600D018C0 /* Pocket History Guide.docx */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pocket History Guide.docx"; sourceTree = "<group>"; };
+		C9DD20171E203FE900D018C0 /* Pocket History Guide.docx */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pocket History Guide.docx"; sourceTree = "<group>"; };
+		C9DD20191E2040A400D018C0 /* Pocket History Guide.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Pocket History Guide.pdf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -278,7 +280,8 @@
 		011E017B1C8646B200AB8BA0 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				C9DD20151E20291600D018C0 /* Pocket History Guide.docx */,
+				C9DD20191E2040A400D018C0 /* Pocket History Guide.pdf */,
+				C9DD20171E203FE900D018C0 /* Pocket History Guide.docx */,
 				C9DD20111E2026E200D018C0 /* Head To Toe.docx */,
 				C9DD20121E2026E200D018C0 /* Outlined Review.docx */,
 				011E01611C86463400AB8BA0 /* AppDelegate.swift */,
@@ -429,7 +432,8 @@
 				011E016C1C86463400AB8BA0 /* Assets.xcassets in Resources */,
 				C9DD20141E2026E200D018C0 /* Outlined Review.docx in Resources */,
 				01CD863B1C865F2E00E4437D /* Main.storyboard in Resources */,
-				C9DD20161E20291600D018C0 /* Pocket History Guide.docx in Resources */,
+				C9DD201A1E2040A400D018C0 /* Pocket History Guide.pdf in Resources */,
+				C9DD20181E203FE900D018C0 /* Pocket History Guide.docx in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
