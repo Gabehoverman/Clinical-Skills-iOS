@@ -83,7 +83,7 @@ class SystemsTableViewController: UITableViewController {
 		if let controller = self.fetchedResultsController {
 			if let managedSystem = controller.object(at: indexPath) as? SystemManagedObject {
 				if self.tabBarController?.selectedIndex == StoryboardIdentifiers.tab.clinicalSkills {
-					self.performSegue(withIdentifier: StoryboardIdentifiers.segue.toComponentsView, sender: System(managedObject: managedSystem))
+					self.performSegue(withIdentifier: StoryboardIdentifiers.segue.toComponentFile, sender: System(managedObject: managedSystem))
 				} else {
 					self.performSegue(withIdentifier: StoryboardIdentifiers.segue.toSystemBreakdownView, sender: System(managedObject: managedSystem))
 				}
@@ -143,19 +143,21 @@ class SystemsTableViewController: UITableViewController {
 	// MARK: - Navigation Methods
 	
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if segue.identifier == StoryboardIdentifiers.segue.toComponentsView {
-			if let destination = segue.destination as? ComponentsTableViewController {
+		if segue.identifier == StoryboardIdentifiers.segue.toComponentFile {
+			if let destination = segue.destination as? ComponentFileController {
 				if let system = sender as? System {
 					destination.system = system
 				}
 			}
+        /*
 		} else if segue.identifier == StoryboardIdentifiers.segue.toSystemBreakdownView {
 			if let destination = segue.destination as? SystemBreakdownViewController {
 				if let system = sender as? System {
 					destination.system = system
 				}
 			}
-		}
+        */
+        }
 	}
 }
 

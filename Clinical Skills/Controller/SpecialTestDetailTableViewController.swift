@@ -225,7 +225,7 @@ extension SpecialTestDetailTableViewController : UICollectionViewDelegateFlowLay
 }
 
 // MARK: - Collection View Data Source Methods
-
+/*
 extension SpecialTestDetailTableViewController : UICollectionViewDataSource {
 	
 	func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -242,11 +242,10 @@ extension SpecialTestDetailTableViewController : UICollectionViewDataSource {
 	
 	private func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		if let initialImage = self.images?[indexPath.row] {
-			let photosViewController = NYTPhotosViewController(photos: self.images, initialPhoto: initialImage)
+			let photosViewController = NYTPhotosViewController(nibName: self.images, bundle: initialImage)
 			self.present(photosViewController, animated: true, completion: nil)
 		}
 	}
-	
 	
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: StoryboardIdentifiers.cell.collectionImageCell, for: indexPath) as? ImageCollectionViewCell {
@@ -258,6 +257,9 @@ extension SpecialTestDetailTableViewController : UICollectionViewDataSource {
 		return UICollectionViewCell()
 	}
 }
+
+*/
+
 
 // MARK: - Collection View Delegate Methods
 

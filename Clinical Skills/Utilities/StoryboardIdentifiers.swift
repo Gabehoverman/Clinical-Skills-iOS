@@ -23,6 +23,7 @@ struct StoryboardIdentifiers {
 		static let toSoftwareWebsiteView = "ToSoftwareWebsiteView"
         static let toDisclaimerView = "ToDisclaimerView"
         //static let toPocketHistory = "ToPocketHistoryView"
+        static let toComponentFile = "ToComponentFile"
 	}
 	
 	struct tab {
@@ -37,6 +38,7 @@ struct StoryboardIdentifiers {
 		static let personnelAcknowledgementTableViewController = "PersonnelAcknowledgementTableViewController"
 		static let softwareAcknowledgementTableViewController = "SoftwareAcknowledgementTableViewController"
         static let disclaimerViewController = "DisclaimerViewController"
+        static let componentFileController = "ComponentFileController"
 	}
 	
 	struct cell {

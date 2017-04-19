@@ -1,4 +1,4 @@
 github "duemunk/Async" "7251f43b5552fc2aca2d026b68d7d2049928616c"
 github "Flipboard/FLAnimatedImage" "1.0.12"
 github "SwiftyJSON/SwiftyJSON" "3.1.4"
-github "NYTimes/NYTPhotoViewer" "6bb64ea9e57a109cbe587354a94345575d22ad14"
+github "NYTimes/NYTPhotoViewer" "0ecbb02fcd84911fe6f898267df42188ac96d068"

@@ -96,6 +96,7 @@
    </AnalyzeAction>
    <ArchiveAction
       buildConfiguration = "Release"
+      customArchiveName = "Clinical Skills"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>

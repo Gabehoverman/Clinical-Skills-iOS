@@ -64,7 +64,24 @@
 		01E9FFDF1CB5C018005276AC /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E9FFDE1CB5C018005276AC /* VideoViewController.swift */; };
 		01EFD90A1CCC245000730D3C /* PersonnelAcknowledgementManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01EFD9091CCC245000730D3C /* PersonnelAcknowledgementManagedObject.swift */; };
 		01EFD90C1CCC245A00730D3C /* SoftwareAcknowledgementManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01EFD90B1CCC245A00730D3C /* SoftwareAcknowledgementManagedObject.swift */; };
+		C91DCBE61EA6C8600066D969 /* Abdomen System.pdf in Resources */ = {isa = PBXBuildFile; fileRef = C91DCBDE1EA6C8600066D969 /* Abdomen System.pdf */; };
+		C91DCBE71EA6C8600066D969 /* Cardiovascular System.pdf in Resources */ = {isa = PBXBuildFile; fileRef = C91DCBDF1EA6C8600066D969 /* Cardiovascular System.pdf */; };
+		C91DCBE81EA6C8600066D969 /* Eye System.pdf in Resources */ = {isa = PBXBuildFile; fileRef = C91DCBE01EA6C8600066D969 /* Eye System.pdf */; };
+		C91DCBE91EA6C8600066D969 /* HENNT System.pdf in Resources */ = {isa = PBXBuildFile; fileRef = C91DCBE11EA6C8600066D969 /* HENNT System.pdf */; };
+		C91DCBEA1EA6C8600066D969 /* Musculoskeletal System.pdf in Resources */ = {isa = PBXBuildFile; fileRef = C91DCBE21EA6C8600066D969 /* Musculoskeletal System.pdf */; };
+		C91DCBEB1EA6C8600066D969 /* Neurological System.pdf in Resources */ = {isa = PBXBuildFile; fileRef = C91DCBE31EA6C8600066D969 /* Neurological System.pdf */; };
+		C91DCBEC1EA6C8600066D969 /* Respiratory System.pdf in Resources */ = {isa = PBXBuildFile; fileRef = C91DCBE41EA6C8600066D969 /* Respiratory System.pdf */; };
+		C91DCBED1EA6C8600066D969 /* Vital Signs.pdf in Resources */ = {isa = PBXBuildFile; fileRef = C91DCBE51EA6C8600066D969 /* Vital Signs.pdf */; };
+		C91DCBEF1EA6CA030066D969 /* Musculoskeletal System.docx in Resources */ = {isa = PBXBuildFile; fileRef = C91DCBEE1EA6CA030066D969 /* Musculoskeletal System.docx */; };
+		C91DCBF71EA6CA6A0066D969 /* Abdomen System.docx in Resources */ = {isa = PBXBuildFile; fileRef = C91DCBF01EA6CA6A0066D969 /* Abdomen System.docx */; };
+		C91DCBF81EA6CA6A0066D969 /* Cardiovascular System.docx in Resources */ = {isa = PBXBuildFile; fileRef = C91DCBF11EA6CA6A0066D969 /* Cardiovascular System.docx */; };
+		C91DCBF91EA6CA6A0066D969 /* Eye System.docx in Resources */ = {isa = PBXBuildFile; fileRef = C91DCBF21EA6CA6A0066D969 /* Eye System.docx */; };
+		C91DCBFA1EA6CA6A0066D969 /* HENNT System.docx in Resources */ = {isa = PBXBuildFile; fileRef = C91DCBF31EA6CA6A0066D969 /* HENNT System.docx */; };
+		C91DCBFB1EA6CA6A0066D969 /* Neurological System.docx in Resources */ = {isa = PBXBuildFile; fileRef = C91DCBF41EA6CA6A0066D969 /* Neurological System.docx */; };
+		C91DCBFC1EA6CA6A0066D969 /* Respiratory System.docx in Resources */ = {isa = PBXBuildFile; fileRef = C91DCBF51EA6CA6A0066D969 /* Respiratory System.docx */; };
+		C91DCBFD1EA6CA6A0066D969 /* Vital Signs.docx in Resources */ = {isa = PBXBuildFile; fileRef = C91DCBF61EA6CA6A0066D969 /* Vital Signs.docx */; };
 		C980B43E1D1C6D80003181E4 /* HeadToToeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C980B43D1D1C6D80003181E4 /* HeadToToeViewController.swift */; };
+		C99778A41E82100C001D4676 /* ComponentFileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99778A31E82100C001D4676 /* ComponentFileController.swift */; };
 		C9C0F10A1DDBD0EB00865557 /* DisclaimerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C0F1091DDBD0EB00865557 /* DisclaimerViewController.swift */; };
 		C9DD200C1E201F2F00D018C0 /* OutlinedReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DD200B1E201F2F00D018C0 /* OutlinedReviewViewController.swift */; };
 		C9DD20131E2026E200D018C0 /* Head To Toe.docx in Resources */ = {isa = PBXBuildFile; fileRef = C9DD20111E2026E200D018C0 /* Head To Toe.docx */; };
@@ -144,7 +161,24 @@
 		01E9FFDE1CB5C018005276AC /* VideoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
 		01EFD9091CCC245000730D3C /* PersonnelAcknowledgementManagedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonnelAcknowledgementManagedObject.swift; sourceTree = "<group>"; };
 		01EFD90B1CCC245A00730D3C /* SoftwareAcknowledgementManagedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoftwareAcknowledgementManagedObject.swift; sourceTree = "<group>"; };
+		C91DCBDE1EA6C8600066D969 /* Abdomen System.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Abdomen System.pdf"; sourceTree = SOURCE_ROOT; };
+		C91DCBDF1EA6C8600066D969 /* Cardiovascular System.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Cardiovascular System.pdf"; sourceTree = SOURCE_ROOT; };
+		C91DCBE01EA6C8600066D969 /* Eye System.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Eye System.pdf"; sourceTree = SOURCE_ROOT; };
+		C91DCBE11EA6C8600066D969 /* HENNT System.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "HENNT System.pdf"; sourceTree = SOURCE_ROOT; };
+		C91DCBE21EA6C8600066D969 /* Musculoskeletal System.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Musculoskeletal System.pdf"; sourceTree = SOURCE_ROOT; };
+		C91DCBE31EA6C8600066D969 /* Neurological System.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Neurological System.pdf"; sourceTree = SOURCE_ROOT; };
+		C91DCBE41EA6C8600066D969 /* Respiratory System.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Respiratory System.pdf"; sourceTree = SOURCE_ROOT; };
+		C91DCBE51EA6C8600066D969 /* Vital Signs.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Vital Signs.pdf"; sourceTree = SOURCE_ROOT; };
+		C91DCBEE1EA6CA030066D969 /* Musculoskeletal System.docx */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Musculoskeletal System.docx"; path = "Documents/System Docs/Musculoskeletal System.docx"; sourceTree = SOURCE_ROOT; };
+		C91DCBF01EA6CA6A0066D969 /* Abdomen System.docx */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Abdomen System.docx"; path = "Documents/System Docs/Abdomen System.docx"; sourceTree = SOURCE_ROOT; };
+		C91DCBF11EA6CA6A0066D969 /* Cardiovascular System.docx */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Cardiovascular System.docx"; path = "Documents/System Docs/Cardiovascular System.docx"; sourceTree = SOURCE_ROOT; };
+		C91DCBF21EA6CA6A0066D969 /* Eye System.docx */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Eye System.docx"; path = "Documents/System Docs/Eye System.docx"; sourceTree = SOURCE_ROOT; };
+		C91DCBF31EA6CA6A0066D969 /* HENNT System.docx */ = {isa = PBXFileReference; lastKnownFileType = file; name = "HENNT System.docx"; path = "Documents/System Docs/HENNT System.docx"; sourceTree = SOURCE_ROOT; };
+		C91DCBF41EA6CA6A0066D969 /* Neurological System.docx */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Neurological System.docx"; path = "Documents/System Docs/Neurological System.docx"; sourceTree = SOURCE_ROOT; };
+		C91DCBF51EA6CA6A0066D969 /* Respiratory System.docx */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Respiratory System.docx"; path = "Documents/System Docs/Respiratory System.docx"; sourceTree = SOURCE_ROOT; };
+		C91DCBF61EA6CA6A0066D969 /* Vital Signs.docx */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Vital Signs.docx"; path = "Documents/System Docs/Vital Signs.docx"; sourceTree = SOURCE_ROOT; };
 		C980B43D1D1C6D80003181E4 /* HeadToToeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeadToToeViewController.swift; sourceTree = "<group>"; };
+		C99778A31E82100C001D4676 /* ComponentFileController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentFileController.swift; sourceTree = "<group>"; };
 		C9C0F1091DDBD0EB00865557 /* DisclaimerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisclaimerViewController.swift; sourceTree = "<group>"; };
 		C9DD200B1E201F2F00D018C0 /* OutlinedReviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutlinedReviewViewController.swift; sourceTree = "<group>"; };
 		C9DD20111E2026E200D018C0 /* Head To Toe.docx */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Head To Toe.docx"; sourceTree = "<group>"; };
@@ -249,6 +283,7 @@
 				C980B43D1D1C6D80003181E4 /* HeadToToeViewController.swift */,
 				C9C0F1091DDBD0EB00865557 /* DisclaimerViewController.swift */,
 				C9DD200B1E201F2F00D018C0 /* OutlinedReviewViewController.swift */,
+				C99778A31E82100C001D4676 /* ComponentFileController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -278,6 +313,22 @@
 		011E017B1C8646B200AB8BA0 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C91DCBF01EA6CA6A0066D969 /* Abdomen System.docx */,
+				C91DCBF11EA6CA6A0066D969 /* Cardiovascular System.docx */,
+				C91DCBF21EA6CA6A0066D969 /* Eye System.docx */,
+				C91DCBF31EA6CA6A0066D969 /* HENNT System.docx */,
+				C91DCBF41EA6CA6A0066D969 /* Neurological System.docx */,
+				C91DCBF51EA6CA6A0066D969 /* Respiratory System.docx */,
+				C91DCBF61EA6CA6A0066D969 /* Vital Signs.docx */,
+				C91DCBEE1EA6CA030066D969 /* Musculoskeletal System.docx */,
+				C91DCBDE1EA6C8600066D969 /* Abdomen System.pdf */,
+				C91DCBDF1EA6C8600066D969 /* Cardiovascular System.pdf */,
+				C91DCBE01EA6C8600066D969 /* Eye System.pdf */,
+				C91DCBE11EA6C8600066D969 /* HENNT System.pdf */,
+				C91DCBE21EA6C8600066D969 /* Musculoskeletal System.pdf */,
+				C91DCBE31EA6C8600066D969 /* Neurological System.pdf */,
+				C91DCBE41EA6C8600066D969 /* Respiratory System.pdf */,
+				C91DCBE51EA6C8600066D969 /* Vital Signs.pdf */,
 				C9DD20191E2040A400D018C0 /* Pocket History Guide.pdf */,
 				C9DD20111E2026E200D018C0 /* Head To Toe.docx */,
 				C9DD20121E2026E200D018C0 /* Outlined Review.docx */,
@@ -391,6 +442,7 @@
 					011E015D1C86463400AB8BA0 = {
 						CreatedOnToolsVersion = 7.2;
 						LastSwiftMigration = 0810;
+						ProvisioningStyle = Manual;
 					};
 					01AB774A1CC059640059813F = {
 						CreatedOnToolsVersion = 7.3;
@@ -423,13 +475,29 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C91DCBEB1EA6C8600066D969 /* Neurological System.pdf in Resources */,
+				C91DCBE91EA6C8600066D969 /* HENNT System.pdf in Resources */,
 				01CD86451C86A5F000E4437D /* Settings.bundle in Resources */,
+				C91DCBFD1EA6CA6A0066D969 /* Vital Signs.docx in Resources */,
+				C91DCBFA1EA6CA6A0066D969 /* HENNT System.docx in Resources */,
 				01CD863A1C865F2E00E4437D /* LaunchScreen.storyboard in Resources */,
 				C9DD20131E2026E200D018C0 /* Head To Toe.docx in Resources */,
+				C91DCBF71EA6CA6A0066D969 /* Abdomen System.docx in Resources */,
 				011E016C1C86463400AB8BA0 /* Assets.xcassets in Resources */,
 				C9DD20141E2026E200D018C0 /* Outlined Review.docx in Resources */,
+				C91DCBFB1EA6CA6A0066D969 /* Neurological System.docx in Resources */,
+				C91DCBE61EA6C8600066D969 /* Abdomen System.pdf in Resources */,
 				01CD863B1C865F2E00E4437D /* Main.storyboard in Resources */,
+				C91DCBFC1EA6CA6A0066D969 /* Respiratory System.docx in Resources */,
+				C91DCBEF1EA6CA030066D969 /* Musculoskeletal System.docx in Resources */,
+				C91DCBEC1EA6C8600066D969 /* Respiratory System.pdf in Resources */,
+				C91DCBEA1EA6C8600066D969 /* Musculoskeletal System.pdf in Resources */,
+				C91DCBE71EA6C8600066D969 /* Cardiovascular System.pdf in Resources */,
+				C91DCBE81EA6C8600066D969 /* Eye System.pdf in Resources */,
+				C91DCBED1EA6C8600066D969 /* Vital Signs.pdf in Resources */,
+				C91DCBF81EA6CA6A0066D969 /* Cardiovascular System.docx in Resources */,
 				C9DD201A1E2040A400D018C0 /* Pocket History Guide.pdf in Resources */,
+				C91DCBF91EA6CA6A0066D969 /* Eye System.docx in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -475,6 +543,7 @@
 				01EFD90A1CCC245000730D3C /* PersonnelAcknowledgementManagedObject.swift in Sources */,
 				01A610201CA4F20300A63ED6 /* ComponentDetailsTableViewController.swift in Sources */,
 				0105E4221C91600300AC4F09 /* SpecialTest.swift in Sources */,
+				C99778A41E82100C001D4676 /* ComponentFileController.swift in Sources */,
 				01DFC6AF1CCAFCED0020BD55 /* AcknowledgementsViewController.swift in Sources */,
 				01DB22311CACDB110069ECFB /* Palpation.swift in Sources */,
 				010EC6FA1CB4F0FB004AA8A1 /* ExamTechniqueDetailsTableViewController.swift in Sources */,
@@ -639,6 +708,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				DEVELOPMENT_TEAM = AREE863LSY;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -649,8 +719,11 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.marshall.alexander.wvsom-clinical-skills";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "4e54def3-d498-4c87-8bd5-6dc97633cb16";
+				PROVISIONING_PROFILE_SPECIFIER = "Clinical Skills";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -660,6 +733,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				DEVELOPMENT_TEAM = AREE863LSY;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -671,7 +745,10 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.marshall.alexander.wvsom-clinical-skills";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "4e54def3-d498-4c87-8bd5-6dc97633cb16";
+				PROVISIONING_PROFILE_SPECIFIER = "Clinical Skills";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

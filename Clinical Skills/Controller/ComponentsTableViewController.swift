@@ -46,6 +46,8 @@ class ComponentsTableViewController : UITableViewController {
 			self.remoteConnectionManager?.fetchComponents(forSystem: self.system!)
 		
 			NotificationCenter.default.addObserver(self, selector: #selector(self.backgroundManagedObjectContextDidSave(_:)), name: NSNotification.Name.NSManagedObjectContextDidSave, object: nil)
+            
+            
 		}
 	}
 	

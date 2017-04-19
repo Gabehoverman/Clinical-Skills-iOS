@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Du2-Kh-XVf">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -35,6 +35,9 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="pM0-4v-GKd" kind="show" identifier="ToComponentFile" id="epG-9z-2Mg"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -62,9 +65,6 @@
                             </fragment>
                         </attributedString>
                     </refreshControl>
-                    <connections>
-                        <segue destination="yzK-o4-xGa" kind="show" identifier="ToComponentsView" id="8YB-yd-AEx"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Myo-E9-iSL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -82,7 +82,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="1Lz-Nd-jFp" kind="relationship" relationship="rootViewController" id="7R6-u0-nrI"/>
+                        <segue destination="1Lz-Nd-jFp" kind="relationship" relationship="rootViewController" id="lly-JE-TDf"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wN8-Hx-UiL" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -102,9 +102,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="axi-7T-X2Q">
-                                <rect key="frame" x="162" y="315.5" width="51" height="36"/>
+                                <rect key="frame" x="74.5" y="315.5" width="226" height="36"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <state key="normal" title="Show"/>
+                                <state key="normal" title="Press To Return To Guide"/>
                                 <connections>
                                     <action selector="show:" destination="naU-fq-aVx" eventType="touchUpInside" id="p2Q-yI-bID"/>
                                 </connections>
@@ -173,9 +173,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gK0-HE-Po6">
-                                <rect key="frame" x="162" y="315.5" width="51" height="36"/>
+                                <rect key="frame" x="86" y="315.5" width="203" height="36"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <state key="normal" title="Show"/>
+                                <state key="normal" title="Press To Return To File"/>
                                 <connections>
                                     <action selector="show:" destination="OCm-0N-LfY" eventType="touchUpInside" id="VWp-3d-fRL"/>
                                 </connections>
@@ -244,12 +244,12 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bAY-xk-lfw">
-                                <rect key="frame" x="162" y="275" width="51" height="36"/>
+                                <rect key="frame" x="46" y="306" width="282" height="36"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <state key="normal" title="Show"/>
+                                <state key="normal" title="Press To Return To Review"/>
                                 <connections>
-                                    <action selector="show:" destination="OCm-0N-LfY" eventType="touchUpInside" id="E2K-bN-14c"/>
+                                    <action selector="show:" destination="FV0-WN-gDV" eventType="touchUpInside" id="t2a-s0-YJu"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -259,7 +259,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="feN-iU-Ew7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4790" y="2924"/>
+            <point key="canvasLocation" x="4789.6000000000004" y="2923.9880059970019"/>
         </scene>
         <!--Systems Table View Controller-->
         <scene sceneID="wmv-z0-BQc">
@@ -866,12 +866,11 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="u46-bO-75k" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6487" y="531"/>
+            <point key="canvasLocation" x="8471" y="551"/>
         </scene>
         <!--Disclaimer View Controller-->
         <scene sceneID="l8x-My-mAl">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="49q-6d-pIC" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="DisclaimerViewController" title="Disclaimer View Controller" useStoryboardIdentifierAsRestorationIdentifier="YES" id="YOJ-pp-FNc" customClass="DisclaimerViewController" customModule="Clinical_Skills" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="TrI-0x-3VD"/>
@@ -901,6 +900,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Disclaimer" id="ciW-6s-go6"/>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="49q-6d-pIC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="7312.8000000000002" y="-2603.7481259370315"/>
         </scene>
@@ -972,7 +972,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="88"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Developer" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KQm-Fb-Dxw">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" ambiguous="YES" text="Developer" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KQm-Fb-Dxw">
                                             <rect key="frame" x="339" y="16" width="245" height="21"/>
                                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="12"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1333,7 +1333,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gRR-ME-CPO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7319" y="531"/>
+            <point key="canvasLocation" x="9295" y="551"/>
         </scene>
         <!--Special Tests Detail Table View Controller-->
         <scene sceneID="c3R-MR-H34">
@@ -1479,7 +1479,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RDZ-Ik-Vz9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="8179" y="531"/>
+            <point key="canvasLocation" x="10156" y="551"/>
         </scene>
         <!--Video View Controller-->
         <scene sceneID="Nj7-83-IMi">
@@ -1547,7 +1547,40 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZYf-VC-xgA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="9039" y="531"/>
+            <point key="canvasLocation" x="11015" y="551"/>
+        </scene>
+        <!--Component File-->
+        <scene sceneID="QBZ-fu-8Su">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hlP-13-gS3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="pM0-4v-GKd" customClass="ComponentFileController" customModule="Clinical_Skills" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="hkE-XL-TQO"/>
+                        <viewControllerLayoutGuide type="bottom" id="hDT-ge-gNK"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="oVr-tW-91m">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JuK-wC-SYF">
+                                <rect key="frame" x="85.5" y="315.5" width="204" height="36"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="Press To Return To FIle"/>
+                                <connections>
+                                    <action selector="show:" destination="pM0-4v-GKd" eventType="touchUpInside" id="EJQ-6A-KpN"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="JuK-wC-SYF" firstAttribute="centerX" secondItem="oVr-tW-91m" secondAttribute="centerX" id="7IW-2g-oel"/>
+                            <constraint firstItem="JuK-wC-SYF" firstAttribute="centerY" secondItem="oVr-tW-91m" secondAttribute="centerY" id="Bp9-tX-Is1"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Component File" id="a20-ot-1KE"/>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="6602" y="551"/>
         </scene>
     </scenes>
     <resources>
