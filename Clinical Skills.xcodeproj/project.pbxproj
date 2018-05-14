@@ -64,6 +64,25 @@
 		01E9FFDF1CB5C018005276AC /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E9FFDE1CB5C018005276AC /* VideoViewController.swift */; };
 		01EFD90A1CCC245000730D3C /* PersonnelAcknowledgementManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01EFD9091CCC245000730D3C /* PersonnelAcknowledgementManagedObject.swift */; };
 		01EFD90C1CCC245A00730D3C /* SoftwareAcknowledgementManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01EFD90B1CCC245A00730D3C /* SoftwareAcknowledgementManagedObject.swift */; };
+		1F27206E1F06AB6A00B2B46E /* OfflineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F27206D1F06AB6A00B2B46E /* OfflineViewController.swift */; };
+		1F4D75A11EF89310002741D6 /* Async.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F4D75A01EF89310002741D6 /* Async.framework */; };
+		1F4D75A31EF89316002741D6 /* FLAnimatedImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F4D75A21EF89316002741D6 /* FLAnimatedImage.framework */; };
+		1F4D75A51EF89318002741D6 /* NYTPhotoViewer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F4D75A41EF89318002741D6 /* NYTPhotoViewer.framework */; };
+		1F4D75A71EF8931B002741D6 /* NYTPhotoViewerCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F4D75A61EF8931B002741D6 /* NYTPhotoViewerCore.framework */; };
+		1F4D75A91EF8931F002741D6 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F4D75A81EF8931F002741D6 /* SwiftyJSON.framework */; };
+		1F7A5E681F55FD1C00355154 /* PDFReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7A5E671F55FD1C00355154 /* PDFReviewViewController.swift */; };
+		1F7BB4921F549CF4003091B1 /* SystemMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7BB4911F549CF4003091B1 /* SystemMenuViewController.swift */; };
+		1F8AC03C1F166BD300BFB1C5 /* OfflineTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8AC03B1F166BD300BFB1C5 /* OfflineTableViewController.swift */; };
+		1F91C2D91F90129400396861 /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F91C2D81F90129400396861 /* Section.swift */; };
+		1F91C2DB1F9113BE00396861 /* HeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F91C2DA1F9113BE00396861 /* HeaderCell.swift */; };
+		1F91C2DD1F95615000396861 /* ExpandableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F91C2DC1F95615000396861 /* ExpandableHeaderView.swift */; };
+		1F91C2DF1F95648500396861 /* ExpandableTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F91C2DE1F95648500396861 /* ExpandableTableViewController.swift */; };
+		1FE87E9D1F571BC9001F6813 /* VideoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE87E9C1F571BC9001F6813 /* VideoTableViewController.swift */; };
+		1FE87E9F1F571C8E001F6813 /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE87E9E1F571C8E001F6813 /* Video.swift */; };
+		1FE87EA11F572066001F6813 /* VideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE87EA01F572066001F6813 /* VideoPlayerViewController.swift */; };
+		1FE87EA31F575E56001F6813 /* DetailOverviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE87EA21F575E56001F6813 /* DetailOverviewViewController.swift */; };
+		1FE87EA51F576120001F6813 /* DetailOverviewComponentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE87EA41F576120001F6813 /* DetailOverviewComponentViewController.swift */; };
+		1FE87EA71F576A3B001F6813 /* SpecialTestOverviewTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE87EA61F576A3B001F6813 /* SpecialTestOverviewTableViewController.swift */; };
 		C91DCBE61EA6C8600066D969 /* Abdomen System.pdf in Resources */ = {isa = PBXBuildFile; fileRef = C91DCBDE1EA6C8600066D969 /* Abdomen System.pdf */; };
 		C91DCBE71EA6C8600066D969 /* Cardiovascular System.pdf in Resources */ = {isa = PBXBuildFile; fileRef = C91DCBDF1EA6C8600066D969 /* Cardiovascular System.pdf */; };
 		C91DCBE81EA6C8600066D969 /* Eye System.pdf in Resources */ = {isa = PBXBuildFile; fileRef = C91DCBE01EA6C8600066D969 /* Eye System.pdf */; };
@@ -161,6 +180,25 @@
 		01E9FFDE1CB5C018005276AC /* VideoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
 		01EFD9091CCC245000730D3C /* PersonnelAcknowledgementManagedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonnelAcknowledgementManagedObject.swift; sourceTree = "<group>"; };
 		01EFD90B1CCC245A00730D3C /* SoftwareAcknowledgementManagedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoftwareAcknowledgementManagedObject.swift; sourceTree = "<group>"; };
+		1F27206D1F06AB6A00B2B46E /* OfflineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfflineViewController.swift; sourceTree = "<group>"; };
+		1F4D75A01EF89310002741D6 /* Async.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Async.framework; path = Carthage/Build/iOS/Async.framework; sourceTree = "<group>"; };
+		1F4D75A21EF89316002741D6 /* FLAnimatedImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FLAnimatedImage.framework; path = Carthage/Build/iOS/FLAnimatedImage.framework; sourceTree = "<group>"; };
+		1F4D75A41EF89318002741D6 /* NYTPhotoViewer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NYTPhotoViewer.framework; path = Carthage/Build/iOS/NYTPhotoViewer.framework; sourceTree = "<group>"; };
+		1F4D75A61EF8931B002741D6 /* NYTPhotoViewerCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NYTPhotoViewerCore.framework; path = Carthage/Build/iOS/NYTPhotoViewerCore.framework; sourceTree = "<group>"; };
+		1F4D75A81EF8931F002741D6 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
+		1F7A5E671F55FD1C00355154 /* PDFReviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFReviewViewController.swift; sourceTree = "<group>"; };
+		1F7BB4911F549CF4003091B1 /* SystemMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemMenuViewController.swift; sourceTree = "<group>"; };
+		1F8AC03B1F166BD300BFB1C5 /* OfflineTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfflineTableViewController.swift; sourceTree = "<group>"; };
+		1F91C2D81F90129400396861 /* Section.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
+		1F91C2DA1F9113BE00396861 /* HeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderCell.swift; sourceTree = "<group>"; };
+		1F91C2DC1F95615000396861 /* ExpandableHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExpandableHeaderView.swift; path = ../Model/ExpandableHeaderView.swift; sourceTree = "<group>"; };
+		1F91C2DE1F95648500396861 /* ExpandableTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpandableTableViewController.swift; sourceTree = "<group>"; };
+		1FE87E9C1F571BC9001F6813 /* VideoTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VideoTableViewController.swift; path = ../View/Storyboard/VideoTableViewController.swift; sourceTree = "<group>"; };
+		1FE87E9E1F571C8E001F6813 /* Video.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Video.swift; path = ../../Video.swift; sourceTree = "<group>"; };
+		1FE87EA01F572066001F6813 /* VideoPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoPlayerViewController.swift; sourceTree = "<group>"; };
+		1FE87EA21F575E56001F6813 /* DetailOverviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DetailOverviewViewController.swift; path = ../../DetailOverviewViewController.swift; sourceTree = "<group>"; };
+		1FE87EA41F576120001F6813 /* DetailOverviewComponentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailOverviewComponentViewController.swift; sourceTree = "<group>"; };
+		1FE87EA61F576A3B001F6813 /* SpecialTestOverviewTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpecialTestOverviewTableViewController.swift; path = ../View/Storyboard/SpecialTestOverviewTableViewController.swift; sourceTree = "<group>"; };
 		C91DCBDE1EA6C8600066D969 /* Abdomen System.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Abdomen System.pdf"; sourceTree = SOURCE_ROOT; };
 		C91DCBDF1EA6C8600066D969 /* Cardiovascular System.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Cardiovascular System.pdf"; sourceTree = SOURCE_ROOT; };
 		C91DCBE01EA6C8600066D969 /* Eye System.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Eye System.pdf"; sourceTree = SOURCE_ROOT; };
@@ -191,6 +229,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F4D75A11EF89310002741D6 /* Async.framework in Frameworks */,
+				1F4D75A31EF89316002741D6 /* FLAnimatedImage.framework in Frameworks */,
+				1F4D75A51EF89318002741D6 /* NYTPhotoViewer.framework in Frameworks */,
+				1F4D75A71EF8931B002741D6 /* NYTPhotoViewerCore.framework in Frameworks */,
+				1F4D75A91EF8931F002741D6 /* SwiftyJSON.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -210,6 +253,7 @@
 				011E01601C86463400AB8BA0 /* Clinical Skills */,
 				01AB774C1CC059640059813F /* Clinical SkillsUITests */,
 				011E015F1C86463400AB8BA0 /* Products */,
+				1F4D759F1EF89310002741D6 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -266,8 +310,13 @@
 		011E01781C8646A500AB8BA0 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				1FE87EA61F576A3B001F6813 /* SpecialTestOverviewTableViewController.swift */,
+				1FE87EA21F575E56001F6813 /* DetailOverviewViewController.swift */,
+				1FE87E9C1F571BC9001F6813 /* VideoTableViewController.swift */,
 				01DFC6AE1CCAFCED0020BD55 /* AcknowledgementsViewController.swift */,
 				011E01AD1C864A9600AB8BA0 /* SystemsTableViewController.swift */,
+				1F27206D1F06AB6A00B2B46E /* OfflineViewController.swift */,
+				1F8AC03B1F166BD300BFB1C5 /* OfflineTableViewController.swift */,
 				010EC6F51CB4DA54004AA8A1 /* SystemBreakdownViewController.swift */,
 				018FF8961C9010BF0087FB81 /* ComponentsTableViewController.swift */,
 				01A6101F1CA4F20300A63ED6 /* ComponentDetailsTableViewController.swift */,
@@ -284,6 +333,11 @@
 				C9C0F1091DDBD0EB00865557 /* DisclaimerViewController.swift */,
 				C9DD200B1E201F2F00D018C0 /* OutlinedReviewViewController.swift */,
 				C99778A31E82100C001D4676 /* ComponentFileController.swift */,
+				1F7BB4911F549CF4003091B1 /* SystemMenuViewController.swift */,
+				1F7A5E671F55FD1C00355154 /* PDFReviewViewController.swift */,
+				1FE87EA01F572066001F6813 /* VideoPlayerViewController.swift */,
+				1FE87EA41F576120001F6813 /* DetailOverviewComponentViewController.swift */,
+				1F91C2DE1F95648500396861 /* ExpandableTableViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -343,7 +397,10 @@
 		011E018F1C864A3400AB8BA0 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				1FE87E9E1F571C8E001F6813 /* Video.swift */,
+				1F91C2DA1F9113BE00396861 /* HeaderCell.swift */,
 				011E01A51C864A8600AB8BA0 /* System.swift */,
+				1F91C2D81F90129400396861 /* Section.swift */,
 				010EC6FB1CB4FD60004AA8A1 /* ExamTechnique.swift */,
 				01BCAE661C8FC1920076ECE5 /* Component.swift */,
 				01DB22301CACDB110069ECFB /* Palpation.swift */,
@@ -380,6 +437,7 @@
 		01DB223E1CAD01150069ECFB /* Table View Cells */ = {
 			isa = PBXGroup;
 			children = (
+				1F91C2DC1F95615000396861 /* ExpandableHeaderView.swift */,
 				01BF47DE1C9555B6003B10CB /* ImagesTableViewCell.swift */,
 				01D620ED1C95348B00756A7F /* ImageCollectionViewCell.swift */,
 				01195E321CAB515100CD7631 /* RangeOfMotionTableViewCell.swift */,
@@ -388,6 +446,18 @@
 				01D6DF2E1CCB74C600DFE3EC /* SoftwareAcknowledgementTableViewCell.swift */,
 			);
 			name = "Table View Cells";
+			sourceTree = "<group>";
+		};
+		1F4D759F1EF89310002741D6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1F4D75A81EF8931F002741D6 /* SwiftyJSON.framework */,
+				1F4D75A61EF8931B002741D6 /* NYTPhotoViewerCore.framework */,
+				1F4D75A41EF89318002741D6 /* NYTPhotoViewer.framework */,
+				1F4D75A21EF89316002741D6 /* FLAnimatedImage.framework */,
+				1F4D75A01EF89310002741D6 /* Async.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -442,7 +512,7 @@
 					011E015D1C86463400AB8BA0 = {
 						CreatedOnToolsVersion = 7.2;
 						LastSwiftMigration = 0810;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 					01AB774A1CC059640059813F = {
 						CreatedOnToolsVersion = 7.3;
@@ -539,6 +609,8 @@
 				011807061CABA5880061A64F /* Muscle.swift in Sources */,
 				01D6DF311CCB7A1A00DFE3EC /* SoftwareWebsiteViewController.swift in Sources */,
 				010EC6FC1CB4FD60004AA8A1 /* ExamTechnique.swift in Sources */,
+				1FE87EA11F572066001F6813 /* VideoPlayerViewController.swift in Sources */,
+				1F27206E1F06AB6A00B2B46E /* OfflineViewController.swift in Sources */,
 				01D42CBA1CA503A900A2AFD3 /* RangeOfMotion.swift in Sources */,
 				01EFD90A1CCC245000730D3C /* PersonnelAcknowledgementManagedObject.swift in Sources */,
 				01A610201CA4F20300A63ED6 /* ComponentDetailsTableViewController.swift in Sources */,
@@ -551,6 +623,7 @@
 				C9C0F10A1DDBD0EB00865557 /* DisclaimerViewController.swift in Sources */,
 				011807081CABA5AC0061A64F /* MuscleManagedObject.swift in Sources */,
 				01DB22401CAD01350069ECFB /* StoryboardIdentifiers.swift in Sources */,
+				1F7BB4921F549CF4003091B1 /* SystemMenuViewController.swift in Sources */,
 				01A610221CA4FB2600A63ED6 /* RangeOfMotionManagedObject.swift in Sources */,
 				01DFC6AB1CCAF75E0020BD55 /* SoftwareAcknowledgement.swift in Sources */,
 				01DB222F1CACD76A0069ECFB /* PalpationTableViewCell.swift in Sources */,
@@ -561,23 +634,33 @@
 				011E01BB1C864C1A00AB8BA0 /* ClinicalSkillsCoreDataModel.xcdatamodeld in Sources */,
 				011E01AE1C864A9600AB8BA0 /* SystemsTableViewController.swift in Sources */,
 				01BCAE691C8FC2720076ECE5 /* ComponentManagedObject.swift in Sources */,
+				1F8AC03C1F166BD300BFB1C5 /* OfflineTableViewController.swift in Sources */,
 				011E019A1C864A6A00AB8BA0 /* RemoteConnectionManager.swift in Sources */,
+				1FE87EA51F576120001F6813 /* DetailOverviewComponentViewController.swift in Sources */,
 				01BF47DF1C9555B6003B10CB /* ImagesTableViewCell.swift in Sources */,
+				1F91C2DB1F9113BE00396861 /* HeaderCell.swift in Sources */,
 				01D6DF271CCB5C2200DFE3EC /* PersonnelAcknowledgementTableViewCell.swift in Sources */,
+				1F7A5E681F55FD1C00355154 /* PDFReviewViewController.swift in Sources */,
 				01DFC6AD1CCAF7BA0020BD55 /* AcknowledgementsManager.swift in Sources */,
 				011E01B21C864A9D00AB8BA0 /* UserDefaultsManager.swift in Sources */,
 				C9DD200C1E201F2F00D018C0 /* OutlinedReviewViewController.swift in Sources */,
+				1F91C2D91F90129400396861 /* Section.swift in Sources */,
 				01D6DF2F1CCB74C600DFE3EC /* SoftwareAcknowledgementTableViewCell.swift in Sources */,
+				1F91C2DD1F95615000396861 /* ExpandableHeaderView.swift in Sources */,
+				1FE87EA71F576A3B001F6813 /* SpecialTestOverviewTableViewController.swift in Sources */,
 				0105E41E1C9154A200AC4F09 /* SpecialTestsTableViewController.swift in Sources */,
+				1FE87E9D1F571BC9001F6813 /* VideoTableViewController.swift in Sources */,
 				010EC6F61CB4DA54004AA8A1 /* SystemBreakdownViewController.swift in Sources */,
 				0105E4201C915FFD00AC4F09 /* SpecialTestManagedObject.swift in Sources */,
 				011E01881C864A0500AB8BA0 /* DatastoreManager.swift in Sources */,
 				010EC6F81CB4E974004AA8A1 /* ExamTechniquesTableViewController.swift in Sources */,
 				011E01AC1C864A9200AB8BA0 /* SystemManagedObject.swift in Sources */,
+				1F91C2DF1F95648500396861 /* ExpandableTableViewController.swift in Sources */,
 				011F3DA51C927522002749E5 /* VideoLinkManagedObject.swift in Sources */,
 				011F3DA31C927519002749E5 /* VideoLink.swift in Sources */,
 				C980B43E1D1C6D80003181E4 /* HeadToToeViewController.swift in Sources */,
 				010EC6FE1CB4FD69004AA8A1 /* ExamTechniqueManagedObject.swift in Sources */,
+				1FE87E9F1F571C8E001F6813 /* Video.swift in Sources */,
 				011F3DA11C920A5F002749E5 /* SpecialTestDetailTableViewController.swift in Sources */,
 				0118070E1CABD4B50061A64F /* BasicPhoto.swift in Sources */,
 				01EFD90C1CCC245A00730D3C /* SoftwareAcknowledgementManagedObject.swift in Sources */,
@@ -591,6 +674,7 @@
 				01195E331CAB515100CD7631 /* RangeOfMotionTableViewCell.swift in Sources */,
 				018FF8971C9010BF0087FB81 /* ComponentsTableViewController.swift in Sources */,
 				01D620EE1C95348B00756A7F /* ImageCollectionViewCell.swift in Sources */,
+				1FE87EA31F575E56001F6813 /* DetailOverviewViewController.swift in Sources */,
 				011E01621C86463400AB8BA0 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -708,8 +792,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				DEVELOPMENT_TEAM = AREE863LSY;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = P8FE53P84Y;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -719,8 +803,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.marshall.alexander.wvsom-clinical-skills";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "4e54def3-d498-4c87-8bd5-6dc97633cb16";
-				PROVISIONING_PROFILE_SPECIFIER = "Clinical Skills";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -733,8 +817,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				DEVELOPMENT_TEAM = AREE863LSY;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = P8FE53P84Y;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -745,8 +829,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.marshall.alexander.wvsom-clinical-skills";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "4e54def3-d498-4c87-8bd5-6dc97633cb16";
-				PROVISIONING_PROFILE_SPECIFIER = "Clinical Skills";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

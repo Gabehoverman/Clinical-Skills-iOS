@@ -17,6 +17,7 @@ class RemoteConnectionManager : NSObject {
 			if self.shouldRequestFromLocal {
 				return "http://localhost:3000/"
 			} else {
+                //return "http://localhost:3000/"
 				return "https://wvsom-clinical-skills.herokuapp.com/"
 			}
 		}
@@ -123,6 +124,10 @@ class RemoteConnectionManager : NSObject {
 	func fetchVideoLinks(forExamTechnique examTechnique: ExamTechnique) {
 		self.fetchWithQueryString(dataURLs.videoLinks, queryString: "exam_technique=\(examTechnique.name)")
 	}
+    
+    func fetchSystemVideoLinks(forSystem system: System) {
+        self.fetchWithQueryString(dataURLs.videoLinks, queryString: "system=\(system.name.lowercased())")
+    }
 	
 	func fetchImageData(forCloudinaryLink cloudinaryLink: String) {
 		self.fetchWithCloudinaryLink(cloudinaryLink)

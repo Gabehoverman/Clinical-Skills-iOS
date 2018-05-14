@@ -11,6 +11,8 @@ import UIKit
 
 class ImagesTableViewCell : UITableViewCell {
 	
-	@IBOutlet weak var imagesCollectionView: UICollectionView!
+	//@IBOutlet weak var imagesCollectionView: UICollectionView!
+    //@IBOutlet weak var imagesCollectionView: UICollectionView!
+    @IBOutlet weak var imagesCollectionView: UICollectionView!
 	
 }

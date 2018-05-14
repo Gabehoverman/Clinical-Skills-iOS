@@ -28,6 +28,8 @@ class SystemManagedObject: NSManagedObject {
 	@NSManaged var details : String
 	@NSManaged var components: NSMutableSet
 	@NSManaged var rangesOfMotion: NSMutableSet
+    @NSManaged var url: String
+    @NSManaged var title: String
 	
 	override var description: String {
 		get {

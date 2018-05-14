@@ -1,0 +1,990 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Clinical Skills/Controller/ComponentsTableViewController.swift"
+            timestampString = "520449579.962711"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "73"
+            endingLineNumber = "73"
+            landmarkName = "tableView(_:cellForRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Clinical Skills/Controller/SystemsTableViewController.swift"
+            timestampString = "526329721.388851"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "174"
+            endingLineNumber = "174"
+            landmarkName = "tableView(_:didSelectRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Clinical Skills/Controller/SystemsTableViewController.swift"
+            timestampString = "526329721.388851"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "236"
+            endingLineNumber = "236"
+            landmarkName = "prepare(for:sender:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Clinical Skills/Controller/OfflineViewController.swift"
+            timestampString = "521564804.909598"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "109"
+            endingLineNumber = "109"
+            landmarkName = "OfflineViewController"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Clinical Skills/Controller/OfflineViewController.swift"
+            timestampString = "521564804.909598"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "177"
+            endingLineNumber = "177">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Clinical Skills/Controller/OfflineViewController.swift"
+            timestampString = "521564804.909598"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "30"
+            endingLineNumber = "30"
+            landmarkName = "OfflineViewController"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Clinical_Skills.OfflineViewController.tableComponents.getter : Swift.Array&lt;Swift.String&gt;"
+                  moduleName = "Clinical Skills"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/GabeHoverman/clinical-skills-ios/Clinical%20Skills/Controller/OfflineViewController.swift"
+                  timestampString = "521398132.612538"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "29"
+                  endingLineNumber = "29"
+                  offsetFromSymbolStart = "35">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Clinical_Skills.OfflineViewController.init (style : __C.UITableViewStyle) -&gt; Clinical_Skills.OfflineViewController"
+                  moduleName = "Clinical Skills"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/GabeHoverman/clinical-skills-ios/Clinical%20Skills/Controller/OfflineViewController.swift"
+                  timestampString = "521398132.617307"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "29"
+                  endingLineNumber = "29"
+                  offsetFromSymbolStart = "227">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Clinical_Skills.OfflineViewController.init (nibName : Swift.Optional&lt;Swift.String&gt;, bundle : Swift.Optional&lt;__ObjC.Bundle&gt;) -&gt; Clinical_Skills.OfflineViewController"
+                  moduleName = "Clinical Skills"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/GabeHoverman/clinical-skills-ios/Clinical%20Skills/Controller/OfflineViewController.swift"
+                  timestampString = "521398132.619125"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "29"
+                  endingLineNumber = "29"
+                  offsetFromSymbolStart = "293">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Clinical_Skills.OfflineViewController.init (coder : __ObjC.NSCoder) -&gt; Swift.Optional&lt;Clinical_Skills.OfflineViewController&gt;"
+                  moduleName = "Clinical Skills"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/GabeHoverman/clinical-skills-ios/Clinical%20Skills/Controller/OfflineViewController.swift"
+                  timestampString = "521398132.620484"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "29"
+                  endingLineNumber = "29"
+                  offsetFromSymbolStart = "227">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Clinical Skills/Controller/OfflineViewController.swift"
+            timestampString = "521564804.909598"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "31"
+            endingLineNumber = "31"
+            landmarkName = "OfflineViewController"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Clinical_Skills.OfflineViewController.Abdomen.getter : Clinical_Skills.System"
+                  moduleName = "Clinical Skills"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/GabeHoverman/clinical-skills-ios/Clinical%20Skills/Controller/OfflineViewController.swift"
+                  timestampString = "521425958.012537"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "32"
+                  endingLineNumber = "32"
+                  offsetFromSymbolStart = "35">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Clinical_Skills.OfflineViewController.init (style : __C.UITableViewStyle) -&gt; Clinical_Skills.OfflineViewController"
+                  moduleName = "Clinical Skills"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/GabeHoverman/clinical-skills-ios/Clinical%20Skills/Controller/OfflineViewController.swift"
+                  timestampString = "521425958.014983"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "32"
+                  endingLineNumber = "32"
+                  offsetFromSymbolStart = "219">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Clinical_Skills.OfflineViewController.init (nibName : Swift.Optional&lt;Swift.String&gt;, bundle : Swift.Optional&lt;__ObjC.Bundle&gt;) -&gt; Clinical_Skills.OfflineViewController"
+                  moduleName = "Clinical Skills"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/GabeHoverman/clinical-skills-ios/Clinical%20Skills/Controller/OfflineViewController.swift"
+                  timestampString = "521425958.017488"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "32"
+                  endingLineNumber = "32"
+                  offsetFromSymbolStart = "274">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Clinical_Skills.OfflineViewController.init (coder : __ObjC.NSCoder) -&gt; Swift.Optional&lt;Clinical_Skills.OfflineViewController&gt;"
+                  moduleName = "Clinical Skills"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/GabeHoverman/clinical-skills-ios/Clinical%20Skills/Controller/OfflineViewController.swift"
+                  timestampString = "521425958.01946"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "32"
+                  endingLineNumber = "32"
+                  offsetFromSymbolStart = "220">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Clinical Skills/Controller/OfflineViewController.swift"
+            timestampString = "521564804.909598"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "15"
+            endingLineNumber = "15"
+            landmarkName = "OfflineViewController"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Clinical_Skills.OfflineViewController.__deallocating_deinit"
+                  moduleName = "Clinical Skills"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/GabeHoverman/clinical-skills-ios/Clinical%20Skills/Controller/OfflineViewController.swift"
+                  timestampString = "521425573.319707"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "4">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Clinical_Skills.OfflineViewController.init (style : __C.UITableViewStyle) -&gt; Clinical_Skills.OfflineViewController"
+                  moduleName = "Clinical Skills"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/GabeHoverman/clinical-skills-ios/Clinical%20Skills/Controller/OfflineViewController.swift"
+                  timestampString = "521425573.321643"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "18"
+                  endingLineNumber = "18"
+                  offsetFromSymbolStart = "39">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Clinical_Skills.OfflineViewController.__allocating_init (style : __C.UITableViewStyle) -&gt; Clinical_Skills.OfflineViewController"
+                  moduleName = "Clinical Skills"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/GabeHoverman/clinical-skills-ios/Clinical%20Skills/Controller/OfflineViewController.swift"
+                  timestampString = "521425573.323585"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "4">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Clinical_Skills.OfflineViewController.init (nibName : Swift.Optional&lt;Swift.String&gt;, bundle : Swift.Optional&lt;__ObjC.Bundle&gt;) -&gt; Clinical_Skills.OfflineViewController"
+                  moduleName = "Clinical Skills"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/GabeHoverman/clinical-skills-ios/Clinical%20Skills/Controller/OfflineViewController.swift"
+                  timestampString = "521425573.325277"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "18"
+                  endingLineNumber = "18"
+                  offsetFromSymbolStart = "83">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Clinical_Skills.OfflineViewController.__allocating_init (nibName : Swift.Optional&lt;Swift.String&gt;, bundle : Swift.Optional&lt;__ObjC.Bundle&gt;) -&gt; Clinical_Skills.OfflineViewController"
+                  moduleName = "Clinical Skills"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/GabeHoverman/clinical-skills-ios/Clinical%20Skills/Controller/OfflineViewController.swift"
+                  timestampString = "521425573.32715"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "23">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Clinical_Skills.OfflineViewController.__allocating_init (coder : __ObjC.NSCoder) -&gt; Swift.Optional&lt;Clinical_Skills.OfflineViewController&gt;"
+                  moduleName = "Clinical Skills"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/GabeHoverman/clinical-skills-ios/Clinical%20Skills/Controller/OfflineViewController.swift"
+                  timestampString = "521425573.328629"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "4">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Clinical_Skills.OfflineViewController.init (coder : __ObjC.NSCoder) -&gt; Swift.Optional&lt;Clinical_Skills.OfflineViewController&gt;"
+                  moduleName = "Clinical Skills"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/GabeHoverman/clinical-skills-ios/Clinical%20Skills/Controller/OfflineViewController.swift"
+                  timestampString = "521425573.33007"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "18"
+                  endingLineNumber = "18"
+                  offsetFromSymbolStart = "39">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Clinical Skills/Controller/OfflineViewController.swift"
+            timestampString = "521564804.909598"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "106"
+            endingLineNumber = "106"
+            landmarkName = "tableView(_:didSelectRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Clinical Skills/Controller/ComponentFileController.swift"
+            timestampString = "522875687.262301"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "100"
+            endingLineNumber = "100"
+            landmarkName = "ComponentFileController"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Clinical Skills/Controller/ComponentFileController.swift"
+            timestampString = "522873584.334724"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "60"
+            endingLineNumber = "60"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Clinical Skills/Controller/HeadToToeViewController.swift"
+            timestampString = "523842795.150478"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "45"
+            endingLineNumber = "45"
+            landmarkName = "goBack(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Clinical Skills/Controller/SystemsTableViewController.swift"
+            timestampString = "526329721.388851"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "235"
+            endingLineNumber = "235"
+            landmarkName = "prepare(for:sender:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Clinical Skills/Controller/SystemMenuViewController.swift"
+            timestampString = "525640031.009366"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "13"
+            endingLineNumber = "13"
+            landmarkName = "SystemMenuViewController"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Clinical Skills/Controller/SystemMenuViewController.swift"
+            timestampString = "525822598.718279"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "44"
+            endingLineNumber = "44"
+            landmarkName = "toPdfReview(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Clinical Skills/Controller/SystemMenuViewController.swift"
+            timestampString = "525822598.718279"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "54"
+            endingLineNumber = "54"
+            landmarkName = "toPdfReview(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Video.swift"
+            timestampString = "525807295.401646"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "27"
+            endingLineNumber = "27"
+            landmarkName = "init(managedObject:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Clinical Skills/Controller/VideoPlayerViewController.swift"
+            timestampString = "529268320.184668"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "31"
+            endingLineNumber = "31"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Clinical Skills/Controller/DetailOverviewComponentViewController.swift"
+            timestampString = "525820707.775918"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "14"
+            endingLineNumber = "14"
+            landmarkName = "DetailOverviewComponentViewController"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Clinical_Skills.DetailOverviewComponentViewController.__deallocating_deinit"
+                  moduleName = "Clinical Skills"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/GabeHoverman/clinical-skills-ios/Clinical%20Skills/Controller/DetailOverviewComponentViewController.swift"
+                  timestampString = "525821566.078402"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "4">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Clinical_Skills.DetailOverviewComponentViewController.init (style : __C.UITableViewStyle) -&gt; Clinical_Skills.DetailOverviewComponentViewController"
+                  moduleName = "Clinical Skills"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/GabeHoverman/clinical-skills-ios/Clinical%20Skills/Controller/DetailOverviewComponentViewController.swift"
+                  timestampString = "525821566.079998"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "19"
+                  endingLineNumber = "19"
+                  offsetFromSymbolStart = "31">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Clinical_Skills.DetailOverviewComponentViewController.__allocating_init (style : __C.UITableViewStyle) -&gt; Clinical_Skills.DetailOverviewComponentViewController"
+                  moduleName = "Clinical Skills"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/GabeHoverman/clinical-skills-ios/Clinical%20Skills/Controller/DetailOverviewComponentViewController.swift"
+                  timestampString = "525821566.081879"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "4">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Clinical_Skills.DetailOverviewComponentViewController.init (nibName : Swift.Optional&lt;Swift.String&gt;, bundle : Swift.Optional&lt;__ObjC.Bundle&gt;) -&gt; Clinical_Skills.DetailOverviewComponentViewController"
+                  moduleName = "Clinical Skills"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/GabeHoverman/clinical-skills-ios/Clinical%20Skills/Controller/DetailOverviewComponentViewController.swift"
+                  timestampString = "525821566.084032"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "19"
+                  endingLineNumber = "19"
+                  offsetFromSymbolStart = "74">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Clinical_Skills.DetailOverviewComponentViewController.__allocating_init (nibName : Swift.Optional&lt;Swift.String&gt;, bundle : Swift.Optional&lt;__ObjC.Bundle&gt;) -&gt; Clinical_Skills.DetailOverviewComponentViewController"
+                  moduleName = "Clinical Skills"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/GabeHoverman/clinical-skills-ios/Clinical%20Skills/Controller/DetailOverviewComponentViewController.swift"
+                  timestampString = "525821566.085804"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "23">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Clinical_Skills.DetailOverviewComponentViewController.__allocating_init (coder : __ObjC.NSCoder) -&gt; Swift.Optional&lt;Clinical_Skills.DetailOverviewComponentViewController&gt;"
+                  moduleName = "Clinical Skills"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/GabeHoverman/clinical-skills-ios/Clinical%20Skills/Controller/DetailOverviewComponentViewController.swift"
+                  timestampString = "525821566.087818"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "4">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Clinical_Skills.DetailOverviewComponentViewController.init (coder : __ObjC.NSCoder) -&gt; Swift.Optional&lt;Clinical_Skills.DetailOverviewComponentViewController&gt;"
+                  moduleName = "Clinical Skills"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/GabeHoverman/clinical-skills-ios/Clinical%20Skills/Controller/DetailOverviewComponentViewController.swift"
+                  timestampString = "525821566.089486"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "19"
+                  endingLineNumber = "19"
+                  offsetFromSymbolStart = "31">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Clinical Skills/Controller/ComponentsTableViewController.swift"
+            timestampString = "525821179.129145"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "152"
+            endingLineNumber = "152"
+            landmarkName = "prepare(for:sender:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Clinical Skills/Controller/SystemMenuViewController.swift"
+            timestampString = "526491658.254484"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "14"
+            endingLineNumber = "14"
+            landmarkName = "SystemMenuViewController"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Clinical_Skills.SystemMenuViewController.ClinicalTestButton.getter : weak Swift.ImplicitlyUnwrappedOptional&lt;__ObjC.UIView&gt;"
+                  moduleName = "Clinical Skills"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/GabeHoverman/clinical-skills-ios/Clinical%20Skills/Controller/SystemMenuViewController.swift"
+                  timestampString = "526491771.131388"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "14"
+                  endingLineNumber = "14"
+                  offsetFromSymbolStart = "27">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Clinical_Skills.SystemMenuViewController.ClinicalTestButton.setter : weak Swift.ImplicitlyUnwrappedOptional&lt;__ObjC.UIView&gt;"
+                  moduleName = "Clinical Skills"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/GabeHoverman/clinical-skills-ios/Clinical%20Skills/Controller/SystemMenuViewController.swift"
+                  timestampString = "526491771.133986"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "14"
+                  endingLineNumber = "14"
+                  offsetFromSymbolStart = "42">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Clinical_Skills.SystemMenuViewController.init (nibName : Swift.Optional&lt;Swift.String&gt;, bundle : Swift.Optional&lt;__ObjC.Bundle&gt;) -&gt; Clinical_Skills.SystemMenuViewController"
+                  moduleName = "Clinical Skills"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/GabeHoverman/clinical-skills-ios/Clinical%20Skills/Controller/SystemMenuViewController.swift"
+                  timestampString = "526491771.13625"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "14"
+                  endingLineNumber = "14"
+                  offsetFromSymbolStart = "70">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Clinical_Skills.SystemMenuViewController.init (coder : __ObjC.NSCoder) -&gt; Swift.Optional&lt;Clinical_Skills.SystemMenuViewController&gt;"
+                  moduleName = "Clinical Skills"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/GabeHoverman/clinical-skills-ios/Clinical%20Skills/Controller/SystemMenuViewController.swift"
+                  timestampString = "526491771.138171"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "14"
+                  endingLineNumber = "14"
+                  offsetFromSymbolStart = "31">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Clinical Skills/View/Storyboard/VideoTableViewController.swift"
+            timestampString = "529256511.136086"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "92"
+            endingLineNumber = "92"
+            landmarkName = "tableView(_:cellForRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Clinical Skills/View/Storyboard/VideoTableViewController.swift"
+            timestampString = "529256511.136086"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "75"
+            endingLineNumber = "75"
+            landmarkName = "tableView(_:numberOfRowsInSection:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Clinical Skills/View/Storyboard/VideoTableViewController.swift"
+            timestampString = "529268013.185368"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "112"
+            endingLineNumber = "112"
+            landmarkName = "prepare(for:sender:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "DetailOverviewViewController.swift"
+            timestampString = "529960791.028336"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "115"
+            endingLineNumber = "115"
+            landmarkName = "tableView(_:numberOfRowsInSection:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Clinical Skills/Model/ExpandableHeaderView.swift"
+            timestampString = "529885467.545446"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "40"
+            endingLineNumber = "40"
+            landmarkName = "layoutSubviews()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "DetailOverviewViewController.swift"
+            timestampString = "529888126.083507"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "13"
+            endingLineNumber = "13"
+            landmarkName = "DetailOverviewViewController"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Clinical_Skills.DetailOverviewViewController.__deallocating_deinit"
+                  moduleName = "Clinical Skills"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/GabeHoverman/clinical-skills-ios/DetailOverviewViewController.swift"
+                  timestampString = "529888127.158119"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "4">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Clinical_Skills.DetailOverviewViewController.init (style : __C.UITableViewStyle) -&gt; Clinical_Skills.DetailOverviewViewController"
+                  moduleName = "Clinical Skills"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/GabeHoverman/clinical-skills-ios/DetailOverviewViewController.swift"
+                  timestampString = "529888127.159879"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "16"
+                  endingLineNumber = "16"
+                  offsetFromSymbolStart = "28">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Clinical_Skills.DetailOverviewViewController.__allocating_init (style : __C.UITableViewStyle) -&gt; Clinical_Skills.DetailOverviewViewController"
+                  moduleName = "Clinical Skills"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/GabeHoverman/clinical-skills-ios/DetailOverviewViewController.swift"
+                  timestampString = "529888127.162013"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "4">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Clinical_Skills.DetailOverviewViewController.init (nibName : Swift.Optional&lt;Swift.String&gt;, bundle : Swift.Optional&lt;__ObjC.Bundle&gt;) -&gt; Clinical_Skills.DetailOverviewViewController"
+                  moduleName = "Clinical Skills"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/GabeHoverman/clinical-skills-ios/DetailOverviewViewController.swift"
+                  timestampString = "529888127.163456"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "16"
+                  endingLineNumber = "16"
+                  offsetFromSymbolStart = "70">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Clinical_Skills.DetailOverviewViewController.__allocating_init (nibName : Swift.Optional&lt;Swift.String&gt;, bundle : Swift.Optional&lt;__ObjC.Bundle&gt;) -&gt; Clinical_Skills.DetailOverviewViewController"
+                  moduleName = "Clinical Skills"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/GabeHoverman/clinical-skills-ios/DetailOverviewViewController.swift"
+                  timestampString = "529888127.164743"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "23">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Clinical_Skills.DetailOverviewViewController.__allocating_init (coder : __ObjC.NSCoder) -&gt; Swift.Optional&lt;Clinical_Skills.DetailOverviewViewController&gt;"
+                  moduleName = "Clinical Skills"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/GabeHoverman/clinical-skills-ios/DetailOverviewViewController.swift"
+                  timestampString = "529888127.166055"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "4">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Clinical_Skills.DetailOverviewViewController.init (coder : __ObjC.NSCoder) -&gt; Swift.Optional&lt;Clinical_Skills.DetailOverviewViewController&gt;"
+                  moduleName = "Clinical Skills"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/GabeHoverman/clinical-skills-ios/DetailOverviewViewController.swift"
+                  timestampString = "529888127.167352"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "16"
+                  endingLineNumber = "16"
+                  offsetFromSymbolStart = "31">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Clinical Skills/Controller/SpecialTestDetailTableViewController.swift"
+            timestampString = "530569029.873094"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "132"
+            endingLineNumber = "132"
+            landmarkName = "tableView(_:cellForRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Clinical Skills/Controller/SpecialTestDetailTableViewController.swift"
+            timestampString = "530203930.517092"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "256"
+            endingLineNumber = "256">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Clinical Skills/Controller/SpecialTestDetailTableViewController.swift"
+            timestampString = "530569029.873094"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "128"
+            endingLineNumber = "128"
+            landmarkName = "tableView(_:cellForRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

@@ -22,6 +22,7 @@ class SpecialTestManagedObject : NSManagedObject {
 		static let component = "component"
 		static let imageLinks = "image_links"
 		static let videoLinks = "video_links"
+        static let howTo = "how_to"
 	}
 	
 	@NSManaged var id: Int32
@@ -32,6 +33,7 @@ class SpecialTestManagedObject : NSManagedObject {
 	@NSManaged var component: ComponentManagedObject
 	@NSManaged var imageLinks: NSMutableSet
 	@NSManaged var videoLinks: NSMutableSet
+    @NSManaged var howTo: String
 	
 	override var description: String {
 		get {

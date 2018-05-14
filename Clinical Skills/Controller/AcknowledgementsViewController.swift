@@ -39,6 +39,7 @@ class AcknowledgementsViewController : UIViewController {
                 self.disclaimerViewController = self.storyboard?.instantiateViewController(withIdentifier: StoryboardIdentifiers.controller.disclaimerViewController) as?
                     DisclaimerViewController
             }
+            
             return self.disclaimerViewController
         }
 	}

@@ -71,6 +71,12 @@ class FetchedResultsControllers {
 		return fetchedResultsControllerForRequest(request)
 	}
 	
+    class func videoLinksFetchedResultsController(_ forSystem: System) -> NSFetchedResultsController<NSFetchRequestResult> {
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: VideoLinkManagedObject.entityName)
+        request.sortDescriptors = [NSSortDescriptor(key: VideoLinkManagedObject.propertyKeys.title, ascending: true)]
+        return fetchedResultsControllerForRequest(request)
+    }
+    
 	class func rangesOfMotionFetchedResultsController(forComponent component: Component) -> NSFetchedResultsController<NSFetchRequestResult> {
 		let request = NSFetchRequest<NSFetchRequestResult>(entityName: RangeOfMotionManagedObject.entityName)
 		request.predicate = NSPredicate(format: "%K = %d", "component.id", component.id)

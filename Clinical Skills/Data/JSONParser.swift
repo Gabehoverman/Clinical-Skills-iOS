@@ -177,7 +177,8 @@ class JSONParser : NSObject {
 				let positiveSign = specialTest[SpecialTestManagedObject.propertyKeys.positiveSign].stringValue
 				let indication = specialTest[SpecialTestManagedObject.propertyKeys.indication].stringValue
 				let notes = specialTest[SpecialTestManagedObject.propertyKeys.notes].stringValue
-				specialTests.append(SpecialTest(component: component, id: id, name: name, positiveSign: positiveSign, indication: indication, notes: notes))
+                let howTo = specialTest[SpecialTestManagedObject.propertyKeys.howTo].stringValue
+                specialTests.append(SpecialTest(component: component, id: id, name: name, positiveSign: positiveSign, indication: indication, notes: notes, howTo: howTo))
 			}
 		}
 		return specialTests
@@ -221,6 +222,19 @@ class JSONParser : NSObject {
 		}
 		return videoLinks
 	}
+    
+    func parseVideoLinks(_ system: System) -> [VideoLink] {
+        var videoLinks = [VideoLink]()
+        for (_, data) in self.json {
+            for (_, videoLink) in data {
+                let id = Int32(videoLink[VideoLinkManagedObject.propertyKeys.id].intValue)
+                let title = videoLink[VideoLinkManagedObject.propertyKeys.title].stringValue
+                let link = videoLink[VideoLinkManagedObject.propertyKeys.link].stringValue
+                videoLinks.append(VideoLink(id: id, title: title, link: link))
+            }
+        }
+        return videoLinks
+    }
 	
 	// MARK: - Print Methods
 	

@@ -224,6 +224,7 @@ class DatastoreManager : NSObject {
 				newManagedSpecialTest.positiveSign = specialTest.positiveSign
 				newManagedSpecialTest.indication = specialTest.indication
 				newManagedSpecialTest.notes = specialTest.notes
+                newManagedSpecialTest.howTo = specialTest.howTo
 				if let managedComponent = self.retrieveObjectWithID(specialTest.component.id, entityName: ComponentManagedObject.entityName, idPropertyKey: ComponentManagedObject.propertyKeys.id) as? ComponentManagedObject {
 					newManagedSpecialTest.component = managedComponent
 				}
@@ -359,6 +360,7 @@ class DatastoreManager : NSObject {
 			managedSpecialTest.positiveSign = toSpecialTest.positiveSign
 			managedSpecialTest.indication = toSpecialTest.indication
 			managedSpecialTest.notes = toSpecialTest.notes
+            managedSpecialTest.howTo = toSpecialTest.howTo
 			if let managedComponent = self.retrieveObjectWithID(toSpecialTest.component.id, entityName: ComponentManagedObject.entityName, idPropertyKey: ComponentManagedObject.propertyKeys.id) as? ComponentManagedObject {
 				managedSpecialTest.component = managedComponent
 			}

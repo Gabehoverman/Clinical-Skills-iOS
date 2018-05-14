@@ -16,14 +16,26 @@ class OutlinedReviewViewController : UIViewController {
     var documentController: UIDocumentInteractionController?
     var dismissing: Bool?
     
+    @IBOutlet weak var myWebView: UIWebView!
+    @IBOutlet weak var backButton: UIBarButtonItem!
     // MARK: - View Controller Methods
     
     override func viewDidLoad() {
         if let url = Bundle.main.url(forResource: "Outlined Review", withExtension: "docx") {
-            self.documentController = UIDocumentInteractionController(url: url)
-            self.documentController!.delegate = self
-            self.dismissing = false
+            myWebView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            myWebView.scalesPageToFit = true
+            myWebView.frame.origin.y = 100
+            myWebView.frame = self.view.bounds
+            myWebView.loadRequest(URLRequest(url: url))
+            
+            //self.documentController = UIDocumentInteractionController(url: url)
+            //self.documentController!.delegate = self
+            //self.dismissing = false
         }
+    }
+    
+    @IBAction func goBack(_ sender: UIButton) {
+        myWebView.goBack();
     }
     
     override func viewDidAppear(_ animated: Bool) {

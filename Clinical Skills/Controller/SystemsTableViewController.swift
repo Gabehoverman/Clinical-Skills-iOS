@@ -15,6 +15,9 @@ class SystemsTableViewController: UITableViewController {
 	
 	// MARK: - Properties
 	
+
+    @IBOutlet weak var OfflineUIView: UIView!
+    @IBOutlet weak var OfflineButton: UIButton!
 	var fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult>?
 	
 	var searchController: UISearchController?
@@ -25,10 +28,16 @@ class SystemsTableViewController: UITableViewController {
 	
 	var searchPhrase: String?
 	var defaultSearchPredicate: NSPredicate?
+    
+    let blackView = UIView();
 	
 	// MARK: - View Controller Methodsq
 	
 	override func viewDidLoad() {
+        
+        self.OfflineUIView.isHidden = true
+        
+        backgroundDim()
 		
 		self.fetchedResultsController = FetchedResultsControllers.allSystemsFetchedResultController()
 		self.fetchResultsWithReload(false)
@@ -43,7 +52,58 @@ class SystemsTableViewController: UITableViewController {
 		self.remoteConnectionManager?.fetchSystems()
 		
 		NotificationCenter.default.addObserver(self, selector: #selector(self.backgroundManagedObjectContextDidSave(_:)), name: NSNotification.Name.NSManagedObjectContextDidSave, object: nil)
+        
+        dismissBackgroundDim()
 	}
+    
+   
+    
+    func backgroundDim() {
+        
+        if let window = UIApplication.shared.keyWindow {
+            
+            blackView.backgroundColor = UIColor(white: 0, alpha: 0.7)
+            window.addSubview(blackView)
+            blackView.frame = view.frame
+            
+            let label = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 21))
+            label.center = CGPoint(x: 180, y: 300)
+            label.textAlignment = .center
+            label.textColor = .white
+            label.text = "Loading Clinical Skills"
+            blackView.addSubview(label)
+            
+            let spinner = UIActivityIndicatorView()
+            spinner.center = CGPoint(x:180 , y: 260)
+            spinner.startAnimating()
+            spinner.color = .green
+            spinner.activityIndicatorViewStyle = .whiteLarge
+            blackView.addSubview(spinner)
+        }
+        
+    }
+    
+    func dismissBackgroundDim() {
+        blackView.isHidden = true
+    }
+    
+    //Not in use
+    func offlineModeView() {
+        let offlineView = UIView()
+        offlineView.frame = view.frame
+        view.addSubview(offlineView)
+        
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 21))
+        label.center = CGPoint(x: 180, y: 300)
+        label.text = "Your Application Appears to be Offline"
+        label.numberOfLines = 2
+        offlineView.addSubview(label)
+        
+        let button = UIButton()
+        button.center = CGPoint(x: 180, y: 300)
+        offlineView.addSubview(button)
+    
+    }
 	
 	// MARK: - Core Data Notification Methods
 	
@@ -70,12 +130,39 @@ class SystemsTableViewController: UITableViewController {
 	
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let managedSystem = self.fetchedResultsController!.object(at: indexPath) as! SystemManagedObject
-		let cell = UITableViewCell()
+		let cell = UITableViewCell(style: UITableViewCellStyle.subtitle, reuseIdentifier: "MyTestCell")
 		cell.accessoryType = .disclosureIndicator
 		cell.textLabel?.numberOfLines = 0
 		cell.textLabel?.lineBreakMode = .byWordWrapping
-		cell.textLabel?.font = UIFont.systemFont(ofSize: 18, weight: UIFontWeightSemibold)
+		cell.textLabel?.font = UIFont.systemFont(ofSize: 17, weight: UIFontWeightSemibold)
 		cell.textLabel?.text = managedSystem.name
+        cell.detailTextLabel?.numberOfLines = 2
+        cell.detailTextLabel?.lineBreakMode = .byWordWrapping
+        cell.detailTextLabel?.tintColor = UIColor(red:0.74, green:0.76, blue:0.78, alpha:1.0)
+        cell.imageView?.image = UIImage(named: managedSystem.name + "Icon")
+        //cell.detailTextLabel?.text = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
+        
+        cell.detailTextLabel?.text = managedSystem.name + " tests and inspection details"
+        
+        /*if (managedSystem.name == "Abdomen" ) {
+            cell.detailTextLabel?.text = "Abdominal tests and inspection details"
+        } else if (managedSystem.name == "Cardiovascular" ) {
+            cell.detailTextLabel?.text = "Cardiovascular tests and inspection details"
+        } else if (managedSystem.name == "Eye") {
+            cell.detailTextLabel?.text = "Eye tests and inspection details"
+        } else if (managedSystem.name == "Head, Ears, Nose, Neck, Throat") {
+            cell.detailTextLabel?.text = "Head, Ears, Nose, Neck, and Throat tests and inspection details"
+        } else if (managedSystem.name == "Musculoskeletal") {
+            cell.detailTextLabel?.text = "Musculoskeletal tests and inspection details"
+        } else if (managedSystem.name == "Neurological") {
+            cell.detailTextLabel?.text = "Neuroligcal tests and inspection details"
+        } else if (managedSystem.name == "Respiratory") {
+            cell.detailTextLabel?.text = "Respiratory tests and inspection details"
+        } else if (managedSystem.name == "Vital Signs" ) {
+            cell.detailTextLabel?.text = "Vital Signs tests and inspection details"
+        } else {
+            
+        }*/
 		return cell
 	}
 	
@@ -83,9 +170,11 @@ class SystemsTableViewController: UITableViewController {
 		if let controller = self.fetchedResultsController {
 			if let managedSystem = controller.object(at: indexPath) as? SystemManagedObject {
 				if self.tabBarController?.selectedIndex == StoryboardIdentifiers.tab.clinicalSkills {
-					self.performSegue(withIdentifier: StoryboardIdentifiers.segue.toComponentFile, sender: System(managedObject: managedSystem))
+                    //To Systems Menu Table View
+					self.performSegue(withIdentifier: "toSystemMenu", sender: System(managedObject: managedSystem))
 				} else {
-					self.performSegue(withIdentifier: StoryboardIdentifiers.segue.toSystemBreakdownView, sender: System(managedObject: managedSystem))
+                    //To Components List View
+					self.performSegue(withIdentifier: StoryboardIdentifiers.segue.toComponentsView, sender: System(managedObject: managedSystem))
 				}
 			} else {
 				print("Error getting System")
@@ -107,6 +196,7 @@ class SystemsTableViewController: UITableViewController {
 			print("Error Fetching Systems")
 			print("\(error)\n")
 			if !self.presentingAlert && self.presentedViewController == nil {
+                offlineModeView()
 				let alertController = UIAlertController(title: "Error Storing Data", message: "An error occurred while storing data. Please try agian.", preferredStyle: .alert)
 				alertController.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
 				self.presentingAlert = true
@@ -149,14 +239,13 @@ class SystemsTableViewController: UITableViewController {
 					destination.system = system
 				}
 			}
-        /*
-		} else if segue.identifier == StoryboardIdentifiers.segue.toSystemBreakdownView {
-			if let destination = segue.destination as? SystemBreakdownViewController {
+        
+		} else if segue.identifier == "toSystemMenu" {
+			if let destination = segue.destination as? SystemMenuViewController {
 				if let system = sender as? System {
 					destination.system = system
 				}
 			}
-        */
         }
 	}
 }
@@ -202,6 +291,8 @@ extension SystemsTableViewController: RemoteConnectionManagerDelegate {
 			print(self.remoteConnectionManager!.messageForError(error))
 			print("\(error)\n")
 			if !self.presentingAlert && self.presentedViewController == nil {
+                //self.offlineModeView()
+                self.OfflineUIView.isHidden = false;
 				let alertController = UIAlertController(title: "Error Fetching Remote Data", message: "An error occured while fetching data from the server. Please try agian.", preferredStyle: .alert)
 				alertController.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
 				self.presentingAlert = true

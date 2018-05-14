@@ -6,14 +6,16 @@
 //  Copyright © 2017 Nick. All rights reserved.
 //
 
-import Foundation
+
 import UIKit
+import WebKit
 
 class ComponentFileController : UIViewController {
     
     // MARK: - Properties
     
     var documentController: UIDocumentInteractionController?
+    var webView: UIWebView?
     var dismissing: Bool?
     var system: System?
     
@@ -26,6 +28,8 @@ class ComponentFileController : UIViewController {
         let selectedSystem = self.system?.name;
         var systemFileName = " ";
         
+        
+         
         switch(selectedSystem){
         case "Abdomen"?:
             systemFileName = "Abdomen System";
@@ -52,19 +56,31 @@ class ComponentFileController : UIViewController {
         
         if selectedSystem != "Musculoskeletal"{
             if let url = Bundle.main.url(forResource: systemFileName, withExtension: "docx") {
-                self.documentController = UIDocumentInteractionController(url: url)
-                self.documentController!.delegate = self
-                self.dismissing = false
+                let webView = UIWebView(frame: self.view.frame)
+                webView.loadRequest(URLRequest(url: url))
+                webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+                webView.scalesPageToFit = true
+                webView.frame.origin.y = 50
+                view.addSubview(webView)
+            
+                //self.documentController = UIDocumentInteractionController(url: url)
+                //self.documentController!.delegate = self
+                //self.dismissing = false
             }
         }
         else {
             if let url = Bundle.main.url(forResource: systemFileName, withExtension: "pdf") {
-                self.documentController = UIDocumentInteractionController(url: url)
-                self.documentController!.delegate = self
-                self.dismissing = false
+                let webView = UIWebView(frame: self.view.frame)
+                webView.loadRequest(URLRequest(url: url))
+                webView.frame.origin.y = 50
+                view.addSubview(webView)
+                
+                //self.documentController = UIDocumentInteractionController(url: url)
+                //self.documentController!.delegate = self
+                //self.dismissing = false
             }
         }
-    
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -81,6 +97,7 @@ class ComponentFileController : UIViewController {
         self.dismissing = false
         self.presentPreview()
     }
+
     
     // MARK: - Navigation Methods
     
@@ -91,7 +108,6 @@ class ComponentFileController : UIViewController {
             }
         }
     }
-    
 }
 
 // MARK: - Document Interface Controller Delegate Methods

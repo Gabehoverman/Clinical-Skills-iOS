@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10171" systemVersion="15E65" minimumToolsVersion="Automatic">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="16F73" minimumToolsVersion="Xcode 7.3" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
     <entity name="Component" representedClassName="ComponentManagedObject" syncable="YES">
-        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="inspection" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
@@ -13,49 +13,50 @@
     </entity>
     <entity name="ExamTechnique" representedClassName="ExamTechniqueManagedObject" syncable="YES">
         <attribute name="details" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="system" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="System" inverseName="exam_techniques" inverseEntity="System" syncable="YES"/>
         <relationship name="videoLinks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="VideoLink" inverseName="examTechnique" inverseEntity="VideoLink" syncable="YES"/>
     </entity>
     <entity name="ImageLink" representedClassName="ImageLinkManagedObject" syncable="YES">
-        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="link" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="specialTest" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SpecialTest" inverseName="imageLinks" inverseEntity="SpecialTest" syncable="YES"/>
     </entity>
     <entity name="Muscle" representedClassName="MuscleManagedObject" syncable="YES">
-        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="component" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Component" inverseName="muscles" inverseEntity="Component" syncable="YES"/>
     </entity>
     <entity name="Palpation" representedClassName="PalpationManagedObject" syncable="YES">
         <attribute name="details" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="structure" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="component" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Component" inverseName="palpations" inverseEntity="Component" syncable="YES"/>
     </entity>
     <entity name="PersonnelAcknowledgement" representedClassName="PersonnelAcknowledgementManagedObject" syncable="YES">
-        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="role" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="RangeOfMotion" representedClassName="RangeOfMotionManagedObject" syncable="YES">
         <attribute name="degrees" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="motion" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="component" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Component" inverseName="rangesOfMotion" inverseEntity="Component" syncable="YES"/>
     </entity>
     <entity name="SoftwareAcknowledgement" representedClassName="SoftwareAcknowledgementManagedObject" syncable="YES">
-        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="link" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="SpecialTest" representedClassName="SpecialTestManagedObject" syncable="YES">
-        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="howTo" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="indication" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
@@ -66,13 +67,13 @@
     </entity>
     <entity name="System" representedClassName="SystemManagedObject" syncable="YES">
         <attribute name="details" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="components" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Component" inverseName="system" inverseEntity="Component" syncable="YES"/>
         <relationship name="exam_techniques" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ExamTechnique" inverseName="system" inverseEntity="ExamTechnique" syncable="YES"/>
     </entity>
     <entity name="VideoLink" representedClassName="VideoLinkManagedObject" syncable="YES">
-        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="link" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="examTechnique" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ExamTechnique" inverseName="videoLinks" inverseEntity="ExamTechnique" syncable="YES"/>
@@ -84,11 +85,11 @@
         <element name="ImageLink" positionX="-198" positionY="288" width="128" height="105"/>
         <element name="Muscle" positionX="0" positionY="0" width="128" height="90"/>
         <element name="Palpation" positionX="0" positionY="0" width="128" height="120"/>
+        <element name="PersonnelAcknowledgement" positionX="0" positionY="0" width="128" height="105"/>
         <element name="RangeOfMotion" positionX="234" positionY="33" width="128" height="118"/>
-        <element name="SpecialTest" positionX="79" positionY="207" width="128" height="165"/>
+        <element name="SoftwareAcknowledgement" positionX="9" positionY="9" width="128" height="90"/>
+        <element name="SpecialTest" positionX="79" positionY="207" width="128" height="180"/>
         <element name="System" positionX="223" positionY="-144" width="128" height="120"/>
         <element name="VideoLink" positionX="-198" positionY="147" width="128" height="120"/>
-        <element name="PersonnelAcknowledgement" positionX="0" positionY="0" width="128" height="105"/>
-        <element name="SoftwareAcknowledgement" positionX="9" positionY="9" width="128" height="90"/>
     </elements>
 </model>

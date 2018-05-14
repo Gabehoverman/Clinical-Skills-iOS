@@ -19,9 +19,10 @@ class SpecialTestDetailTableViewController : UITableViewController {
 	var parentSpecialTest: SpecialTest?
 	var images: [BasicPhoto]?
 	
-	weak var imagesCollectionView: UICollectionView?
+    weak var imagesCollectionView: UICollectionView?
+    
 	
-	var imageLinksFetchedResultsController: NSFetchedResultsController<NSFetchRequestResult>?
+	//var imageLinksFetchedResultsController: NSFetchedResultsController<NSFetchRequestResult>?
 	var videoLinksFetchedResultsController: NSFetchedResultsController<NSFetchRequestResult>?
 	
 	var remoteConnectionManager: RemoteConnectionManager?
@@ -34,7 +35,7 @@ class SpecialTestDetailTableViewController : UITableViewController {
 	override func viewDidLoad() {
 		
 		if self.parentSpecialTest != nil {
-			self.images = [BasicPhoto]()
+			//self.images = [BasicPhoto]()
 			
 			//self.imageLinksFetchedResultsController = FetchedResultsControllers.imageLinksFetchedResultsController(self.parentSpecialTest!)
 			self.videoLinksFetchedResultsController = FetchedResultsControllers.videoLinksFetchedResultsController(self.parentSpecialTest!)
@@ -54,17 +55,18 @@ class SpecialTestDetailTableViewController : UITableViewController {
 	// MARK: - Table View Controller Methods
 	
 	override func numberOfSections(in tableView: UITableView) -> Int {
-		return 5
+		return 6
 	}
 	
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 		switch (section) {
 			case 0: return "Name"
-			case 1: return "Positive Sign"
-			case 2: return "Indication"
-			case 3: return "Notes"
-            //case 4: return "Images"
-			case 4: return "Video Links"
+            case 1: return "How To"
+			case 2: return "Positive Sign"
+			case 3: return "Indication"
+			case 4: return "Notes"
+            //case 5: return "Images"
+			case 5: return "Video Links"
 			default: return  "Section \(section)"
 		}
 	}
@@ -73,19 +75,23 @@ class SpecialTestDetailTableViewController : UITableViewController {
 		if self.parentSpecialTest != nil {
 			if section == 0 && self.parentSpecialTest!.name != "" {
 				return 1
-			} else if section == 1 && self.parentSpecialTest!.positiveSign != "" {
+            } else if section == 1 && self.parentSpecialTest!.howTo != "" {
+                return 1
+			} else if section == 2 && self.parentSpecialTest!.positiveSign != "" {
 				return 1
-			} else if section == 2 && self.parentSpecialTest!.indication != "" {
+			} else if section == 3 && self.parentSpecialTest!.indication != "" {
 				return 1
-			} else if section == 3 && self.parentSpecialTest!.notes != "" {
+			} else if section == 4 && self.parentSpecialTest!.notes != "" {
 				return 1
                 
             //IMAGE REMOVAL
-			//} else if section == 4 {
-				//if let count = self.imageLinksFetchedResultsController?.fetchedObjects?.count, count != 0 {
-					//return 1
-                //}
-			} else if section == 4 {
+            /*
+			} else if section == 5 {
+				if let count = self.imageLinksFetchedResultsController?.fetchedObjects?.count, count != 0 {
+					return 1
+                }*/
+            
+			} else if section == 5 {
 				if let count = self.videoLinksFetchedResultsController?.fetchedObjects?.count {
 					return count
 				}
@@ -95,8 +101,8 @@ class SpecialTestDetailTableViewController : UITableViewController {
 	}
 	
 	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-		if indexPath.section == 3 {
-			return 132
+		if indexPath.section == 5 {
+			return UITableViewAutomaticDimension //132
 		} else {
 			return UITableViewAutomaticDimension
 		}
@@ -107,23 +113,28 @@ class SpecialTestDetailTableViewController : UITableViewController {
 		let cell = UITableViewCell()
 		cell.textLabel?.numberOfLines = 0
 		cell.textLabel?.lineBreakMode = .byWordWrapping
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 300
 		cell.textLabel?.font = UIFont.systemFont(ofSize: 15)
 		switch (indexPath.section) {
 			case 0: cell.textLabel?.text = self.parentSpecialTest?.name
-			case 1: cell.textLabel?.text = self.parentSpecialTest?.positiveSign
-			case 2: cell.textLabel?.text = self.parentSpecialTest?.indication
-			case 3: cell.textLabel?.text = self.parentSpecialTest?.notes
+			case 1: cell.textLabel?.text = self.parentSpecialTest?.howTo//positiveSign
+            case 2: cell.textLabel?.text = self.parentSpecialTest?.positiveSign
+			case 3: cell.textLabel?.text = self.parentSpecialTest?.indication
+			case 4: cell.textLabel?.text = self.parentSpecialTest?.notes
             
             //IMAGE REMOVAL
-			//case 4:
-                //if let imagesCell = tableView.dequeueReusableCell(withIdentifier: StoryboardIdentifiers.cell.specialTestImagesCell) as? ImagesTableViewCell {
-                    //imagesCell.imagesCollectionView.backgroundColor = UIColor.clear
-                    //imagesCell.imagesCollectionView.dataSource = self
-                    //imagesCell.imagesCollectionView.delegate = self
-                    //self.imagesCollectionView = imagesCell.imagesCollectionView
-                    //return imagesCell
-                //}
-			case 4:
+            /*
+			case 5: //cell.textLabel?.text = self.imageLinksFetchedResultsController?.fetchedObjects?.description
+                    //cell.textLabel?.text = self.imagesCollectionView?.
+                if let imagesCell = tableView.dequeueReusableCell(withIdentifier: StoryboardIdentifiers.cell.specialTestImagesCell) as? ImagesTableViewCell {
+                    imagesCell.imagesCollectionView.backgroundColor = UIColor.clear
+                    imagesCell.imagesCollectionView.dataSource = self as UICollectionViewDataSource
+                    imagesCell.imagesCollectionView.delegate = self
+                    self.imagesCollectionView = imagesCell.imagesCollectionView
+                    return imagesCell
+                }*/
+			case 5:
 				if let managedVideoLink = self.videoLinksFetchedResultsController?.object(at: fixedSectionIndexPath) as? VideoLinkManagedObject {
 					cell.accessoryType = .disclosureIndicator
 					cell.textLabel?.text = managedVideoLink.title
@@ -132,10 +143,10 @@ class SpecialTestDetailTableViewController : UITableViewController {
 		}
 		return cell
 	}
-	
+    
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		if indexPath.section == 4 {
-			let fixedSectionIndexPath = IndexPath(row: indexPath.row, section: 2) // NSIndexPath referencing section 0 to avoid "no section at index 3" error
+		if indexPath.section == 5 {
+			let fixedSectionIndexPath = IndexPath(row: indexPath.row, section: 0) // NSIndexPath referencing section 0 to avoid "no section at index 3" error
 			if let managedVideoLink = self.videoLinksFetchedResultsController?.object(at: fixedSectionIndexPath) as? VideoLinkManagedObject {
 				self.performSegue(withIdentifier: StoryboardIdentifiers.segue.toVideoView, sender: managedVideoLink)
 			}
@@ -172,9 +183,9 @@ class SpecialTestDetailTableViewController : UITableViewController {
 				workingContext.mergeChanges(fromContextDidSave: saveNotification)
 			}
 			
-			if let workingContext = self.imageLinksFetchedResultsController?.managedObjectContext {
+			/*if let workingContext = self.imageLinksFetchedResultsController?.managedObjectContext {
 				workingContext.mergeChanges(fromContextDidSave: saveNotification)
-			}
+			}*/
 		}
 	}
 	
@@ -236,14 +247,14 @@ extension SpecialTestDetailTableViewController : UICollectionViewDataSource {
 		if let count = self.images?.count {
 			return count
 		} else {
-			return 0
+			return 1
 		}
 	}
 	
 	private func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		if let initialImage = self.images?[indexPath.row] {
-			let photosViewController = NYTPhotosViewController(nibName: self.images, bundle: initialImage)
-			self.present(photosViewController, animated: true, completion: nil)
+			//let photosViewController = NYTPhotosViewController(nibName: self.images, bundle: initialImage)
+			//self.present(photosViewController, animated: true, completion: nil)
 		}
 	}
 	
@@ -256,9 +267,9 @@ extension SpecialTestDetailTableViewController : UICollectionViewDataSource {
 		}
 		return UICollectionViewCell()
 	}
-}
+}*/
 
-*/
+
 
 
 // MARK: - Collection View Delegate Methods
@@ -283,7 +294,7 @@ extension SpecialTestDetailTableViewController : RemoteConnectionManagerDelegate
 	func didFinishDataRequestWithData(_ receivedData: Data) {
 		let datastoreManager = DatastoreManager(delegate: self)
 		let parser = JSONParser(rawData: receivedData)
-		if parser.dataType == JSONParser.dataTypes.imageLink {
+		/*if parser.dataType == JSONParser.dataTypes.imageLink {
 			if self.parentSpecialTest != nil {
 				let imageLinks = parser.parseImageLinks(self.parentSpecialTest!)
 				datastoreManager.store(imageLinks)
@@ -291,13 +302,14 @@ extension SpecialTestDetailTableViewController : RemoteConnectionManagerDelegate
 					self.remoteConnectionManager?.fetchImageData(forCloudinaryLink: imageLink.link)
 				}
 			}
-		} else if parser.dataType == JSONParser.dataTypes.videoLink {
+		} else */
+        if parser.dataType == JSONParser.dataTypes.videoLink {
 			if self.parentSpecialTest != nil {
 				let videoLinks = parser.parseVideoLinks(self.parentSpecialTest!)
 				datastoreManager.store(videoLinks)
-				if let count = self.imageLinksFetchedResultsController?.fetchedObjects?.count, count == 0 {
+				/* if let count = self.imageLinksFetchedResultsController?.fetchedObjects?.count, count == 0 {
 					self.remoteConnectionManager?.fetchImageLinks(forSpecialTest: self.parentSpecialTest!)
-				}
+				}*/
 			}
 		}
 	}

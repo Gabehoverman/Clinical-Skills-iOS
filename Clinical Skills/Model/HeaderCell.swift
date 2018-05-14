@@ -7,3 +7,11 @@
 //
 
 import Foundation
+import UIKit
+
+class HeaderCell: UITableViewCell {
+    
+    @IBOutlet var titleLabel: UILabel!
+    @IBOutlet var toggleButton: UIButton!
+    
+}

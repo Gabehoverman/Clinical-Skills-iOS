@@ -82,9 +82,9 @@ class ComponentsTableViewController : UITableViewController {
 		if self.fetchedResultsController != nil {
 			if let managedComponent = self.fetchedResultsController!.object(at: indexPath) as? ComponentManagedObject {
 				if self.tabBarController?.selectedIndex == StoryboardIdentifiers.tab.clinicalSkills {
-					self.performSegue(withIdentifier: StoryboardIdentifiers.segue.toComponentDetailsView, sender: managedComponent)
+					self.performSegue(withIdentifier: StoryboardIdentifiers.segue.toComponentDetailsView, sender: managedComponent) //Orginially toComponentFile
 				} else {
-					self.performSegue(withIdentifier: StoryboardIdentifiers.segue.toSpecialTestsView, sender: managedComponent)
+					self.performSegue(withIdentifier: StoryboardIdentifiers.segue.toComponentDetailsView, sender: managedComponent) //toSpecialTestsView originally
 				}
 			}
 		}
@@ -148,9 +148,9 @@ class ComponentsTableViewController : UITableViewController {
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if segue.identifier == StoryboardIdentifiers.segue.toComponentDetailsView {
 			if let destination = segue.destination as? ComponentDetailsTableViewController {
-				if let managedComponent = sender as? ComponentManagedObject {
+				/*if let managedComponent = sender as? ComponentManagedObject {
 					destination.component = Component(managedObject: managedComponent)
-				}
+				}*/
 			}
 		} else if segue.identifier == StoryboardIdentifiers.segue.toSpecialTestsView {
 			if let destination = segue.destination as? SpecialTestsTableViewController {

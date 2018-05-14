@@ -32,6 +32,14 @@ class VideoLink {
 		self.examTechnique = examTechnique
 	}
 	
+    init(id: Int32, title: String, link: String) {
+        self.id = Int32(id)
+        self.title = title
+        self.link = link
+        self.specialTest = nil
+        self.examTechnique = nil
+    }
+    
 	init(managedObject: VideoLinkManagedObject) {
 		if let specialTestManagedObject = managedObject.specialTest {
 			self.specialTest = SpecialTest(managedObject: specialTestManagedObject)

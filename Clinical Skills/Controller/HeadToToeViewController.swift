@@ -7,6 +7,7 @@
 //
 import Foundation
 import UIKit
+import WebKit
 
 class HeadToToeViewController : UIViewController {
     
@@ -14,15 +15,47 @@ class HeadToToeViewController : UIViewController {
     
     var documentController: UIDocumentInteractionController?
     var dismissing: Bool?
+    var webView: UIWebView?
     
+    @IBOutlet weak var BackButton: UIButton!
+    var url = Bundle.main.url(forResource: "Head To Toe", withExtension: "docx")
+    
+    @IBOutlet weak var myWebView: UIWebView!
     // MARK: - View Controller Methods
     
     override func viewDidLoad() {
         if let url = Bundle.main.url(forResource: "Head To Toe", withExtension: "docx") {
-            self.documentController = UIDocumentInteractionController(url: url)
-            self.documentController!.delegate = self
-            self.dismissing = false
+            myWebView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            myWebView.scalesPageToFit = true
+            myWebView.frame.origin.y = 30
+            myWebView.frame = self.view.bounds
+            myWebView.loadRequest(URLRequest(url: url))
+            
+            
+            //view.addSubview(webView)
+            
+            //self.documentController = UIDocumentInteractionController(url: url)
+            //self.documentController!.delegate = self
+            //self.dismissing = false
         }
+    }
+
+    @IBAction func goBack(_ sender: UIButton) {
+        print("i've been clicked");
+        myWebView.goBack();
+    }
+    
+    
+    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+        if navigationType == UIWebViewNavigationType.linkClicked {
+            UIApplication.shared.openURL(request.url!)
+            return false
+        }
+        return true
+    }
+    
+    @IBAction func GoBack(_ sender: UIButton) {
+        webView?.goBack();
     }
     
     override func viewDidAppear(_ animated: Bool) {
