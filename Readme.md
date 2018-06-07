@@ -1,3 +1,3 @@
-#ClinSy - A Clinical Skills Reference Application
+# ClinSy - A Clinical Skills Reference Application
 
-##West Virginia University School of Medicine
+## West Virginia University School of Medicine
