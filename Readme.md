@@ -2,6 +2,6 @@
 
 Developed for the West Virginia School of Medicine
 
-![Device Mockup](‘./Device Mockup.png’)
+![Device Mockup](./Device\ Mockup.png)
 
 ## Installation Steps
